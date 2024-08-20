@@ -86,7 +86,7 @@
                                     class="bg-sky-200 p-3 rounded-xl font-extrabold text-sky-800 flex items-center justify-center text-[20px]">
                                     FORM INPUT PRESENSI
                                 </div>
-                                <div class="mt-5">
+                                <div class="mt-10 mb-8">
                                     <div class="flex gap-5">
                                         <div class="w-full">
                                             <label for="name"
@@ -103,7 +103,7 @@
                                     </div>
                                 </div>
                                 @foreach ($mahasiswa as $pr)
-                                    <div class="mt-5">
+                                    <div class="mb-6">
                                         <div class="flex gap-5">
                                             <div class="w-full">
                                                 <input type="text" id="name"
@@ -121,7 +121,9 @@
                                                     name="id_semester" data-placeholder="Pilih semester">
                                                     <option value="">Pilih...</option>
                                                     <option value="HADIR">HADIR</option>
-                                                    <option value="HADIR">HADIR</option>
+                                                    <option value="SAKIT">SAKIT</option>
+                                                    <option value="IZIN">IZIN</option>
+                                                    <option value="ALPA">ALPA</option>
                                                 </select>
                                             </div>
                                         </div>
