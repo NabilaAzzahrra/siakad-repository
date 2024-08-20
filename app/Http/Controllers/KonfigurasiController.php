@@ -46,6 +46,7 @@ class KonfigurasiController extends Controller
             'id_keterangan' => $request->input('keterangan'),
             'id_kurikulum' => $request->input('kurikulum'),
             'id_perhitungan' => $request->input('perhitungan'),
+            'jml_pertemuan' => $request->input('jml_pertemuan'),
         ];
 
         Konfigurasi::create($data);
@@ -81,6 +82,7 @@ class KonfigurasiController extends Controller
             'id_keterangan' => $request->input('id_keterangans'),
             'id_kurikulum' => $request->input('id_kurikulums'),
             'id_perhitungan' => $request->input('id_perhitungans'),
+            'jml_pertemuan' => $request->input('jml_pertemuan'),
         ];
 
         $datas = Konfigurasi::findOrFail($id);

@@ -20,4 +20,14 @@ class Kelas extends Model
     {
         return $this->belongsTo(Jurusan::class, 'id_jurusan', 'id');
     }
+
+    public function jadwal_reguler()
+    {
+        return $this->hasMany(Jadwalreguler::class, 'id_kelas');
+    }
+
+    public function mahasiswa()
+    {
+        return $this->hasMany(Mahasiswa::class, 'id_kelas');
+    }
 }

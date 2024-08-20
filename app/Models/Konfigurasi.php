@@ -13,6 +13,7 @@ class Konfigurasi extends Model
         'id_keterangan',
         'id_kurikulum',
         'id_perhitungan',
+        'jml_pertemuan',
     ];
 
     protected $table = 'konfigurasi';

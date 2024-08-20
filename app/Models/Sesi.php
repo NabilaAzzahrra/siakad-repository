@@ -20,4 +20,9 @@ class Sesi extends Model
     {
         return $this->belongsTo(Pukul::class, 'id_pukul', 'id');
     }
+
+    public function jadwal_reguler()
+    {
+        return $this->hasMany(Jadwalreguler::class, 'id_sesi');
+    }
 }

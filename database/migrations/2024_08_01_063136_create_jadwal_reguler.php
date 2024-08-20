@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('jadwal_reguler', function (Blueprint $table) {
             $table->id();
+            $table->string('id_jadwal');
+            $table->integer('id_hari');
             $table->integer('id_sesi');
             $table->integer('id_detail_kurikulum');
             $table->integer('id_ruang');

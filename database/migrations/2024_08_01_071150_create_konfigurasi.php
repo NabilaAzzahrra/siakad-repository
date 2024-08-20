@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('id_keterangan');
             $table->integer('id_kurikulum');
             $table->integer('id_perhitungan');
+            $table->integer('jml_pertemuan');
             $table->timestamps();
         });
     }

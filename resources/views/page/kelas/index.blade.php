@@ -86,7 +86,6 @@
                 <form method="POST" id="formSourceModal">
                     @csrf
                     <div class="flex flex-col  p-4 space-y-6">
-
                         <div class="mb-5">
                             <label for="text" class="block mb-2 text-sm font-medium text-gray-900">kelas</label>
                             <input type="text" id="kelass" name="kelas"

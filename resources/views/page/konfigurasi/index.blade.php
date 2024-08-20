@@ -76,6 +76,12 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="mb-5">
+                                        <label for="text" class="block mb-2 text-sm font-medium text-gray-900">Jumlah Pertemuan</label>
+                                        <input type="number" id="jml_pertemuan" name="jml_pertemuan"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600"
+                                            id="" placeholder="Masukan Jumlah Pertemuan disini...">
+                                    </div>
                                     <button type="submit"
                                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Simpan</button>
                                 </div>
@@ -99,6 +105,7 @@
                                                 <th>Kurikulum</th>
                                                 <th>Keterangan</th>
                                                 <th>Perhitungan</th>
+                                                <th>Pertemuan</th>
                                                 <th>ACTIONS</th>
                                             </tr>
                                         </thead>
@@ -179,6 +186,14 @@
                             </select>
                         </div>
                     </div>
+                    <div class="fex gap-5">
+                        <div class="flex flex-col  p-4 space-y-6 w-full">
+                            <label for="text" class="block text-sm font-medium text-gray-900 dark:text-white">Jumlah Pertemuan</label>
+                            <input type="number" id="jml_pertemuans" name="jml_pertemuan"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600"
+                                id="" placeholder="Masukan Jumlah Pertemuan disini...">
+                        </div>
+                    </div>
                     <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
                         <button type="submit" id="formSourceButton"
                             class="bg-green-400 m-2 w-40 h-10 rounded-xl hover:bg-green-500">Simpan</button>
@@ -226,6 +241,11 @@
                     render: (data, type, row) => {
                         return data.nama_perhitungan;
                     }
+                },{
+                    data: 'jml_pertemuan',
+                    render: (data, type, row) => {
+                        return data;
+                    }
                 }, {
                     data: {
                         no: 'no',
@@ -233,7 +253,7 @@
                     },
                     render: (data) => {
                         let editUrl =
-                            `<button type="button" data-id="${data.id}"
+                            `<button type="button" data-id="${data.id}" data-jml_pertemuans="${data.jml_pertemuan}"
                                                         data-modal-target="sourceModal" data-id_tahun_akademiks="${data.id_tahun_akademik}" data-id_kurikulums="${data.id_kurikulum}" data-id_keterangans="${data.id_keterangan}" data-id_perhitungans="${data.id_perhitungan}"
                                                         onclick="editSourceModal(this)"
                                                         class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
@@ -253,6 +273,7 @@
             const id_tahun_akademiks = button.dataset.id_tahun_akademiks;
             const id_keterangans = button.dataset.id_keterangans;
             const id_perhitungans = button.dataset.id_perhitungans;
+            const jml_pertemuans = button.dataset.jml_pertemuans;
             let url = "{{ route('konfigurasi.update', ':id') }}".replace(':id', id);
             console.log(url);
             let status = document.getElementById(modalTarget);
@@ -261,6 +282,8 @@
             document.querySelector('[name="id_tahun_akademiks"]').value = id_tahun_akademiks;
             let event = new Event('change');
             document.querySelector('[name="id_tahun_akademiks"]').dispatchEvent(event);
+
+            document.getElementById('jml_pertemuans').value = jml_pertemuans;
 
             document.querySelector('[name="id_keterangans"]').value = id_keterangans;
             document.querySelector('[name="id_keterangans"]').dispatchEvent(event);

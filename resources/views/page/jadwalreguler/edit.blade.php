@@ -13,26 +13,44 @@
                         <div class="p-6 bg-red-500 rounded-xl">
                             FORM INPUT JADWAL REGULER
                         </div>
-                        <form action="{{ route('jadwal_reguler.store') }}" method="post">
+                        <form action="{{ route('jadwal_reguler.update', $jadwal->id) }}" method="post">
                             @csrf
+                            @method('PATCH')
                             <div class="p-4 rounded-xl">
                                 <div class="flex gap-5">
-                                    <div class="mb-5 w-full">
-                                        <label for="pukul"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                            Sesi <span class="text-red-500">*</span>
-                                        </label>
-                                        <select class="js-example-placeholder-single js-states form-control w-full m-6"
-                                            name="sesi" data-placeholder="Pilih Sesi" onchange="getsesi()">
-                                            <option value="{{ $jadwal->id_sesi }}">{{ $jadwal->sesi }}</option>
-                                            @foreach ($sesi as $k)
-                                                @if ($k->id != $jadwal->id_sesi)
-                                                    <option value="{{ $k->id }}" data-sesi="{{ $k->id }}">
-                                                        {{ $k->sesi }}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-
+                                    <div class="flex gap-5 w-full">
+                                        <div class="mb-5 w-full">
+                                            <label for="pukul"
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                Hari <span class="text-red-500">*</span>
+                                            </label>
+                                            <select class="js-example-placeholder-single js-states form-control w-full m-6"
+                                                name="hari" data-placeholder="Pilih Hari">
+                                                <option value="{{ $jadwal->id_hari }}">{{ $jadwal->hari->hari }}</option>
+                                                @foreach ($hari as $k)
+                                                    @if ($k->id != $jadwal->id_hari)
+                                                        <option value="{{ $k->id }}" data-hari="{{ $k->id_hari }}">
+                                                            {{ $k->hari }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="mb-5 w-full">
+                                            <label for="pukul"
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                Sesi <span class="text-red-500">*</span>
+                                            </label>
+                                            <select class="js-example-placeholder-single js-states form-control w-full m-6"
+                                                name="sesi" data-placeholder="Pilih Sesi" onchange="getsesi()">
+                                                <option value="{{ $jadwal->id_sesi }}">{{ $jadwal->sesi->sesi }}</option>
+                                                @foreach ($sesi as $k)
+                                                    @if ($k->id != $jadwal->id_sesi)
+                                                        <option value="{{ $k->id }}" data-sesi="{{ $k->id_sesi }}">
+                                                            {{ $k->sesi }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
 
                                     <div class="mb-5 w-full">
@@ -40,7 +58,8 @@
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pukul</label>
                                         <input type="text" id="pukul" name="pukul"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="Masukan Pukul disini ..." readonly />
+                                            placeholder="Masukan Pukul disini ..."
+                                            value="{{ $jadwal->sesi->pukul->pukul }}" readonly />
                                     </div>
                                     <div class="mb-5 w-full">
                                         <label for="kurikulum"
@@ -49,12 +68,14 @@
                                         <select class="js-example-placeholder-single js-states form-control w-full m-6"
                                             name="kurikulum" data-placeholder="Pilih Materi Ajar"
                                             onchange="getdetailkurikulum()">
-                                            <option value="">Pilih...</option>
-                                            @foreach ($kurikulum as $k)
-                                                <option value="{{ $k->id_materi_ajar }}">
-                                                    {{ $k->materi_ajar->materi_ajar }}</option>
+                                            @foreach ($kurikulum as $c)
+                                                <option value="{{ $c->id_materi_ajar }}"
+                                                    {{ $c->id_materi_ajar == $jadwal->id_detail_kurikulum ? 'selected' : '' }}>
+                                                    {{ $c->materi_ajar->materi_ajar }}
+                                                </option>
                                             @endforeach
                                         </select>
+
                                     </div>
 
                                     <div class="flex w-full gap-5">
@@ -63,7 +84,8 @@
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Semester</label>
                                             <input type="text" id="semester" name="semester"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Masukan Semester disini ..." value="{{ old('semester') }}"
+                                                placeholder="Masukan Semester disini ..."
+                                                value="{{ $jadwal->detail_kurikulum->materi_ajar->semester->semester }}"
                                                 readonly />
                                         </div>
                                         <div class="mb-5 w-full">
@@ -71,8 +93,8 @@
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">SKS</label>
                                             <input type="text" id="sks" name="sks"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Masukan SKS disini ..." value="{{ old('sks') }}"
-                                                readonly />
+                                                placeholder="Masukan SKS disini ..."
+                                                value="{{ $jadwal->detail_kurikulum->materi_ajar->sks }}" readonly />
                                         </div>
                                     </div>
                                 </div>
@@ -86,7 +108,10 @@
                                             name="ruang" data-placeholder="Pilih Ruang">
                                             <option value="">Pilih...</option>
                                             @foreach ($ruang as $k)
-                                                <option value="{{ $k->id }}">{{ $k->ruang }}</option>
+                                                <option value="{{ $k->id }}"
+                                                    {{ $k->id == $jadwal->id_ruang ? 'selected' : '' }}>
+                                                    {{ $k->ruang }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -99,7 +124,10 @@
                                             name="dosen" data-placeholder="Pilih Dosen">
                                             <option value="">Pilih...</option>
                                             @foreach ($dosen as $k)
-                                                <option value="{{ $k->id }}">{{ $k->nama_dosen }}</option>
+                                                <option value="{{ $k->id }}"
+                                                    {{ $k->id == $jadwal->id_dosen ? 'selected' : '' }}>
+                                                    {{ $k->nama_dosen }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -112,7 +140,11 @@
                                             name="kelas" data-placeholder="Pilih Kelas" onchange="getkelas()">
                                             <option value="">Pilih...</option>
                                             @foreach ($kelas as $k)
-                                                <option value="{{ $k->id }}">{{ $k->kelas }}</option>
+                                                {{-- <option value="{{ $k->id }}">{{ $k->kelas }}</option> --}}
+                                                <option value="{{ $k->id }}"
+                                                    {{ $k->id == $jadwal->id_kelas ? 'selected' : '' }}>
+                                                    {{ $k->kelas }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -121,7 +153,7 @@
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jurusan</label>
                                         <input type="text" id="jurusan" name="jurusan"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="Masukan jurusan disini ..." value="{{ old('jurusan') }}"
+                                            placeholder="Masukan jurusan disini ..." value="{{ $jadwal->kelas->jurusan->jurusan }}"
                                             readonly />
                                     </div>
                                 </div>
@@ -169,7 +201,7 @@
         var kurikulumId = selectedOption.value;
 
         if (kurikulumId) {
-            await axios.get(`/api/kurikulum_detail/${kurikulumId}`)
+            await axios.get(`/api/kurikulum_detail_det/${kurikulumId}`)
                 .then((response) => {
                     const data = response.data;
                     if (data && data.kurikulum && data.kurikulum.materi_ajar) {

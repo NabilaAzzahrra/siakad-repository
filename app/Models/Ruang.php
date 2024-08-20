@@ -14,4 +14,9 @@ class Ruang extends Model
     ];
 
     protected $table = 'ruang';
+
+    public function jadwal_reguler()
+    {
+        return $this->hasMany(Jadwalreguler::class, 'id_ruang');
+    }
 }

@@ -19,4 +19,9 @@ class Tahunakademik extends Model
     {
         return $this->hasMany(Konfigurasi::class, 'id_tahun_akademik');
     }
+
+    public function jadwal()
+    {
+        return $this->hasMany(Jadwalreguler::class, 'id_tahun_akademik');
+    }
 }

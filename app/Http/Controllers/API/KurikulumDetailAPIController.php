@@ -10,7 +10,15 @@ class KurikulumDetailAPIController extends Controller
 {
     public function get_all()
     {
-        $kurikulum = Detailkurikulum::with(['materi_ajar'])->get();
+        $kurikulum = Detailkurikulum::with(['materi_ajar', 'materi_ajar.semester'])->get();
+        return response()->json([
+            'kurikulum' => $kurikulum,
+        ]);
+    }
+
+    public function get_id_det($id)
+    {
+        $kurikulum = Detailkurikulum::with(['materi_ajar', 'materi_ajar.semester', 'materi_ajar.semester.keterangan'])->where('id_kurikulum', $id)->first();
         return response()->json([
             'kurikulum' => $kurikulum,
         ]);
@@ -18,7 +26,7 @@ class KurikulumDetailAPIController extends Controller
 
     public function get_id($id)
     {
-        $kurikulum = Detailkurikulum::with(['materi_ajar', 'materi_ajar.semester', 'materi_ajar.semester.keterangan'])->where('id_materi_ajar', $id)->first();
+        $kurikulum = Detailkurikulum::with(['materi_ajar', 'materi_ajar.semester', 'materi_ajar.semester.keterangan'])->where('id_kurikulum', $id)->get();
         return response()->json([
             'kurikulum' => $kurikulum,
         ]);

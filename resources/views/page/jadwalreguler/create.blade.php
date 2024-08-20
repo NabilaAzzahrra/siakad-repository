@@ -16,19 +16,38 @@
                         <form action="{{ route('jadwal_reguler.store') }}" method="post">
                             @csrf
                             <div class="p-4 rounded-xl">
+                                <input type="number" value="{{ $konfigurasi->jml_pertemuan }}" name="jml_pertemuan"
+                                    >
                                 <div class="flex gap-5">
-                                    <div class="mb-5 w-full">
-                                        <label for="pukul"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                            Sesi <span class="text-red-500">*</span>
-                                        </label>
-                                        <select class="js-example-placeholder-single js-states form-control w-full m-6"
-                                            name="sesi" data-placeholder="Pilih Sesi" onchange="getsesi()">
-                                            <option value="">Pilih...</option>
-                                            @foreach ($sesi as $k)
-                                                <option value="{{ $k->id }}">{{ $k->sesi }}</option>
-                                            @endforeach
-                                        </select>
+                                    <div class="flex w-full gap-5">
+                                        <div class="mb-5 w-full">
+                                            <label for="hari"
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                Hari <span class="text-red-500">*</span>
+                                            </label>
+                                            <select
+                                                class="js-example-placeholder-single js-states form-control w-full m-6"
+                                                name="hari" data-placeholder="Pilih Hari">
+                                                <option value="">Pilih...</option>
+                                                @foreach ($hari as $k)
+                                                    <option value="{{ $k->id }}">{{ $k->hari }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="mb-5 w-full">
+                                            <label for="pukul"
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                Sesi <span class="text-red-500">*</span>
+                                            </label>
+                                            <select
+                                                class="js-example-placeholder-single js-states form-control w-full m-6"
+                                                name="sesi" data-placeholder="Pilih Sesi" onchange="getsesi()">
+                                                <option value="">Pilih...</option>
+                                                @foreach ($sesi as $k)
+                                                    <option value="{{ $k->id }}">{{ $k->sesi }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
 
                                     <div class="mb-5 w-full">
@@ -166,7 +185,7 @@
         var kurikulumId = selectedOption.value;
 
         if (kurikulumId) {
-            await axios.get(`/api/kurikulum_detail/${kurikulumId}`)
+            await axios.get(`/api/kurikulum_detail_det/${kurikulumId}`)
                 .then((response) => {
                     const data = response.data;
                     if (data && data.kurikulum && data.kurikulum.materi_ajar) {

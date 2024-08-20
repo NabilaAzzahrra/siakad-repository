@@ -126,7 +126,7 @@
             console.log(idKurikulum);
             $('#detail-datatable').DataTable({
                 ajax: {
-                    url: `/api/kurikulum_detail?id=${idKurikulum}`,
+                    url: `/api/kurikulum_detail/${idKurikulum}`,
                     dataSrc: 'kurikulum'
                 },
                 paging: false, // Disable pagination

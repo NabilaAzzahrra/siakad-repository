@@ -19,17 +19,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="flex justify-center">
-                                <div class="p-12" style="width:100%;overflow-x:auto;">
-                                    {{-- <table class="table table-bordered" id="pukul-datatable">
-                                        <thead>
-                                            <tr>
-                                                <th class="w-7">No.</th>
-                                                <th>pukul</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                    </table> --}}
+                            <div class="flex w-full justify-center">
+                                <div class="pt-12 w-full" style="width:100%;overflow-x:auto;">
 
                                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                                         <table
@@ -46,6 +37,11 @@
                                                     <th scope="col" class="px-6 py-3 text-center">
                                                         <div class="flex items-center">
                                                             PENGAJAR
+                                                        </div>
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-center">
+                                                        <div class="flex items-center">
+                                                            HARI
                                                         </div>
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center">
@@ -105,6 +101,9 @@
                                                             {{ $j->nama_dosen }}
                                                         </td>
                                                         <td class="px-6 py-4">
+                                                            {{ $j->hari }}
+                                                        </td>
+                                                        <td class="px-6 py-4">
                                                             {{ $j->sesi }}
                                                         </td>
                                                         <td class="px-6 py-4">
@@ -126,14 +125,19 @@
                                                             {{ $j->jurusan }}
                                                         </td>
                                                         <td class="px-6 py-4 text-right">
-                                                            <a href="{{ route('jadwal_reguler.edit', $j->id) }}"
+                                                            <a href="{{ route('jadwal_reguler.show', $j->kode_jadwal) }}"
+                                                                class="mr-2 bg-green-500 hover:bg-green-600 px-3 py-1 rounded-md text-xs text-white">
+                                                                <i class="fa-solid fa-eye"></i>
+                                                            </a>
+
+                                                            <a href="{{ route('jadwal_reguler.edit', $j->id_jadwal) }}"
                                                                 class="mr-2 bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
                                                                 <i class="fa-solid fa-edit"></i>
                                                             </a>
-                                                            <a onclick="return jadwalDelete('{{ $j->id }}', '{{ $j->materi_ajar }}')"
-                                                                class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-md text-xs text-white">
-                                                                 <i class="fas fa-trash"></i>
-                                                             </a>
+                                                            <a onclick="return jadwalDelete('{{ $j->kode_jadwal }}', '{{ $j->materi_ajar }}')"
+                                                                class="bg-red-500 hover:bg-red-300 px-3 py-1 rounded-md text-xs text-white">
+                                                                <i class="fas fa-trash"></i>
+                                                            </a>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -221,7 +225,7 @@
                                                        <i class="fas fa-edit"></i>
                                                     </button>`;
                         let deleteUrl =
-                            `<button onclick="return pukulDelete('${data.id}','${data.pukul}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-md text-xs text-white"><i class="fas fa-trash"></i></button>`;
+                            `<button onclick="return pukulDelete('${data.id}','${data.pukul}','${data.id_jadwal}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-md text-xs text-white"><i class="fas fa-trash"></i></button>`;
                         return `<div style="text-align:center">${editUrl} ${deleteUrl}</div>`;
                     }
                 }, ],
@@ -279,23 +283,21 @@
             }
         }
 
-        const jadwalDelete = async (id, ruang) => {
-            let tanya = confirm(`Apakah anda yakin untuk menghapus ruang ${ruang} ?`);
+        const jadwalDelete = async (id_jadwal, materi_ajar) => {
+            let tanya = confirm(
+                `Apakah anda yakin untuk menghapus Jadwal ${id_jadwal} untuk materi ${materi_ajar}?`);
             if (tanya) {
-                await axios.post(`/ruang/${id}`, {
+                try {
+                    await axios.post(`/jadwal_reguler/${id_jadwal}`, {
                         '_method': 'DELETE',
                         '_token': $('meta[name="csrf-token"]').attr('content')
-                    })
-                    .then(function(response) {
-                        // Handle success
-                        location.reload();
-                    })
-                    .catch(function(error) {
-                        // Handle error
-                        alert('Error deleting record');
-                        console.log(error);
                     });
+                    location.reload(); // Refresh halaman setelah berhasil menghapus
+                } catch (error) {
+                    alert('Terjadi kesalahan saat menghapus data.');
+                    console.log(error);
+                }
             }
-        }
+        };
     </script>
 </x-app-layout>

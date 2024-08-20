@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\API\DetailFormatifAPIController;
 use App\Http\Controllers\API\DosenAPIController;
+use App\Http\Controllers\API\HariAPIController;
+use App\Http\Controllers\API\IntegrationPMBOnline;
 use App\Http\Controllers\API\JadwalregulerAPIController;
 use App\Http\Controllers\API\JurusanAPIController;
 use App\Http\Controllers\API\KelasAPIController;
@@ -10,6 +13,7 @@ use App\Http\Controllers\API\KurikulumAPIController;
 use App\Http\Controllers\API\KurikulumDetailAPIController;
 use App\Http\Controllers\API\MateriajarAPIController;
 use App\Http\Controllers\API\PerhitunganAPIController;
+use App\Http\Controllers\API\PresensiAPIController;
 use App\Http\Controllers\API\PukulAPIController;
 use App\Http\Controllers\API\RuangAPIController;
 use App\Http\Controllers\API\SemesterAPIController;
@@ -33,9 +37,15 @@ Route::get('/dosen', [DosenAPIController::class, 'get_all'])->name('jadwal_regul
 Route::get('/konfigurasi', [KonfigurasiAPIController::class, 'get_all'])->name('konfigurasi.get');
 Route::get('/kurikulum_detail', [KurikulumDetailAPIController::class, 'get_all'])->name('kurikulum.get');
 Route::get('/perhitungan', [PerhitunganAPIController::class, 'get_all'])->name('perhitungan.get');
+Route::get('/presensi', [PresensiAPIController::class, 'get_all'])->name('presensi.get');
 Route::get('/pukul/{id}', [PukulAPIController::class, 'get_id']);
 Route::get('/kurikulum_detail/{id}', [KurikulumDetailAPIController::class, 'get_id']);
+Route::get('/kurikulum_detail_det/{id}', [KurikulumDetailAPIController::class, 'get_id_det']);
 Route::get('/kelas/{id}', [KelasAPIController::class, 'get_id']);
+Route::get('/hari', [HariAPIController::class, 'get_all'])->name('hari.get');
+Route::get('/detail_formatif', [DetailFormatifAPIController::class, 'get_all'])->name('detail.get');
+Route::post('/integration/pmb', [IntegrationPMBOnline::class, 'integrate']);
+Route::get('/integration', [IntegrationPMBOnline::class, 'get_all'])->name('integration.get');
 // Route::get('/recruitment/{id}', [PukulAPIController::class, 'get_code'])->name('recruitment.get');
 
 Route::get('/user', function (Request $request) {

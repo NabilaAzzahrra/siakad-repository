@@ -25,4 +25,9 @@ class Detailkurikulum extends Model
     {
         return $this->belongsTo(Materiajar::class, 'id_materi_ajar', 'id');
     }
+
+    public function jadwal_reguler()
+    {
+        return $this->hasMany(Jadwalreguler::class, 'id_detail_kurikulum');
+    }
 }
