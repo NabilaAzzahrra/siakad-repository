@@ -17,4 +17,14 @@ class DetailUas extends Model
     ];
 
     protected $table = 'detail_uas';
+
+    public function uas()
+    {
+        return $this->belongsTo(Uas::class, 'id_uass', 'id_uas');
+    }
+
+    public function mahasiswa()
+    {
+        return $this->belongsTo(Mahasiswa::class, 'nim', 'nim');
+    }
 }

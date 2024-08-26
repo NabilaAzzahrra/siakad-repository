@@ -19,4 +19,14 @@ class Uas extends Model
     ];
 
     protected $table = 'uas';
+
+    public function jadwal()
+    {
+        return $this->belongsTo(Jadwalreguler::class, 'id_jadwal', 'id_jadwal');
+    }
+
+    public function detail_uas()
+    {
+        return $this->hasMany(DetailUas::class, 'id_uas');
+    }
 }

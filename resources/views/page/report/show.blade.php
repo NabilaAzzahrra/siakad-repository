@@ -32,20 +32,55 @@
                                                         </th>
                                                         <th scope="col" class="px-6 py-3 text-center ">
                                                             <div class="flex items-center">
-                                                                NAMA DOSEN
+                                                                MATERI AJAR
                                                             </div>
                                                         </th>
                                                         <th scope="col" class="px-6 py-3 text-center bg-gray-100">
                                                             <div class="flex items-center">
-                                                                EMAIL
+                                                                PENGAJAR
                                                             </div>
                                                         </th>
                                                         <th scope="col" class="px-6 py-3 text-center">
                                                             <div class="flex items-center">
-                                                                NO HP
+                                                                HARI
                                                             </div>
                                                         </th>
                                                         <th scope="col" class="px-6 py-3 text-center bg-gray-100">
+                                                            <div class="flex items-center">
+                                                                SESI
+                                                            </div>
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-3 text-center ">
+                                                            <div class="flex items-center">
+                                                                PUKUL
+                                                            </div>
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-3 text-center bg-gray-100">
+                                                            <div class="flex items-center">
+                                                                SEMESTER
+                                                            </div>
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-3 text-center ">
+                                                            <div class="flex items-center">
+                                                                SKS
+                                                            </div>
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-3 text-center bg-gray-100">
+                                                            <div class="flex items-center">
+                                                                RUANG
+                                                            </div>
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-3 text-center ">
+                                                            <div class="flex items-center">
+                                                                KELAS
+                                                            </div>
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-3 text-center bg-gray-100">
+                                                            <div class="flex items-center">
+                                                                JURUSAN
+                                                            </div>
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-3 text-center ">
                                                             <div class="flex items-center">
 
                                                             </div>
@@ -56,7 +91,7 @@
                                                     @php
                                                         $no = 1;
                                                     @endphp
-                                                    @foreach ($dosen as $m)
+                                                    @foreach ($jadwal as $m)
                                                         <tr
                                                             class="bg-white border dark:bg-gray-800 dark:border-gray-700">
                                                             <td class="px-6 py-4 text-center bg-gray-100">
@@ -64,16 +99,37 @@
                                                             </td>
                                                             <th scope="row"
                                                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                                {{ $m->nama_dosen }}
+                                                                {{ $m->detail_kurikulum->materi_ajar->materi_ajar }}
                                                             </th>
                                                             <td class="px-6 py-4 bg-gray-100">
-                                                                {{ $m->email }}
+                                                                {{ $m->dosen->nama_dosen }}
                                                             </td>
                                                             <td class="px-6 py-4">
-                                                                {{ $m->no_hp }}
+                                                                {{ $m->hari->hari }}
                                                             </td>
                                                             <td class="px-6 py-4 bg-gray-100">
-                                                                <a href="{{ route('report_dosen.show', $m->id) }}"
+                                                                {{ $m->sesi->sesi }}
+                                                            </td>
+                                                            <td class="px-6 py-4">
+                                                                {{ $m->sesi->pukul->pukul }}
+                                                            </td>
+                                                            <td class="px-6 py-4 bg-gray-100">
+                                                                {{ $m->detail_kurikulum->materi_ajar->semester->semester }}
+                                                            </td>
+                                                            <td class="px-6 py-4">
+                                                                {{ $m->detail_kurikulum->materi_ajar->sks }}
+                                                            </td>
+                                                            <td class="px-6 py-4 bg-gray-100">
+                                                                {{ $m->ruang->ruang }}
+                                                            </td>
+                                                            <td class="px-6 py-4">
+                                                                {{ $m->kelas->kelas }}
+                                                            </td>
+                                                            <td class="px-6 py-4 bg-gray-100">
+                                                                {{ $m->kelas->jurusan->jurusan }}
+                                                            </td>
+                                                            <td class="px-6 py-4 ">
+                                                                <a href="{{ route('report_dosen.edit', $m->id_jadwal) }}"
                                                                     class="mr-2 bg-green-500 hover:bg-green-600 px-3 py-1 rounded-md text-xs text-white">
                                                                     <i class="fa-solid fa-file"></i>
                                                                 </a>
@@ -85,7 +141,7 @@
 
                                         </div>
                                         <div class="mt-4">
-                                            {{ $dosen->links() }}
+                                            {{-- {{ $dosen->links() }} --}}
                                         </div>
                                     </form>
                                 </div>
@@ -96,93 +152,4 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', function() {
-            const selectedItemsKey = 'selectedItems';
-            let selectedItems = JSON.parse(localStorage.getItem(selectedItemsKey)) || [];
-
-            function updateLocalStorage() {
-                localStorage.setItem(selectedItemsKey, JSON.stringify(selectedItems));
-            }
-
-            function updateCheckboxes() {
-                const checkboxes = document.querySelectorAll('input[name="user_id[]"]');
-                const checkAllBox = document.querySelector('input[name="check"]');
-                let allChecked = true;
-
-                checkboxes.forEach(checkbox => {
-                    if (selectedItems.includes(checkbox.value)) {
-                        checkbox.checked = true;
-                    } else {
-                        allChecked = false;
-                    }
-                });
-
-                checkAllBox.checked = allChecked;
-            }
-
-            function handleCheckboxChange(event) {
-                const checkbox = event.target;
-                const checkAllBox = document.querySelector('input[name="check"]');
-
-                if (checkbox.checked) {
-                    if (!selectedItems.includes(checkbox.value)) {
-                        selectedItems.push(checkbox.value);
-                    }
-                } else {
-                    selectedItems = selectedItems.filter(item => item !== checkbox.value);
-                }
-
-                updateLocalStorage();
-
-                const checkboxes = document.querySelectorAll('input[name="user_id[]"]');
-                checkAllBox.checked = Array.from(checkboxes).every(cb => cb.checked);
-            }
-
-            document.querySelectorAll('input[name="user_id[]"]').forEach(checkbox => {
-                checkbox.addEventListener('change', handleCheckboxChange);
-            });
-
-            document.querySelector('input[name="check"]').addEventListener('change', function(event) {
-                const checkAll = event.target;
-                const checkboxes = document.querySelectorAll('input[name="user_id[]"]');
-
-                checkboxes.forEach(checkbox => {
-                    if (!checkbox.disabled) {
-                        checkbox.checked = checkAll.checked;
-                        if (checkAll.checked) {
-                            if (!selectedItems.includes(checkbox.value)) {
-                                selectedItems.push(checkbox.value);
-                            }
-                        } else {
-                            selectedItems = selectedItems.filter(item => item !== checkbox.value);
-                        }
-                    }
-                });
-
-                updateLocalStorage();
-            });
-
-            // Load existing selections on page load
-            updateCheckboxes();
-
-            // Function to reset selections after a successful edit
-            function resetSelections() {
-                selectedItems = [];
-                updateLocalStorage();
-                updateCheckboxes();
-            }
-
-            // Example: Call this function after a successful data update
-            function onDataUpdateSuccess() {
-                resetSelections();
-                // Additional actions after data update can be added here
-            }
-
-            // Simulating a data update operation
-            setTimeout(() => {
-                onDataUpdateSuccess(); // Trigger reset after update
-            }, 1000); // Replace with your actual data update logic
-        });
-    </script>
 </x-app-layout>

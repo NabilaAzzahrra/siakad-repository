@@ -69,7 +69,7 @@
                                         </svg>
                                     </button>
                                     <div id="jadwal-submenu"
-                                        class="hidden absolute left-full top-0 mt-2 w-48 bg-white shadow-lg rounded-md">
+                                        class="hidden absolute left-full top-0 ml-2 -mt-[184px] w-48 bg-white shadow-lg rounded-md border">
                                         <x-dropdown-link :href="route('hari.index')">
                                             {{ __('Hari') }}
                                         </x-dropdown-link>
@@ -194,15 +194,34 @@
                                         </svg>
                                     </button>
                                     <div id="presensi-submenu"
-                                        class="hidden absolute left-full top-0 ml-2 -mt-1 w-48 bg-white shadow-lg rounded-md border">
+                                        class="hidden absolute left-full top-0 ml-2 -mt-1 w-52 bg-white shadow-lg rounded-md border">
                                         <x-dropdown-link :href="route('report_dosen.index')">
                                             {{ __('Dosen') }}
                                         </x-dropdown-link>
-                                        <x-dropdown-link :href="route('hari.index')">
-                                            {{ __('Mahasiswa') }}
-                                        </x-dropdown-link>
+                                        <div class="relative">
+                                            <button id="anak-presensi-submenu-button"
+                                                class="flex justify-between items-center w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 dark:text-gray-400 bg-white dark:bg-gray-800 focus:outline-none transition ease-in-out duration-150">
+                                                {{ __('Mahasiswa') }}
+                                                <svg class="ml-2 fill-current h-4 w-4 transform -rotate-90"
+                                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd"
+                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                        clip-rule="evenodd" />
+                                                </svg>
+                                            </button>
+                                            <div id="anak-presensi-submenu"
+                                                class="hidden absolute left-full top-0 ml-2 -mt-9 w-48 bg-white shadow-lg rounded-md border">
+                                                <x-dropdown-link :href="route('report_keseluruhan.index')">
+                                                    {{ __('Keseluruhan') }}
+                                                </x-dropdown-link>
+                                                <x-dropdown-link :href="route('report_dosen.index')">
+                                                    {{ __('Per Mahasiswa') }}
+                                                </x-dropdown-link>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
                                 <div class="relative">
                                     <button id="nilai-button"
                                         class="flex justify-between items-center w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 dark:text-gray-400 bg-white dark:bg-gray-800 focus:outline-none transition ease-in-out duration-150">
@@ -343,6 +362,8 @@
         var presensiSubmenu = document.getElementById('presensi-submenu');
         var nilaiButton = document.getElementById('nilai-button');
         var nilaiSubmenu = document.getElementById('nilai-submenu');
+        var anakPresensiButton = document.getElementById('anak-presensi-submenu-button');
+        var anakPresensiSubmenu = document.getElementById('anak-presensi-submenu');
 
         var allSubmenus = [jadwalSubmenu, presensiSubmenu, nilaiSubmenu];
         var allButtons = [jadwalButton, presensiButton, nilaiButton];
@@ -351,6 +372,7 @@
             allSubmenus.forEach(function(submenu) {
                 submenu.classList.add('hidden');
             });
+            anakPresensiSubmenu.classList.add('hidden');
         }
 
         function toggleSubmenu(button, submenu) {
@@ -366,14 +388,22 @@
             });
         });
 
+        anakPresensiButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            anakPresensiSubmenu.classList.toggle('hidden');
+        });
+
         document.addEventListener('click', function(event) {
             if (!allButtons.some(button => button.contains(event.target)) &&
-                !allSubmenus.some(submenu => submenu.contains(event.target))) {
+                !allSubmenus.some(submenu => submenu.contains(event.target)) &&
+                !anakPresensiButton.contains(event.target) &&
+                !anakPresensiSubmenu.contains(event.target)) {
                 closeAllSubmenus();
             }
         });
 
-        allSubmenus.forEach(function(submenu) {
+        allSubmenus.concat(anakPresensiSubmenu).forEach(function(submenu) {
             submenu.addEventListener('click', function(event) {
                 event.stopPropagation();
             });

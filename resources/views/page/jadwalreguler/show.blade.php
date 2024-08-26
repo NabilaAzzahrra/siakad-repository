@@ -51,7 +51,7 @@
                                     $link = route('presensi.edit', $p->id_presensi);
                                 }
 
-                                $hide = '';
+                                // $hide = '';
                                 if ($jadwal->hari->hari == 'SENIN') {
                                     $hari = 'Monday';
                                 } elseif ($jadwal->hari->hari == 'SELASA') {
@@ -67,26 +67,51 @@
                                 } elseif ($jadwal->hari->hari == 'MINGGU') {
                                     $hari = 'Sunday';
                                 } else {
-                                    $hari = 'Unknown day'; // Default value jika tidak cocok
+                                    $hari = 'Unknown day';
                                 }
 
-                                if ($hari != date('l')) {
-                                    $hide = 'hidden';
-                                    $isTodayScheduled = true;
-                                }
+                                $pukul = $jadwal->sesi->pukul->pukul;
+
+                                // Pisahkan string menjadi dua bagian
+                                $pukulArray = explode(' - ', $pukul);
+
+                                // Ambil jam mulai dan jam berakhir
+                                $jamMulai = $pukulArray[0]; // "08.00"
+                                $jamBerakhir = $pukulArray[1]; // "09.40"
+
+                                $waktuSekarang = date('H:i');
+
                                 $hidePresensiButton = 'hidden';
 
                                 if ($p->tgl_presensi !== null) {
                                     $hidePresensiButton = '';
                                 }
 
-                                // Tampilkan tombol presensi hanya jika:
-                                // - Hari ini adalah hari pertemuan
-                                // - Pertemuan belum diisi presensi
-                                // - Ini adalah pertemuan pertama yang belum diisi presensi
-                                if ($isTodayScheduled && $p->tgl_presensi === null) {
-                                    $hidePresensiButton = '';
-                                    $isTodayScheduled = false; // Set ke false agar pertemuan selanjutnya tombolnya di hidden
+                                // Cek apakah hari ini adalah hari yang dijadwalkan
+                                if ($hari == date('l')) {
+                                    // Cek apakah ini adalah pertemuan pertama yang belum diisi presensinya
+                                    if ($p->pertemuan == 1 && $p->tgl_presensi === null) {
+                                        if ($waktuSekarang >= $jamMulai && $waktuSekarang <= $jamBerakhir) {
+                                            $hidePresensiButton = ''; // Tampilkan tombol
+                                            $isTodayScheduled = false;
+                                        } else {
+                                            $hidePresensiButton = 'hidden';
+                                        }
+                                    } else {
+                                        if ($isTodayScheduled && $p->tgl_presensi === null) {
+                                            if ($waktuSekarang >= $jamMulai && $waktuSekarang <= $jamBerakhir) {
+                                                $hidePresensiButton = '';
+                                                $isTodayScheduled = false;
+                                            } else {
+                                                $hidePresensiButton = 'hidden';
+                                            }
+                                        } else {
+                                            $hidePresensiButton = 'hidden';
+                                        }
+                                    }
+                                } else {
+                                    // Jika bukan hari yang dijadwalkan, sembunyikan semua tombol
+                                    $hidePresensiButton = 'hidden';
                                 }
 
                                 if ($p->file_materi === null) {
@@ -137,7 +162,8 @@
                                         </div>
                                         <div class="flex gap-4 mt-3">
                                             <a href="{{ $link }}"
-                                                class="border border-gray-300 px-2 py-1 text-xs rounded-full font-extrabold flex items-center justify-center {{ $hide }} {{ $hidePresensiButton }}">
+                                                class="border border-gray-300 px-2 py-1 text-xs rounded-full font-extrabold flex items-center justify-center
+                                                 {{ $hidePresensiButton }}">
                                                 <i class="fi fi-sr-member-list text-sky-700 pr-1 flex items-center"></i>
                                                 <span class="pr-1 flex items-center">Presensi
                                                 </span>

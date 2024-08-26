@@ -20,15 +20,15 @@
                                     <div class="font-bold pr-[47px]">Materi Ajar</div>
                                     <div class="font-bold pr-4">:</div>
                                     <div class="font-bold text-sky-600">
-                                        {{ $uts->jadwal->detail_kurikulum->materi_ajar->materi_ajar }}</div>
+                                        {{ $uas->jadwal->detail_kurikulum->materi_ajar->materi_ajar }}</div>
                                 </div>
                                 <div class="flex items-center mb-4">
                                     <div class="font-bold pr-2 pt-1"><i class="fi fi-sr-calendar-clock"></i></div>
                                     <div class="font-bold pr-[22px]">Semester/SKS</div>
                                     <div class="font-bold pr-4">:</div>
                                     <div class="font-bold text-sky-600">
-                                        {{ $uts->jadwal->detail_kurikulum->materi_ajar->semester->semester }} /
-                                        {{ $uts->jadwal->detail_kurikulum->materi_ajar->sks }}
+                                        {{ $uas->jadwal->detail_kurikulum->materi_ajar->semester->semester }} /
+                                        {{ $uas->jadwal->detail_kurikulum->materi_ajar->sks }}
                                     </div>
                                 </div>
                                 <div class="flex items-center mb-4">
@@ -36,21 +36,21 @@
                                     <div class="font-bold pr-16">Pengajar</div>
                                     <div class="font-bold pr-4">:</div>
                                     <div class="font-bold text-sky-600 text-wrap">
-                                        {{ $uts->jadwal->dosen->nama_dosen }}</div>
+                                        {{ $uas->jadwal->dosen->nama_dosen }}</div>
                                 </div>
                                 <div class="flex items-center mb-4">
                                     <div class="font-bold pr-2 pt-1"><i class="fi fi-sr-hourglass-start"></i></div>
-                                    <div class="font-bold pr-[36px]">Tanggal UTS</div>
+                                    <div class="font-bold pr-[36px]">Tanggal uas</div>
                                     <div class="font-bold pr-4">:</div>
                                     <div class="font-bold text-sky-600">
-                                        {{ date('d-m-Y', strtotime($uts->tgl_ujian)) }} </div>
+                                        {{ date('d-m-Y', strtotime($uas->tgl_ujian)) }} </div>
                                 </div>
                                 <div class="flex items-center mb-4">
                                     <div class="font-bold pr-2 pt-1"><i class="fi fi-sr-hourglass-start"></i></div>
                                     <div class="font-bold pr-[79px]">Waktu</div>
                                     <div class="font-bold pr-4">:</div>
                                     <div class="font-bold text-sky-600">
-                                        {{ date($uts->waktu_ujian) }} WIB</div>
+                                        {{ date($uas->waktu_ujian) }} WIB</div>
                                 </div>
                                 <div>
                                     {{-- @php
@@ -131,7 +131,7 @@
                                                     </th>
                                                     <td class="px-6 py-4 bg-gray-100 uppercase">{{ $m->mahasiswa->nama }}</td>
                                                     <td class="px-6 py-4 flex gap-3">
-                                                        <a href="{{ asset('uts/jawaban/' . $m->file) }}"
+                                                        <a href="{{ asset('uas/jawaban/' . $m->file) }}"
                                                             class="bg-sky-500 hover:bg-bg-red-300 px-3 py-2 rounded-md text-xs text-white"
                                                             download>
                                                             <i class="fi fi-sr-file-download"></i>
@@ -242,7 +242,7 @@
             const selectedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];
             selectedItems.forEach(item => {
                 const link = document.createElement('a');
-                link.href = `{{ asset('uts/jawaban/') }}/${item}`;
+                link.href = `{{ asset('uas/jawaban/') }}/${item}`;
                 link.download = item;
                 document.body.appendChild(link);
                 link.click();
@@ -265,7 +265,7 @@
             }
 
             // Make a POST request to the server to download the files as a zip
-            fetch('/download-zip-uts', {
+            fetch('/download-zip-uas', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

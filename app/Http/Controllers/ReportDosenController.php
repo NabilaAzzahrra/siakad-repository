@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dosen;
+use App\Models\Jadwalreguler;
+use App\Models\Konfigurasi;
+use App\Models\Presensi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ReportDosenController extends Controller
 {
@@ -11,7 +16,10 @@ class ReportDosenController extends Controller
      */
     public function index()
     {
-        return view('page.report.dosen');
+        $dosen = DB::table('dosen')->paginate(30);
+        return view('page.report.dosen')->with([
+            'dosen' => $dosen,
+        ]);
     }
 
     /**
@@ -35,7 +43,16 @@ class ReportDosenController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $konfigurasi = Konfigurasi::first();
+        $id_tahun_akademik = $konfigurasi->id_tahun_akademik;
+
+        $jadwal = Jadwalreguler::where('id_dosen', $id)
+            ->where('id_tahun_akademik', $id_tahun_akademik)
+            ->get();
+
+        return view('page.report.show')->with([
+            'jadwal' => $jadwal,
+        ]);
     }
 
     /**
@@ -43,7 +60,12 @@ class ReportDosenController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $jadwal = Jadwalreguler::where('id_jadwal', $id)->first();
+        $presensi = Presensi::where('id_jadwal', $id)->get();
+        return view('page.report.hasil')->with([
+            'jadwal' => $jadwal,
+            'presensi' => $presensi,
+        ]);
     }
 
     /**

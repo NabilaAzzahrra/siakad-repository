@@ -20,4 +20,10 @@ class DetailPresensi extends Model
     {
         return $this->belongsTo(Mahasiswa::class, 'nim', 'nim');
     }
+
+
+    public function presensi()
+    {
+        return $this->belongsTo(Presensi::class, 'id_presensi', 'id_presensi');
+    }
 }

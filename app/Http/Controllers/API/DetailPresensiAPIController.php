@@ -10,7 +10,7 @@ class DetailPresensiAPIController extends Controller
 {
     public function get_all()
     {
-        $detailpresensi = DetailPresensi::with(['mahasiswa','mahasiswa.kelas','mahasiswa.kelas.jurusan'])->get();
+        $detailpresensi = DetailPresensi::with(['presensi','mahasiswa','mahasiswa.kelas','mahasiswa.kelas.jurusan'])->get();
         return response()->json([
             'detailpresensi' => $detailpresensi,
         ]);

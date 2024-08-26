@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\DetailFormatifAPIController;
 use App\Http\Controllers\API\DetailPresensiAPIController;
+use App\Http\Controllers\API\DetailUasAPIController;
 use App\Http\Controllers\API\DetailUtsAPIController;
 use App\Http\Controllers\API\DosenAPIController;
 use App\Http\Controllers\API\HariAPIController;
@@ -24,6 +25,7 @@ use App\Http\Controllers\API\SemesterAPIController;
 use App\Http\Controllers\API\SesiAPIController;
 use App\Http\Controllers\API\TahunakademikAPIController;
 use App\Http\Controllers\API\TugasPertemuanAPIController;
+use App\Http\Controllers\API\UasAPIController;
 use App\Http\Controllers\API\UtsAPIController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -58,6 +60,8 @@ Route::get('/nilai', [NilaiAPIController::class, 'get_all'])->name('nilai.get');
 Route::get('/konfigurasi_ujian', [KonfigurasiUjianAPIController::class, 'get_all'])->name('konfigurasi_ujian.get');
 Route::get('/uts', [UtsAPIController::class, 'get_all'])->name('uts.get');
 Route::get('/detail_uts', [DetailUtsAPIController::class, 'get_all'])->name('detail_uts.get');
+Route::get('/uas', [UasAPIController::class, 'get_all'])->name('uas.get');
+Route::get('/detail_uas', [DetailUasAPIController::class, 'get_all'])->name('detail_uas.get');
 // Route::get('/recruitment/{id}', [PukulAPIController::class, 'get_code'])->name('recruitment.get');
 
 Route::get('/user', function (Request $request) {

@@ -34,4 +34,9 @@ class Presensi extends Model
     {
         return $this->belongsTo(Dosen::class, 'id_dosen', 'id');
     }
+
+    public function detail_presensi()
+    {
+        return $this->hasMany(DetailPresensi::class, 'id_presensi');
+    }
 }

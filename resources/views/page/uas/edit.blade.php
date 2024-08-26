@@ -13,17 +13,17 @@
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                             <div class="p-6 bg-red-500 rounded-xl">
                                 <div class="flex items-center justify-between">
-                                    <div>DATA TAMBAH SOAL UTS</div>
+                                    <div>DATA TAMBAH SOAL uas</div>
                                 </div>
                             </div>
                             <div class="flex justify-center">
                                 <div class="p-12" style="width:100%;overflow-x:auto;">
-                                    <form action="{{ route('ujian_uts.update', $uts->id) }}" method="POST"
+                                    <form action="{{ route('ujian_uas.update', $uas->id) }}" method="POST"
                                         enctype="multipart/form-data">
                                         @csrf
                                         @method('PATCH')
-                                        <input type="hidden" name="id_jadwal" value="{{ $uts->jadwal->id_jadwal }}">
-                                        <input type="hidden" name="id_uts" value="{{ $uts->id_uts }}">
+                                        <input type="hidden" name="id_jadwal" value="{{ $uas->jadwal->id_jadwal }}">
+                                        <input type="hidden" name="id_uas" value="{{ $uas->id_uas }}">
                                         <div class="flex gap-5">
                                             <div class="mb-5 w-full">
                                                 <label for="materi_ajar"
@@ -32,7 +32,7 @@
                                                 <input type="text" id="materi_ajar" name="materi_ajar"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                     placeholder="Masukan Materi Ajar disini ..."
-                                                    value="{{ $uts->jadwal->detail_kurikulum->materi_ajar->materi_ajar }}" />
+                                                    value="{{ $uas->jadwal->detail_kurikulum->materi_ajar->materi_ajar }}" />
                                             </div>
                                             <div class="mb-5 w-full">
                                                 <label for="sks"
@@ -40,7 +40,7 @@
                                                 <input type="text" id="sks" name="sks"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                     placeholder="Masukan Materi Ajar disini ..."
-                                                    value="{{ $uts->jadwal->detail_kurikulum->materi_ajar->sks }}" />
+                                                    value="{{ $uas->jadwal->detail_kurikulum->materi_ajar->sks }}" />
                                             </div>
                                             <div class="mb-5 w-full">
                                                 <label for="semester"
@@ -48,7 +48,7 @@
                                                 <input type="text" id="semester" name="semester"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                     placeholder="Masukan Materi Ajar disini ..."
-                                                    value="{{ $uts->jadwal->detail_kurikulum->materi_ajar->semester->semester }}" />
+                                                    value="{{ $uas->jadwal->detail_kurikulum->materi_ajar->semester->semester }}" />
                                             </div>
                                             <div class="mb-5 w-full">
                                                 <label for="nama_dosen"
@@ -56,7 +56,7 @@
                                                 <input type="text" id="nama_dosen" name="nama_dosen"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                     placeholder="Masukan Materi Ajar disini ..."
-                                                    value="{{ $uts->jadwal->dosen->nama_dosen }}" />
+                                                    value="{{ $uas->jadwal->dosen->nama_dosen }}" />
                                             </div>
                                         </div>
 
@@ -67,7 +67,7 @@
                                                 <input type="text" id="materi_ajar" name="materi_ajar"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                     placeholder="Masukan Materi Ajar disini ..."
-                                                    value="{{ $uts->jadwal->ruang->ruang }}" />
+                                                    value="{{ $uas->jadwal->ruang->ruang }}" />
                                             </div>
 
                                             <div class="mb-5 w-full">
@@ -76,11 +76,11 @@
                                                 <input type="date" id="tgl_ujian" name="tgl_ujian"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                     placeholder="Masukan Materi Ajar disini ..."
-                                                    value="{{ $uts->tgl_ujian }}" />
+                                                    value="{{ $uas->tgl_ujian }}" />
                                             </div>
 
                                             @php
-                                                $tgl_ujian = $uts->tgl_ujian;
+                                                $tgl_ujian = $uas->tgl_ujian;
                                                 $day = date('l', strtotime($tgl_ujian));
 
                                                 switch ($day) {
@@ -126,7 +126,7 @@
                                                 <input type="text" id="waktu_ujian" name="waktu_ujian"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                     placeholder="Masukan Materi Ajar disini ..."
-                                                    value="{{ $uts->waktu_ujian }}" />
+                                                    value="{{ $uas->waktu_ujian }}" />
                                             </div>
                                         </div>
                                         <div class="flex gap-5">
@@ -137,12 +137,12 @@
                                                 <input type="text" id="file_sebelumnya" name="file_sebelumnya"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                     placeholder="Masukan Materi Ajar disini ..."
-                                                    value="{{ $uts->file }}" readonly />
+                                                    value="{{ $uas->file }}" readonly />
                                             </div>
                                             <div class="mb-5 w-full">
                                                 <label for="file"
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Soal
-                                                    UTS</label>
+                                                    uas</label>
                                                 <input type="file" id="file" name="file"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                     placeholder="Masukan Materi Ajar disini ..." />

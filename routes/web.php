@@ -20,6 +20,7 @@ use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PukulController;
 use App\Http\Controllers\ReportDosenController;
+use App\Http\Controllers\ReportMahasiswaKeseluruhanController;
 use App\Http\Controllers\RuangController;
 use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\SesiController;
@@ -64,6 +65,7 @@ Route::resource('report_dosen', ReportDosenController::class)->middleware(['auth
 Route::resource('konfigurasi_ujian', KonfigurasiUjianController::class)->middleware(['auth']);
 Route::resource('uas', UasController::class)->middleware(['auth']);
 Route::resource('ujian_uas', UjianUASController::class)->middleware(['auth']);
+Route::resource('report_keseluruhan', ReportMahasiswaKeseluruhanController::class)->middleware(['auth']);
 
 Route::post('/download-zip', [DetailFormatifController::class, 'downloadZip']);
 Route::post('/kurikulum/detail', [KurikulumController::class, 'detail'])->name('kurikulum.detail')->middleware(['auth']);
@@ -83,9 +85,6 @@ Route::post('/jawaban_uts_add', [UtsController::class, 'jawaban_uts_add'])->name
 Route::post('/download-zip-uts', [UtsController::class, 'downloadZip']);
 Route::post('/jawaban_uas_add', [UasController::class, 'jawaban_uas_add'])->name('uas.jawaban_uas_add');
 Route::post('/download-zip-uas', [UasController::class, 'downloadZip']);
-
-
-
 
 Route::get('/dashboard', function () {
     return view('dashboard');
