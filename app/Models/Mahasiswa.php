@@ -31,4 +31,19 @@ class Mahasiswa extends Model
     {
         return $this->hasMany(DetailFormatif::class, 'nim');
     }
+
+    public function detail_tugas()
+    {
+        return $this->hasMany(DetailTugas::class, 'nim');
+    }
+
+    public function nilai()
+    {
+        return $this->hasMany(Nilai::class, 'nim');
+    }
+
+    public function detail_uts()
+    {
+        return $this->hasMany(DetailUts::class, 'id_uts');
+    }
 }

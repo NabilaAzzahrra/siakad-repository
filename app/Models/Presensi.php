@@ -24,4 +24,14 @@ class Presensi extends Model
     {
         return $this->belongsTo(Jadwalreguler::class, 'id_jadwal', 'id_jadwal');
     }
+
+    public function tugas()
+    {
+        return $this->hasMany(Tugas::class, 'id_presensi');
+    }
+
+    public function dosen()
+    {
+        return $this->belongsTo(Dosen::class, 'id_dosen', 'id');
+    }
 }

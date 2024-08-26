@@ -24,4 +24,9 @@ class Keterangan extends Model
     {
         return $this->hasMany(Konfigurasi::class, 'id_keterangan');
     }
+
+    public function konfigurasi_ujian()
+    {
+        return $this->hasMany(KonfigurasiUjian::class, 'id_keterangan');
+    }
 }

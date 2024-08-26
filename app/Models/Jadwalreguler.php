@@ -69,4 +69,14 @@ class Jadwalreguler extends Model
     {
         return $this->belongsTo(Tahunakademik::class, 'id_tahun_akademik', 'id');
     }
+
+    public function nilai()
+    {
+        return $this->hasMany(Nilai::class, 'id_jadwal');
+    }
+
+    public function uts()
+    {
+        return $this->hasMany(Uts::class, 'id_jadwal');
+    }
 }

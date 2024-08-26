@@ -17,4 +17,9 @@ class Dosen extends Model
     ];
 
     protected $table = 'dosen';
+
+    public function presensi()
+    {
+        return $this->hasMany(Presensi::class, 'di_dosen');
+    }
 }

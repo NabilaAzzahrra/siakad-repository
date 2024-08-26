@@ -114,8 +114,10 @@ class JadwalregulerController extends Controller
     public function show(string $id)
     {
         $presensi = Presensi::where('id_jadwal', $id)->get();
+        $jadwal = Jadwalreguler::where('id_jadwal', $id)->first();
         return view('page.jadwalreguler.show')->with([
-            'presensi' => $presensi
+            'presensi' => $presensi,
+            'jadwal' => $jadwal
         ]);
     }
 

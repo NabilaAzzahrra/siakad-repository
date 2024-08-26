@@ -29,6 +29,7 @@
                             $color = '';
                             $tgl_presensi = '';
                             $materi = '';
+                            $isTodayScheduled = true;
                         @endphp
                         @foreach ($presensi as $p)
                             @php
@@ -40,21 +41,64 @@
                                     $border = 'border-[#00AEB6]';
                                 }
 
-                                if ($p->tgl_pertemuan === null) {
+                                if ($p->tgl_presensi === null) {
                                     $tgl_presensi =
                                         '<i class="fi fi-sr-cross-circle flex items-center text-red-500"></i>';
+                                    $link = route('presensi.show', $p->id_presensi);
                                 } else {
                                     $tgl_presensi =
                                         '<i class="fi fi-sr-check-circle flex items-center text-green-500"></i>';
+                                    $link = route('presensi.edit', $p->id_presensi);
+                                }
+
+                                $hide = '';
+                                if ($jadwal->hari->hari == 'SENIN') {
+                                    $hari = 'Monday';
+                                } elseif ($jadwal->hari->hari == 'SELASA') {
+                                    $hari = 'Tuesday';
+                                } elseif ($jadwal->hari->hari == 'RABU') {
+                                    $hari = 'Wednesday';
+                                } elseif ($jadwal->hari->hari == 'KAMIS') {
+                                    $hari = 'Thursday';
+                                } elseif ($jadwal->hari->hari == 'JUMAT') {
+                                    $hari = 'Friday';
+                                } elseif ($jadwal->hari->hari == 'SABTU') {
+                                    $hari = 'Saturday';
+                                } elseif ($jadwal->hari->hari == 'MINGGU') {
+                                    $hari = 'Sunday';
+                                } else {
+                                    $hari = 'Unknown day'; // Default value jika tidak cocok
+                                }
+
+                                if ($hari != date('l')) {
+                                    $hide = 'hidden';
+                                    $isTodayScheduled = true;
+                                }
+                                $hidePresensiButton = 'hidden';
+
+                                if ($p->tgl_presensi !== null) {
+                                    $hidePresensiButton = '';
+                                }
+
+                                // Tampilkan tombol presensi hanya jika:
+                                // - Hari ini adalah hari pertemuan
+                                // - Pertemuan belum diisi presensi
+                                // - Ini adalah pertemuan pertama yang belum diisi presensi
+                                if ($isTodayScheduled && $p->tgl_presensi === null) {
+                                    $hidePresensiButton = '';
+                                    $isTodayScheduled = false; // Set ke false agar pertemuan selanjutnya tombolnya di hidden
                                 }
 
                                 if ($p->file_materi === null) {
                                     $file_materi =
                                         '<i class="fi fi-sr-cross-circle flex items-center text-red-500"></i>';
+                                    $link_materi = '#';
                                 } else {
                                     $file_materi =
                                         '<i class="fi fi-sr-check-circle flex items-center text-green-500"></i>';
+                                    $link_materi = route('presensi.materi_update', $p->id_presensi);
                                 }
+
                             @endphp
                             <div
                                 class="{{ $color }} border border-4 {{ $border }} px-2 rounded-3xl h-64 relative">
@@ -92,24 +136,24 @@
                                             </div>
                                         </div>
                                         <div class="flex gap-4 mt-3">
-                                            <a href="{{route('presensi.show', $p->id_presensi)}}"
-                                                class="border border-gray-300 px-2 py-1 text-xs rounded-full font-extrabold flex items-center justify-center">
+                                            <a href="{{ $link }}"
+                                                class="border border-gray-300 px-2 py-1 text-xs rounded-full font-extrabold flex items-center justify-center {{ $hide }} {{ $hidePresensiButton }}">
                                                 <i class="fi fi-sr-member-list text-sky-700 pr-1 flex items-center"></i>
-                                                <span class="pr-1 flex items-center">Presensi</span>
+                                                <span class="pr-1 flex items-center">Presensi
+                                                </span>
                                                 {!! $tgl_presensi !!}
                                             </a>
-                                            <a href="#"
+                                            <a href="{{ $link_materi }}"
                                                 class="border border-gray-300 px-2 py-1 text-xs rounded-full font-extrabold flex items-center justify-center">
                                                 <i
                                                     class="fi fi-ss-book-open-cover text-green-500 pr-1 flex items-center"></i>
                                                 <span class="pr-1 flex items-center">File Materi</span>
                                                 {!! $file_materi !!}
                                             </a>
-                                            <a href="#"
+                                            <a href="{{ route('tugas.show', $p->id_presensi) }}"
                                                 class="border border-gray-300 px-2 py-1 text-xs rounded-full font-extrabold flex items-center justify-center ">
                                                 <i class="fi fi-sr-web-test text-amber-500 pr-1 flex items-center"></i>
                                                 <span class="pr-1 flex items-center">Tugas</span>
-                                                {!! $tgl_presensi !!}
                                             </a>
                                         </div>
                                     </div>
@@ -121,4 +165,93 @@
             </div>
         </div>
     </div>
+    <div class="fixed inset-0 flex items-center justify-center z-50 hidden" id="sourceModal">
+        <div class="fixed inset-0 bg-black opacity-50"></div>
+        <div class="fixed inset-0 flex items-center justify-center">
+            <div class="w-full md:w-1/2 relative bg-white rounded-lg shadow mx-5">
+                <div class="flex items-start justify-between p-4 border-b rounded-t">
+                    <h3 class="text-xl font-semibold text-gray-900" id="title_source">
+                        Tambah Sumber Database
+                    </h3>
+                    <button type="button" onclick="sourceModalClose(this)" data-modal-target="sourceModal"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center"
+                        data-modal-hide="defaultModal">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <form method="POST" id="formSourceModal">
+                    @csrf
+                    <div class="flex flex-col  p-4 space-y-6">
+                        <input type="text" id="id_presensis" name="id_presensi" hidden>
+                        <input type="text" id="materis" name="materis" hidden>
+                        <div class="">
+                            <label for="text" class="block mb-2 text-sm font-medium text-gray-900">Materi
+                                Sebelumnya</label>
+                            <input type="text" id="file_materis" name="file_materi"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Masukan jurusan disini..." readonly>
+                        </div>
+                        <div class="mb-5">
+                            <label for="materi_baru"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Materi Baru</label>
+                            <input type="file" id="materi_baru" name="materi_baru"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Masukan Materi disini ..." required />
+                        </div>
+                    </div>
+                    <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
+                        <button type="submit" id="formSourceButton"
+                            class="bg-green-400 m-2 w-40 h-10 rounded-xl hover:bg-green-500">Simpan</button>
+                        <button type="button" data-modal-target="sourceModal" onclick="sourceModalClose(this)"
+                            class="bg-red-500 m-2 w-40 h-10 rounded-xl text-white hover:shadow-lg hover:bg-red-600">Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        const editSourceModal = (button) => {
+            const formModal = document.getElementById('formSourceModal');
+            const modalTarget = button.dataset.modalTarget;
+            const id_presensi = button.dataset.id_presensi;
+            const file_materi = button.dataset.file_materi;
+            const materi = button.dataset.materi;
+            let url = "{{ route('presensi.materi_update', ':id') }}".replace(':id', id_presensi);
+            let status = document.getElementById(modalTarget);
+
+            // Set modal title and fields
+            document.getElementById('title_source').innerText = `Update Materi ${id_presensi}`;
+            document.getElementById('id_presensis').value = id_presensi;
+            document.getElementById('file_materis').value = file_materi;
+            document.getElementById('materis').value = materi;
+            document.getElementById('formSourceButton').innerText = 'Simpan';
+            formModal.setAttribute('action', url);
+
+            // Add CSRF token if not already present
+            if (!document.querySelector('#formSourceModal input[name="_token"]')) {
+                let csrfToken = document.createElement('input');
+                csrfToken.setAttribute('type', 'hidden');
+                csrfToken.setAttribute('name', '_token');
+                csrfToken.setAttribute('value', '{{ csrf_token() }}');
+                formModal.appendChild(csrfToken);
+            }
+
+            // Add method input for PATCH if not already present
+            if (!document.querySelector('#formSourceModal input[name="_method"]')) {
+                let methodInput = document.createElement('input');
+                methodInput.setAttribute('type', 'hidden');
+                methodInput.setAttribute('name', '_method');
+                methodInput.setAttribute('value', 'PATCH');
+                formModal.appendChild(methodInput);
+            }
+
+            status.classList.toggle('hidden');
+        };
+
+        const sourceModalClose = (button) => {
+            const modalTarget = button.dataset.modalTarget;
+            let status = document.getElementById(modalTarget);
+            status.classList.toggle('hidden');
+        }
+    </script>
 </x-app-layout>

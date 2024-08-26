@@ -15,4 +15,9 @@ class DetailPresensi extends Model
     ];
 
     protected $table = 'detail_presensi';
+
+    public function mahasiswa()
+    {
+        return $this->belongsTo(Mahasiswa::class, 'nim', 'nim');
+    }
 }
