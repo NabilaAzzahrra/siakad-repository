@@ -40,6 +40,7 @@ class DosenController extends Controller
             'name' => $request->input('nama_dosen'),
             'email' => $request->input('email_dosen'),
             'password' => $request->input('password'),
+            'role' => "D"
         ];
 
         Dosen::create($data);

@@ -11,6 +11,10 @@ class IntegrationPMBOnline extends Controller
 {
     public function integrate(Request $request)
     {
+
+        // return response($request->all());
+
+
         $yearNow = date('y');
 
         $lastNIM = Mahasiswa::where('nim', 'like', $yearNow . '%')
@@ -28,29 +32,47 @@ class IntegrationPMBOnline extends Controller
             $newNumber = '0001';
         }
 
-        $new_nim = $yearNow ."0252001". $newNumber;
+        $new_nim = $yearNow . "0252001" . $newNumber;
 
         $data = [
             'identity_user' => $request->identity_user,
             'nim' => $new_nim,
             'nama' => $request->name,
+            'tempat_lahir' => $request->place_of_birth,
+            'tgl_lahir' => $request->date_of_birth,
+            'tahun_angkatan' => $request->pmb,
             'id_kelas' => null,
             'tingkat' => null,
             'no_hp' => $request->phone,
-            'status' => false
+            'status' => false,
+            'keaktifan' => "aktif",
         ];
+
+        // return response()->json($data);
 
         $datas = [
             'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password
+            'email' => $new_nim,
+            'password' => $new_nim,
+            'role' => 'M'
         ];
 
+        $datas_ortu = [
+            'name' => "Orang Tua" . " " . $request->name,
+            'email' => "ortu" . $new_nim,
+            'password' => $request->date_of_birth,
+            'role' => 'O'
+        ];
+
+        // return response()->json($datas_ortu);
+
         User::create($datas);
+        User::create($datas_ortu);
         Mahasiswa::create($data);
         return response()->json([
             'mahasiswa' => $data,
-            'user' => $datas
+            'user' => $datas,
+            // 'user' => $datas
         ]);
     }
 

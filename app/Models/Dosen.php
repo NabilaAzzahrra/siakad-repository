@@ -22,4 +22,9 @@ class Dosen extends Model
     {
         return $this->hasMany(Presensi::class, 'di_dosen');
     }
+
+    public function kelas()
+    {
+        return $this->hasMany(Dosen::class, 'di_dosen');
+    }
 }

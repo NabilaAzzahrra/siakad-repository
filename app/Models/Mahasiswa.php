@@ -17,7 +17,10 @@ class Mahasiswa extends Model
         'tingkat',
         'no_hp',
         'status',
-        'keaktifan'
+        'keaktifan',
+        'tempat_lahir',
+        'tgl_lahir',
+        'tahun_angkatan',
     ];
 
     protected $table = 'mahasiswa';
@@ -46,4 +49,5 @@ class Mahasiswa extends Model
     {
         return $this->hasMany(DetailUts::class, 'id_uts');
     }
+
 }

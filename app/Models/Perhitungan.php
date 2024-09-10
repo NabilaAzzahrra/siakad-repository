@@ -24,4 +24,9 @@ class Perhitungan extends Model
     {
         return $this->hasMany(Konfigurasi::class, 'id_perhitungan');
     }
+
+    public function jadwal()
+    {
+        return $this->hasMany(Jadwalreguler::class, 'id_perhitungan');
+    }
 }

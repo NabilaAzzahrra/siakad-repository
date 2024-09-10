@@ -153,6 +153,15 @@
                                                     $no = 1;
                                                 @endphp
                                                 @foreach ($mahasiswa as $m)
+                                                    @php
+                                                        $kehadiran = null;
+                                                        $jumlah_hadir = $m->jumlah_hadir;
+                                                        if ($jumlah_hadir < 14) {
+                                                            $kehadiran = $jumlah_hadir * 7;
+                                                        } else {
+                                                            $kehadiran = 100;
+                                                        }
+                                                    @endphp
                                                     <tr class="bg-white border dark:bg-gray-800 dark:border-gray-700">
                                                         <td class="px-6 py-4 text-center bg-gray-100">
                                                             {{ $no++ }}
@@ -171,28 +180,24 @@
                                                                 value="{{ $m->nama }}" readonly>
                                                         </td>
                                                         <td class="px-6 py-4">
-                                                            <input type="text" id="presensi"
-                                                                name="presensi[]"
-                                                                class="w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0 uppercase">
+                                                            <input type="text" id="presensi" name="presensi[]"
+                                                                value="{{ $kehadiran }}"
+                                                                class="w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0 uppercase" readonly>
                                                         </td>
                                                         <td class="px-6 py-4 bg-gray-100">
-                                                            <input type="text" id="tugas"
-                                                                name="tugas[]"
+                                                            <input type="text" id="tugas" name="tugas[]"
                                                                 class="w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0 uppercase">
                                                         </td>
                                                         <td class="px-6 py-4">
-                                                            <input type="text" id="formatif"
-                                                                name="formatif[]"
+                                                            <input type="text" id="formatif" name="formatif[]"
                                                                 class="w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0 uppercase">
                                                         </td>
                                                         <td class="px-6 py-4 bg-gray-100">
-                                                            <input type="text" id="uts"
-                                                                name="uts[]"
+                                                            <input type="text" id="uts" name="uts[]"
                                                                 class="w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0 uppercase">
                                                         </td>
                                                         <td class="px-6 py-4">
-                                                            <input type="text" id="uas"
-                                                                name="uas[]"
+                                                            <input type="text" id="uas" name="uas[]"
                                                                 class="w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0 uppercase">
                                                         </td>
                                                     </tr>

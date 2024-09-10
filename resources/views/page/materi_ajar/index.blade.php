@@ -44,6 +44,18 @@
                                         </select>
                                     </div>
                                     <div class="mb-5">
+                                        <label for="id_jurusan"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jurusan
+                                            <span class="text-red-500">*</span></label>
+                                        <select class="js-example-placeholder-single js-states form-control w-full m-6"
+                                            name="id_jurusan" data-placeholder="Pilih Jurusan">
+                                            <option value="">Pilih...</option>
+                                            @foreach ($jurusan as $j)
+                                                <option value="{{ $j->id }}">{{ $j->jurusan }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="mb-5">
                                         <label for="ebook"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">E-Book</label>
                                         <input type="file" id="ebook" name="ebook"
@@ -72,6 +84,7 @@
                                                 <th>materi_ajar</th>
                                                 <th>SKS</th>
                                                 <th>Semester</th>
+                                                <th>Jurusan</th>
                                                 <th>E-Book</th>
                                                 <th>Action</th>
                                             </tr>
@@ -125,6 +138,18 @@
                                 <option value="">Pilih...</option>
                                 @foreach ($semester as $p)
                                     <option value="{{ $p->id }}">{{ $p->semester }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-5">
+                            <label for="id_jurusan"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jurusan
+                                <span class="text-red-500">*</span></label>
+                            <select class="js-example-placeholder-single js-states form-control w-[930px] m-6"
+                                id="id_jurusan" name="id_jurusanl" data-placeholder="Pilih Jurusan">
+                                <option value="">Pilih...</option>
+                                @foreach ($jurusan as $j)
+                                    <option value="{{ $j->id }}">{{ $j->jurusan }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -184,6 +209,11 @@
                         return data.semester;
                     }
                 }, {
+                    data: 'jurusan',
+                    render: (data, type, row) => {
+                        return data.jurusan;
+                    }
+                }, {
                     data: 'id',
                     render: (data, type, row) => {
                         var UrlEbook = "{{ route('materi_ajar.show', ':id') }}".replace(
@@ -201,7 +231,7 @@
                     render: (data) => {
                         let editUrl =
                             `<button type="button" data-id="${data.id}"
-                                                        data-modal-target="sourceModal" data-ebooks_lama="${data.ebook}" data-materi_ajar="${data.materi_ajar}"  data-sks="${data.sks}" data-id_semester="${data.id_semester}"
+                                                        data-modal-target="sourceModal" data-ebooks_lama="${data.ebook}" data-materi_ajar="${data.materi_ajar}"  data-sks="${data.sks}" data-id_semester="${data.id_semester}" data-id_jurusan="${data.id_jurusan}"
                                                         onclick="editSourceModal(this)"
                                                         class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
                                                        <i class="fas fa-edit"></i>
@@ -222,6 +252,7 @@
             const id_semester = button.dataset.id_semester;
             const sks = button.dataset.sks;
             const ebook = button.dataset.ebooks_lama;
+            const id_jurusan = button.dataset.id_jurusan;
             let url = "{{ route('materi_ajar.update', ':id') }}".replace(':id', id);
             console.log(url);
             let status = document.getElementById(modalTarget);
@@ -229,9 +260,11 @@
             document.getElementById('materi_ajars').value = materi_ajar;
             document.getElementById('skss').value = sks;
             document.getElementById('ebooks_lama').value = ebook;
-            document.querySelector('[name="id_semesterl"]').value = id_semester;
             let event = new Event('change');
+            document.querySelector('[name="id_semesterl"]').value = id_semester;
             document.querySelector('[name="id_semesterl"]').dispatchEvent(event);
+            document.querySelector('[name="id_jurusanl"]').value = id_jurusan;
+            document.querySelector('[name="id_jurusanl"]').dispatchEvent(event);
             document.getElementById('formSourceButton').innerText = 'Simpan';
             document.getElementById('formSourceModal').setAttribute('action', url);
             let csrfToken = document.createElement('input');

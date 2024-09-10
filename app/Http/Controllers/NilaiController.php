@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DetailPresensi;
 use App\Models\Jadwalreguler;
 use App\Models\Mahasiswa;
 use App\Models\Nilai;
@@ -89,14 +90,23 @@ class NilaiController extends Controller
     public function show(string $id)
     {
         $presensi = Presensi::with(['jadwal', 'jadwal.kelas'])->where('id_jadwal', $id)->first();
+        $id_presensi = $presensi->id_presensi;
         $mahasiswa = Mahasiswa::where('id_kelas', $presensi->jadwal->id_kelas)
             ->orderBy('nama', 'asc')
             ->get();
         $jadwal = Jadwalreguler::where('id_jadwal', $id)->first();
+        // $detail = DetailPresensi::with(['presensi'])->where('id_presensi', $id_presensi)->get();
+        foreach ($mahasiswa as $m) {
+            $m->jumlah_hadir = DetailPresensi::where('id_presensi', $id_presensi)
+                ->where('nim', $m->nim)
+                ->where('keterangan', 'HADIR')
+                ->count();
+        }
         return view('page.nilai.show')->with([
             'jadwal' => $jadwal,
             'presensi' => $presensi,
-            'mahasiswa' => $mahasiswa
+            'mahasiswa' => $mahasiswa,
+            // 'detail' => $detail
         ]);
     }
 

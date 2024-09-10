@@ -10,7 +10,7 @@ class KelasAPIController extends Controller
 {
     public function get_all()
     {
-        $kelas = Kelas::with(['jurusan'])->get();
+        $kelas = Kelas::with(['jurusan','dosen'])->get();
         return response()->json([
             'kelas'=> $kelas,
         ]);

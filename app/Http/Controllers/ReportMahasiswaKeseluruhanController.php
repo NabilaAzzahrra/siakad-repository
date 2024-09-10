@@ -48,7 +48,43 @@ class ReportMahasiswaKeseluruhanController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $jadwal = Jadwalreguler::where('id_jadwal', $id)->first();
+        $kelas = $jadwal->id_kelas;
+        $presensi = Presensi::where('id_jadwal', $id)->get();
+        $mahasiswa = Mahasiswa::where('id_kelas', $kelas)->orderBy('nama', 'ASC')->get();
+
+        // Array untuk menyimpan data detail presensi untuk setiap mahasiswa
+        $detailPresensiData = [];
+
+        foreach ($mahasiswa as $m) {
+            if (empty($m->nim)) {
+                continue; // Skip loop jika NIM kosong
+            }
+
+            $presensiData = [];
+
+            foreach ($presensi as $p) {
+                if (empty($p->id_presensi)) {
+                    continue; // Skip loop jika id_presensi kosong
+                }
+
+                $detailPresensi = DetailPresensi::where('id_presensi', $p->id_presensi)
+                    ->where('nim', $m->nim) // Menggunakan 'nim' untuk query
+                    ->first();
+
+                // Tambahkan 'keterangan' jika ada, atau tanda '-' jika tidak ada
+                $presensiData[] = $detailPresensi ? $detailPresensi->keterangan : '-';
+            }
+
+            $detailPresensiData[$m->nim] = $presensiData;
+        }
+
+        return view('page.report_mahasiswa.print')->with([
+            'jadwal' => $jadwal,
+            'presensi' => $presensi,
+            'mahasiswa' => $mahasiswa,
+            'detailPresensiData' => $detailPresensiData
+        ]);
     }
 
     /**
@@ -69,45 +105,45 @@ class ReportMahasiswaKeseluruhanController extends Controller
     // }
 
     public function edit(string $id)
-{
-    $jadwal = Jadwalreguler::where('id_jadwal', $id)->first();
-    $kelas = $jadwal->id_kelas;
-    $presensi = Presensi::where('id_jadwal', $id)->get();
-    $mahasiswa = Mahasiswa::where('id_kelas', $kelas)->orderBy('nama', 'ASC')->get();
+    {
+        $jadwal = Jadwalreguler::where('id_jadwal', $id)->first();
+        $kelas = $jadwal->id_kelas;
+        $presensi = Presensi::where('id_jadwal', $id)->get();
+        $mahasiswa = Mahasiswa::where('id_kelas', $kelas)->orderBy('nama', 'ASC')->get();
 
-    // Array untuk menyimpan data detail presensi untuk setiap mahasiswa
-    $detailPresensiData = [];
+        // Array untuk menyimpan data detail presensi untuk setiap mahasiswa
+        $detailPresensiData = [];
 
-    foreach ($mahasiswa as $m) {
-        if (empty($m->nim)) {
-            continue; // Skip loop jika NIM kosong
-        }
-
-        $presensiData = [];
-
-        foreach ($presensi as $p) {
-            if (empty($p->id_presensi)) {
-                continue; // Skip loop jika id_presensi kosong
+        foreach ($mahasiswa as $m) {
+            if (empty($m->nim)) {
+                continue; // Skip loop jika NIM kosong
             }
 
-            $detailPresensi = DetailPresensi::where('id_presensi', $p->id_presensi)
-                ->where('nim', $m->nim) // Menggunakan 'nim' untuk query
-                ->first();
+            $presensiData = [];
 
-            // Tambahkan 'keterangan' jika ada, atau tanda '-' jika tidak ada
-            $presensiData[] = $detailPresensi ? $detailPresensi->keterangan : '-';
+            foreach ($presensi as $p) {
+                if (empty($p->id_presensi)) {
+                    continue; // Skip loop jika id_presensi kosong
+                }
+
+                $detailPresensi = DetailPresensi::where('id_presensi', $p->id_presensi)
+                    ->where('nim', $m->nim) // Menggunakan 'nim' untuk query
+                    ->first();
+
+                // Tambahkan 'keterangan' jika ada, atau tanda '-' jika tidak ada
+                $presensiData[] = $detailPresensi ? $detailPresensi->keterangan : '-';
+            }
+
+            $detailPresensiData[$m->nim] = $presensiData;
         }
 
-        $detailPresensiData[$m->nim] = $presensiData;
+        return view('page.report_mahasiswa.hasil')->with([
+            'jadwal' => $jadwal,
+            'presensi' => $presensi,
+            'mahasiswa' => $mahasiswa,
+            'detailPresensiData' => $detailPresensiData
+        ]);
     }
-
-    return view('page.report_mahasiswa.hasil')->with([
-        'jadwal' => $jadwal,
-        'presensi' => $presensi,
-        'mahasiswa' => $mahasiswa,
-        'detailPresensiData' => $detailPresensiData
-    ]);
-}
 
 
 

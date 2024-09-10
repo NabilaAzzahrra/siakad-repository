@@ -36,6 +36,19 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    <div class="mb-5">
+                                        <label for="jurusan"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pembimbing
+                                            Akademik
+                                            <span class="text-red-500">*</span></label>
+                                        <select class="js-example-placeholder-single js-states form-control w-full m-6"
+                                            name="id_dosen" data-placeholder="Pilih Pembimbing Akademik">
+                                            <option value="">Pilih...</option>
+                                            @foreach ($dosen as $d)
+                                                <option value="{{ $d->id }}">{{ $d->nama_dosen }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     <button type="submit"
                                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Simpan</button>
                                 </div>
@@ -57,6 +70,7 @@
                                                 <th class="w-7">No.</th>
                                                 <th>kelas</th>
                                                 <th>jurusan</th>
+                                                <th>Pembimbing Akademik</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -86,7 +100,7 @@
                 <form method="POST" id="formSourceModal">
                     @csrf
                     <div class="flex flex-col  p-4 space-y-6">
-                        <div class="mb-5">
+                        <div class="">
                             <label for="text" class="block mb-2 text-sm font-medium text-gray-900">kelas</label>
                             <input type="text" id="kelass" name="kelas"
                                 class="px-3 py-2 border shadow rounded w-full block text-sm placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 invalid:text-pink-700 invalid:focus:ring-pink-700 invalid:focus:border-pink-700 peer hover:shadow-lg"
@@ -101,6 +115,18 @@
                                 <option value="">Pilih...</option>
                                 @foreach ($jurusan as $p)
                                     <option value="{{ $p->id }}">{{ $p->jurusan }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-5">
+                            <label for="id_dosen"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pembimbing Akademik
+                                <span class="text-red-500">*</span></label>
+                            <select class="js-example-placeholder-single js-states form-control w-[930px] m-6"
+                                id="id_dosen" name="id_dosenn" data-placeholder="Pilih Pembimbing Akademik">
+                                <option value="">Pilih...</option>
+                                @foreach ($dosen as $d)
+                                    <option value="{{ $d->id }}">{{ $d->nama_dosen }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -143,6 +169,11 @@
                         return data.jurusan;
                     }
                 }, {
+                    data: 'dosen',
+                    render: (data, type, row) => {
+                        return data.nama_dosen;
+                    }
+                }, {
                     data: {
                         id: 'id',
                         id_jurusan: 'id_jurusan',
@@ -151,7 +182,7 @@
                     render: (data) => {
                         let editUrl =
                             `<button type="button" data-id="${data.id}"
-                                                        data-modal-target="sourceModal" data-kelas="${data.kelas}" data-id_jurusan="${data.id_jurusan}"
+                                                        data-modal-target="sourceModal" data-kelas="${data.kelas}" data-id_jurusan="${data.id_jurusan}"  data-id_dosen="${data.id_dosen}"
                                                         onclick="editSourceModal(this)"
                                                         class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
                                                        <i class="fas fa-edit"></i>
@@ -170,14 +201,18 @@
             const id = button.dataset.id;
             const kelas = button.dataset.kelas;
             const id_jurusan = button.dataset.id_jurusan;
+            const id_dosen = button.dataset.id_dosen;
             let url = "{{ route('kelas.update', ':id') }}".replace(':id', id);
             console.log(url);
             let status = document.getElementById(modalTarget);
             document.getElementById('title_source').innerText = `Update kelas ${kelas}`;
             document.getElementById('kelass').value = kelas;
-            document.querySelector('[name="id_jurusann"]').value = id_jurusan;
             let event = new Event('change');
+            document.querySelector('[name="id_jurusann"]').value = id_jurusan;
+            document.querySelector('[name="id_dosenn"]').value = id_dosen;
             document.querySelector('[name="id_jurusann"]').dispatchEvent(event);
+            document.querySelector('[name="id_dosenn"]').dispatchEvent(event);
+            // document.querySelector('[name="id_dosenn"]').dispatchEvent(event);
             document.getElementById('formSourceButton').innerText = 'Simpan';
             document.getElementById('formSourceModal').setAttribute('action', url);
             let csrfToken = document.createElement('input');

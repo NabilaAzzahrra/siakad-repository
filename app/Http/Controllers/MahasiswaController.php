@@ -21,6 +21,7 @@ class MahasiswaController extends Controller
             ->select('mahasiswa.*', 'kelas.kelas', 'jurusan.jurusan')
             ->whereNotNull('mahasiswa.id_kelas')
             ->whereNotNull('mahasiswa.tingkat')
+            ->orderBy('nama', 'ASC')
             ->paginate(30);
 
 
@@ -62,6 +63,7 @@ class MahasiswaController extends Controller
             ->join('kelas', 'mahasiswa.id_kelas', '=', 'kelas.id')
             ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id')
             ->whereIn('mahasiswa.nim', $user_ids)
+            ->orderBy('nama', 'ASC')
             ->select('mahasiswa.*', 'kelas.kelas', 'jurusan.jurusan')
             ->paginate(15);
 

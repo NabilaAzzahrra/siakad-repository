@@ -16,10 +16,13 @@ return new class extends Migration
             $table->string('identity_user', 50)->unique();
             $table->string('nim')->nullable()->unique();
             $table->string('nama');
+            $table->string('tempat_lahir');
+            $table->date('tgl_lahir');
             $table->integer('id_kelas')->nullable();
             $table->integer('tingkat')->nullable();
             $table->string('no_hp')->unique();
             $table->boolean('status')->default(false);
+            $table->integer('tahun_angkatan');
             $table->string('keaktifan')->default('aktif');
             $table->timestamps();
         });

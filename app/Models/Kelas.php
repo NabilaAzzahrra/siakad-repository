@@ -11,7 +11,8 @@ class Kelas extends Model
 
     protected $fillable = [
         'kelas',
-        'id_jurusan'
+        'id_jurusan',
+        'id_dosen'
     ];
 
     protected $table = 'kelas';
@@ -19,6 +20,11 @@ class Kelas extends Model
     public function jurusan()
     {
         return $this->belongsTo(Jurusan::class, 'id_jurusan', 'id');
+    }
+
+    public function dosen()
+    {
+        return $this->belongsTo(Dosen::class, 'id_dosen', 'id');
     }
 
     public function jadwal_reguler()

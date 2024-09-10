@@ -13,7 +13,8 @@ class Materiajar extends Model
         'materi_ajar',
         'sks',
         'id_semester',
-        'ebook'
+        'ebook',
+        'id_jurusan'
     ];
 
     protected $table = 'materi_ajar';
@@ -26,5 +27,10 @@ class Materiajar extends Model
     public function detail()
     {
         return $this->hasMany(Detailkurikulum::class, 'id_materi_ajar');
+    }
+
+    public function jurusan()
+    {
+        return $this->belongsTo(Jurusan::class, 'id_jurusan', 'id');
     }
 }

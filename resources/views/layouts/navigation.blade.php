@@ -17,117 +17,120 @@
                     </x-nav-link>
                 </div>
 
-                <div class="hidden sm:flex sm:items-center sm:ms-6">
-                    <li class="relative list-none">
-                        <x-dropdown>
-                            <x-slot name="trigger">
-                                <button
-                                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                                    <div>Master</div>
+                @can('role-A')
+                    <div class="hidden sm:flex sm:items-center sm:ms-6">
+                        <li class="relative list-none">
+                            <x-dropdown>
+                                <x-slot name="trigger">
+                                    <button
+                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                                        <div>Master</div>
 
-                                    <div class="ms-1">
-                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd"
-                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                    </div>
-                                </button>
-                            </x-slot>
-
-                            <x-slot name="content">
-                                <x-dropdown-link :href="route('perhitungan.index')">
-                                    {{ __('Perhitungan') }}
-                                </x-dropdown-link>
-
-                                <x-dropdown-link :href="route('konfigurasi.index')">
-                                    {{ __('Konfigurasi Akademik') }}
-                                </x-dropdown-link>
-
-                                <x-dropdown-link :href="route('konfigurasi_ujian.index')">
-                                    {{ __('Konfigurasi Ujian') }}
-                                </x-dropdown-link>
-
-                                <x-dropdown-link :href="route('kurikulum.index')">
-                                    {{ __('Kurikulum') }}
-                                </x-dropdown-link>
-
-                                <x-dropdown-link :href="route('dosen.index')">
-                                    {{ __('Dosen') }}
-                                </x-dropdown-link>
-
-                                <div class="relative">
-                                    <button id="jadwal-button"
-                                        class="flex justify-between items-center w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 dark:text-gray-400 bg-white dark:bg-gray-800 focus:outline-none transition ease-in-out duration-150">
-                                        {{ __('Jadwal') }}
-                                        <svg class="ml-2 fill-current h-4 w-4 transform -rotate-90"
-                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd"
-                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                clip-rule="evenodd" />
-                                        </svg>
+                                        <div class="ms-1">
+                                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
                                     </button>
-                                    <div id="jadwal-submenu"
-                                        class="hidden absolute left-full top-0 ml-2 -mt-[184px] w-48 bg-white shadow-lg rounded-md border">
-                                        <x-dropdown-link :href="route('hari.index')">
-                                            {{ __('Hari') }}
-                                        </x-dropdown-link>
-                                        <x-dropdown-link :href="route('pukul.index')">
-                                            {{ __('Pukul') }}
-                                        </x-dropdown-link>
-                                        <x-dropdown-link :href="route('ruang.index')">
-                                            {{ __('Ruang') }}
-                                        </x-dropdown-link>
-                                        <x-dropdown-link :href="route('sesi.index')">
-                                            {{ __('Sesi') }}
-                                        </x-dropdown-link>
-                                        <x-dropdown-link :href="route('jurusan.index')">
-                                            {{ __('Jurusan') }}
-                                        </x-dropdown-link>
-                                        <x-dropdown-link :href="route('kelas.index')">
-                                            {{ __('Kelas') }}
-                                        </x-dropdown-link>
-                                        <x-dropdown-link :href="route('materi_ajar.index')">
-                                            {{ __('Materi Ajar') }}
-                                        </x-dropdown-link>
-                                        <x-dropdown-link :href="route('semester.index')">
-                                            {{ __('Semester') }}
-                                        </x-dropdown-link>
-                                        <x-dropdown-link :href="route('keterangan.index')">
-                                            {{ __('Keterangan') }}
-                                        </x-dropdown-link>
-                                        <x-dropdown-link :href="route('tahunakademik.index')">
-                                            {{ __('Tahun Akademik') }}
-                                        </x-dropdown-link>
+                                </x-slot>
+
+                                <x-slot name="content">
+                                    <x-dropdown-link :href="route('perhitungan.index')">
+                                        {{ __('Perhitungan') }}
+                                    </x-dropdown-link>
+
+                                    <x-dropdown-link :href="route('konfigurasi.index')">
+                                        {{ __('Konfigurasi Akademik') }}
+                                    </x-dropdown-link>
+
+                                    <x-dropdown-link :href="route('konfigurasi_ujian.index')">
+                                        {{ __('Konfigurasi Ujian') }}
+                                    </x-dropdown-link>
+
+                                    <x-dropdown-link :href="route('kurikulum.index')">
+                                        {{ __('Kurikulum') }}
+                                    </x-dropdown-link>
+
+                                    <x-dropdown-link :href="route('dosen.index')">
+                                        {{ __('Dosen') }}
+                                    </x-dropdown-link>
+
+                                    <div class="relative">
+                                        <button id="jadwal-button"
+                                            class="flex justify-between items-center w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 dark:text-gray-400 bg-white dark:bg-gray-800 focus:outline-none transition ease-in-out duration-150">
+                                            {{ __('Jadwal') }}
+                                            <svg class="ml-2 fill-current h-4 w-4 transform -rotate-90"
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
+                                        <div id="jadwal-submenu"
+                                            class="hidden absolute left-full top-0 ml-2 -mt-[184px] w-48 bg-white shadow-lg rounded-md border">
+                                            <x-dropdown-link :href="route('hari.index')">
+                                                {{ __('Hari') }}
+                                            </x-dropdown-link>
+                                            <x-dropdown-link :href="route('pukul.index')">
+                                                {{ __('Pukul') }}
+                                            </x-dropdown-link>
+                                            <x-dropdown-link :href="route('ruang.index')">
+                                                {{ __('Ruang') }}
+                                            </x-dropdown-link>
+                                            <x-dropdown-link :href="route('sesi.index')">
+                                                {{ __('Sesi') }}
+                                            </x-dropdown-link>
+                                            <x-dropdown-link :href="route('jurusan.index')">
+                                                {{ __('Jurusan') }}
+                                            </x-dropdown-link>
+                                            <x-dropdown-link :href="route('kelas.index')">
+                                                {{ __('Kelas') }}
+                                            </x-dropdown-link>
+                                            <x-dropdown-link :href="route('materi_ajar.index')">
+                                                {{ __('Materi Ajar') }}
+                                            </x-dropdown-link>
+                                            <x-dropdown-link :href="route('semester.index')">
+                                                {{ __('Semester') }}
+                                            </x-dropdown-link>
+                                            <x-dropdown-link :href="route('keterangan.index')">
+                                                {{ __('Keterangan') }}
+                                            </x-dropdown-link>
+                                            <x-dropdown-link :href="route('tahunakademik.index')">
+                                                {{ __('Tahun Akademik') }}
+                                            </x-dropdown-link>
+                                        </div>
                                     </div>
-                                </div>
 
-                            </x-slot>
-                        </x-dropdown>
-                    </li>
-                </div>
+                                </x-slot>
+                            </x-dropdown>
+                        </li>
+                    </div>
 
-                <!-- Navigation Links -->
-                <div class="hidden sm:flex sm:items-center sm:ms-6">
-                    <x-nav-link :href="route('mahasiswa.index')" :active="request()->routeIs('dashboard')">
-                        {{ __('Mahasiswa') }}
-                    </x-nav-link>
-                </div>
 
-                <!-- Navigation Links -->
-                <div class="hidden sm:flex sm:items-center sm:ms-6">
-                    <x-nav-link :href="route('jadwal_reguler.index')" :active="request()->routeIs('dashboard')">
-                        {{ __('Jadwal') }}
-                    </x-nav-link>
-                </div>
+                    <!-- Navigation Links -->
+                    <div class="hidden sm:flex sm:items-center sm:ms-6">
+                        <x-nav-link :href="route('mahasiswa.index')" :active="request()->routeIs('dashboard')">
+                            {{ __('Mahasiswa') }}
+                        </x-nav-link>
+                    </div>
 
-                <!-- Navigation Links -->
-                <div class="hidden sm:flex sm:items-center sm:ms-6">
-                    <x-nav-link :href="route('nilai.index')" :active="request()->routeIs('dashboard')">
-                        {{ __('Nilai') }}
-                    </x-nav-link>
-                </div>
+                    <!-- Navigation Links -->
+                    <div class="hidden sm:flex sm:items-center sm:ms-6">
+                        <x-nav-link :href="route('jadwal_reguler.index')" :active="request()->routeIs('dashboard')">
+                            {{ __('Jadwal') }}
+                        </x-nav-link>
+                    </div>
+
+                    <!-- Navigation Links -->
+                    <div class="hidden sm:flex sm:items-center sm:ms-6">
+                        <x-nav-link :href="route('nilai.index')" :active="request()->routeIs('dashboard')">
+                            {{ __('Nilai') }}
+                        </x-nav-link>
+                    </div>
+                @endcan
 
                 <div class="hidden sm:flex sm:items-center sm:ms-6">
                     <li class="relative list-none">
@@ -162,94 +165,164 @@
                     </li>
                 </div>
 
-                <div class="hidden sm:flex sm:items-center sm:ms-6">
-                    <li class="relative list-none">
-                        <x-dropdown>
-                            <x-slot name="trigger">
-                                <button
-                                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                                    <div>Report</div>
+                @can('role-A')
+                    <div class="hidden sm:flex sm:items-center sm:ms-6">
+                        <li class="relative list-none">
+                            <x-dropdown>
+                                <x-slot name="trigger">
+                                    <button
+                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                                        <div>Ujian</div>
 
-                                    <div class="ms-1">
-                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd"
-                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                    </div>
-                                </button>
-                            </x-slot>
-
-                            <x-slot name="content">
-                                <div class="relative">
-                                    <button id="presensi-button"
-                                        class="flex justify-between items-center w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 dark:text-gray-400 bg-white dark:bg-gray-800 focus:outline-none transition ease-in-out duration-150">
-                                        {{ __('Presensi') }}
-                                        <svg class="ml-2 fill-current h-4 w-4 transform -rotate-90"
-                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd"
-                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                clip-rule="evenodd" />
-                                        </svg>
+                                        <div class="ms-1">
+                                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
                                     </button>
-                                    <div id="presensi-submenu"
-                                        class="hidden absolute left-full top-0 ml-2 -mt-1 w-52 bg-white shadow-lg rounded-md border">
-                                        <x-dropdown-link :href="route('report_dosen.index')">
-                                            {{ __('Dosen') }}
-                                        </x-dropdown-link>
-                                        <div class="relative">
-                                            <button id="anak-presensi-submenu-button"
-                                                class="flex justify-between items-center w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 dark:text-gray-400 bg-white dark:bg-gray-800 focus:outline-none transition ease-in-out duration-150">
-                                                {{ __('Mahasiswa') }}
-                                                <svg class="ml-2 fill-current h-4 w-4 transform -rotate-90"
-                                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                                    <path fill-rule="evenodd"
-                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                        clip-rule="evenodd" />
-                                                </svg>
-                                            </button>
-                                            <div id="anak-presensi-submenu"
-                                                class="hidden absolute left-full top-0 ml-2 -mt-9 w-48 bg-white shadow-lg rounded-md border">
-                                                <x-dropdown-link :href="route('report_keseluruhan.index')">
-                                                    {{ __('Keseluruhan') }}
-                                                </x-dropdown-link>
-                                                <x-dropdown-link :href="route('report_dosen.index')">
-                                                    {{ __('Per Mahasiswa') }}
-                                                </x-dropdown-link>
+                                </x-slot>
+
+                                <x-slot name="content">
+                                    <x-dropdown-link :href="route('ujian_uts.index')">
+                                        {{ __('UTS') }}
+                                    </x-dropdown-link>
+
+                                    <x-dropdown-link :href="route('ujian_uas.index')">
+                                        {{ __('UAS') }}
+                                    </x-dropdown-link>
+
+                                </x-slot>
+                            </x-dropdown>
+                        </li>
+                    </div>
+
+                    <div class="hidden sm:flex sm:items-center sm:ms-6">
+                        <li class="relative list-none">
+                            <x-dropdown>
+                                <x-slot name="trigger">
+                                    <button
+                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                                        <div>Report</div>
+
+                                        <div class="ms-1">
+                                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
+                                    </button>
+                                </x-slot>
+
+                                <x-slot name="content">
+                                    <div class="relative">
+                                        <button id="presensi-button"
+                                            class="flex justify-between items-center w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 dark:text-gray-400 bg-white dark:bg-gray-800 focus:outline-none transition ease-in-out duration-150">
+                                            {{ __('Presensi') }}
+                                            <svg class="ml-2 fill-current h-4 w-4 transform -rotate-90"
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
+                                        <div id="presensi-submenu"
+                                            class="hidden absolute left-full top-0 ml-2 -mt-1 w-52 bg-white shadow-lg rounded-md border">
+                                            <x-dropdown-link :href="route('report_dosen.index')">
+                                                {{ __('Dosen') }}
+                                            </x-dropdown-link>
+                                            <div class="relative">
+                                                <button id="anak-presensi-submenu-button"
+                                                    class="flex justify-between items-center w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 dark:text-gray-400 bg-white dark:bg-gray-800 focus:outline-none transition ease-in-out duration-150">
+                                                    {{ __('Mahasiswa') }}
+                                                    <svg class="ml-2 fill-current h-4 w-4 transform -rotate-90"
+                                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                        <path fill-rule="evenodd"
+                                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+                                                </button>
+                                                <div id="anak-presensi-submenu"
+                                                    class="hidden absolute left-full top-0 ml-2 -mt-9 w-48 bg-white shadow-lg rounded-md border">
+                                                    <x-dropdown-link :href="route('report_keseluruhan.index')">
+                                                        {{ __('Keseluruhan') }}
+                                                    </x-dropdown-link>
+                                                    <x-dropdown-link :href="route('report_presensi_mahasiswa.index')">
+                                                        {{ __('Per Mahasiswa') }}
+                                                    </x-dropdown-link>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="relative">
-                                    <button id="nilai-button"
-                                        class="flex justify-between items-center w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 dark:text-gray-400 bg-white dark:bg-gray-800 focus:outline-none transition ease-in-out duration-150">
-                                        {{ __('Nilai') }}
-                                        <svg class="ml-2 fill-current h-4 w-4 transform -rotate-90"
-                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd"
-                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                    </button>
-                                    <div id="nilai-submenu"
-                                        class="hidden absolute left-full top-0 -mt-10 ml-2 w-48 bg-white border shadow-lg rounded-md">
-                                        <x-dropdown-link :href="route('hari.index')">
-                                            {{ __('Keseluruhan') }}
-                                        </x-dropdown-link>
-                                        <x-dropdown-link :href="route('hari.index')">
-                                            {{ __('Transkrip') }}
-                                        </x-dropdown-link>
-                                        <x-dropdown-link :href="route('hari.index')">
-                                            {{ __('KHS') }}
-                                        </x-dropdown-link>
+                                    <div class="relative">
+                                        <button id="nilai-button"
+                                            class="flex justify-between items-center w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 dark:text-gray-400 bg-white dark:bg-gray-800 focus:outline-none transition ease-in-out duration-150">
+                                            {{ __('Nilai') }}
+                                            <svg class="ml-2 fill-current h-4 w-4 transform -rotate-90"
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
+                                        <div id="nilai-submenu"
+                                            class="hidden absolute left-full top-0 -mt-10 ml-2 w-48 bg-white border shadow-lg rounded-md">
+                                            <div class="relative">
+                                                <button id="anak-nilai-submenu-button"
+                                                    class="flex justify-between items-center w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 dark:text-gray-400 bg-white dark:bg-gray-800 focus:outline-none transition ease-in-out duration-150">
+                                                    {{ __('Mahasiswa') }}
+                                                    <svg class="ml-2 fill-current h-4 w-4 transform -rotate-90"
+                                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                        <path fill-rule="evenodd"
+                                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+                                                </button>
+                                                <div id="anak-nilai-submenu"
+                                                    class="hidden absolute left-full top-0 ml-2 -mt-0 w-48 bg-white shadow-lg rounded-md border">
+                                                    <x-dropdown-link :href="route('report_nilai_keseluruhan.index')">
+                                                        {{ __('Keseluruhan') }}
+                                                    </x-dropdown-link>
+                                                    <x-dropdown-link :href="route('report_nilai_mahasiswa.index')">
+                                                        {{ __('Per Mahasiswa') }}
+                                                    </x-dropdown-link>
+                                                </div>
+                                            </div>
+                                            <x-dropdown-link :href="route('khs.index')">
+                                                {{ __('KHS') }}
+                                            </x-dropdown-link>
+                                            <x-dropdown-link :href="route('data_prestasi.index')">
+                                                {{ __('Data Prestasi') }}
+                                            </x-dropdown-link>
+                                            <x-dropdown-link :href="route('transkrip.index')">
+                                                {{ __('Transkrip') }}
+                                            </x-dropdown-link>
+                                        </div>
                                     </div>
-                                </div>
-                            </x-slot>
+                                </x-slot>
 
-                        </x-dropdown>
-                    </li>
+                            </x-dropdown>
+                        </li>
+                    </div>
+                @endcan
+
+                <!-- Navigation Links -->
+                <div class="hidden sm:flex sm:items-center sm:ms-6">
+                    <x-nav-link :href="route('krs_mhs.index')" :active="request()->routeIs('dashboard')">
+                        {{ __('KRS') }}
+                    </x-nav-link>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden sm:flex sm:items-center sm:ms-6">
+                    <x-nav-link :href="route('jadwal_reguler.jadwal_mhs', Auth::user()->email)" :active="request()->routeIs('dashboard')">
+                        {{ __('Jadwal') }}
+                    </x-nav-link>
                 </div>
 
             </div>
@@ -364,6 +437,8 @@
         var nilaiSubmenu = document.getElementById('nilai-submenu');
         var anakPresensiButton = document.getElementById('anak-presensi-submenu-button');
         var anakPresensiSubmenu = document.getElementById('anak-presensi-submenu');
+        var anakNilaiButton = document.getElementById('anak-nilai-submenu-button');
+        var anakNilaiSubmenu = document.getElementById('anak-nilai-submenu');
 
         var allSubmenus = [jadwalSubmenu, presensiSubmenu, nilaiSubmenu];
         var allButtons = [jadwalButton, presensiButton, nilaiButton];
@@ -373,6 +448,7 @@
                 submenu.classList.add('hidden');
             });
             anakPresensiSubmenu.classList.add('hidden');
+            anakNilaiSubmenu.classList.add('hidden');
         }
 
         function toggleSubmenu(button, submenu) {
@@ -394,16 +470,24 @@
             anakPresensiSubmenu.classList.toggle('hidden');
         });
 
+        anakNilaiButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            anakNilaiSubmenu.classList.toggle('hidden');
+        });
+
         document.addEventListener('click', function(event) {
             if (!allButtons.some(button => button.contains(event.target)) &&
                 !allSubmenus.some(submenu => submenu.contains(event.target)) &&
                 !anakPresensiButton.contains(event.target) &&
-                !anakPresensiSubmenu.contains(event.target)) {
+                !anakPresensiSubmenu.contains(event.target) &&
+                !anakNilaiButton.contains(event.target) &&
+                !anakNilaiSubmenu.contains(event.target)) {
                 closeAllSubmenus();
             }
         });
 
-        allSubmenus.concat(anakPresensiSubmenu).forEach(function(submenu) {
+        allSubmenus.concat(anakPresensiSubmenu, anakNilaiSubmenu).forEach(function(submenu) {
             submenu.addEventListener('click', function(event) {
                 event.stopPropagation();
             });

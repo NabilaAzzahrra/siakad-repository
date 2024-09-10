@@ -91,18 +91,21 @@
                                 if ($hari == date('l')) {
                                     // Cek apakah ini adalah pertemuan pertama yang belum diisi presensinya
                                     if ($p->pertemuan == 1 && $p->tgl_presensi === null) {
-                                        if ($waktuSekarang >= $jamMulai && $waktuSekarang <= $jamBerakhir) {
+                                        if ($waktuSekarang >= $jamMulai || $waktuSekarang <= $jamBerakhir) {
                                             $hidePresensiButton = ''; // Tampilkan tombol
                                             $isTodayScheduled = false;
+                                            // dd('ini');
                                         } else {
                                             $hidePresensiButton = 'hidden';
                                         }
                                     } else {
                                         if ($isTodayScheduled && $p->tgl_presensi === null) {
-                                            if ($waktuSekarang >= $jamMulai && $waktuSekarang <= $jamBerakhir) {
+                                            if ($waktuSekarang >= $jamMulai || $waktuSekarang <= $jamBerakhir) {
                                                 $hidePresensiButton = '';
                                                 $isTodayScheduled = false;
+                                                // dd('ini');
                                             } else {
+                                                // dd('ini ya');
                                                 $hidePresensiButton = 'hidden';
                                             }
                                         } else {
@@ -114,7 +117,7 @@
                                     $hidePresensiButton = 'hidden';
                                 }
 
-                                if ($p->file_materi === null) {
+                                if ($p->tgl_presensi === null) {
                                     $file_materi =
                                         '<i class="fi fi-sr-cross-circle flex items-center text-red-500"></i>';
                                     $link_materi = '#';

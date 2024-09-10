@@ -16,7 +16,7 @@
                         <form action="{{ route('jadwal_reguler.store') }}" method="post">
                             @csrf
                             <div class="p-4 rounded-xl">
-                                <input type="number" value="{{ $konfigurasi->jml_pertemuan }}" name="jml_pertemuan"
+                                <input type="hidden" value="{{ $konfigurasi->jml_pertemuan }}" name="jml_pertemuan"
                                     >
                                 <div class="flex gap-5">
                                     <div class="flex w-full gap-5">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dosen;
 use App\Models\Jurusan;
 use App\Models\Kelas;
 use Illuminate\Http\Request;
@@ -14,8 +15,10 @@ class KelasController extends Controller
     public function index()
     {
         $jurusan = Jurusan::all();
+        $dosen = Dosen::all();
         return view('page.kelas.index')->with([
             'jurusan' => $jurusan,
+            'dosen' => $dosen,
         ]);
     }
 
@@ -35,6 +38,7 @@ class KelasController extends Controller
         $data = [
             'kelas' => $request->input('kelas'),
             'id_jurusan' => $request->input('id_jurusan'),
+            'id_dosen' => $request->input('id_dosen'),
         ];
 
         Kelas::create($data);
@@ -68,6 +72,7 @@ class KelasController extends Controller
         $data = [
             'kelas' => $request->input('kelas'),
             'id_jurusan' => $request->input('id_jurusann'),
+            'id_dosen' => $request->input('id_dosenn'),
         ];
 
         $datas = Kelas::findOrFail($id);
@@ -84,6 +89,6 @@ class KelasController extends Controller
     {
         $data = Kelas::findOrFail($id);
         $data->delete();
-        return back()->with('message_delete','Data Kelas Sudah dihapus');
+        return back()->with('message_delete', 'Data Kelas Sudah dihapus');
     }
 }

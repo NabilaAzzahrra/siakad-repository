@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +20,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // $this->registerPolicies();
+
+        Gate::define('role-A', function ($user) {
+            return $user->role === 'A';
+        });
+
+        Gate::define('role-M', function ($user) {
+            return $user->role === 'M';
+        });
     }
 }

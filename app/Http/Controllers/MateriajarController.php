@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jurusan;
 use App\Models\Materiajar;
 use App\Models\Semester;
 use Illuminate\Http\Request;
@@ -14,8 +15,10 @@ class MateriajarController extends Controller
     public function index()
     {
         $semester = Semester::all();
+        $jurusan = Jurusan::all();
         return view('page.materi_ajar.index')->with([
             'semester' => $semester,
+            'jurusan' => $jurusan,
         ]);
     }
 
@@ -49,6 +52,7 @@ class MateriajarController extends Controller
             'materi_ajar' => $request->input('materi_ajar'),
             'sks' => $request->input('sks'),
             'id_semester' => $request->input('id_semester'),
+            'id_jurusan' => $request->input('id_jurusan'),
             'ebook' => $ebookFilePath,
         ];
 
@@ -99,6 +103,7 @@ class MateriajarController extends Controller
         $materi_ajar->materi_ajar = $request->input('materi_ajar');
         $materi_ajar->sks = $request->input('sks');
         $materi_ajar->id_semester = $request->input('id_semesterl');
+        $materi_ajar->id_jurusan = $request->input('id_jurusanl');
 
         // Simpan nama file ebook lama untuk referensi
         $oldEbook = $materi_ajar->ebook;

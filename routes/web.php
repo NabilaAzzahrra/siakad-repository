@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DataPrestasiController;
 use App\Http\Controllers\DetailController;
 use App\Http\Controllers\DetailFormatif;
 use App\Http\Controllers\DetailFormatifController;
@@ -9,8 +10,10 @@ use App\Http\Controllers\JadwalregulerController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\KeteranganController;
+use App\Http\Controllers\KHSController;
 use App\Http\Controllers\KonfigurasiController;
 use App\Http\Controllers\KonfigurasiUjianController;
+use App\Http\Controllers\KrsMhsController;
 use App\Http\Controllers\KurikulumController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MateriajarController;
@@ -21,16 +24,21 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PukulController;
 use App\Http\Controllers\ReportDosenController;
 use App\Http\Controllers\ReportMahasiswaKeseluruhanController;
+use App\Http\Controllers\ReportNilaiKeseluruhanController;
+use App\Http\Controllers\ReportNilaiMahasiswaController;
+use App\Http\Controllers\ReportPresensiMahasiswaController;
 use App\Http\Controllers\RuangController;
 use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\SesiController;
 use App\Http\Controllers\TahunakademikController;
+use App\Http\Controllers\TranskripController;
 use App\Http\Controllers\TugasController;
 use App\Http\Controllers\TugasPertemuanController;
 use App\Http\Controllers\UasController;
 use App\Http\Controllers\UjianUASController;
 use App\Http\Controllers\UjianUTSController;
 use App\Http\Controllers\UtsController;
+use App\Models\Jadwalreguler;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -66,6 +74,15 @@ Route::resource('konfigurasi_ujian', KonfigurasiUjianController::class)->middlew
 Route::resource('uas', UasController::class)->middleware(['auth']);
 Route::resource('ujian_uas', UjianUASController::class)->middleware(['auth']);
 Route::resource('report_keseluruhan', ReportMahasiswaKeseluruhanController::class)->middleware(['auth']);
+Route::resource('report_presensi_mahasiswa', ReportPresensiMahasiswaController::class)->middleware(['auth']);
+Route::resource('report_nilai_keseluruhan', ReportNilaiKeseluruhanController::class)->middleware(['auth']);
+Route::resource('report_nilai_mahasiswa', ReportNilaiMahasiswaController::class)->middleware(['auth']);
+Route::resource('khs', KHSController::class)->middleware(['auth']);
+Route::resource('data_prestasi', DataPrestasiController::class)->middleware(['auth']);
+Route::resource('krs_mhs', KrsMhsController::class)->middleware(['auth']);
+Route::resource('transkrip', TranskripController::class)->middleware(['auth']);
+
+Route::get('/jadwal_mhs/{id}', [JadwalRegulerController::class, 'jadwal_mhs'])->name('jadwal_reguler.jadwal_mhs');
 
 Route::post('/download-zip', [DetailFormatifController::class, 'downloadZip']);
 Route::post('/kurikulum/detail', [KurikulumController::class, 'detail'])->name('kurikulum.detail')->middleware(['auth']);
@@ -85,6 +102,7 @@ Route::post('/jawaban_uts_add', [UtsController::class, 'jawaban_uts_add'])->name
 Route::post('/download-zip-uts', [UtsController::class, 'downloadZip']);
 Route::post('/jawaban_uas_add', [UasController::class, 'jawaban_uas_add'])->name('uas.jawaban_uas_add');
 Route::post('/download-zip-uas', [UasController::class, 'downloadZip']);
+Route::get('/cetak-pdf/{id_jadwal}', [ReportMahasiswaKeseluruhanController::class, 'generatePDF'])->name('cetak-pdf');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

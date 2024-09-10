@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('sks');
             $table->integer('id_semester');
             $table->string('ebook');
+            $table->integer('id_jurusan');
             $table->timestamps();
         });
     }

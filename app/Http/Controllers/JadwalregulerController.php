@@ -11,6 +11,8 @@ use App\Models\Hari;
 use App\Models\Jadwalreguler;
 use App\Models\Kelas;
 use App\Models\Konfigurasi;
+use App\Models\Mahasiswa;
+use App\Models\Nilai;
 use App\Models\Presensi;
 use App\Models\Pukul;
 use App\Models\Ruang;
@@ -25,6 +27,10 @@ class JadwalregulerController extends Controller
      */
     public function index()
     {
+        $konfigurasi = Konfigurasi::first();
+        $tahun_akademik = $konfigurasi->id_tahun_akademik;
+        $keterangan = $konfigurasi->id_keterangan;
+
         $jadwal_reguler = DB::table('jadwal_reguler')
             ->join('detail_kurikulum', 'jadwal_reguler.id_detail_kurikulum', '=', 'detail_kurikulum.id_materi_ajar')
             ->join('dosen', 'jadwal_reguler.id_dosen', '=', 'dosen.id')
@@ -37,7 +43,9 @@ class JadwalregulerController extends Controller
             ->join('semester', 'materi_ajar.id_semester', '=', 'semester.id')
             ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id')
             ->select('jadwal_reguler.*', 'jadwal_reguler.id as id_jadwal', 'jadwal_reguler.id_jadwal as kode_jadwal', 'detail_kurikulum.*', 'dosen.*', 'hari.*', 'sesi.*', 'sesi.id as kode_sesi', 'pukul.*', 'ruang.*', 'kelas.*', 'materi_ajar.*', 'semester.*', 'jurusan.*')
-            ->paginate(15);
+            ->where('id_tahun_akademik', $tahun_akademik)
+            ->where('jadwal_reguler.id_keterangan', $keterangan)
+            ->paginate(10);
 
         return view('page.jadwalreguler.index')->with([
             'jadwal_reguler' => $jadwal_reguler,
@@ -302,6 +310,39 @@ class JadwalregulerController extends Controller
         return view('page.jadwalreguler.formatif_answer')->with([
             'detail' => $detail,
             'formatif' => $formatif,
+        ]);
+    }
+
+    public function jadwal_mhs(string $id)
+    {
+        $konfigurasi = Konfigurasi::first();
+
+        $ga = $konfigurasi->keterangan;
+
+        $mahasiswa = Mahasiswa::where('nim', $id)->first();
+
+        if ($mahasiswa) {
+            $tingkat = $mahasiswa->tingkat;
+
+            $jadwal_reguler = Nilai::with(['mahasiswa', 'jadwal', 'jadwal.detail_kurikulum.materi_ajar.semester'])
+                ->where('nim', $id)
+                ->whereHas('jadwal.detail_kurikulum.materi_ajar.semester', function ($query) use ($ga, $tingkat) {
+                    if ($tingkat === 2) {
+                        $semester = $ga ? 3 : 4;
+                    } elseif ($tingkat === 4) {
+                        $semester = $ga ? 5 : 6;
+                    } else {
+                        $semester = $ga ? 1 : 2;
+                    }
+                    $query->where('semester', $semester);
+                })
+                ->get();
+        } else {
+            $jadwal_reguler = collect();
+        }
+
+        return view('page.jadwalreguler_mhs.index')->with([
+            'jadwal_reguler' => $jadwal_reguler,
         ]);
     }
 }

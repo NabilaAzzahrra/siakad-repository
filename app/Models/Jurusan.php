@@ -19,4 +19,9 @@ class Jurusan extends Model
     {
         return $this->belongsTo(Kelas::class, 'id_jurusan', 'id');
     }
+
+    public function materi_ajar()
+    {
+        return $this->hasMany(Materiajar::class, 'id_jurusan');
+    }
 }

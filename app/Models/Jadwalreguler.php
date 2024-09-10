@@ -79,4 +79,9 @@ class Jadwalreguler extends Model
     {
         return $this->hasMany(Uts::class, 'id_jadwal');
     }
+
+    public function perhitungan()
+    {
+        return $this->belongsTo(Perhitungan::class, 'id_perhitungan', 'id');
+    }
 }

@@ -202,7 +202,7 @@
                                                         <td class="px-6 py-4">
                                                             <input type="text" id="presensi" name="presensi[]"
                                                                 class="w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0 uppercase"
-                                                                value="{{ $m->presensi }}">
+                                                                value="{{ $m->presensi }}" readonly>
                                                         </td>
                                                         <td class="px-6 py-4 bg-gray-100">
                                                             <input type="text" id="tugas" name="tugas[]"
