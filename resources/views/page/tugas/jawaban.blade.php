@@ -11,65 +11,70 @@
                 <div class="w-full md:w-3/12 p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 bg-red-500 rounded-xl">
+                            <div class="p-6 bg rounded-xl">
                                 FORM INPUT materi_ajar
                             </div>
                             @foreach ($tugas as $d)
-                            @endforeach
-                            <div class="mt-4">
-                                <div class="flex items-center mb-4">
-                                    <div class="font-bold pr-2 pt-1"><i class="fi fi-ss-book-open-cover"></i></div>
-                                    <div class="font-bold pr-[47px]">Materi Ajar</div>
-                                    <div class="font-bold pr-4">:</div>
-                                    <div class="font-bold text-sky-600">
-                                        {{ $d->m_tugas->presensi->jadwal->detail_kurikulum->materi_ajar->materi_ajar }}</div>
-                                </div>
-                                <div class="flex items-center mb-4">
-                                    <div class="font-bold pr-2 pt-1"><i class="fi fi-sr-calendar-clock"></i></div>
-                                    <div class="font-bold pr-[22px]">Semester/SKS</div>
-                                    <div class="font-bold pr-4">:</div>
-                                    <div class="font-bold text-sky-600">
-                                        {{ $d->m_tugas->presensi->jadwal->detail_kurikulum->materi_ajar->semester->semester }} /
-                                        {{ $d->m_tugas->presensi->jadwal->detail_kurikulum->materi_ajar->sks }}
+                                <div class="mt-4">
+                                    <div class="flex items-center mb-4">
+                                        <div class="font-bold pr-2 pt-1"><i class="fi fi-ss-book-open-cover"></i></div>
+                                        <div class="font-bold pr-[47px]">Materi Ajar</div>
+                                        <div class="font-bold pr-4">:</div>
+                                        <div class="font-bold text-sky-600">
+                                            {{ $d->m_tugas->presensi->jadwal->detail_kurikulum->materi_ajar->materi_ajar }}
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="flex items-center mb-4">
-                                    <div class="font-bold pr-2 pt-1"><i class="fi fi-sr-chalkboard-user"></i></div>
-                                    <div class="font-bold pr-16">Pengajar</div>
-                                    <div class="font-bold pr-4">:</div>
-                                    <div class="font-bold text-sky-600 text-wrap">
-                                        {{ $d->m_tugas->presensi->jadwal->dosen->nama_dosen }}</div>
-                                </div>
-                                <div class="flex items-center mb-4">
-                                    <div class="font-bold pr-2 pt-1"><i class="fi fi-sr-hourglass-start"></i></div>
-                                    <div class="font-bold pr-16">Deadline</div>
-                                    <div class="font-bold pr-4">:</div>
-                                    <div class="font-bold text-sky-600">
-                                        {{ date('d-m-Y H:i', strtotime($d->m_tugas->deadline)) }} WIB</div>
-                                </div>
-                                <div>
-                                    @php
-                                        if (date('Y-m-d H:i:s') < $d->m_tugas->deadline) {
-                                            $button = "
+                                    <div class="flex items-center mb-4">
+                                        <div class="font-bold pr-2 pt-1"><i class="fi fi-sr-calendar-clock"></i></div>
+                                        <div class="font-bold pr-[22px]">Semester/SKS</div>
+                                        <div class="font-bold pr-4">:</div>
+                                        <div class="font-bold text-sky-600">
+                                            {{ $d->m_tugas->presensi->jadwal->detail_kurikulum->materi_ajar->semester->semester }}
+                                            /
+                                            {{ $d->m_tugas->presensi->jadwal->detail_kurikulum->materi_ajar->sks }}
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center mb-4">
+                                        <div class="font-bold pr-2 pt-1"><i class="fi fi-sr-chalkboard-user"></i></div>
+                                        <div class="font-bold pr-16">Pengajar</div>
+                                        <div class="font-bold pr-4">:</div>
+                                        <div class="font-bold text-sky-600 text-wrap">
+                                            {{ $d->m_tugas->presensi->jadwal->dosen->nama_dosen }}</div>
+                                    </div>
+                                    <div class="flex items-center mb-4">
+                                        <div class="font-bold pr-2 pt-1"><i class="fi fi-sr-hourglass-start"></i></div>
+                                        <div class="font-bold pr-16">Deadline</div>
+                                        <div class="font-bold pr-4">:</div>
+                                        <div class="font-bold text-sky-600">
+                                            {{ date('d-m-Y H:i', strtotime($d->m_tugas->deadline)) }} WIB</div>
+                                    </div>
+                                    <div>
+                                        @php
+                                            if (date('Y-m-d H:i:s') < $d->m_tugas->deadline) {
+                                                $button =
+                                                    "
                                                 <div class='w-full'>
-                                                    <a href=". route('tugass.tugas_show', $d->m_tugas->id) ."
+                                                    <a href=" .
+                                                    route('tugass.tugas_show', $d->m_tugas->id) .
+                                                    "
                                                         class='bg-green-200 flex items-center justify-center rounded-xl p-2 text-green-800 font-bold shadow-xl'>
                                                         <i class='fi fi-sr-check-circle pt-1 pr-2'></i> Soal formatif
                                                     </a>
                                                 </div>
                                             ";
-                                        } else {
-                                            $button = "<a href='#'
+                                            } else {
+                                                $button = "<a href='#'
                                                     class='bg-red-200 flex items-center justify-center rounded-xl p-2 text-red-800 font-bold shadow-xl'>
                                                     <i class='fi fi-sr-cross-circle pt-1 pr-2'></i> Formatif sudah tidak dapat di akses
                                                 </a>";
-                                        }
-                                    @endphp
+                                            }
+                                        @endphp
 
-                                    {!! $button !!}
+                                        {!! $button !!}
 
+                                    </div>
                                 </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>

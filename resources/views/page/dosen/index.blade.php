@@ -68,6 +68,7 @@
                                         <thead>
                                             <tr>
                                                 <th class="w-7">No.</th>
+                                                <th>Kode Dosen</th>
                                                 <th>Nama Dosen</th>
                                                 <th>Email Dosen</th>
                                                 <th>No HP Dosen</th>
@@ -164,6 +165,11 @@
                     data: 'no',
                     render: (data, type, row, meta) => {
                         return `<div style="text-align:center">${meta.row + 1}.</div>`;;
+                    }
+                }, {
+                    data: 'kode_dosen',
+                    render: (data, type, row) => {
+                        return data;
                     }
                 }, {
                     data: 'nama_dosen',

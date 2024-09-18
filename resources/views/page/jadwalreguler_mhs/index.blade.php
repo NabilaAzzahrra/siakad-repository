@@ -77,6 +77,11 @@
                                                         </div>
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center">
+                                                        <div class="flex items-center">
+
+                                                        </div>
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-center">
                                                         <span class="sr-only">Edit</span>
                                                     </th>
                                                 </tr>
@@ -119,6 +124,12 @@
                                                         </td>
                                                         <td class="px-6 py-4">
                                                             {{ $j->jadwal->kelas->jurusan->jurusan }}
+                                                        </td>
+                                                        <td class="px-6 py-4">
+                                                            <a href="{{ route('jadwal_reguler.show', $j->id_jadwal) }}"
+                                                                class="mr-2 bg-green-500 hover:bg-green-600 px-3 py-1 rounded-md text-xs text-white">
+                                                                <i class="fa-solid fa-eye"></i>
+                                                            </a>
                                                         </td>
                                                     </tr>
                                                 @endforeach

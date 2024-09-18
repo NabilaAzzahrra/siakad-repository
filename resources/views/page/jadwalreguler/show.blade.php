@@ -164,14 +164,37 @@
                                             </div>
                                         </div>
                                         <div class="flex gap-4 mt-3">
-                                            <a href="{{ $link }}"
-                                                class="border border-gray-300 px-2 py-1 text-xs rounded-full font-extrabold flex items-center justify-center
+                                            @can('role-A')
+                                                @if ($p->tgl_presensi === null)
+                                                    <a href="{{ $link }}"
+                                                        class="border border-gray-300 px-2 py-1 text-xs rounded-full font-extrabold flex items-center justify-center {{ $hidePresensiButton }}">
+                                                        <i
+                                                            class="fi fi-sr-member-list text-sky-700 pr-1 flex items-center"></i>
+                                                        <span class="pr-1 flex items-center">Presensi
+                                                        </span>
+                                                        {!! $tgl_presensi !!}
+                                                    </a>
+                                                @else
+                                                    <a href="{{ route('presensi.edit', $p->id_presensi) }}"
+                                                        class="border border-gray-300 px-2 py-1 text-xs rounded-full font-extrabold flex items-center justify-center">
+                                                        <i
+                                                            class="fi fi-sr-member-list text-sky-700 pr-1 flex items-center"></i>
+                                                        <span class="pr-1 flex items-center">Presensi
+                                                        </span>
+                                                        {!! $tgl_presensi !!}
+                                                    </a>
+                                                @endif
+                                            @endcan
+                                            @can('role-D')
+                                                <a href="{{ $link }}"
+                                                    class="border border-gray-300 px-2 py-1 text-xs rounded-full font-extrabold flex items-center justify-center
                                                  {{ $hidePresensiButton }}">
-                                                <i class="fi fi-sr-member-list text-sky-700 pr-1 flex items-center"></i>
-                                                <span class="pr-1 flex items-center">Presensi
-                                                </span>
-                                                {!! $tgl_presensi !!}
-                                            </a>
+                                                    <i class="fi fi-sr-member-list text-sky-700 pr-1 flex items-center"></i>
+                                                    <span class="pr-1 flex items-center">Presensi
+                                                    </span>
+                                                    {!! $tgl_presensi !!}
+                                                </a>
+                                            @endcan
                                             <a href="{{ $link_materi }}"
                                                 class="border border-gray-300 px-2 py-1 text-xs rounded-full font-extrabold flex items-center justify-center">
                                                 <i

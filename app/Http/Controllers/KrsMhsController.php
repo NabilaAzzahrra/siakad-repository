@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jadwalreguler;
+use App\Models\Konfigurasi;
 use App\Models\Nilai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,9 +15,13 @@ class KrsMhsController extends Controller
      */
     public function index()
     {
+        $konfigurasi = Konfigurasi::first();
+        $id_keterangan = $konfigurasi->id_keterangan;
+        $id_tahun_akademik = $konfigurasi->id_tahun_akademik;
         $jadwal = Jadwalreguler::whereHas('kelas.jurusan', function ($query) {
             $query->where('id_jurusan', Auth::user()->mahasiswa->kelas->jurusan->id);
-        })->with('kelas.jurusan')->get();
+        })->where('id_keterangan', $id_keterangan)->where('id_tahun_akademik', $id_tahun_akademik)->with('kelas.jurusan')->get();
+        // dd($jadwal);
         $nilai = Nilai::where('nim', Auth::user()->email)->get();
         return view('page.krs_mhs.index')->with([
             'jadwal' => $jadwal,

@@ -18,6 +18,7 @@ use App\Models\Pukul;
 use App\Models\Ruang;
 use App\Models\Sesi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class JadwalregulerController extends Controller
@@ -306,16 +307,21 @@ class JadwalregulerController extends Controller
     public function formatif_answer(string $id)
     {
         $detail = DetailFormatif::where('id_formatif', $id)->get();
+        $detail_mhs = DetailFormatif::where('id_formatif', $id)->where('nim', Auth::user()->email)->get();
         $formatif = Formatif::where('id_formatif', $id)->first();
+        // dd($formatif);
         return view('page.jadwalreguler.formatif_answer')->with([
             'detail' => $detail,
             'formatif' => $formatif,
+            'detail_mhs' => $detail_mhs,
         ]);
     }
 
     public function jadwal_mhs(string $id)
     {
         $konfigurasi = Konfigurasi::first();
+        $tahun_akademik = $konfigurasi->id_tahun_akademik;
+        $keterangan = $konfigurasi->id_keterangan;
 
         $ga = $konfigurasi->keterangan;
 
@@ -326,7 +332,9 @@ class JadwalregulerController extends Controller
 
             $jadwal_reguler = Nilai::with(['mahasiswa', 'jadwal', 'jadwal.detail_kurikulum.materi_ajar.semester'])
                 ->where('nim', $id)
-                ->whereHas('jadwal.detail_kurikulum.materi_ajar.semester', function ($query) use ($ga, $tingkat) {
+                ->whereHas('jadwal.detail_kurikulum.materi_ajar.semester', function ($query) use ($tahun_akademik, $keterangan, $ga, $tingkat) {
+                    $query->where('id_tahun_akademik', $tahun_akademik)
+                        ->where('id_keterangan', $keterangan);
                     if ($tingkat === 2) {
                         $semester = $ga ? 3 : 4;
                     } elseif ($tingkat === 4) {
@@ -342,6 +350,44 @@ class JadwalregulerController extends Controller
         }
 
         return view('page.jadwalreguler_mhs.index')->with([
+            'jadwal_reguler' => $jadwal_reguler,
+        ]);
+    }
+
+    public function jadwal_dosen(string $id)
+    {
+        $konfigurasi = Konfigurasi::first();
+        $tahun_akademik = $konfigurasi->id_tahun_akademik;
+        $keterangan = $konfigurasi->id_keterangan;
+        $kode_dosen = Auth::user()->email;
+
+        $jadwal_reguler = Jadwalreguler::with([
+            'perhitungan',
+            'sesi',
+            'sesi.pukul',
+            'hari',
+            'ruang',
+            'tahun_akademik',
+            'dosen',
+            'kelas',
+            'kelas.jurusan',
+            'detail_kurikulum',
+            'detail_kurikulum.materi_ajar',
+            'detail_kurikulum.materi_ajar.semester',
+            'detail_kurikulum.materi_ajar.semester.keterangan'
+        ])
+            ->whereHas('tahun_akademik', function ($query) use ($tahun_akademik) {
+                $query->where('id_tahun_akademik', $tahun_akademik);
+            })
+            ->whereHas('detail_kurikulum.materi_ajar.semester.keterangan', function ($query) use ($keterangan) {
+                $query->where('id_keterangan', $keterangan);
+            })
+            ->whereHas('dosen', function ($query) use ($kode_dosen) {
+                $query->where('kode_dosen', $kode_dosen);
+            })
+            ->paginate(10);
+
+        return view('page.jadwalreguler_dsn.index')->with([
             'jadwal_reguler' => $jadwal_reguler,
         ]);
     }

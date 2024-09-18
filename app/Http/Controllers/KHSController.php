@@ -75,53 +75,6 @@ class KHSController extends Controller
      */
     public function store(Request $request)
     {
-        // $user_ids = $request->input('user_id');
-        // $id_jurusan = $request->input('id_jurusan');
-        // if (empty($user_ids)) {
-        //     return redirect()->back()->with('error', 'Pilih dulu');
-        // }
-
-        // $kelas = Kelas::all();
-        // $result = DB::table('mahasiswa')
-        //     ->join('kelas', 'mahasiswa.id_kelas', '=', 'kelas.id')
-        //     ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id')
-        //     ->whereIn('mahasiswa.nim', $user_ids)
-        //     ->select('mahasiswa.*', 'kelas.kelas', 'jurusan.jurusan')
-        //     ->paginate(15);
-
-        // if ($result->isEmpty()) {
-        //     return redirect()->back()->with('error', 'Data tidak ditemukan');
-        // }
-
-        // $jadwal = DB::table('vw_data_prestasi')
-        //     ->where('semester', 2)
-        //     ->where('id_jurusan', 2)
-        //     ->groupBy('id_materi_ajar')
-        //     ->get();
-
-        // // $jadwal = DB::table('vw_data_prestasi')
-        // //     ->where('semester', 1)
-        // //     ->where('id_kelas', 2)
-        // //     ->groupBy('id_materi_ajar')
-        // //     ->get();
-
-
-        // $nilai = Nilai::where('verifikasi', 1)
-        //     ->whereIn('nim', $user_ids)
-        //     ->get();
-
-        // // Group the nilai by both nim and id_jadwal
-        // $nilaiPerMahasiswa = [];
-        // foreach ($nilai as $itemNilai) {
-        //     $nilaiPerMahasiswa[$itemNilai->nim][$itemNilai->id_jadwal] = $itemNilai;
-        // }
-
-        // return view('page.khs.print')->with([
-        //     'stu_data' => $result,
-        //     'kelas' => $kelas,
-        //     'jadwal' => $jadwal,
-        //     'nilaiPerMahasiswa' => $nilaiPerMahasiswa
-        // ]);
 
         $user_ids = $request->input('user_id');
         $id_jurusans = $request->input('id_jurusan');

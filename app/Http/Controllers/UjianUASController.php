@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jadwalreguler;
+use App\Models\Konfigurasi;
 use App\Models\Uas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UjianUASController extends Controller
 {
@@ -67,10 +69,15 @@ class UjianUASController extends Controller
                 Uas::create($data);
             }
 
-
-            return redirect()
-                ->route('ujian_uas.index')
-                ->with('message', 'Data UAS Sudah ditambahkan');
+            if (Auth::user()->role == 'A') {
+                return redirect()
+                    ->route('ujian_uas.index')
+                    ->with('message', 'Data UAS Sudah ditambahkan');
+            } else {
+                return redirect()
+                    ->route('ujian_uas.ujian_uas_dosen', Auth::user()->email)
+                    ->with('message', 'Data UAS Sudah diupdate');
+            }
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
         }
@@ -131,9 +138,15 @@ class UjianUASController extends Controller
         // Simpan perubahan ke database
         $uas->save();
 
-        return redirect()
-            ->route('ujian_uas.index')
-            ->with('message', 'Data UAS Sudah diupdate');
+        if (Auth::user()->role == 'A') {
+            return redirect()
+                ->route('ujian_uas.index')
+                ->with('message', 'Data UAS Sudah diupdate');
+        } else {
+            return redirect()
+                ->route('ujian_uas.ujian_uas_dosen', Auth::user()->email)
+                ->with('message', 'Data UAS Sudah diupdate');
+        }
     }
 
     /**
@@ -142,5 +155,45 @@ class UjianUASController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function ujian_uas_dosen()
+    {
+        $konfigurasi = Konfigurasi::first();
+        $tahun_akademik = $konfigurasi->id_tahun_akademik;
+        $keterangan = $konfigurasi->id_keterangan;
+        $kode_dosen = Auth::user()->email;
+
+        $jadwal = Jadwalreguler::with([
+            'perhitungan',
+            'sesi',
+            'sesi.pukul',
+            'hari',
+            'ruang',
+            'tahun_akademik',
+            'dosen',
+            'kelas',
+            'kelas.jurusan',
+            'detail_kurikulum',
+            'detail_kurikulum.materi_ajar',
+            'detail_kurikulum.materi_ajar.semester',
+            'detail_kurikulum.materi_ajar.semester.keterangan'
+        ])
+            ->whereHas('tahun_akademik', function ($query) use ($tahun_akademik) {
+                $query->where('id_tahun_akademik', $tahun_akademik);
+            })
+            ->whereHas('detail_kurikulum.materi_ajar.semester.keterangan', function ($query) use ($keterangan) {
+                $query->where('id_keterangan', $keterangan);
+            })
+            ->whereHas('dosen', function ($query) use ($kode_dosen) {
+                $query->where('kode_dosen', $kode_dosen);
+            })
+            ->paginate(10);
+
+        $uas = Uas::all();
+        return view('page.uas_dosen.index')->with([
+            'jadwal' => $jadwal,
+            'uas' => $uas,
+        ]);
     }
 }

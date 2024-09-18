@@ -104,22 +104,43 @@
                                         }
                                     @endphp
 
-                                    @if ($route)
-                                        <form action="{{ $route }}" method="POST">
-                                            @csrf
-                                            @method('PATCH')
-                                            <input type="hidden" value="1" name="verifikasi">
-                                            <button type="submit"
-                                                class="bg-sky-200 p-3 rounded-xl font-extrabold text-sky-800 flex items-center justify-center text-[18px] w-[300px]">
-                                                <i class="fi fi-sr-cross-circle flex items-center text-red-500 mr-3"></i> {{ $text }}
+                                    @can('role-A')
+                                        @if ($route)
+                                            <form action="{{ $route }}" method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" value="1" name="verifikasi">
+                                                <button type="submit"
+                                                    class="bg-sky-200 p-3 rounded-xl font-extrabold text-sky-800 flex items-center justify-center text-[18px] w-[300px]">
+                                                    <i
+                                                        class="fi fi-sr-cross-circle flex items-center text-red-500 mr-3"></i>
+                                                    {{ $text }}
+                                                </button>
+                                            </form>
+                                        @else
+                                            <button disabled
+                                                class="bg-gray-200 p-3 rounded-xl font-extrabold text-gray-800 flex items-center justify-center text-[18px] w-[300px]">
+                                                <i class="fi fi-sr-check-circle flex items-center text-green-500 mr-3"></i>
+                                                {{ $text }}
                                             </button>
-                                        </form>
-                                    @else
-                                        <button disabled
-                                            class="bg-gray-200 p-3 rounded-xl font-extrabold text-gray-800 flex items-center justify-center text-[18px] w-[300px]">
-                                            <i class="fi fi-sr-check-circle flex items-center text-green-500 mr-3"></i> {{ $text }}
-                                        </button>
-                                    @endif
+                                        @endif
+                                    @endcan
+
+                                    @can('role-D')
+                                        @if ($route)
+                                            <button disabled
+                                                class="bg-sky-200 p-3 rounded-xl font-extrabold text-sky-800 flex items-center justify-center text-[18px] w-[300px]">
+                                                <i class="fi fi-sr-cross-circle flex items-center text-red-500 mr-3"></i>
+                                                {{ $text }}
+                                            </button>
+                                        @else
+                                            <button disabled
+                                                class="bg-gray-200 p-3 rounded-xl font-extrabold text-gray-800 flex items-center justify-center text-[18px] w-[300px]">
+                                                <i class="fi fi-sr-check-circle flex items-center text-green-500 mr-3"></i>
+                                                {{ $text }}
+                                            </button>
+                                        @endif
+                                    @endcan
 
                                 </div>
                                 <form action="{{ route('nilai.update', $nilaiMateri->id_jadwal) }}" method="POST"
@@ -129,8 +150,8 @@
                                     <div class="overflow-hidden rounded-xl border mt-5 mb-5">
                                         <input type="hidden" id="id_jadwal" name="id_jadwal"
                                             class="w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0"
-                                            placeholder="Masukkan Id Jadwal disini" value="{{ $presensi->id_jadwal }}"
-                                            readonly>
+                                            placeholder="Masukkan Id Jadwal disini"
+                                            value="{{ $presensi->id_jadwal }}" readonly>
                                         <table
                                             class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                             <thead

@@ -29,6 +29,8 @@ class DetailFormatifController extends Controller
      */
     public function store(Request $request)
     {
+
+        // dd($request->all());
         try {
             $nim = $request->input('nim');
             $id_formatif = $request->input('id_formatif');

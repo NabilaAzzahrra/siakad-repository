@@ -22,7 +22,7 @@ class MahasiswaController extends Controller
             ->whereNotNull('mahasiswa.id_kelas')
             ->whereNotNull('mahasiswa.tingkat')
             ->orderBy('nama', 'ASC')
-            ->paginate(30);
+            ->paginate(2);
 
 
         return view('page.mahasiswa.index')->with([

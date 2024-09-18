@@ -8,6 +8,7 @@ use App\Models\Konfigurasi;
 use App\Models\Mahasiswa;
 use App\Models\Presensi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReportMahasiswaKeseluruhanController extends Controller
 {
@@ -161,5 +162,43 @@ class ReportMahasiswaKeseluruhanController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function r_mahasiswa()
+    {
+        $konfigurasi = Konfigurasi::first();
+        $tahun_akademik = $konfigurasi->id_tahun_akademik;
+        $keterangan = $konfigurasi->id_keterangan;
+        $kode_dosen = Auth::user()->email;
+
+        $jadwal = Jadwalreguler::with([
+            'perhitungan',
+            'sesi',
+            'sesi.pukul',
+            'hari',
+            'ruang',
+            'tahun_akademik',
+            'dosen',
+            'kelas',
+            'kelas.jurusan',
+            'detail_kurikulum',
+            'detail_kurikulum.materi_ajar',
+            'detail_kurikulum.materi_ajar.semester',
+            'detail_kurikulum.materi_ajar.semester.keterangan'
+        ])
+            ->whereHas('tahun_akademik', function ($query) use ($tahun_akademik) {
+                $query->where('id_tahun_akademik', $tahun_akademik);
+            })
+            ->whereHas('detail_kurikulum.materi_ajar.semester.keterangan', function ($query) use ($keterangan) {
+                $query->where('id_keterangan', $keterangan);
+            })
+            ->whereHas('dosen', function ($query) use ($kode_dosen) {
+                $query->where('kode_dosen', $kode_dosen);
+            })
+            ->paginate(10);
+
+        return view('page.report_mahasiswa.keseluruhan')->with([
+            'jadwal' => $jadwal,
+        ]);
     }
 }

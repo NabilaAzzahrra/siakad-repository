@@ -6,6 +6,7 @@ use App\Models\DetailPresensi;
 use App\Models\Mahasiswa;
 use App\Models\Presensi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PresensiController extends Controller
 {
@@ -45,7 +46,7 @@ class PresensiController extends Controller
 
             // Masukkan input materi ke dalam $data
             $data['materi'] = $request->input('materi');
-            $data['file_materi'] = $materiFilePath;
+            $data['file_materi'] = $materiFileName;
             $data['tgl_presensi'] = date('Y-m-d');
             // Cari data presensi berdasarkan id_presensi
             $presensi = Presensi::where('id_presensi', $presensiId)->first();
@@ -93,10 +94,16 @@ class PresensiController extends Controller
         //     // Simpan detail presensi
         //     $detailPresensi->save();
         // }
-
-        return redirect()
+        if (Auth::user()->role == 'A') {
+            return redirect()
             ->route('jadwal_reguler.index')
             ->with('message', 'Data presensi telah berhasil ditambahkan.');
+        } else {
+            return redirect()
+            ->route('jadwal_reguler.jadwal_dosen', Auth::user()->email)
+            ->with('message', 'Data presensi telah berhasil ditambahkan.');
+        }
+
     }
 
 

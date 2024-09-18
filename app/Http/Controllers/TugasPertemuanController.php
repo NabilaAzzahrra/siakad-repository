@@ -6,6 +6,7 @@ use App\Models\DetailTugas;
 use App\Models\Presensi;
 use App\Models\Tugas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use ZipArchive;
 
@@ -57,9 +58,15 @@ class TugasPertemuanController extends Controller
 
             Tugas::create($data);
 
-            return redirect()
-                ->route('jadwal_reguler.index')
-                ->with('message', 'Data presensi telah berhasil ditambahkan.');
+            if (Auth::user()->role == 'A') {
+                return redirect()
+                    ->route('jadwal_reguler.index')
+                    ->with('message', 'Data presensi telah berhasil ditambahkan.');
+            } else {
+                return redirect()
+                    ->route('jadwal_reguler.jadwal_dosen', Auth::user()->email)
+                    ->with('message', 'Data presensi telah berhasil ditambahkan.');
+            }
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
         }
@@ -72,9 +79,11 @@ class TugasPertemuanController extends Controller
     {
         $presensi = Presensi::where('id_presensi', $id)->first();
         $tugas = Tugas::where('id_presensi', $id)->get();
+        $detail_tugas = DetailTugas::all();
         return view('page.tugas.index')->with([
             'presensi' => $presensi,
             'tugas' => $tugas,
+            'detail_tugas' => $detail_tugas
         ]);
     }
 

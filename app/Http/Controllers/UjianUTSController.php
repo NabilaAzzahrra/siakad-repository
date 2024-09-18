@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jadwalreguler;
+use App\Models\Konfigurasi;
 use App\Models\Uts;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UjianUTSController extends Controller
 {
@@ -67,10 +69,15 @@ class UjianUTSController extends Controller
                 Uts::create($data);
             }
 
-
-            return redirect()
-                ->route('ujian_uts.index')
-                ->with('message', 'Data UTS Sudah ditambahkan');
+            if (Auth::user()->role == 'A') {
+                return redirect()
+                    ->route('ujian_uts.index')
+                    ->with('message', 'Data UTS Sudah ditambahkan');
+            }else{
+                return redirect()
+                    ->route('ujian_uts.ujian_uts_dosen', Auth::user()->email)
+                    ->with('message', 'Data UTS Sudah ditambahkan');
+            }
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
         }
@@ -131,9 +138,15 @@ class UjianUTSController extends Controller
         // Simpan perubahan ke database
         $uts->save();
 
-        return redirect()
+        if (Auth::user()->role == 'A') {
+            return redirect()
             ->route('ujian_uts.index')
             ->with('message', 'Data UTS Sudah diupdate');
+        }else{
+            return redirect()
+                ->route('ujian_uts.ujian_uts_dosen', Auth::user()->email)
+                ->with('message', 'Data UTS Sudah diupdate');
+        }
     }
 
     /**
@@ -142,5 +155,45 @@ class UjianUTSController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function ujian_uts_dosen()
+    {
+        $konfigurasi = Konfigurasi::first();
+        $tahun_akademik = $konfigurasi->id_tahun_akademik;
+        $keterangan = $konfigurasi->id_keterangan;
+        $kode_dosen = Auth::user()->email;
+
+        $jadwal = Jadwalreguler::with([
+            'perhitungan',
+            'sesi',
+            'sesi.pukul',
+            'hari',
+            'ruang',
+            'tahun_akademik',
+            'dosen',
+            'kelas',
+            'kelas.jurusan',
+            'detail_kurikulum',
+            'detail_kurikulum.materi_ajar',
+            'detail_kurikulum.materi_ajar.semester',
+            'detail_kurikulum.materi_ajar.semester.keterangan'
+        ])
+            ->whereHas('tahun_akademik', function ($query) use ($tahun_akademik) {
+                $query->where('id_tahun_akademik', $tahun_akademik);
+            })
+            ->whereHas('detail_kurikulum.materi_ajar.semester.keterangan', function ($query) use ($keterangan) {
+                $query->where('id_keterangan', $keterangan);
+            })
+            ->whereHas('dosen', function ($query) use ($kode_dosen) {
+                $query->where('kode_dosen', $kode_dosen);
+            })
+            ->paginate(10);
+
+        $uts = Uts::all();
+        return view('page.uts_dosen.index')->with([
+            'jadwal' => $jadwal,
+            'uts' => $uts,
+        ]);
     }
 }

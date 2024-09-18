@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Dosen;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DosenController extends Controller
 {
@@ -29,7 +30,24 @@ class DosenController extends Controller
      */
     public function store(Request $request)
     {
+        // Cari kode dosen terakhir di database, misal di tabel 'dosens'
+        $lastKodeDosen = DB::table('dosen')->orderBy('kode_dosen', 'desc')->first();
+
+        if ($lastKodeDosen) {
+            // Ambil angka dari kode terakhir, misal "DSN0002" -> 2
+            $lastNumber = (int) substr($lastKodeDosen->kode_dosen, 3);
+            // Tambahkan 1 untuk kode baru
+            $newNumber = $lastNumber + 1;
+        } else {
+            // Jika belum ada kode dosen, mulai dari 1
+            $newNumber = 1;
+        }
+
+        // Format kode dosen menjadi "DSN0001", "DSN0002", dll.
+        $newKodeDosen = 'DSN' . str_pad($newNumber, 4, '0', STR_PAD_LEFT);
+
         $data = [
+            'kode_dosen' => $newKodeDosen,
             'nama_dosen' => $request->input('nama_dosen'),
             'email' => $request->input('email_dosen'),
             'no_hp' => $request->input('no_hp_dosen'),
@@ -38,7 +56,7 @@ class DosenController extends Controller
 
         $datas = [
             'name' => $request->input('nama_dosen'),
-            'email' => $request->input('email_dosen'),
+            'email' => $newKodeDosen,
             'password' => $request->input('password'),
             'role' => "D"
         ];

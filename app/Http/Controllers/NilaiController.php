@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\DetailPresensi;
 use App\Models\Jadwalreguler;
+use App\Models\Konfigurasi;
 use App\Models\Mahasiswa;
 use App\Models\Nilai;
 use App\Models\Presensi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class NilaiController extends Controller
@@ -79,9 +81,15 @@ class NilaiController extends Controller
             $nilaiMateri->save();
         }
 
-        return redirect()
-            ->route('nilai.index')
-            ->with('message', 'Data presensi telah berhasil ditambahkan.');
+        if (Auth::user()->role == 'A') {
+            return redirect()
+                ->route('nilai.index')
+                ->with('message', 'Data presensi telah berhasil ditambahkan.');
+        } else {
+            return redirect()
+                ->route('nilai.nilai_dosen', Auth::user()->email)
+                ->with('message', 'Data UAS Sudah diupdate');
+        }
     }
 
     /**
@@ -178,5 +186,45 @@ class NilaiController extends Controller
         }
 
         return back()->with('message_error', 'Semua nilai sudah diverifikasi sebelumnya.');
+    }
+
+    public function nilai_dosen()
+    {
+        $konfigurasi = Konfigurasi::first();
+        $tahun_akademik = $konfigurasi->id_tahun_akademik;
+        $keterangan = $konfigurasi->id_keterangan;
+        $kode_dosen = Auth::user()->email;
+
+        $jadwal_reguler = Jadwalreguler::with([
+            'perhitungan',
+            'sesi',
+            'sesi.pukul',
+            'hari',
+            'ruang',
+            'tahun_akademik',
+            'dosen',
+            'kelas',
+            'kelas.jurusan',
+            'detail_kurikulum',
+            'detail_kurikulum.materi_ajar',
+            'detail_kurikulum.materi_ajar.semester',
+            'detail_kurikulum.materi_ajar.semester.keterangan'
+        ])
+            ->whereHas('tahun_akademik', function ($query) use ($tahun_akademik) {
+                $query->where('id_tahun_akademik', $tahun_akademik);
+            })
+            ->whereHas('detail_kurikulum.materi_ajar.semester.keterangan', function ($query) use ($keterangan) {
+                $query->where('id_keterangan', $keterangan);
+            })
+            ->whereHas('dosen', function ($query) use ($kode_dosen) {
+                $query->where('kode_dosen', $kode_dosen);
+            })
+            ->paginate(10);
+
+        $nilai = Nilai::all();
+        return view('page.nilai_dosen.index')->with([
+            'jadwal_reguler' => $jadwal_reguler,
+            'nilai' => $nilai
+        ]);
     }
 }
