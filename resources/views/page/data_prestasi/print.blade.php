@@ -138,7 +138,7 @@
 
         .page::before {
             content: "";
-            position: absolute;
+            position: ;
             top: 0;
             left: 0;
             width: 189px;
@@ -149,7 +149,7 @@
 
         .page::after {
             content: "";
-            position: absolute;
+            position: ;
             bottom: 0;
             right: 0;
             width: 794px;
@@ -183,7 +183,7 @@
 
             .page::before {
                 content: "";
-                position: absolute;
+                position: ;
                 top: 0;
                 left: 0;
                 width: 189px;
@@ -194,7 +194,7 @@
 
             .page::after {
                 content: "";
-                position: absolute;
+                position: ;
                 bottom: 0;
                 right: 0;
                 width: 794px;
@@ -218,13 +218,13 @@
                 <div class="-ml-[585px]">
                     <img src="{{ asset('img/graphic.png') }}" alt="" width="15%" class="mx-auto">
                 </div>
-                <div class="absolute top-0 left-0 right-0 text-center mt-6">
+                <div class=" top-0 left-0 right-0 text-center -mt-[160px]">
                     <img src="{{ asset('img/logo.png') }}" width="10%" alt="Logo" class="mx-auto">
                 </div>
-                <div class="absolute top-[120px] left-0 right-0 text-center text-[#00426D] text-sm font-extrabold">
+                <div class="mb-4 left-0 right-0 text-center text-[#00426D] text-sm font-extrabold">
                     TASIKMALAYA
                 </div>
-                <div class="absolute top-[150px] left-0 right-0 text-center text-sm font-bold">
+                <div class="mb-4 left-0 right-0 text-center text-sm font-bold">
                     DATA PRESTASI AKADEMIK
                 </div>
                 <div class="ml-12 text-[10px]">
@@ -970,3 +970,6 @@
 </body>
 
 </html>
+<script>
+    window.print();
+</script>

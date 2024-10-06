@@ -21,8 +21,8 @@ class KrsMhsController extends Controller
         $jadwal = Jadwalreguler::whereHas('kelas.jurusan', function ($query) {
             $query->where('id_jurusan', Auth::user()->mahasiswa->kelas->jurusan->id);
         })->where('id_keterangan', $id_keterangan)->where('id_tahun_akademik', $id_tahun_akademik)->with('kelas.jurusan')->get();
-        // dd($jadwal);
         $nilai = Nilai::where('nim', Auth::user()->email)->get();
+        // dd($jadwal);
         return view('page.krs_mhs.index')->with([
             'jadwal' => $jadwal,
             'nilai' => $nilai,

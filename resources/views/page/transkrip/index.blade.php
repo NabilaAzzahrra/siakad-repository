@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('pukul') }}
+            {{ __('Transkrip') }}
         </h2>
     </x-slot>
 
@@ -9,15 +9,15 @@
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-full p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 bg-red-500 rounded-xl">
+                            <div class="p-6 bg-amber-300 font-bold rounded-xl">
                                 <div class="flex items-center justify-between">
                                     <div>DATA MAHASISWA</div>
                                 </div>
                             </div>
                             <form action="">
-                                <div class="mt-12 mx-12 flex gap-5">
+                                <div class="mt-12 lg:mx-12 flex flex-col lg:flex-row gap-5">
                                     <div class="w-full">
                                         <label for="tahun_angkatan"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">TAHUN
@@ -56,7 +56,7 @@
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             placeholder="Pilih Bulan dan Tahun" required />
                                     </div>
-                                    <div class="flex justify-end mt-7">
+                                    <div class="flex justify-center lg:justify-end lg:mt-7">
                                         <button class="mb-4 p-2 bg-sky-400 text-white rounded-xl">
                                             FILTER
                                         </button>
@@ -64,7 +64,7 @@
                                 </div>
                             </form>
                             <div class="flex justify-center">
-                                <div class="p-12" style="width:100%;overflow-x:auto;">
+                                <div class="lg:p-12" style="width:100%;overflow-x:auto;">
                                     <form action="{{ route('transkrip.store') }}" method="POST" class="formupdate">
                                         @csrf
                                         <div class="flex justify-end">
@@ -72,7 +72,7 @@
                                                 SUBMIT
                                             </button>
                                         </div>
-                                        <div class="relative overflow-x-auto sm:rounded-lg shadow-lg">
+                                        <div class="relative overflow-x-auto rounded-lg shadow-lg">
                                             <input type="hidden" name="bulan_tahun" value="{{ request('bulan_tahun', '') }}">
                                             <table
                                                 class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border">

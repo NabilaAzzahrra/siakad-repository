@@ -138,7 +138,7 @@
 
         .page::before {
             content: "";
-            position: absolute;
+            position: ;
             top: 0;
             left: 0;
             width: 189px;
@@ -149,7 +149,7 @@
 
         .page::after {
             content: "";
-            position: absolute;
+            position: ;
             bottom: 0;
             right: 0;
             width: 794px;
@@ -183,7 +183,7 @@
 
             .page::before {
                 content: "";
-                position: absolute;
+                position: ;
                 top: 0;
                 left: 0;
                 width: 189px;
@@ -194,7 +194,7 @@
 
             .page::after {
                 content: "";
-                position: absolute;
+                position: ;
                 bottom: 0;
                 right: 0;
                 width: 794px;
@@ -214,17 +214,17 @@
             <div class="-ml-[585px]">
                 <img src="{{ asset('img/graphic.png') }}" alt="" width="15%" class="mx-auto">
             </div>
-            <div class="absolute top-0 left-0 right-0 text-center mt-6">
+            <div class=" top-0 left-0 right-0 text-center -mt-[160px]">
                 <img src="{{ asset('img/logo.png') }}" width="10%" alt="Logo" class="mx-auto">
             </div>
-            <div class="absolute top-[120px] left-0 right-0 text-center text-[#00426D] text-sm font-extrabold">
+            <div class=" top-[120px] left-0 right-0 text-center text-[#00426D] text-sm font-extrabold">
                 TASIKMALAYA
             </div>
-            <div class="absolute top-[150px] left-0 right-0 text-center text-sm font-bold">
+            <div class=" top-[150px] left-0 right-0 text-center text-sm font-bold">
                 KEHADIRAN MAHASISWA
             </div>
 
-            <div class="absolute top-[200px] ml-24 left-0 right-0 text-center text-sm font-bold">
+            <div class="mt-6 ml-24 left-0 right-0 text-center text-sm font-bold">
                 <div class="flex">
                     <div>Peserta Didik</div>
                     <div class="ml-[114px]">:</div>
@@ -247,7 +247,7 @@
                 </div>
             </div>
 
-            <div class="absolute top-[320px] ml-[6px] mr-[90px] left-0 right-0 text-center text-sm font-bold">
+            <div class="ml-[6px] mr-[90px] mt-6 left-0 right-0 text-center text-sm font-bold">
                 <table class="border border-1 border-black w-full">
                     <thead class="border border-1 border-black">
                         <th class="border border-1 border-black">NO</th>
@@ -299,7 +299,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                <div class="absolute top-[80px] text-xs mt-12 flex items-center justify-start font-bold ml-10">
+                <div class=" top-[80px] text-xs mt-12 flex items-center justify-start font-bold ml-10">
                     <div class="flex text-left">
                         <div>
                             @php
@@ -360,3 +360,6 @@
 </body>
 
 </html>
+<script>
+    window.print();
+</script>

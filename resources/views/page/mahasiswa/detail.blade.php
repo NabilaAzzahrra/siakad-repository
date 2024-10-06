@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('pukul') }}
+            {{ __('Detail Mahasiswa') }}
         </h2>
     </x-slot>
 
@@ -11,24 +11,24 @@
                 <div class="w-full md:w-full p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 bg-red-500 rounded-xl">
+                            <div class="p-6 bg-amber-300 rounded-xl">
                                 <div class="flex items-center justify-between">
                                     <div>DATA MAHASISWA</div>
                                 </div>
                             </div>
                             <div class="flex justify-center">
-                                <div class="p-12" style="width:100%;overflow-x:auto;">
+                                <div class="p-4 pt-6" style="width:100%;overflow-x:auto;">
                                     <form action="{{ route('mahasiswa.edit_det') }}" method="POST" class="formupdate">
                                         @csrf
                                         @method('PUT')
                                         <div class="flex justify-end">
-                                            <button type="submit" class="mb-4 p-2 bg-sky-400 text-white rounded-xl">
+                                            <button type="submit" class="mb-2 lg:mb-0 p-2 bg-sky-400 text-white rounded-xl">
                                                 SUBMIT
                                             </button>
                                         </div>
                                         <div class="mb-5">
-                                            <div class="flex gap-5">
-                                                <div class="mb-5 w-full">
+                                            <div class="flex flex-col lg:flex-row gap-5">
+                                                <div class="w-full">
                                                     <label for="kelas" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                                         Kelas
                                                     </label>
@@ -42,14 +42,14 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="mb-5 w-full">
+                                                <div class=" w-full">
                                                     <label for="jurusan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jurusan</label>
                                                     <input type="text" id="jurusan" name="jurusan"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                         placeholder="Masukan jurusan disini ..."
                                                         value="{{ old('jurusan') }}" readonly />
                                                 </div>
-                                                <div class="mb-5 w-full">
+                                                <div class=" w-full">
                                                     <label for="tingkat" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                                         Tingkat
                                                     </label>
@@ -63,7 +63,7 @@
                                                         <option value="4">4</option>
                                                     </select>
                                                 </div>
-                                                <div class="mb-5 w-full">
+                                                <div class=" w-full">
                                                     <label for="status" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                                         Akses Ujian
                                                     </label>
@@ -75,7 +75,7 @@
                                                         <option value="true">Can Access</option>
                                                     </select>
                                                 </div>
-                                                <div class="mb-5 w-full">
+                                                <div class=" w-full">
                                                     <label for="keaktifan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                                         Keaktifan
                                                     </label>
@@ -91,7 +91,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="relative overflow-x-auto sm:rounded-lg shadow-lg">
+                                        <div class="relative overflow-x-auto rounded-lg shadow-lg">
                                             @foreach ($stu_data as $index => $s)
                                                 <input type="hidden" value="{{ $s->nim }}" name="id{{ $index + 1 }}">
                                             @endforeach

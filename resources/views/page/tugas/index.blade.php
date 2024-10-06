@@ -11,16 +11,16 @@
                 <div class="w-full md:w-full p-3">
                     <form action="{{ route('tugass.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="flex gap-5 items-start ">
+                        <div class="flex flex-col lg:flex-row gap-5 items-start ">
                             @can('role-A')
-                                <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                                <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl rounded-lg">
                                     <div class="p-6 text-gray-900 dark:text-gray-100 overflow-hidden">
                                         <div
                                             class="bg-sky-200 p-3 rounded-xl font-extrabold text-sky-800 flex items-center justify-center text-[20px]">
-                                            DATA PRESENSI
+                                            DATA JADWAL
                                         </div>
                                         <div class="mt-5">
-                                            <div class="flex gap-5 mb-5">
+                                            <div class="flex flex-col lg:flex-row gap-5 mb-5">
                                                 <div class="w-full">
                                                     <label for="id_presensi"
                                                         class="block text-sm font-medium text-gray-700">Kode
@@ -59,7 +59,7 @@
                                                         readonly>
                                                 </div>
                                             </div>
-                                            <div class="flex gap-5 mb-5">
+                                            <div class="flex flex-col lg:flex-row gap-5 mb-5">
                                                 <div class="w-full">
                                                     <label for="name"
                                                         class="block text-sm font-medium text-gray-700">Kelas</label>
@@ -87,7 +87,7 @@
                                                         readonly>
                                                 </div>
                                             </div>
-                                            <div class="flex gap-5">
+                                            <div class="flex flex-col lg:flex-row gap-5">
                                                 <div class="w-full">
                                                     <label for="tugas"
                                                         class="block text-sm font-medium text-gray-700">Tugas</label>
@@ -118,14 +118,14 @@
                                 </div>
                             @endcan
                             @can('role-D')
-                                <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                                <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
                                     <div class="p-6 text-gray-900 dark:text-gray-100 overflow-hidden">
                                         <div
                                             class="bg-sky-200 p-3 rounded-xl font-extrabold text-sky-800 flex items-center justify-center text-[20px]">
-                                            DATA PRESENSI
+                                            DATA JADWAL
                                         </div>
                                         <div class="mt-5">
-                                            <div class="flex gap-5 mb-5">
+                                            <div class="flex flex-col lg:flex-row gap-5 mb-5">
                                                 <div class="w-full">
                                                     <label for="id_presensi"
                                                         class="block text-sm font-medium text-gray-700">Kode
@@ -222,13 +222,13 @@
                                     </div>
                                 </div>
                             @endcan
-                            <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                            <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl rounded-lg">
                                 <div class="p-6 text-gray-900 dark:text-gray-100">
                                     <div
                                         class="bg-sky-200 p-3 rounded-xl font-extrabold text-sky-800 flex items-center justify-center text-[20px]">
                                         TUGAS
                                     </div>
-                                    <div class="mt-10 mb-8">
+                                    <div class="mt-10 mb-8 relative overflow-x-auto rounded-lg shadow-lg">
                                         <table
                                             class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border">
                                             <thead
@@ -274,7 +274,7 @@
                                                         <th scope="row"
                                                             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white bg-gray-100">
                                                             <a href="{{ asset('tugas/' . $t->file_tugas) }}"
-                                                                class="bg-sky-500 hover:bg-bg-red-300 px-3 py-2 rounded-md text-xs text-white"
+                                                                class="bg-sky-500 hover:bg-bg-red-300 px-4 py-3 rounded-xl text-xs text-white"
                                                                 download>
                                                                 <i class="fi fi-sr-file-download"></i>
                                                             </a>
@@ -283,30 +283,30 @@
                                                             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white ">
                                                             @can('role-A')
                                                                 <a href="{{ route('tugass.edit', $t->id_tugas) }}"
-                                                                    class="mr-2 bg-green-500 hover:bg-green-600 px-3 py-1 rounded-md text-xs text-white">
+                                                                    class="mr-2 bg-green-500 hover:bg-green-600 px-4 py-3 rounded-xl text-xs text-white">
                                                                     <i class="fi fi-sr-member-list"></i>
                                                                 </a>
                                                                 <button
                                                                     onclick="return tugasDelete('{{ $t->id_tugas }}','{{ $t->file_tugas }}')"
-                                                                    class="bg-red-500 hover:bg-red-300 px-3 py-1 rounded-md text-xs text-white">
+                                                                    class="bg-red-500 hover:bg-red-300 px-4 py-3 rounded-xl text-xs text-white">
                                                                     <i class="fas fa-trash"></i>
                                                                 </button>
                                                                 <button type="button" data-id="{{ $t->id }}"
                                                                     data-modal-target="sourceModal"
                                                                     data-id_tugas="{{ $t->id_tugas }}"
                                                                     onclick="editSourceModal(this)"
-                                                                    class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
+                                                                    class="bg-amber-500 hover:bg-amber-600 px-4 py-3 rounded-xl text-xs text-white">
                                                                     <i class="fas fa-edit"></i>
                                                                 </button>
                                                             @endcan
                                                             @can('role-D')
                                                                 <a href="{{ route('tugass.edit', $t->id_tugas) }}"
-                                                                    class="mr-2 bg-green-500 hover:bg-green-600 px-3 py-1 rounded-md text-xs text-white">
+                                                                    class="mr-2 bg-green-500 hover:bg-green-600 px-4 py-3 rounded-xl text-xs text-white">
                                                                     <i class="fi fi-sr-member-list"></i>
                                                                 </a>
                                                                 <button
                                                                     onclick="return tugasDelete('{{ $t->id_tugas }}','{{ $t->file_tugas }}')"
-                                                                    class="bg-red-500 hover:bg-red-300 px-3 py-1 rounded-md text-xs text-white">
+                                                                    class="bg-red-500 hover:bg-red-300 px-4 py-3 rounded-xl text-xs text-white">
                                                                     <i class="fas fa-trash"></i>
                                                                 </button>
                                                             @endcan
@@ -314,7 +314,7 @@
                                                                 @if ($jawaban)
                                                                     <a href="{{ asset('tugas/jawaban/' . $t->id_tugas . '-' . Auth::user()->email . '.pdf') }}"
                                                                         download
-                                                                        class="mr-2 bg-green-500 hover:bg-green-600 px-3 py-1 rounded-md text-xs text-white">
+                                                                        class="mr-2 bg-green-500 hover:bg-green-600 px-4 py-3 rounded-xl text-xs text-white">
                                                                         <i class="fa-solid fa-file"></i>
                                                                     </a>
                                                                 @else
@@ -322,7 +322,7 @@
                                                                         data-modal-target="sourceModal"
                                                                         data-id_tugas="{{ $t->id_tugas }}"
                                                                         onclick="editSourceModal(this)"
-                                                                        class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
+                                                                        class="bg-amber-500 hover:bg-amber-600 px-4 py-3 rounded-xl text-xs text-white">
                                                                         <i class="fas fa-edit"></i>
                                                                     </button>
                                                                 @endif
@@ -385,7 +385,7 @@
                     <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
                         <button type="submit" id="formSourceButton"
                             class="bg-green-400 m-2 w-40 h-10 rounded-xl hover:bg-green-500">Simpan</button>
-                        <button type="button" data-modal-target="sourceModal" onclick="changeSourceModal(this)"
+                        <button type="button" data-modal-target="sourceModal" onclick="sourceModalClose(this)"
                             class="bg-red-500 m-2 w-40 h-10 rounded-xl text-white hover:shadow-lg hover:bg-red-600">Batal</button>
                     </div>
                 </form>
@@ -439,5 +439,11 @@
             let status = document.getElementById(modalTarget);
             status.classList.toggle('hidden');
         };
+
+        const sourceModalClose = (button) => {
+            const modalTarget = button.dataset.modalTarget;
+            let status = document.getElementById(modalTarget);
+            status.classList.toggle('hidden');
+        }
     </script>
 </x-app-layout>

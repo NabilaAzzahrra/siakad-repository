@@ -11,7 +11,7 @@
                 <div class="w-full md:w-5/12 p-3 hidden">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 bg-red-500 rounded-xl">
+                            <div class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
                                 FORM INPUT Konfigurasi
                             </div>
                             <form action="{{ route('konfigurasi_ujian.store') }}" method="post">
@@ -45,7 +45,7 @@
                                         </div>
                                     </div>
                                     <button type="submit"
-                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Simpan</button>
+                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i class="fi fi-rr-disk "></i></button>
                                 </div>
                             </form>
                         </div>
@@ -54,8 +54,8 @@
                 <div class="w-full md:w-7/12 p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 bg-red-500 rounded-xl">
-                                DATA Konfigurasi
+                            <div class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
+                                DATA KONFIGURASI
                             </div>
                             <div class="flex justify-center">
                                 <div class="p-12" style="width:100%;overflow-x:auto;">
@@ -113,8 +113,8 @@
                                 placeholder="Masukan Keterangan disini...">
                         </div>
                     </div>
-                    <div class="flex gap-5">
-                        <div class="flex flex-col p-4 space-y-6 w-full">
+                    <div class="flex flex-col lg:flex-row gap-5">
+                        <div class="flex flex-col p-4 w-full">
                             <label for="jenis_ujians"
                                 class="block text-sm font-medium text-gray-900 dark:text-white">Jenis Ujian
                                 <span class="text-red-500">*</span></label>
@@ -125,7 +125,7 @@
                                 <option value="UAS">UAS</option>
                             </select>
                         </div>
-                        <div class="flex flex-col  p-4 space-y-6 w-full">
+                        <div class="flex flex-col p-4 w-full">
                             <label for="tgl_mulais"
                                 class="block text-sm font-medium text-gray-900 dark:text-white">Tanggal Mulai
                                 <span class="text-red-500">*</span></label>
@@ -137,7 +137,7 @@
                     <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
                         <button type="submit" id="formSourceButton"
                             class="bg-green-400 m-2 w-40 h-10 rounded-xl hover:bg-green-500">Simpan</button>
-                        <button type="button" data-modal-target="sourceModal" onclick="changeSourceModal(this)"
+                        <button type="button" data-modal-target="sourceModal" onclick="sourceModalClose(this)"
                             class="bg-red-500 m-2 w-40 h-10 rounded-xl text-white hover:shadow-lg hover:bg-red-600">Batal</button>
                     </div>
                 </form>
@@ -200,7 +200,7 @@
                             `<button type="button" data-id="${data.id}"
                                                         data-modal-target="sourceModal" data-id_tahun_akademiks="${data.id_tahun_akademik}" " data-id_keterangans="${data.id_keterangan}" data-jenis_ujians="${data.jenis_ujian}" data-tgl_mulais="${data.tgl_mulai}"
                                                         onclick="editSourceModal(this)"
-                                                        class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
+                                                        class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-xl h-10 w-10 text-xs text-white">
                                                        <i class="fas fa-edit"></i>
                                                     </button>`;
                         return `<div style="text-align:center">${editUrl}</div>`;
@@ -220,7 +220,7 @@
             let url = "{{ route('konfigurasi_ujian.update', ':id') }}".replace(':id', id);
             console.log(url);
             let status = document.getElementById(modalTarget);
-            document.getElementById('title_source').innerText = `Update Konfigurasi`;
+            document.getElementById('title_source').innerText = `UPDATE KONFIGURASI UJIAN`;
 
             document.getElementById('tgl_mulais').value = tgl_mulais;
             document.getElementById('id_keterangans').value = id_keterangans;

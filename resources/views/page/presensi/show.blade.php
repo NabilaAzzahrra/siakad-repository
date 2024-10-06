@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('pukul') }}
+            {{ __('Presensi') }}
         </h2>
     </x-slot>
 
@@ -11,7 +11,7 @@
                 <div class="w-full md:w-full p-3">
                     <form action="{{ route('presensi.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="flex gap-5 items-start ">
+                        <div class="flex flex-col lg:flex-row gap-5 items-start ">
                             <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                                 <div class="p-6 text-gray-900 dark:text-gray-100 overflow-hidden">
                                     <div
@@ -19,7 +19,7 @@
                                         DATA PRESENSI
                                     </div>
                                     <div class="mt-5">
-                                        <div class="flex gap-5 mb-5">
+                                        <div class="flex flex-col lg:flex-row gap-5 mb-5">
                                             <div class="w-full" hidden>
                                                 <label for="id_presensi"
                                                     class="block text-sm font-medium text-gray-700">Kode
@@ -58,7 +58,7 @@
                                                     readonly>
                                             </div>
                                         </div>
-                                        <div class="flex gap-5 mb-5">
+                                        <div class="flex flex-col lg:flex-row gap-5 mb-5">
                                             <div class="w-full">
                                                 <label for="name"
                                                     class="block text-sm font-medium text-gray-700">Kelas</label>
@@ -86,7 +86,7 @@
                                                     readonly>
                                             </div>
                                         </div>
-                                        <div class="flex gap-5">
+                                        <div class="flex flex-col lg:flex-row gap-5">
                                             <div class="w-full">
                                                 <label for="materi"
                                                     class="block text-sm font-medium text-gray-700">Materi</label>
@@ -115,21 +115,21 @@
                                         <div class="flex gap-5">
                                             <div class="w-full">
                                                 <label for="name"
-                                                    class="block text-sm font-medium text-gray-700">NIM</label>
+                                                   class="block text-sm font-medium text-gray-700 text-center">NIM</label>
                                             </div>
                                             <div class="w-full">
                                                 <label for="name"
-                                                    class="block text-sm font-medium text-gray-700">Mahasiswa</label>
+                                                    class="block text-sm font-medium text-gray-700 text-center">MAHASISWA</label>
                                             </div>
                                             <div class="w-full">
                                                 <label for="name"
-                                                    class="block text-sm font-medium text-gray-700">Keterangan</label>
+                                                    class="block text-sm font-medium text-gray-700 text-center">KETERANGAN</label>
                                             </div>
                                         </div>
                                     </div>
                                     @foreach ($mahasiswa as $pr)
-                                        <div class="mb-6">
-                                            <div class="flex gap-5">
+                                        <div class="mb-1 border border-sky-200 lg:border-white p-2 rounded-xl">
+                                            <div class="flex flex-col lg:flex-row gap-5">
                                                 <div class="w-full">
                                                     <input type="text" id="nim" name="nim[]"
                                                         class="w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0"
@@ -143,7 +143,7 @@
                                                 <div class="w-full">
                                                     <select
                                                         class="js-example-placeholder-single js-states form-control w-full m-6"
-                                                        name="keterangan[]" data-placeholder="Pilih semester">
+                                                        name="keterangan[]" data-placeholder="Pilih Keterangan">
                                                         <option value="">Pilih...</option>
                                                         <option value="HADIR">HADIR</option>
                                                         <option value="SAKIT">SAKIT</option>
@@ -154,8 +154,8 @@
                                             </div>
                                         </div>
                                     @endforeach
-                                    <button type="submit">
-                                        Submit
+                                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-1">
+                                        <i class="fi fi-rr-disk "></i>
                                     </button>
                                 </div>
                             </div>

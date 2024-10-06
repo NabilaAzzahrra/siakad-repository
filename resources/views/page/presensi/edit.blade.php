@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('pukul') }}
+            {{ __('Presensi') }}
         </h2>
     </x-slot>
 
@@ -12,15 +12,15 @@
                     <form action="{{ route('presensi.update', $presensi->id_presensi) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
-                        <div class="flex gap-5 items-start ">
-                            <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                        <div class="flex flex-col lg:flex-row gap-5 items-start">
+                            <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl rounded-lg">
                                 <div class="p-6 text-gray-900 dark:text-gray-100 overflow-hidden">
                                     <div
                                         class="bg-sky-200 p-3 rounded-xl font-extrabold text-sky-800 flex items-center justify-center text-[20px]">
                                         DATA PRESENSI
                                     </div>
                                     <div class="mt-5">
-                                        <div class="flex gap-5 mb-5">
+                                        <div class="flex flex-col lg:flex-row gap-5 mb-5">
                                             <div class="w-full" hidden>
                                                 <label for="id_presensi"
                                                     class="block text-sm font-medium text-gray-700">Kode
@@ -59,7 +59,7 @@
                                                     readonly>
                                             </div>
                                         </div>
-                                        <div class="flex gap-5 mb-5">
+                                        <div class="flex flex-col lg:flex-row gap-5 mb-5">
                                             <div class="w-full">
                                                 <label for="name"
                                                     class="block text-sm font-medium text-gray-700">Kelas</label>
@@ -87,7 +87,7 @@
                                                     readonly>
                                             </div>
                                         </div>
-                                        <div class="flex gap-5">
+                                        <div class="flex flex-col lg:flex-row gap-5">
                                             <div class="w-full">
                                                 <label for="materi"
                                                     class="block text-sm font-medium text-gray-700">Materi</label>
@@ -115,31 +115,31 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                            <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl rounded-lg">
                                 <div class="p-6 text-gray-900 dark:text-gray-100">
                                     <div
                                         class="bg-sky-200 p-3 rounded-xl font-extrabold text-sky-800 flex items-center justify-center text-[20px]">
                                         FORM INPUT PRESENSI
                                     </div>
-                                    <div class="mt-10 mb-8">
+                                    <div class="mt-10 mb-8 border border-sky-200 lg:border-white p-2 rounded-xl">
                                         <div class="flex gap-5">
                                             <div class="w-full">
                                                 <label for="name"
-                                                    class="block text-sm font-medium text-gray-700">NIM</label>
+                                                    class="block text-sm font-medium text-gray-700 text-center">NIM</label>
                                             </div>
                                             <div class="w-full">
                                                 <label for="name"
-                                                    class="block text-sm font-medium text-gray-700">Mahasiswa</label>
+                                                    class="block text-sm font-medium text-gray-700 text-center">MAHASISWA</label>
                                             </div>
                                             <div class="w-full">
                                                 <label for="name"
-                                                    class="block text-sm font-medium text-gray-700">Keterangan</label>
+                                                    class="block text-sm font-medium text-gray-700 text-center">KETERANGAN</label>
                                             </div>
                                         </div>
                                     </div>
                                     @foreach ($mahasiswa as $pr)
-                                        <div class="mb-6">
-                                            <div class="flex gap-5">
+                                        <div class="mb-1 border border-sky-200 lg:border-white p-2 rounded-xl">
+                                            <div class="flex flex-col lg:flex-row gap-5">
                                                 <div class="w-full">
                                                     <input type="text" id="nim" name="nim[]"
                                                         class="w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0"
@@ -171,9 +171,10 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        {{-- <hr class="mb-2 -mt-4 border border-1"> --}}
                                     @endforeach
-                                    <button type="submit">
-                                        Submit
+                                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-1">
+                                        <i class="fi fi-rr-disk "></i>
                                     </button>
                                 </div>
                             </div>

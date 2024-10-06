@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('pukul') }}
+            {{ __('Data Baru') }}
         </h2>
     </x-slot>
 
@@ -9,17 +9,17 @@
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-full p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 bg-red-500 rounded-xl">
+                            <div class="p-6 bg-amber-300 rounded-xl">
                                 <div class="flex items-center justify-between">
                                     <div>MELENGKAPI DATA MAHASISWA</div>
                                 </div>
                             </div>
                             <div class="flex justify-center">
-                                <div class="p-12" style="width:100%;overflow-x:auto;">
+                                <div class="p-2 pt-6" style="width:100%;overflow-x:auto;">
 
-                                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                                    <div class="relative overflow-x-auto shadow-md rounded-lg">
                                         <table
                                             class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border shadow-lg">
                                             <thead
@@ -136,14 +136,14 @@
             <form method="POST" id="formSourceModal">
                 @csrf
                 <div class="flex flex-col p-4 space-y-6">
-                    <div class="flex gap-5">
-                        <div class="mb-2 w-full">
+                    <div class="flex flex-col lg:flex-row gap-5">
+                        <div class="w-full">
                             <label for="nim" class="block mb-2 text-sm font-medium text-gray-900">NIM</label>
                             <input type="text" id="nim" name="nim"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600"
                                 placeholder="Masukan NIM disini...">
                         </div>
-                        <div class="mb-5 w-full">
+                        <div class="w-full">
                             <label for="tingkat" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                 Tingkat<span class="text-red-500">*</span>
                             </label>
@@ -157,8 +157,8 @@
                             </select>
                         </div>
                     </div>
-                    <div class="flex gap-5">
-                        <div class="mb-5 w-full">
+                    <div class="flex flex-col lg:flex-row gap-5">
+                        <div class=" w-full">
                             <label for="kelas"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                 Kelas <span class="text-red-500">*</span>
@@ -171,7 +171,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="mb-5 w-full">
+                        <div class=" w-full">
                             <label for="jurusan"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jurusan</label>
                             <input type="text" id="jurusan" name="jurusan"
@@ -221,7 +221,7 @@
             form.appendChild(createHiddenInput('_token', '{{ csrf_token() }}'));
             form.appendChild(createHiddenInput('_method', 'PATCH'));
 
-            title.innerText = `Update kelas ${kelas}`;
+            title.innerText = `Update Data Baru`;
             nimInput.value = nim;
             kelasSelect.value = button.dataset.id_kelas;
             getkelas();

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('pukul') }}
+            {{ __('UAS') }}
         </h2>
     </x-slot>
 
@@ -11,27 +11,27 @@
                 <div class="w-full md:w-full p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 bg-red-500 rounded-xl">
+                            <div class="p-6 bg-amber-300 font-bold rounded-xl">
                                 <div class="flex items-center justify-between">
-                                    <div>DATA JADWAL REGULER</div>
+                                    <div>UAS</div>
                                 </div>
                             </div>
                             <div class="flex w-full justify-center">
                                 <div class="pt-12 w-full" style="width:100%;overflow-x:auto;">
 
-                                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                                    <div class="relative overflow-x-auto shadow-lg rounded-lg">
                                         <table
-                                            class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border shadow-lg">
+                                            class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border">
                                             <thead
-                                                class="text-xs bg-gray-200 text-gray-700 uppercase py-[100px] dark:bg-gray-700 dark:text-gray-400">
-                                                <tr>
-                                                    <th scope="col" class="px-6 py-3 text-center">
+                                                class="text-md font-bold text-gray-700 uppercase py-[100px] dark:bg-gray-700 dark:text-gray-400">
+                                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
                                                         NO
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center">
                                                         MATERI AJAR
                                                     </th>
-                                                    <th scope="col" class="px-6 py-3 text-center">
+                                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
                                                         <div class="flex items-center">
                                                             PENGAJAR
                                                         </div>
@@ -41,7 +41,7 @@
                                                             TANGGAL
                                                         </div>
                                                     </th>
-                                                    <th scope="col" class="px-6 py-3 text-center">
+                                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
                                                         <div class="flex items-center">
                                                             HARI
                                                         </div>
@@ -51,7 +51,7 @@
                                                             SESI
                                                         </div>
                                                     </th>
-                                                    <th scope="col" class="px-6 py-3 text-center">
+                                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
                                                         <div class="flex items-center">
                                                             PUKUL
                                                         </div>
@@ -61,7 +61,7 @@
                                                             SEMESTER
                                                         </div>
                                                     </th>
-                                                    <th scope="col" class="px-6 py-3 text-center">
+                                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
                                                         <div class="flex items-center">
                                                             SKS
                                                         </div>
@@ -71,7 +71,7 @@
                                                             RUANG
                                                         </div>
                                                     </th>
-                                                    <th scope="col" class="px-6 py-3 text-center">
+                                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
                                                         <div class="flex items-center">
                                                             KELAS
                                                         </div>
@@ -81,7 +81,7 @@
                                                             JURUSAN
                                                         </div>
                                                     </th>
-                                                    <th scope="col" class="px-6 py-3 text-center ">
+                                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100 ">
                                                         <div class="flex items-center">
                                                             SOAL
                                                         </div>
@@ -90,9 +90,6 @@
                                                         <div class="flex items-center">
                                                             ACTION
                                                         </div>
-                                                    </th>
-                                                    <th scope="col" class="px-6 py-3 text-center">
-                                                        <span class="sr-only">EDIT</span>
                                                     </th>
                                                 </tr>
                                             </thead>
@@ -142,13 +139,13 @@
                                                         }
                                                     @endphp
                                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                                        <td class="px-6 py-4 text-center">
+                                                        <td class="px-6 py-4 text-center bg-gray-100">
                                                             {{ $no++ }}
                                                         </td>
                                                         <td class="px-6 py-4 text-center">
                                                             {{ $j->jadwal->detail_kurikulum->materi_ajar->materi_ajar }}
                                                         </td>
-                                                        <td class="px-6 py-4">
+                                                        <td class="px-6 py-4 bg-gray-100">
                                                             {{ $j->jadwal->dosen->nama_dosen }}
                                                         </td>
                                                         <td class="px-6 py-4 ">
@@ -158,7 +155,7 @@
                                                                 <span>Belum ditentukan</span>
                                                             @endif
                                                         </td>
-                                                        <td class="px-6 py-4 bg-gray-100">
+                                                        <td class="px-6 py-4 bg-gray-100 bg-gray-100">
                                                             @if ($uasItem)
                                                                 {{ $hari }}
                                                             @else
@@ -168,7 +165,7 @@
                                                         <td class="px-6 py-4">
                                                             {{ $j->jadwal->sesi->sesi }}
                                                         </td>
-                                                        <td class="px-6 py-4">
+                                                        <td class="px-6 py-4 bg-gray-100">
                                                             @if ($uasItem)
                                                                 {{ $uasItem->waktu_ujian }}
                                                             @else
@@ -178,26 +175,27 @@
                                                         <td class="px-6 py-4">
                                                             {{ $j->jadwal->detail_kurikulum->materi_ajar->semester->semester }}
                                                         </td>
-                                                        <td class="px-6 py-4">
+                                                        <td class="px-6 py-4 bg-gray-100">
                                                             {{ $j->jadwal->detail_kurikulum->materi_ajar->sks }}
                                                         </td>
                                                         <td class="px-6 py-4">
                                                             {{ $j->jadwal->ruang->ruang }}
                                                         </td>
-                                                        <td class="px-6 py-4">
+                                                        <td class="px-6 py-4 bg-gray-100">
                                                             {{ $j->jadwal->kelas->kelas }}
                                                         </td>
                                                         <td class="px-6 py-4">
                                                             {{ $j->jadwal->kelas->jurusan->jurusan }}
                                                         </td>
-                                                        <td class="px-6 py-4">
+                                                        <td class="px-6 py-4 bg-gray-100">
                                                             @if ($uasItem)
                                                                 <a href="{{ asset('uas/' . $uasItem->file) }}" download
-                                                                    class="mr-2 bg-green-500 hover:bg-green-600 px-3 py-1 rounded-md text-xs text-white">
+                                                                    class="mr-2 bg-green-500 hover:bg-green-600 px-4 py-3 rounded-xl text-xs text-white">
                                                                     <i class="fa-solid fa-download"></i>
                                                                 </a>
                                                             @else
-                                                                G
+                                                                <div class="bg-red-500 text-white px-2 rounded-xl">Belum
+                                                                    Terdapat Soal</div>
                                                             @endif
                                                         </td>
                                                         <td class="px-6 py-4">
@@ -206,7 +204,7 @@
                                                                     {{-- If the student's submission exists in detail_uas --}}
                                                                     <a href="{{ asset('uas/jawaban/' . $jawaban->file) }}"
                                                                         download
-                                                                        class="mr-2 bg-green-500 hover:bg-green-600 px-3 py-1 rounded-md text-xs text-white">
+                                                                        class="mr-2 bg-green-500 hover:bg-green-600 px-4 py-3 rounded-xl text-xs text-white">
                                                                         <i class="fa-solid fa-file"></i>
                                                                     </a>
                                                                 @else
@@ -216,8 +214,8 @@
                                                                         data-modal-target="sourceModalUpload"
                                                                         data-id_uas="{{ $uasItem->id_uas }}"
                                                                         onclick="editSourceModalUpload(this)"
-                                                                        class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
-                                                                        <i class="fas fa-edit"></i> Upload
+                                                                        class="bg-amber-500 hover:bg-amber-600 px-4 py-3 rounded-xl text-xs text-white">
+                                                                        <i class="fas fa-upload"></i>
                                                                     </button>
                                                                 @endif
                                                             @else
@@ -273,7 +271,7 @@
                         </div>
                         <div class="mb-5">
                             <label for="files"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jawaban</label>
+                                class="block mb-2 -mt-8 text-sm font-medium text-gray-900 dark:text-white">Jawaban</label>
                             <input type="file" id="files" name="file"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Upload file formatif di sini ..." />
@@ -282,7 +280,7 @@
                     <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
                         <button type="submit" id="formSourceButton"
                             class="bg-green-400 m-2 w-40 h-10 rounded-xl hover:bg-green-500">Simpan</button>
-                        <button type="button" data-modal-target="sourceModal" onclick="changeSourceModal(this)"
+                        <button type="button" onclick="sourceModalClose(this)" data-modal-target="sourceModalUpload"
                             class="bg-red-500 m-2 w-40 h-10 rounded-xl text-white hover:shadow-lg hover:bg-red-600">Batal</button>
                     </div>
                 </form>
@@ -312,5 +310,11 @@
             let status = document.getElementById(modalTarget);
             status.classList.toggle('hidden');
         };
+
+        const sourceModalClose = (button) => {
+            const modalTarget = button.dataset.modalTarget;
+            let status = document.getElementById(modalTarget);
+            status.classList.toggle('hidden');
+        }
     </script>
 </x-app-layout>

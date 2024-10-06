@@ -14,7 +14,7 @@ class MahasiswaController extends Controller
      */
     public function index()
     {
-        $mahasiswa = DB::table('mahasiswa')->where('id_kelas', null)->paginate(15);
+        $mahasiswa = DB::table('mahasiswa')->where('id_kelas', null)->paginate(10);
         $mahasiswa_lengkap = DB::table('mahasiswa')
             ->join('kelas', 'mahasiswa.id_kelas', '=', 'kelas.id')
             ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id')
@@ -22,7 +22,7 @@ class MahasiswaController extends Controller
             ->whereNotNull('mahasiswa.id_kelas')
             ->whereNotNull('mahasiswa.tingkat')
             ->orderBy('nama', 'ASC')
-            ->paginate(2);
+            ->get();
 
 
         return view('page.mahasiswa.index')->with([

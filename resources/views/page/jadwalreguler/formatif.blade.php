@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('formatif') }}
+            {{ __('Formatif') }}
         </h2>
     </x-slot>
 
@@ -12,8 +12,8 @@
                     <div class="w-full md:w-3/12 p-3">
                         <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                             <div class="p-6 text-gray-900 dark:text-gray-100">
-                                <div class="p-6 bg-red-500 rounded-xl">
-                                    FORM INPUT formatif
+                                <div class="p-6 bg-amber-300 rounded-xl font-bold">
+                                    FORM INPUT FORMATIF
                                 </div>
                                 <form action="{{ route('jadwal_reguler.formatif_add') }}" method="post"
                                     enctype="multipart/form-data">
@@ -53,7 +53,8 @@
                                                 placeholder="Masukan Deadline formatif disini ..." required />
                                         </div>
                                         <button type="submit"
-                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Simpan</button>
+                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i
+                                                class="fi fi-rr-disk "></i></button>
                                     </div>
                                 </form>
                             </div>
@@ -62,7 +63,7 @@
                 @endcan
                 @can('role-D')
                     <div class="w-full md:w-3/12 p-3">
-                        <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                        <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
                             <div class="p-6 text-gray-900 dark:text-gray-100">
                                 <div class="p-6 bg-red-500 rounded-xl">
                                     FORM INPUT formatif
@@ -113,25 +114,25 @@
                     </div>
                 @endcan
                 <div class="w-full md:w-9/12 p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 bg-red-500 rounded-xl">
-                                DATA formatif
+                            <div class="p-6 bg-amber-300 rounded-xl font-bold">
+                                DATA FORMATIF
                             </div>
-                            <div class="flex justify-center">
-                                <div class="p-12" style="width:100%;overflow-x:auto;">
+                            <div class="flex justify-center w-full">
+                                <div class="relative overflow-x-auto rounded-lg shadow-lg mt-6 w-full">
                                     <table
                                         class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border shadow-lg">
                                         <thead
-                                            class="text-xs bg-gray-200 text-gray-700 uppercase py-[100px] dark:bg-gray-700 dark:text-gray-400">
+                                            class="text-md font-bold text-gray-700 uppercase py-[100px] dark:bg-gray-700 dark:text-gray-400">
                                             <tr>
-                                                <th scope="col" class="px-6 py-3 text-center">
+                                                <th scope="col" class="px-6 py-3 text-center bg-gray-100">
                                                     NO
                                                 </th>
                                                 <th scope="col" class="px-6 py-3 text-center">
                                                     MATERI FORMATIF
                                                 </th>
-                                                <th scope="col" class="px-6 py-3 text-center">
+                                                <th scope="col" class="px-6 py-3 text-center bg-gray-100">
                                                     <div class="flex items-center">
                                                         DEADLINE
                                                     </div>
@@ -141,7 +142,7 @@
                                                         FILE
                                                     </div>
                                                 </th>
-                                                <th scope="col" class="px-6 py-3 text-center">
+                                                <th scope="col" class="px-6 py-3 text-center bg-gray-100">
                                                     <div class="flex items-center">
 
                                                     </div>
@@ -154,25 +155,25 @@
                                             @endphp
                                             @foreach ($formatif as $j)
                                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                                    <td class="px-6 py-4 text-center">
+                                                    <td class="px-6 py-4 text-center bg-gray-100">
                                                         {{ $no++ }}
                                                     </td>
                                                     <th scope="row"
                                                         class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                                         {{ $j->judul_formatif }}
                                                     </th>
-                                                    <td class="px-6 py-4">
+                                                    <td class="px-6 py-4 bg-gray-100">
                                                         {{ date('d-m-Y H:i', strtotime($j->deadline)) }}
                                                     </td>
                                                     <td class="px-6 py-4">
                                                         <a href="{{ route('jadwal_reguler.formatif_show', $j->id) }}"
-                                                            class="mr-2 bg-green-500 hover:bg-green-600 px-3 py-1 rounded-md text-xs text-white">
+                                                            class="mr-2 bg-green-500 hover:bg-green-600 px-4 py-3 rounded-xl text-xs text-white">
                                                             <i class="fa-solid fa-book"></i>
                                                         </a>
                                                     </td>
-                                                    <td class="px-6 py-4">
+                                                    <td class="px-6 py-4 bg-gray-100">
                                                         <a href="{{ route('jadwal_reguler.formatif_answer', $j->id_formatif) }}"
-                                                            class="mr-2 bg-green-500 hover:bg-green-600 px-3 py-1 rounded-md text-xs text-white">
+                                                            class="mr-2 bg-green-500 hover:bg-green-600 px-4 py-3 rounded-xl text-xs text-white">
                                                             <i class="fi fi-sr-member-list"></i>
                                                         </a>
                                                         @can('role-A')
@@ -182,12 +183,12 @@
                                                                 data-deadline="{{ $j->deadline }}"
                                                                 data-formatif="{{ $j->formatif }}"
                                                                 onclick="editSourceModal(this)"
-                                                                class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
+                                                                class="bg-amber-500 hover:bg-amber-600 px-4 py-3 rounded-xl text-xs text-white">
                                                                 <i class="fas fa-edit"></i>
                                                             </button>
                                                             <button
                                                                 onclick="return formatifDelete('{{ $j->id }}','{{ $j->judul_formatif }}','{{ $j->formatif }}')"
-                                                                class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-md text-xs text-white"><i
+                                                                class="bg-red-500 hover:bg-bg-red-300 px-4 py-3 rounded-xl text-xs text-white"><i
                                                                     class="fas fa-trash"></i></button>
                                                         @endcan
                                                         @can('role-D')
@@ -197,12 +198,12 @@
                                                                 data-deadline="{{ $j->deadline }}"
                                                                 data-formatif="{{ $j->formatif }}"
                                                                 onclick="editSourceModal(this)"
-                                                                class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
+                                                                class="bg-amber-500 hover:bg-amber-600 px-4 py-3 rounded-xl text-xs text-white">
                                                                 <i class="fas fa-edit"></i>
                                                             </button>
                                                             <button
                                                                 onclick="return formatifDelete('{{ $j->id }}','{{ $j->judul_formatif }}','{{ $j->formatif }}')"
-                                                                class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-md text-xs text-white"><i
+                                                                class="bg-red-500 hover:bg-bg-red-300 px-4 py-3 rounded-xl text-xs text-white"><i
                                                                     class="fas fa-trash"></i></button>
                                                         @endcan
                                                     </td>

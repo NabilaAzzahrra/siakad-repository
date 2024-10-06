@@ -5,11 +5,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>SIAKAD | TASIKMALAYA</title>
+    <link rel="icon" href="{{url('img/logo.png')}}" type="image/png">
 
     <!-- Fonts -->
     <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    {{-- AOS --}}
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
     {{-- Tailwindcss --}}
     <script src="https://cdn.tailwindcss.com"></script>
@@ -390,26 +394,64 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
+            background: url('public/img/landing.jpg')
+        }
+
+        .bg-custom {
+            position: relative;
+            z-index: 1;
+            /* color: white; */
+            /* Just to make content visible on the transparent background */
+        }
+
+        .bg-custom::before {
+            content: '';
+            background-image: url('{{ url('img/landing.jpg') }}');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.25;
+            /* Adjust the transparency here */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
         }
     </style>
 </head>
 
-<body class="antialiased">
+<body class="antialiased bg-[url('img/landing.jpg')] bg-contain ">
 
     <div
-        class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
+        class="relative flex items-top justify-center h-screen  px-12 lg:px-[200px] bg-white bg-cover bg-opacity-65 dark:bg-gray-900 sm:items-center py-[100px] lg:py-4 sm:pt-0">
         @if (Route::has('login'))
-            <div class="flex items-center justify-between gap-20 p-5 mx-10">
-                <div class="ml-10">
-                    <p class="font-extrabold text-[30px] -mt-4 mb-2 text-wrap">Sistem Informasi Akademik</p>
-                    <p class="text-md pb-10 text-wrap">Efisiensi, Transparansi, dan Kemudahan Akses dalam Satu Platform
-                        Sistem Informasi Akademik kami memudahkan manajemen data akademik secara cepat dan akurat. Mulai dari pendaftaran mata kuliah hingga pemantauan hasil belajar, semua bisa diakses dalam satu platform yang intuitif. Dengan fitur real-time dan akses yang mudah, Anda dapat mengelola perjalanan akademik Anda dengan lebih efisien dan fokus pada kesuksesan.</p>
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-10 lg:p-5 lg:mx-10">
+                <div class="lg:ml-10">
+                    <div class="flex mb-8 gap-5" data-aos="zoom-in-right">
+                        <div>
+                            <img src="{{ url('img/logo-lp3i.png') }}" alt="" srcset="" class="lg:w-[200px] w-[130px]">
+                        </div>
+                        <div>
+                            <img src="{{ url('img/gmu.png') }}" alt="" srcset="" class="lg:w-[150px] w-[100px]">
+                        </div>
+                    </div>
+                    <p class="font-extrabold text-[30px] -mt-4 mb-3 text-wrap" data-aos="zoom-in-right"
+                        data-aos-easing="ease-in-out">Sistem Informasi Akademik</p>
+                    <p class="font-extrabold text-[20px] lg:-mt-4 mt-1 mb-2 text-wrap" data-aos="zoom-in-right"
+                        data-aos-easing="ease-in-out">LP3I KAMPUS TASIKMALAYA</p>
+                    <p class="text-sm pb-5 text-wrap text-justify" data-aos="zoom-in" data-aos-duration="1000"
+                        data-aos-easing="ease-in-out">Efisiensi, Transparansi, dan Kemudahan Akses dalam Satu Platform
+                        Sistem Informasi Akademik kami memudahkan manajemen data akademik secara cepat dan akurat. Mulai
+                        dari pendaftaran mata kuliah hingga pemantauan hasil belajar, semua bisa diakses dalam satu
+                        platform yang intuitif. Dengan fitur real-time dan akses yang mudah, Anda dapat mengelola
+                        perjalanan akademik Anda dengan lebih efisien dan fokus pada kesuksesan.</p>
                     @auth
-                        <a href="{{ route('login') }}">Dashboard</a>
+                        <a href="{{ route('login') }}" style="z-index: 10;">Dashboard</a>
                     @else
-                        <div class="flex gap-5">
-                            <a href="{{ route('login') }}"
-                                class="bg-sky-400 hover:bg-sky-500 py-2 px-8 rounded-2xl font-bold text-white">Masuk</a>
+                        <div class="flex gap-5" data-aos="fade-up" data-aos-duration="1000" data-aos-easing="ease-in-out">
+                            <a href="{{ route('login') }}" style="z-index: 10;"
+                                class="bg-sky-400 hover:bg-sky-500 py-2 px-8 rounded-2xl font-bold text-white shadow-lg hover:border-blue-700 hover:border-2">Masuk</a>
                             {{-- @if (Route::has('register'))
                                 <a href="{{ route('register') }}"
                                     class="bg-white hover:bg-black hover:text-white border border-1 py-2 px-8 rounded-2xl">Register</a>
@@ -418,13 +460,19 @@
                     @endauth
                 </div>
                 <div class="-mr-10 -mt-20">
-                    <dotlottie-player src="{{ url('json/landing.json') }}" background="transparent" speed="1"
-                        style="width: 600px; height: 600px; padding-right: 100px;" loop autoplay></dotlottie-player>
+                    <dotlottie-player src="{{ url('json/landing.json') }}" background="transparent" speed="1" class="lg:w-[600px] lg:h-[500px] hidden lg:block"
+                        loop autoplay></dotlottie-player>
                 </div>
             </div>
         @endif
     </div>
     <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            // easing="ease-in-out"
+        });
+    </script>
 </body>
 
 </html>

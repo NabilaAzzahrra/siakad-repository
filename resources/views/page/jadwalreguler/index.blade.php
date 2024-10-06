@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('pukul') }}
+            {{ __('Jadwal Pelajaran') }}
         </h2>
     </x-slot>
 
@@ -9,12 +9,12 @@
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-full p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 bg-red-500 rounded-xl">
-                                <div class="flex items-center justify-between">
-                                    <div>DATA JADWAL REGULER</div>
-                                    <div>
+                            <div class="">
+                                <div class="flex flex-col lg:flex-row items-center justify-between gap-5">
+                                    <div class="rounded-xl p-6 bg-amber-300 w-full">DATA JADWAL REGULER</div>
+                                    <div  class="rounded-xl lg:p-6 p-2 text-sm lg:text-md bg-sky-300">
                                         <a href="{{ route('jadwal_reguler.create') }}" class="href">TAMBAH</a>
                                     </div>
                                 </div>
@@ -22,19 +22,19 @@
                             <div class="flex w-full justify-center">
                                 <div class="pt-12 w-full" style="width:100%;overflow-x:auto;">
 
-                                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                                    <div class="relative overflow-x-auto shadow-md rounded-lg">
                                         <table
-                                            class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border shadow-lg">
+                                            class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border">
                                             <thead
-                                                class="text-xs bg-gray-200 text-gray-700 uppercase py-[100px] dark:bg-gray-700 dark:text-gray-400">
-                                                <tr>
-                                                    <th scope="col" class="px-6 py-3 text-center">
+                                                class="text-md font-bold text-gray-700 uppercase py-[100px] dark:bg-gray-700 dark:text-gray-400">
+                                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
                                                         NO
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center">
                                                         MATERI AJAR
                                                     </th>
-                                                    <th scope="col" class="px-6 py-3 text-center">
+                                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
                                                         <div class="flex items-center">
                                                             PENGAJAR
                                                         </div>
@@ -44,7 +44,7 @@
                                                             HARI
                                                         </div>
                                                     </th>
-                                                    <th scope="col" class="px-6 py-3 text-center">
+                                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
                                                         <div class="flex items-center">
                                                             SESI
                                                         </div>
@@ -54,7 +54,7 @@
                                                             PUKUL
                                                         </div>
                                                     </th>
-                                                    <th scope="col" class="px-6 py-3 text-center">
+                                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
                                                         <div class="flex items-center">
                                                             SEMESTER
                                                         </div>
@@ -64,7 +64,7 @@
                                                             SKS
                                                         </div>
                                                     </th>
-                                                    <th scope="col" class="px-6 py-3 text-center">
+                                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
                                                         <div class="flex items-center">
                                                             RUANG
                                                         </div>
@@ -74,7 +74,7 @@
                                                             KELAS
                                                         </div>
                                                     </th>
-                                                    <th scope="col" class="px-6 py-3 text-center">
+                                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
                                                         <div class="flex items-center">
                                                             JURUSAN
                                                         </div>
@@ -90,52 +90,51 @@
                                                 @endphp
                                                 @foreach ($jadwal_reguler as $key => $j)
                                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                                        <td class="px-6 py-4 text-center">
+                                                        <td class="px-6 py-4 text-center bg-gray-100">
                                                             {{ $jadwal_reguler->perPage() * ($jadwal_reguler->currentPage() - 1) + $key + 1 }}
                                                         </td>
                                                         <th scope="row"
                                                             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                                             {{ $j->materi_ajar }}
                                                         </th>
-                                                        <td class="px-6 py-4">
+                                                        <td class="px-6 py-4 bg-gray-100">
                                                             {{ $j->nama_dosen }}
                                                         </td>
                                                         <td class="px-6 py-4">
                                                             {{ $j->hari }}
                                                         </td>
-                                                        <td class="px-6 py-4">
+                                                        <td class="px-6 py-4 bg-gray-100">
                                                             {{ $j->sesi }}
                                                         </td>
                                                         <td class="px-6 py-4">
                                                             {{ $j->pukul }}
                                                         </td>
-                                                        <td class="px-6 py-4">
+                                                        <td class="px-6 py-4 bg-gray-100">
                                                             {{ $j->semester }}
                                                         </td>
                                                         <td class="px-6 py-4">
                                                             {{ $j->sks }}
                                                         </td>
-                                                        <td class="px-6 py-4">
+                                                        <td class="px-6 py-4 bg-gray-100">
                                                             {{ $j->ruang }}
                                                         </td>
                                                         <td class="px-6 py-4">
                                                             {{ $j->kelas }}
                                                         </td>
-                                                        <td class="px-6 py-4">
+                                                        <td class="px-6 py-4 bg-gray-100">
                                                             {{ $j->jurusan }}
                                                         </td>
                                                         <td class="px-6 py-4 text-right">
                                                             <a href="{{ route('jadwal_reguler.show', $j->kode_jadwal) }}"
-                                                                class="mr-2 bg-green-500 hover:bg-green-600 px-3 py-1 rounded-md text-xs text-white">
+                                                                class="mr-2 bg-green-500 hover:bg-green-600 pr-3 pl-4 py-3 rounded-xl text-xs text-white">
                                                                 <i class="fa-solid fa-eye"></i>
                                                             </a>
-
                                                             <a href="{{ route('jadwal_reguler.edit', $j->id_jadwal) }}"
-                                                                class="mr-2 bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
+                                                                class="mr-2 bg-amber-500 hover:bg-amber-600 pr-3 pl-4 py-3 rounded-xl text-xs text-white">
                                                                 <i class="fa-solid fa-edit"></i>
                                                             </a>
                                                             <a onclick="return jadwalDelete('{{ $j->kode_jadwal }}', '{{ $j->materi_ajar }}')"
-                                                                class="bg-red-500 hover:bg-red-300 px-3 py-1 rounded-md text-xs text-white">
+                                                                class="bg-red-500 hover:bg-red-300 pr-4 pl-4 py-3 rounded-xl text-xs text-white">
                                                                 <i class="fas fa-trash"></i>
                                                             </a>
                                                         </td>

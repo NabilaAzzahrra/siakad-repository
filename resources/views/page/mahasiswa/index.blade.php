@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('pukul') }}
+            {{ __('Mahasiswa') }}
         </h2>
     </x-slot>
 
@@ -10,7 +10,7 @@
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-full p-3">
                     @if (count($mahasiswa) > 0)
-                        <div class="bg-sky-200 w-1/2 p-5 rounded-xl mb-10 border border-2 shadow-xl border-sky-300">
+                        <div class="bg-sky-200 w-full lg:w-1/2 p-5 rounded-xl mb-10 border border-2 shadow-xl border-sky-300">
                             <div class="text-xl font-extrabold flex items-center gap-3 text-sky-800">
                                 <div><i class="fi fi-br-info"></i></div>
                                 <div class="mb-1">DATA BARU</div>
@@ -32,23 +32,23 @@
                     @else
                         <div></div>
                     @endif
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 bg-red-500 rounded-xl">
+                            <div class="p-6 bg-amber-300 rounded-xl">
                                 <div class="flex items-center justify-between">
                                     <div>DATA MAHASISWA</div>
                                 </div>
                             </div>
                             <div class="flex justify-center">
-                                <div class="p-12" style="width:100%;overflow-x:auto;">
+                                <div class="p-2" style="width:100%;overflow-x:auto;">
                                     <form action="{{ route('mahasiswa.store') }}" method="POST" class="formupdate">
                                         @csrf
                                         <div class="flex justify-end">
-                                            <button class="mb-4 p-2 bg-sky-400 text-white rounded-xl">
+                                            <button class="mb-3 p-2 text-sm lg:mb-2 lg:p-2 bg-sky-400 text-white rounded-xl">
                                                 SUBMIT
                                             </button>
                                         </div>
-                                        <div class="relative overflow-x-auto sm:rounded-lg shadow-lg">
+                                        <div class="relative overflow-x-auto rounded-lg shadow-lg">
 
                                             <table
                                                 class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border">
@@ -177,7 +177,7 @@
 
                                         </div>
                                         <div class="mt-4">
-                                            {{ $mahasiswa_lengkap->links() }}
+                                            {{-- {{ $mahasiswa_lengkap->links() }} --}}
                                         </div>
                                     </form>
                                 </div>

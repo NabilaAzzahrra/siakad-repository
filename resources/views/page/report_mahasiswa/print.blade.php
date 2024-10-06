@@ -138,7 +138,7 @@
 
         .page::before {
             content: "";
-            position: absolute;
+            position: ;
             top: 0;
             left: 0;
             width: 189px;
@@ -149,7 +149,7 @@
 
         .page::after {
             content: "";
-            position: absolute;
+            position: ;
             bottom: 0;
             right: 0;
             width: 794px;
@@ -183,7 +183,7 @@
 
             .page::before {
                 content: "";
-                position: absolute;
+                position: ;
                 top: 0;
                 left: 0;
                 width: 189px;
@@ -194,7 +194,7 @@
 
             .page::after {
                 content: "";
-                position: absolute;
+                position: ;
                 bottom: 0;
                 right: 0;
                 width: 794px;
@@ -214,17 +214,17 @@
             <div class="-ml-[916px]">
                 <img src="{{ asset('img/graphic.png') }}" alt="" width="10%" class="mx-auto">
             </div>
-            <div class="absolute top-0 left-0 right-0 text-center mt-6">
+            <div class=" top-0 left-0 right-0 text-center -mt-[160px]">
                 <img src="{{ asset('img/logo.png') }}" width="5%" alt="Logo" class="mx-auto">
             </div>
-            <div class="absolute top-[100px] left-0 right-0 text-center text-[#00426D] text-sm font-extrabold">
+            <div class=" top-[100px] left-0 right-0 text-center text-[#00426D] text-sm font-extrabold">
                 TASIKMALAYA
             </div>
-            <div class="absolute top-[130px] left-0 right-0 text-center text-sm font-bold">
+            <div class=" top-[130px] left-0 right-0 text-center text-sm font-bold">
                 TRANSKRIP MAHASISWA
             </div>
 
-            <div class="absolute top-[150px] text-xs mx-12 mt-4 flex items-center justify-between">
+            <div class=" top-[300px] text-xs mx-12 mt-12 flex items-center justify-between">
                 <div>
                     <div class="grid grid-cols-2 gap-[400px]">
                         <div class="flex gap-4">
@@ -267,7 +267,7 @@
                 </div>
             </div>
 
-            <div class="absolute top-[180px] text-xs w-full mt-12">
+            <div class=" top-[280px] text-xs w-full mt-12">
                 <table class="border border-1 border-black">
                     <thead class="border border-1 border-black">
                         <th class="border border-1 border-black w-10">NO</th>
@@ -404,7 +404,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="absolute top-[400px] text-xs mt-12 flex items-center justify-start font-bold ml-10">
+            <div class=" top-[400px] text-xs mt-12 flex items-center justify-start font-bold ml-10">
                 <div class="flex">
                     <div>
                         @php
@@ -455,6 +455,7 @@
                         <div class=" uppercase">Tasikmalaya, {{ date('d') }}
                             {{ $bulan }} {{ date('Y') }}</div>
                         <div class="mt-16 underline underline-offset-2">{{ $jadwal->dosen->nama_dosen }}</div>
+                        <div class="">Dosen Pengampu</div>
                     </div>
                 </div>
             </div>
@@ -464,3 +465,6 @@
 </body>
 
 </html>
+<script>
+    window.print();
+</script>

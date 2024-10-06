@@ -12,8 +12,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-            DB::statement('DROP VIEW IF EXISTS vw_data_prestasi;');
-            DB::statement('
+        DB::statement('DROP VIEW IF EXISTS vw_data_prestasi;');
+        DB::statement('
                 CREATE VIEW vw_data_prestasi AS
             SELECT
                 detail_kurikulum.id,
@@ -37,13 +37,16 @@ return new class extends Migration
                 nilai.tugas,
                 nilai.formatif,
                 nilai.uts,
-                nilai.uas
+                nilai.uas,
+                jurusan.id AS id_jurusan
             FROM
                 detail_kurikulum
                 INNER JOIN materi_ajar ON materi_ajar.id = detail_kurikulum.id_materi_ajar
                 INNER JOIN semester ON semester.id = materi_ajar.id_semester
                 LEFT JOIN jadwal_reguler ON jadwal_reguler.id_detail_kurikulum = detail_kurikulum.id
-                LEFT JOIN nilai ON nilai.id_jadwal = jadwal_reguler.id_jadwal;
+                LEFT JOIN nilai ON nilai.id_jadwal = jadwal_reguler.id_jadwal
+                LEFT JOIN kelas ON kelas.id = jadwal_reguler.id_kelas
+                LEFT JOIN jurusan ON jurusan.id = kelas.id_jurusan;
             ');
     }
 

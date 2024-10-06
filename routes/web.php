@@ -6,6 +6,7 @@ use App\Http\Controllers\DetailFormatif;
 use App\Http\Controllers\DetailFormatifController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\HariController;
+use App\Http\Controllers\InformasiController;
 use App\Http\Controllers\JadwalregulerController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\KelasController;
@@ -42,7 +43,11 @@ use App\Http\Controllers\UjianUASMhsController;
 use App\Http\Controllers\UjianUTSController;
 use App\Http\Controllers\UjianUTSMhsController;
 use App\Http\Controllers\UtsController;
+use App\Models\Informasi;
 use App\Models\Jadwalreguler;
+use App\Models\Konfigurasi;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -89,6 +94,7 @@ Route::resource('khs', KHSController::class)->middleware(['auth']);
 Route::resource('data_prestasi', DataPrestasiController::class)->middleware(['auth']);
 Route::resource('krs_mhs', KrsMhsController::class)->middleware(['auth']);
 Route::resource('transkrip', TranskripController::class)->middleware(['auth']);
+Route::resource('informasi', InformasiController::class)->middleware(['auth']);
 
 Route::get('/jadwal_mhs/{id}', [JadwalRegulerController::class, 'jadwal_mhs'])->name('jadwal_reguler.jadwal_mhs');
 Route::get('/jadwal_dosen/{id}', [JadwalRegulerController::class, 'jadwal_dosen'])->name('jadwal_reguler.jadwal_dosen');
@@ -118,9 +124,122 @@ Route::post('/jawaban_uas_add', [UasController::class, 'jawaban_uas_add'])->name
 Route::post('/download-zip-uas', [UasController::class, 'downloadZip']);
 Route::get('/cetak-pdf/{id_jadwal}', [ReportMahasiswaKeseluruhanController::class, 'generatePDF'])->name('cetak-pdf');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
+Route::get('/dashboard', function (Request $request) {
+    $konfigurasi = Konfigurasi::first();
+    $tahun_akademik = $konfigurasi->id_tahun_akademik;
+    $keterangan = $konfigurasi->id_keterangan;
+
+    $ga = $konfigurasi->keterangan;
+
+    $today = date('l');
+    $now = "";
+
+    switch ($today) {
+        case "Monday":
+            $now = "SENIN";
+            break;
+        case "Tuesday":
+            $now = "SELASA";
+            break;
+        case "Wednesday":
+            $now = "RABU";
+            break;
+        case "Thursday":
+            $now = "KAMIS";
+            break;
+        case "Friday":
+            $now = "JUMAT";
+            break;
+        case "Saturday":
+            $now = "SABTU";
+            break;
+        case "Sunday":
+            $now = "MINGGU";
+            break;
+    }
+
+    $search = $request->input('search');
+
+    $jadwal = Jadwalreguler::with('hari', 'dosen', 'detail_kurikulum.materi_ajar', 'sesi', 'sesi.pukul', 'ruang', 'kelas')
+        ->whereHas('hari', function ($query) use ($now, $tahun_akademik, $keterangan) {
+            $query->where('id_tahun_akademik', $tahun_akademik)
+                ->where('id_keterangan', $keterangan)
+                ->where('hari', $now);
+        })
+        ->when($search, function ($query) use ($search) {
+            $query->where(function ($query) use ($search) {
+                $query->whereHas('detail_kurikulum.materi_ajar', function ($query) use ($search) {
+                    $query->where('materi_ajar', 'like', '%' . $search . '%');
+                })
+                    ->orWhereHas('dosen', function ($query) use ($search) {
+                        $query->where('nama_dosen', 'like', '%' . $search . '%');
+                    })
+                    ->orWhereHas('hari', function ($query) use ($search) {
+                        $query->where('hari', 'like', '%' . $search . '%');
+                    })
+                    ->orWhereHas('detail_kurikulum.materi_ajar', function ($query) use ($search) {
+                        $query->where('sks', 'like', '%' . $search . '%');
+                    })
+                    ->orWhereHas('sesi', function ($query) use ($search) {
+                        $query->where('sesi', 'like', '%' . $search . '%');
+                    })
+                    ->orWhereHas('ruang', function ($query) use ($search) {
+                        $query->where('ruang', 'like', '%' . $search . '%');
+                    })
+                    ->orWhereHas('kelas', function ($query) use ($search) {
+                        $query->where('kelas', 'like', '%' . $search . '%');
+                    })
+                    ->orWhereHas('sesi.pukul', function ($query) use ($search) {
+                        $query->where('pukul', 'like', '%' . $search . '%');
+                    });
+            });
+        })
+        ->paginate(10);
+
+    $kode_dosen = Auth::user()->email;
+
+    if (Auth::user()->role == "M") {
+        $jadwal_mhs = Jadwalreguler::with('hari', 'dosen', 'detail_kurikulum.materi_ajar', 'sesi', 'sesi.pukul', 'ruang', 'kelas')
+            ->whereHas('hari', function ($query) use ($now, $tahun_akademik, $keterangan) {
+                $query->where('id_tahun_akademik', $tahun_akademik)
+                    ->where('id_keterangan', $keterangan)
+                    ->where('hari', $now)
+                    ->where('id_kelas', Auth::user()->mahasiswa->kelas->id);
+            })->paginate(10);
+    } else if (Auth::user()->role == "D") {
+        $jadwal_mhs = Jadwalreguler::with('hari', 'dosen', 'detail_kurikulum.materi_ajar', 'sesi', 'sesi.pukul', 'ruang', 'kelas')
+            ->whereHas('hari', function ($query) use ($now, $tahun_akademik, $keterangan) {
+                $query->where('id_tahun_akademik', $tahun_akademik)
+                    ->where('id_keterangan', $keterangan)
+                    ->where('hari', $now);
+            })->whereHas('dosen', function ($query) use ($kode_dosen) {
+                $query->where('kode_dosen', $kode_dosen);
+            })->paginate(10);
+    } else {
+        $jadwal_mhs = null;
+    }
+
+
+
+    if ($request->ajax()) {
+        return view('partials.jadwal', ['jadwal' => $jadwal])->render();
+    }
+
+    if (Auth::user()->role == "M") {
+        $informasi = Informasi::where('kategori', 'MAHASISWA')->orderBy('created_at', 'desc')->take(3)->get();
+    } else if (Auth::user()->role == "D") {
+        $informasi = Informasi::where('kategori', 'DOSEN')->orderBy('created_at', 'desc')->take(3)->get();
+    } else {
+        $informasi = Informasi::orderBy('created_at', 'desc')->take(3)->get();
+    }
+
+    return view('dashboard', [
+        'jadwal' => $jadwal,
+        'jadwal_mhs' => $jadwal_mhs,
+        'informasi' => $informasi,
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

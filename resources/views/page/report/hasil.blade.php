@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('pukul') }}
+            {{ __('Report Presensi') }}
         </h2>
     </x-slot>
 
@@ -11,13 +11,13 @@
                 <div class="w-full md:w-[500px] p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 mb-5 bg-red-500 rounded-xl">
+                            <div class="p-6 mb-5 bg-amber-300 font-bold rounded-xl">
                                 <div class="flex items-center justify-between">
                                     <div>DATA JADWAL</div>
                                 </div>
                             </div>
                             <div class="flex justify-start">
-                                <div class="p-12" style="width:100%;overflow-x:auto;">
+                                <div class="lg:p-12" style="width:100%;overflow-x:auto;">
                                     <div class="flex items-center mb-4">
                                         <div class="font-bold pr-2 pt-1"><i class="fi fi-ss-book-open-cover"></i>
                                         </div>
@@ -67,12 +67,12 @@
                 <div class="w-full md:w-full p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 mb-5 bg-red-500 rounded-xl">
+                            <div class="p-6 mb-5 bg-amber-300 font-bold rounded-xl">
                                 <div class="flex items-center justify-between">
                                     <div>DATA PRESENSI</div>
                                 </div>
                             </div>
-                            <div class="flex justify-start bg-white relative overflow-x-auto sm:rounded-lg shadow-lg">
+                            <div class="flex justify-start bg-white relative overflow-x-auto rounded-lg shadow-lg">
                                 <table
                                     class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border">
                                     <thead

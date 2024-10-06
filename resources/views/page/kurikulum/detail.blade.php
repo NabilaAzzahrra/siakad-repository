@@ -9,15 +9,16 @@
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <input type="text" id="id_kurikulum" value="{{ $kurikulum->id }}" hidden>
             <div class="flex flex-col md:flex-row justify-center">
-                <div class="w-full md:w-5/12 p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="w-full md:w-1/2 p-3">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="mb-5">MATERI AJAR KURIKULUM <span
-                                    class="font-bold">{{ $kurikulum->kurikulum }}</span>
+                            <div
+                                class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold text-wrap">
+                                MATERI AJAR KURIKULUM <span class="font-bold">{{ $kurikulum->kurikulum }}</span>
                             </div>
                         </div>
                         <div class="flex justify-center">
-                            <div class="p-12" style="width:100%;  overflow-x:auto;">
+                            <div class="p-6" style="width:100%;  overflow-x:auto;">
                                 <table class="table table-bordered" id="detail-datatable">
                                     <thead>
                                         <tr>
@@ -34,15 +35,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="w-full md:w-7/12 p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg h-full">
+                <div class="w-full md:w-1/2 p-3">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg h-full">
                         <form action="{{ route('kurikulum.detail') }}" method="post">
                             @csrf
                             <div class="p-6 text-gray-900 dark:text-gray-100">
-                                <div class="flex items-center justify-between">
-                                    <div class="">MATERI AJAR</div>
+                                <div class="flex gap-2 items-center justify-between">
+                                    <div
+                                        class="lg:p-6 w-full p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold text-wrap">
+                                        MATERI AJAR</span>
+                                    </div>
                                     <button type="submit"
-                                        class="bg-red-500 py-2 px-4 rounded-lg text-black hover:bg-red-500">
+                                        class="bg-blue-500 py-2 px-4 rounded-xl  hover:bg-blue-600 text-white">
                                         <i class="fa-solid fa-save"></i>
                                     </button>
                                     <input type="hidden" name="id_kurikulum" value="{{ $kurikulum->id }}">
@@ -97,12 +101,14 @@
                     },
                     {
                         data: 'sks',
-                        render: (data, type, row) => data
+                        render: (data, type, row) =>
+                        `<div style="text-align:center">${data}</div>`
                     },
                     {
                         data: 'semester',
-                        render: (data, type, row) => data.semester
-                    },{
+                        render: (data, type, row) =>
+                         `<div style="text-align:center">${data.semester}</div>`
+                    }, {
                         data: 'jurusan',
                         render: (data, type, row) => data.jurusan
                     },
@@ -110,7 +116,7 @@
                         data: 'id',
                         render: (data, type, row) => {
                             let ditambahkan =
-                                '<span class="bg-emerald-300 p-1 rounded-full text-[12px] font-bold">Added</span>';
+                                '<span class="bg-green-500 px-4 py-2 rounded-full text-[12px] font-bold text-white">Added</span>';
                             let buttonckeck = `
                             <div class="flex items-center justify-center">
                                 <input id="checked-checkbox" name="user_id[]" type="checkbox" value="${data}" class="w-4 h-4 text-blue-600 bg-white border-black border-2 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -149,25 +155,27 @@
                     },
                     {
                         data: 'materi_ajar',
-                        render: (data, type, row) => data.sks
+                        render: (data, type, row) =>
+                        `<div style="text-align:center">${data.sks}</div>`
                     },
                     {
                         data: 'materi_ajar',
-                        render: (data, type, row) => data.semester.semester
-                    },{
+                        render: (data, type, row) =>
+                         `<div style="text-align:center">${data.semester.semester}</div>`
+                    }, {
                         data: 'materi_ajar',
                         render: (data, type, row) => data.jurusan.jurusan
-                    },{
-                    data: {
-                        no: 'no',
-                        name: 'name'
+                    }, {
+                        data: {
+                            no: 'no',
+                            name: 'name'
+                        },
+                        render: (data) => {
+                            let deleteUrl =
+                                `<button onclick="return detailDelete('${data.id}','${data.materi_ajar.materi_ajar}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-xl text-xs text-white h-10 w-10 flex items-center justify-center"><i class="fas fa-trash"></i></button>`;
+                            return `<div style="text-align:center">${deleteUrl}</div>`;
+                        }
                     },
-                    render: (data) => {
-                        let deleteUrl =
-                            `<button onclick="return detailDelete('${data.id}','${data.materi_ajar.materi_ajar}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-md text-xs text-white"><i class="fas fa-trash"></i></button>`;
-                        return `<div style="text-align:center">${deleteUrl}</div>`;
-                    }
-                },
                 ],
             });
         });

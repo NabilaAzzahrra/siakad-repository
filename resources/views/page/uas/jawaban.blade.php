@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('materi_ajar') }}
+            {{ __('Daftar Jawaban UAS') }}
         </h2>
     </x-slot>
 
@@ -11,8 +11,8 @@
                 <div class="w-full md:w-3/12 p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 bg-red-500 rounded-xl">
-                                FORM INPUT materi_ajar
+                            <div class="p-6 bg-amber-300 font-bold rounded-xl">
+                                DATA UAS
                             </div>
                             <div class="mt-4">
                                 <div class="flex items-center mb-4">
@@ -81,8 +81,8 @@
                 <div class="w-full md:w-9/12 p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 bg-red-500 rounded-xl flex items-center justify-between">
-                                <div>DATA materi_ajar</div>
+                            <div class="p-6 bg-amber-300 font-bold rounded-xl flex items-center justify-between">
+                                <div>DATA JAWABAN MAHASISWA</div>
                             </div>
                             <div class="flex justify-center">
                                 <div class="p-6" style="width:100%;  overflow-x:auto;">
@@ -92,55 +92,59 @@
                                             Download All
                                         </a>
                                     </div>
-                                    <table
-                                        class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border">
-                                        <thead
-                                            class="text-md font-bold text-gray-700 uppercase py-[100px] dark:bg-gray-700 dark:text-gray-400">
-                                            <tr>
-                                                <th scope="col" class="px-6 py-3 text-center">
-                                                    <input type="checkbox" class="rounded-md" onchange="checkAll(this)"
-                                                        name="check">
-                                                </th>
-                                                <th scope="col" class="px-6 py-3 text-center bg-gray-100">
-                                                    NO
-                                                </th>
-                                                <th scope="col" class="px-6 py-3 text-center">
-                                                    NIM
-                                                </th>
-                                                <th scope="col" class="px-6 py-3 text-center bg-gray-100">
-                                                    <div class="flex items-center">NAMA</div>
-                                                </th>
-                                                <th scope="col" class="px-6 py-3 text-center">
-                                                    <div class="flex items-center">DOWNLOAD</div>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @php $no = 1; @endphp
-                                            @foreach ($detail as $m)
-                                                <tr class="bg-white border dark:bg-gray-800 dark:border-gray-700">
-                                                    <td class="px-6 py-4 text-center">
-                                                        <input type="checkbox" class="rounded-md" name="user_id[]"
-                                                            value="{{ $m->file }}">
-                                                    </td>
-                                                    <td class="px-6 py-4 text-center bg-gray-100">{{ $no++ }}
-                                                    </td>
-                                                    <th scope="row"
-                                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                        {{ $m->nim }}
+                                    <div class="relative overflow-x-auto rounded-lg shadow-lg">
+                                        <table
+                                            class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border">
+                                            <thead
+                                                class="text-md font-bold text-gray-700 uppercase py-[100px] dark:bg-gray-700 dark:text-gray-400">
+                                                <tr>
+                                                    <th scope="col" class="px-6 py-3 text-center">
+                                                        <input type="checkbox" class="rounded-md"
+                                                            onchange="checkAll(this)" name="check">
                                                     </th>
-                                                    <td class="px-6 py-4 bg-gray-100 uppercase">{{ $m->mahasiswa->nama }}</td>
-                                                    <td class="px-6 py-4 flex gap-3">
-                                                        <a href="{{ asset('uas/jawaban/' . $m->file) }}"
-                                                            class="bg-sky-500 hover:bg-bg-red-300 px-3 py-2 rounded-md text-xs text-white"
-                                                            download>
-                                                            <i class="fi fi-sr-file-download"></i>
-                                                        </a>
-                                                    </td>
+                                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
+                                                        NO
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-center">
+                                                        NIM
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
+                                                        <div class="flex items-center">NAMA</div>
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-center">
+                                                        <div class="flex items-center">DOWNLOAD</div>
+                                                    </th>
                                                 </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                                @php $no = 1; @endphp
+                                                @foreach ($detail as $m)
+                                                    <tr class="bg-white border dark:bg-gray-800 dark:border-gray-700">
+                                                        <td class="px-6 py-4 text-center">
+                                                            <input type="checkbox" class="rounded-md" name="user_id[]"
+                                                                value="{{ $m->file }}">
+                                                        </td>
+                                                        <td class="px-6 py-4 text-center bg-gray-100">
+                                                            {{ $no++ }}
+                                                        </td>
+                                                        <th scope="row"
+                                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                            {{ $m->nim }}
+                                                        </th>
+                                                        <td class="px-6 py-4 bg-gray-100 uppercase">
+                                                            {{ $m->mahasiswa->nama }}</td>
+                                                        <td class="px-6 py-4 flex gap-3">
+                                                            <a href="{{ asset('uas/jawaban/' . $m->file) }}"
+                                                                class="bg-sky-500 hover:bg-bg-red-300 px-4 py-3 rounded-md text-xs text-white"
+                                                                download>
+                                                                <i class="fi fi-sr-file-download"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

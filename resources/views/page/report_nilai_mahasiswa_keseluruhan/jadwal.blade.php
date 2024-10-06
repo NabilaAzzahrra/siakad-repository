@@ -1,14 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('pukul') }}
+            {{ __('Daftar Nilai Mahasiswa') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="">
-                <div class="bg-white p-3 m-12 rounded-xl">
+                <div class="bg-white p-6 m-4 shadow-lg  rounded-xl">
                     <div class="flex items-center mb-4">
                         <div class="font-bold pr-2 pt-1"><i class="fi fi-ss-book-open-cover"></i>
                         </div>
@@ -53,15 +53,15 @@
                 </div>
 
                 <div class="w-full md:w-full p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 mb-5 bg-red-500 rounded-xl">
+                            <div class="p-6 mb-5 bg-amber-300 rounded-xl">
                                 <div class="flex items-center justify-between">
                                     <div>DATA PRESENSI</div>
-                                    <a href="{{ route('report_nilai_keseluruhan.show', $jadwal->id_jadwal) }}">PRINT</a>
+                                    <a href="{{ route('report_nilai_keseluruhan.show', $jadwal->id_jadwal) }}" class="bg-sky-300 p-2 rounded-xl text-white">PRINT</a>
                                 </div>
                             </div>
-                            <div class="flex justify-start bg-white relative overflow-x-auto sm:rounded-lg shadow-lg">
+                            <div class="flex justify-start bg-white relative overflow-x-auto rounded-lg shadow-lg">
                                 <table
                                     class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border">
                                     <thead

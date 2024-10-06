@@ -1,25 +1,25 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('pukul') }}
+            {{ __('Jadwal Pelajaran') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="w-full p-3">
-                <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
-                        <div class="p-6 bg-red-500 rounded-xl">
-                            FORM INPUT JADWAL REGULER
+                        <div class="p-6 bg-amber-300 rounded-xl">
+                            FORM UPDATE JADWAL REGULER
                         </div>
                         <form action="{{ route('jadwal_reguler.update', $jadwal->id) }}" method="post">
                             @csrf
                             @method('PATCH')
                             <div class="p-4 rounded-xl">
-                                <div class="flex gap-5">
+                                <div class="flex flex-col lg:flex-row gap-5">
                                     <div class="flex gap-5 w-full">
-                                        <div class="mb-5 w-full">
+                                        <div class="lg:mb-5 w-full">
                                             <label for="pukul"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                                 Hari <span class="text-red-500">*</span>
@@ -35,7 +35,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="mb-5 w-full">
+                                        <div class="lg:mb-5 w-full">
                                             <label for="pukul"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                                 Sesi <span class="text-red-500">*</span>
@@ -53,7 +53,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="mb-5 w-full">
+                                    <div class="lg:mb-5 w-full">
                                         <label for="pukul"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pukul</label>
                                         <input type="text" id="pukul" name="pukul"
@@ -61,7 +61,7 @@
                                             placeholder="Masukan Pukul disini ..."
                                             value="{{ $jadwal->sesi->pukul->pukul }}" readonly />
                                     </div>
-                                    <div class="mb-5 w-full">
+                                    <div class="lg:mb-5 w-full">
                                         <label for="kurikulum"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Materi
                                             Ajar <span class="text-red-500">*</span></label>
@@ -98,8 +98,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="flex gap-5">
-                                    <div class="mb-5 w-full">
+                                <div class="flex flex-col lg:flex-row gap-5">
+                                    <div class="lg:mb-5 w-full">
                                         <label for="ruang"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                             Ruang <span class="text-red-500">*</span>
@@ -115,7 +115,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="mb-5 w-full">
+                                    <div class="lg:mb-5 w-full">
                                         <label for="dosen"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                             Dosen <span class="text-red-500">*</span>
@@ -131,7 +131,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="mb-5 w-full">
+                                    <div class="lg:mb-5 w-full">
                                         <label for="kelas"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                             Kelas <span class="text-red-500">*</span>
@@ -168,7 +168,7 @@
                                         value="{{ $konfigurasi->id_perhitungan }}">
                                 </div>
                                 <button type="submit"
-                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Simpan</button>
+                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i class="fi fi-rr-disk "></i></button>
                             </div>
                         </form>
                     </div>

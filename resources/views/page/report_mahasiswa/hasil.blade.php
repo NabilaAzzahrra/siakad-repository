@@ -1,14 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('pukul') }}
+            {{ __('Daftar Presensi') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="">
-                <div class="bg-white p-3 m-12 rounded-xl">
+                <div class="bg-white p-6 m-4 shadow-lg  rounded-xl">
                     <div class="flex items-center mb-4">
                         <div class="font-bold pr-2 pt-1"><i class="fi fi-ss-book-open-cover"></i>
                         </div>
@@ -55,13 +55,13 @@
                 <div class="w-full md:w-full p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 mb-5 bg-red-500 rounded-xl">
+                            <div class="p-6 mb-5 bg-amber-300 font-bold rounded-xl">
                                 <div class="flex items-center justify-between">
                                     <div>DATA PRESENSI</div>
-                                    <a href="{{ route('report_keseluruhan.show', $jadwal->id_jadwal) }}">PRINT</a>
+                                    <a href="{{ route('report_keseluruhan.show', $jadwal->id_jadwal) }}" class="bg-sky-300 text-white p-2 rounded-xl">PRINT</a>
                                 </div>
                             </div>
-                            <div class="flex justify-start bg-white relative overflow-x-auto sm:rounded-lg shadow-lg">
+                            <div class="flex justify-start bg-white relative overflow-x-auto rounded-lg shadow-lg">
                                 <table
                                     class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border">
                                     <thead
@@ -138,11 +138,11 @@
                                                     ? date('d/m/y', strtotime($p->tgl_presensi))
                                                     : '-';
                                             @endphp
-                                            <th class="px-6 py-4 text-center">{{ $date }}</th>
+                                            <th class="px-6 py-4 text-center border">{{ $date }}</th>
                                         @endforeach
-                                        <tr>
-                                            <th colspan="3" class="px-6 py-4 text-center">JUMLAH MAHASISWA</th>
-                                            <th colspan="18" class="px-6 py-4 text-center">{{ count($mahasiswa) }}
+                                        <tr class="bg-white border dark:bg-gray-800 dark:border-gray-700">
+                                            <th colspan="3" class="px-6 py-4 text-center border">JUMLAH MAHASISWA</th>
+                                            <th colspan="18" class="px-6 py-4 text-center border">{{ count($mahasiswa) }}
                                             </th>
                                         </tr>
                                         @php
@@ -165,34 +165,34 @@
                                                 }
                                             }
                                         @endphp
-                                        <tr>
-                                            <th colspan="3" class="px-6 py-4 text-center">HADIR</th>
+                                        <tr class="bg-white border dark:bg-gray-800 dark:border-gray-700">
+                                            <th colspan="3" class="px-6 py-4 text-center border">HADIR</th>
                                             @foreach ($hadirPerPertemuan as $count)
-                                                <th class="px-6 py-4 text-center">
+                                                <th class="px-6 py-4 text-center border">
                                                     {{ $count }}
                                                 </th>
                                             @endforeach
                                         </tr>
-                                        <tr>
-                                            <th colspan="3" class="px-6 py-4 text-center">IZIN</th>
+                                        <tr class="bg-white border dark:bg-gray-800 dark:border-gray-700">
+                                            <th colspan="3" class="px-6 py-4 text-center border">IZIN</th>
                                             @foreach ($izinPerPertemuan as $count)
-                                                <th class="px-6 py-4 text-center">
+                                                <th class="px-6 py-4 text-center border">
                                                     {{ $count }}
                                                 </th>
                                             @endforeach
                                         </tr>
-                                        <tr>
-                                            <th colspan="3" class="px-6 py-4 text-center">SAKIT</th>
+                                        <tr class="bg-white border dark:bg-gray-800 dark:border-gray-700">
+                                            <th colspan="3" class="px-6 py-4 text-center border">SAKIT</th>
                                             @foreach ($sakitPerPertemuan as $count)
-                                                <th class="px-6 py-4 text-center">
+                                                <th class="px-6 py-4 text-center border">
                                                     {{ $count }}
                                                 </th>
                                             @endforeach
                                         </tr>
-                                        <tr>
-                                            <th colspan="3" class="px-6 py-4 text-center">ALPA</th>
+                                        <tr class="bg-white border dark:bg-gray-800 dark:border-gray-700">
+                                            <th colspan="3" class="px-6 py-4 text-center border">ALPA</th>
                                             @foreach ($alpaPerPertemuan as $count)
-                                                <th class="px-6 py-4 text-center">
+                                                <th class="px-6 py-4 text-center border">
                                                     {{ $count }}
                                                 </th>
                                             @endforeach

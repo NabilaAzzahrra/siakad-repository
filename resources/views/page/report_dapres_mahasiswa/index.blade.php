@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('pukul') }}
+            {{ __('Data Prestasi Mahasiswa') }}
         </h2>
     </x-slot>
 
@@ -11,9 +11,9 @@
                 <div class="w-full md:w-full p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 bg-red-500 rounded-xl">
+                            <div class="p-6 bg-amber-300 font-bold rounded-xl">
                                 <div class="flex items-center justify-between">
-                                    <div>DATA MAHASISWA</div>
+                                    <div>DATA PRESTASI MAHASISWA</div>
                                 </div>
                             </div>
                             {{-- <form action="">
@@ -39,7 +39,7 @@
                                 </div>
                             </form> --}}
                             <div class="flex justify-center">
-                                <div class="p-12" style="width:100%;overflow-x:auto;">
+                                <div class="lg:p-12 mt-4 lg:mt-0" style="width:100%;overflow-x:auto;">
                                     <form action="{{ route('data_prestasi.store') }}" method="POST" class="formupdate">
                                         @csrf
                                         <div class="flex justify-end">
@@ -47,7 +47,7 @@
                                                 SUBMIT
                                             </button>
                                         </div>
-                                        <div class="relative overflow-x-auto sm:rounded-lg shadow-lg">
+                                        <div class="relative overflow-x-auto rounded-lg shadow-lg">
                                             <input type="hidden" name="semester" value="{{ request('semester', '') }}">
                                             <table
                                                 class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border">

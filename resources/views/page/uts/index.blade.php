@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('pukul') }}
+            {{ __('UTS') }}
         </h2>
     </x-slot>
 
@@ -9,16 +9,16 @@
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-full p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 bg-red-500 rounded-xl">
-                                <div class="flex items-center justify-between">
+                            <div class="p-6 bg-amber-300 rounded-xl">
+                                <div class="flex items-center justify-between font-bold">
                                     <div>DATA UTS</div>
                                 </div>
                             </div>
                             <div class="flex justify-center">
-                                <div class="p-12" style="width:100%;overflow-x:auto;">
-                                    <div class="relative overflow-x-auto sm:rounded-lg shadow-lg">
+                                <div class="lg:p-6 pt-2" style="width:100%;overflow-x:auto;">
+                                    <div class="relative overflow-x-auto rounded-lg shadow-lg">
 
                                         <table
                                             class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border">
@@ -174,52 +174,51 @@
                                                         <td class="px-6 py-4">
                                                             @if ($utsItem)
                                                                 <a href="{{ asset('uts/' . $utsItem->file) }}" download
-                                                                    class="mr-2 bg-green-500 hover:bg-green-600 px-3 py-1 rounded-md text-xs text-white">
+                                                                    class="mr-2 bg-green-500 hover:bg-green-600 px-4 py-3 rounded-xl text-xs text-white">
                                                                     <i class="fa-solid fa-download"></i>
                                                                 </a>
                                                             @else
-                                                                G
+                                                                <div class="text-xs bg-red-500 text-white px-2 rounded-xl py-1">BELUM UPLOAD SOAL</div>
                                                             @endif
                                                         </td>
                                                         <td class="px-6 py-4 bg-gray-100">
                                                             @if ($utsItem)
                                                                 @if ($utsItem->verifikasi == 0)
-                                                                    BELUM
                                                                     <button type="button"
                                                                         data-id="{{ $utsItem->id }}"
                                                                         data-modal-target="sourceModal"
                                                                         data-verifikasi="{{ $utsItem->verifikasi }}"
                                                                         onclick="editSourceModal(this)"
-                                                                        class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
-                                                                        <i class="fas fa-edit"></i>
+                                                                        class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-xl text-xs text-white">
+                                                                        BELUM VERIFIKASI
                                                                     </button>
                                                                 @else
-                                                                    SUDAH
+                                                                    <div class="text-xs bg-green-500 text-white px-2 rounded-xl py-1">SUDAH VERIFIKASI</div>
                                                                 @endif
                                                             @else
-                                                                BELUM UPLOAD SOAL
+                                                                <div class="text-xs bg-red-500 text-white px-2 rounded-xl py-1">BELUM UPLOAD SOAL</div>
                                                             @endif
                                                         </td>
                                                         <td class="px-6 py-4">
                                                             @if ($utsItem)
                                                                 <a href="{{ route('ujian_uts.edit', $utsItem->id) }}"
-                                                                    class="mr-2 bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
+                                                                    class="mr-1 bg-amber-500 hover:bg-amber-600 px-4 py-3 rounded-xl text-xs text-white">
                                                                     <i class="fa-solid fa-file"></i>
                                                                 </a>
                                                                 <button type="button" data-id="{{ $utsItem->id }}"
                                                                     data-modal-target="sourceModalUpload"
                                                                     data-id_uts="{{ $utsItem->id_uts }}"
                                                                     onclick="editSourceModalUpload(this)"
-                                                                    class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
+                                                                    class="bg-amber-500 hover:bg-amber-600 px-4 py-3 rounded-xl text-xs text-white">
                                                                     <i class="fas fa-edit"></i>
                                                                 </button>
                                                                 <a href="{{ route('uts.edit', $utsItem->id_uts) }}"
-                                                                    class="mr-2 bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
+                                                                    class="mr-2 bg-amber-500 hover:bg-amber-600 px-4 py-3 rounded-xl text-xs text-white">
                                                                     <i class="fa-solid fa-list"></i>
                                                                 </a>
                                                             @else
                                                                 <a href="{{ route('uts.show', $m->id_jadwal) }}"
-                                                                    class="mr-2 bg-green-500 hover:bg-green-600 px-3 py-1 rounded-md text-xs text-white">
+                                                                    class="mr-2 bg-green-500 hover:bg-green-600 px-4 py-3 rounded-xl text-xs text-white">
                                                                     <i class="fa-solid fa-file"></i>
                                                                 </a>
                                                             @endif

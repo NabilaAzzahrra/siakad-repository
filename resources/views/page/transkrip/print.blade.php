@@ -135,7 +135,7 @@
 
         .page::before {
             content: "";
-            position: absolute;
+            position: ;
             top: 0;
             left: 0;
             width: 189px;
@@ -146,7 +146,7 @@
 
         .page::after {
             content: "";
-            position: absolute;
+            position: ;
             bottom: 0;
             right: 0;
             width: 794px;
@@ -180,7 +180,7 @@
 
             .page::before {
                 content: "";
-                position: absolute;
+                position: ;
                 top: 0;
                 left: 0;
                 width: 189px;
@@ -191,7 +191,7 @@
 
             .page::after {
                 content: "";
-                position: absolute;
+                position: ;
                 bottom: 0;
                 right: 0;
                 width: 794px;
@@ -220,16 +220,16 @@
                 <div class="-ml-[585px]">
                     <img src="{{ asset('img/graphic.png') }}" alt="" width="15%" class="mx-auto">
                 </div>
-                <div class="absolute top-0 left-0 right-0 text-center mt-12">
+                <div class="top-0 left-0 right-0 text-center -mt-[160px]">
                     <img src="{{ asset('img/logo-lp3i.png') }}" width="30%" alt="Logo" class="mx-auto">
                 </div>
-                <div class="absolute top-[140px] left-0 right-0 text-center text-[18px] font-bold">
+                <div class="mt-4 left-0 right-0 text-center text-[18px] font-bold">
                     ACADEMIC TRANSCRIPT
                 </div>
-                <div class="absolute top-[160px] left-0 right-0 text-center text-[12px] italic">
+                <div class=" top-[160px] left-0 right-0 text-center text-[12px] italic">
                     TRANSKRIP AKADEMIK
                 </div>
-                <div class="absolute top-[180px] left-0 right-0 text-center text-sm font-bold">
+                <div class=" top-[180px] left-0 right-0 text-center text-sm font-bold">
                     No. {{ $formatted_hasil }}.T001.025.T.{{date('my', strtotime($bulan_tahuns))}}
                 </div>
                 @php

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('pukul') }}
+            {{ __('Edit Soal UTS') }}
         </h2>
     </x-slot>
 
@@ -9,22 +9,22 @@
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-full p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 bg-red-500 rounded-xl">
+                            <div class="p-6 bg-amber-300 rounded-xl font-bold">
                                 <div class="flex items-center justify-between">
-                                    <div>DATA TAMBAH SOAL UTS</div>
+                                    <div>DATA EDIT SOAL UTS</div>
                                 </div>
                             </div>
                             <div class="flex justify-center">
-                                <div class="p-12" style="width:100%;overflow-x:auto;">
+                                <div class="lg:p-12 pt-4" style="width:100%;overflow-x:auto;">
                                     <form action="{{ route('ujian_uts.update', $uts->id) }}" method="POST"
                                         enctype="multipart/form-data">
                                         @csrf
                                         @method('PATCH')
                                         <input type="hidden" name="id_jadwal" value="{{ $uts->jadwal->id_jadwal }}">
                                         <input type="hidden" name="id_uts" value="{{ $uts->id_uts }}">
-                                        <div class="flex gap-5">
+                                        <div class="flex flex-col lg:flex-row lg:gap-5 gap-0">
                                             <div class="mb-5 w-full">
                                                 <label for="materi_ajar"
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Materi
@@ -60,7 +60,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="flex gap-5">
+                                        <div class="flex flex-col lg:flex-row lg:gap-5 gap-0">
                                             <div class="mb-5 w-full">
                                                 <label for="materi_ajar"
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ruang</label>
@@ -129,7 +129,7 @@
                                                     value="{{ $uts->waktu_ujian }}" />
                                             </div>
                                         </div>
-                                        <div class="flex gap-5">
+                                        <div class="flex flex-col lg:flex-row lg:gap-5 gap-0">
                                             <div class="mb-5 w-full">
                                                 <label for="file_sebelumnya"
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Soal
@@ -149,7 +149,9 @@
                                             </div>
                                         </div>
 
-                                        <button type="submit">Submit</button>
+                                        <button type="submit"
+                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i
+                                                class="fi fi-rr-disk "></i></button>
                                     </form>
                                 </div>
                             </div>
