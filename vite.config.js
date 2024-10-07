@@ -8,11 +8,11 @@ export default defineConfig({
             refresh: true,
         }),
     ],
-    server: {
-        host: "0.0.0.0", // Membuka akses ke jaringan lokal
-        port: 3000, // Port yang ingin digunakan
-        hmr: {
-            host: "192.168.120.92", // Ganti dengan IP address laptop
-        },
-    },
+    // server: {
+    //     host: "0.0.0.0", // Membuka akses ke jaringan lokal
+    //     port: 3000, // Port yang ingin digunakan
+    //     hmr: {
+    //         host: "192.168.120.92", // Ganti dengan IP address laptop
+    //     },
+    // },
 });
