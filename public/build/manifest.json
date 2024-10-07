@@ -1,0 +1,17 @@
+{
+  "public/img/landing.jpg": {
+    "file": "assets/landing-D1s5yf4b.jpg",
+    "src": "public/img/landing.jpg"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-CB3A-Lx5.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-Cs0QkU1O.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  }
+}
