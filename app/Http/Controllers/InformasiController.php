@@ -12,7 +12,7 @@ class InformasiController extends Controller
      */
     public function index()
     {
-        $informasi = Informasi::paginate(2);
+        $informasi = Informasi::paginate(5);
         return view('page.informasi.index')->with([
             'informasi' => $informasi
         ]);

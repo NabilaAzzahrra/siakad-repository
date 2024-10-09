@@ -24,75 +24,108 @@
                                 <x-slot name="trigger">
                                     <button
                                         class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-black dark:text-gray-400 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                                        <div class="text-[16px] font-bold tracking-wide">Master</div>
-
+                                        <div
+                                            class="text-[16px] font-bold tracking-wide {{ request()->routeIs(['perhitungan.index', 'konfigurasi.index', 'konfigurasi_ujian.index', 'kurikulum.index', 'dosen.index', 'informasi.index', 'hari.index', 'pukul.index', 'ruang.index', 'sesi.index', 'jurusan.index', 'kelas.index', 'materi_ajar.index', 'semester.index', 'keterangan.index', 'tahunakademik.index']) || request()->routeIs(['perhitungan.index', 'konfigurasi.index', 'konfigurasi_ujian.index', 'kurikulum.index', 'dosen.index', 'informasi.index', 'hari.index', 'pukul.index', 'ruang.index', 'sesi.index', 'jurusan.index', 'kelas.index', 'materi_ajar.index', 'semester.index', 'keterangan.index', 'tahunakademik.index']) ? 'text-[#F2994A]' : '' }}">
+                                            Master</div>
                                         <div class="ms-1 mt-1">
-                                            <i class="fi fi-rr-caret-down"></i>
+                                            <i
+                                                class="fi fi-rr-caret-down {{ request()->routeIs(['perhitungan.index', 'konfigurasi.index', 'konfigurasi_ujian.index', 'kurikulum.index', 'dosen.index', 'informasi.index', 'hari.index', 'pukul.index', 'ruang.index', 'sesi.index', 'jurusan.index', 'kelas.index', 'materi_ajar.index', 'semester.index', 'keterangan.index', 'tahunakademik.index']) || request()->routeIs(['perhitungan.index', 'konfigurasi.index', 'konfigurasi_ujian.index', 'kurikulum.index', 'dosen.index', 'informasi.index', 'hari.index', 'pukul.index', 'ruang.index', 'sesi.index', 'jurusan.index', 'kelas.index', 'materi_ajar.index', 'semester.index', 'keterangan.index', 'tahunakademik.index']) ? 'text-[#F2994A]' : '' }}"></i>
                                         </div>
                                     </button>
                                 </x-slot>
 
                                 <x-slot name="content">
-                                    <x-dropdown-link :href="route('perhitungan.index')">
+                                    <x-dropdown-link :href="route('perhitungan.index')" :class="request()->routeIs('perhitungan.index') ? 'text-red-500 font-bold' : ''">
                                         {{ __('Perhitungan') }}
                                     </x-dropdown-link>
 
-                                    <x-dropdown-link :href="route('konfigurasi.index')">
+                                    <x-dropdown-link :href="route('konfigurasi.index')" :class="request()->routeIs('konfigurasi.index') ? 'text-red-500 font-bold' : ''">
                                         {{ __('Konfigurasi Akademik') }}
                                     </x-dropdown-link>
 
-                                    <x-dropdown-link :href="route('konfigurasi_ujian.index')">
+                                    <x-dropdown-link :href="route('konfigurasi_ujian.index')" :class="request()->routeIs('konfigurasi_ujian.index')
+                                        ? 'text-red-500 font-bold'
+                                        : ''">
                                         {{ __('Konfigurasi Ujian') }}
                                     </x-dropdown-link>
 
-                                    <x-dropdown-link :href="route('kurikulum.index')">
+                                    <x-dropdown-link :href="route('kurikulum.index')" :class="request()->routeIs('kurikulum.index') ? 'text-red-500 font-bold' : ''">
                                         {{ __('Kurikulum') }}
                                     </x-dropdown-link>
 
-                                    <x-dropdown-link :href="route('dosen.index')">
+                                    <x-dropdown-link :href="route('dosen.index')" :class="request()->routeIs('dosen.index') ? 'text-red-500 font-bold' : ''">
                                         {{ __('Dosen') }}
                                     </x-dropdown-link>
 
-                                    <x-dropdown-link :href="route('informasi.index')">
+                                    <x-dropdown-link :href="route('informasi.index')" :class="request()->routeIs('informasi.index') ? 'text-red-500 font-bold' : ''">
                                         {{ __('Informasi') }}
                                     </x-dropdown-link>
 
                                     <div class="relative">
                                         <button id="jadwal-button"
-                                            class="flex justify-between items-center w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 dark:text-gray-400 bg-white dark:bg-gray-800 focus:outline-none transition ease-in-out duration-150">
-                                            {{ __('Jadwal') }}
+                                            class="flex justify-between items-center w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 dark:text-gray-400 bg-white dark:bg-gray-800 focus:outline-none transition ease-in-out duration-150 {{ request()->routeIs([
+                                                'hari.index',
+                                                'pukul.index',
+                                                'ruang.index',
+                                                'sesi.index',
+                                                'jurusan.index',
+                                                'kelas.index',
+                                                'materi_ajar.index',
+                                                'semester.index',
+                                                'keterangan.index',
+                                                'tahunakademik.index',
+                                            ])
+                                                ? 'text-red-500 font-bold'
+                                                : '' }}">
+                                            Jadwal
                                             <i class="fi fi-rr-caret-right"></i>
                                         </button>
                                         <div id="jadwal-submenu"
-                                            class="hidden absolute left-full top-0 ml-2 -mt-[184px] w-48 bg-white shadow-lg rounded-md border">
-                                            <x-dropdown-link :href="route('hari.index')">
+                                            class="hidden absolute left-full top-0 ml-2 -mt-[220px] w-48 bg-white shadow-lg rounded-md border">
+                                            <x-dropdown-link :href="route('hari.index')" :class="request()->routeIs('hari.index') ? 'text-red-500 font-bold' : ''">
                                                 {{ __('Hari') }}
                                             </x-dropdown-link>
-                                            <x-dropdown-link :href="route('pukul.index')">
+                                            <x-dropdown-link :href="route('pukul.index')" :class="request()->routeIs('pukul.index')
+                                                ? 'text-red-500 font-bold'
+                                                : ''">
                                                 {{ __('Pukul') }}
                                             </x-dropdown-link>
-                                            <x-dropdown-link :href="route('ruang.index')">
+                                            <x-dropdown-link :href="route('ruang.index')" :class="request()->routeIs('ruang.index')
+                                                ? 'text-red-500 font-bold'
+                                                : ''">
                                                 {{ __('Ruang') }}
                                             </x-dropdown-link>
-                                            <x-dropdown-link :href="route('sesi.index')">
+                                            <x-dropdown-link :href="route('sesi.index')" :class="request()->routeIs('sesi.index') ? 'text-red-500 font-bold' : ''">
                                                 {{ __('Sesi') }}
                                             </x-dropdown-link>
-                                            <x-dropdown-link :href="route('jurusan.index')">
+                                            <x-dropdown-link :href="route('jurusan.index')" :class="request()->routeIs('jurusan.index')
+                                                ? 'text-red-500 font-bold'
+                                                : ''">
                                                 {{ __('Jurusan') }}
                                             </x-dropdown-link>
-                                            <x-dropdown-link :href="route('kelas.index')">
+                                            <x-dropdown-link :href="route('kelas.index')" :class="request()->routeIs('kelas.index')
+                                                ? 'text-red-500 font-bold'
+                                                : ''">
                                                 {{ __('Kelas') }}
                                             </x-dropdown-link>
-                                            <x-dropdown-link :href="route('materi_ajar.index')">
+                                            <x-dropdown-link :href="route('materi_ajar.index')" :class="request()->routeIs('materi_ajar.index')
+                                                ? 'text-red-500 font-bold'
+                                                : ''">
                                                 {{ __('Materi Ajar') }}
                                             </x-dropdown-link>
-                                            <x-dropdown-link :href="route('semester.index')">
+                                            <x-dropdown-link :href="route('semester.index')" :class="request()->routeIs('semester.index')
+                                                ? 'text-red-500 font-bold'
+                                                : ''">
                                                 {{ __('Semester') }}
                                             </x-dropdown-link>
-                                            <x-dropdown-link :href="route('keterangan.index')">
+                                            <x-dropdown-link :href="route('keterangan.index')" :class="request()->routeIs('keterangan.index')
+                                                ? 'text-red-500 font-bold'
+                                                : ''">
                                                 {{ __('Keterangan') }}
                                             </x-dropdown-link>
-                                            <x-dropdown-link :href="route('tahunakademik.index')">
+                                            <x-dropdown-link :href="route('tahunakademik.index')" :class="request()->routeIs('tahunakademik.index')
+                                                ? 'text-red-500 font-bold'
+                                                : ''">
                                                 {{ __('Tahun Akademik') }}
                                             </x-dropdown-link>
                                         </div>
@@ -129,28 +162,31 @@
                             <x-dropdown>
                                 <x-slot name="trigger">
                                     <button
-                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-black dark:text-gray-400  dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                                        <div class="text-[16px] font-bold tracking-wide">Ujian</div>
+                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-black dark:text-gray-400 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                                        <div
+                                            class="text-[16px] font-bold tracking-wide {{ request()->routeIs('ujian_uts.index') || request()->routeIs('ujian_uas.index') ? 'text-[#F2994A]' : '' }}">
+                                            Ujian</div>
 
                                         <div class="ms-1 mt-1">
-                                            <i class="fi fi-rr-caret-down"></i>
+                                            <i
+                                                class="fi fi-rr-caret-down {{ request()->routeIs('ujian_uts.index') || request()->routeIs('ujian_uas.index') ? 'text-[#F2994A]' : '' }}"></i>
                                         </div>
                                     </button>
                                 </x-slot>
 
                                 <x-slot name="content">
-                                    <x-dropdown-link :href="route('ujian_uts.index')">
+                                    <x-dropdown-link :href="route('ujian_uts.index')" :class="request()->routeIs('ujian_uts.index') ? 'text-red-500 font-bold' : ''">
                                         {{ __('UTS') }}
                                     </x-dropdown-link>
 
-                                    <x-dropdown-link :href="route('ujian_uas.index')">
+                                    <x-dropdown-link :href="route('ujian_uas.index')" :class="request()->routeIs('ujian_uas.index') ? 'text-red-500 font-bold' : ''">
                                         {{ __('UAS') }}
                                     </x-dropdown-link>
-
                                 </x-slot>
                             </x-dropdown>
                         </li>
                     </div>
+
 
                     <div class="hidden sm:flex sm:items-center sm:ms-6">
                         <li class="relative list-none">
@@ -158,10 +194,13 @@
                                 <x-slot name="trigger">
                                     <button
                                         class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-black dark:text-gray-400  dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                                        <div class="text-[16px] font-bold tracking-wide">Report</div>
+                                        <div
+                                            class="text-[16px] font-bold tracking-wide {{ request()->routeIs(['report_dosen.index', 'report_keseluruhan.index', 'report_presensi_mahasiswa.index', 'khs.index', 'data_prestasi.index', 'transkrip.index', 'report_nilai_keseluruhan.index', 'report_nilai_mahasiswa.index']) || request()->routeIs(['report_dosen.index', 'report_keseluruhan.index', 'report_presensi_mahasiswa.index', 'khs.index', 'data_prestasi.index', 'transkrip.index', 'report_nilai_keseluruhan.index', 'report_nilai_mahasiswa.index']) ? 'text-[#F2994A]' : '' }}">
+                                            Report</div>
 
                                         <div class="ms-1 mt-1">
-                                            <i class="fi fi-rr-caret-down"></i>
+                                            <i
+                                                class="fi fi-rr-caret-down {{ request()->routeIs(['report_dosen.index', 'report_keseluruhan.index', 'report_presensi_mahasiswa.index', 'khs.index', 'data_prestasi.index', 'transkrip.index', 'report_nilai_keseluruhan.index', 'report_nilai_mahasiswa.index']) || request()->routeIs(['report_dosen.index', 'report_keseluruhan.index', 'report_presensi_mahasiswa.index', 'khs.index', 'data_prestasi.index', 'transkrip.index', 'report_nilai_keseluruhan.index', 'report_nilai_mahasiswa.index']) ? 'text-[#F2994A]' : '' }}"></i>
                                         </div>
                                     </button>
                                 </x-slot>
@@ -169,27 +208,33 @@
                                 <x-slot name="content">
                                     <div class="relative">
                                         <button id="presensi-button"
-                                            class="flex justify-between items-center w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 dark:text-gray-400 bg-white dark:bg-gray-800 focus:outline-none transition ease-in-out duration-150">
+                                            class="flex justify-between items-center w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 dark:text-gray-400 bg-white dark:bg-gray-800 focus:outline-none transition ease-in-out duration-150 {{ request()->routeIs(['report_dosen.index', 'report_keseluruhan.index', 'report_presensi_mahasiswa.index']) ? 'text-red-500 font-bold' : '' }}">
                                             {{ __('Presensi') }}
                                             <i class="fi fi-rr-caret-right"></i>
                                         </button>
                                         <div id="presensi-submenu"
                                             class="hidden absolute left-full top-0 ml-2 -mt-1 w-52 bg-white shadow-lg rounded-md border">
-                                            <x-dropdown-link :href="route('report_dosen.index')">
+                                            <x-dropdown-link :href="route('report_dosen.index')" :class="request()->routeIs('report_dosen.index')
+                                                ? 'text-red-500 font-bold'
+                                                : ''">
                                                 {{ __('Dosen') }}
                                             </x-dropdown-link>
                                             <div class="relative">
                                                 <button id="anak-presensi-submenu-button"
-                                                    class="flex justify-between items-center w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 dark:text-gray-400 bg-white dark:bg-gray-800 focus:outline-none transition ease-in-out duration-150">
+                                                    class="flex justify-between items-center w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 dark:text-gray-400 bg-white dark:bg-gray-800 focus:outline-none transition ease-in-out duration-150 {{ request()->routeIs(['report_keseluruhan.index', 'report_presensi_mahasiswa.index']) ? 'text-red-500 font-bold' : '' }}">
                                                     {{ __('Mahasiswa') }}
                                                     <i class="fi fi-rr-caret-right"></i>
                                                 </button>
                                                 <div id="anak-presensi-submenu"
                                                     class="hidden absolute left-full top-0 ml-2 -mt-9 w-48 bg-white shadow-lg rounded-md border">
-                                                    <x-dropdown-link :href="route('report_keseluruhan.index')">
+                                                    <x-dropdown-link :href="route('report_keseluruhan.index')" :class="request()->routeIs('report_keseluruhan.index')
+                                                        ? 'text-red-500 font-bold'
+                                                        : ''">
                                                         {{ __('Keseluruhan') }}
                                                     </x-dropdown-link>
-                                                    <x-dropdown-link :href="route('report_presensi_mahasiswa.index')">
+                                                    <x-dropdown-link :href="route('report_presensi_mahasiswa.index')" :class="request()->routeIs('report_presensi_mahasiswa.index')
+                                                        ? 'text-red-500 font-bold'
+                                                        : ''">
                                                         {{ __('Per Mahasiswa') }}
                                                     </x-dropdown-link>
                                                 </div>
@@ -199,35 +244,45 @@
 
                                     <div class="relative">
                                         <button id="nilai-button"
-                                            class="flex justify-between items-center w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 dark:text-gray-400 bg-white dark:bg-gray-800 focus:outline-none transition ease-in-out duration-150">
+                                            class="flex justify-between items-center w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 dark:text-gray-400 bg-white dark:bg-gray-800 focus:outline-none transition ease-in-out duration-150 {{ request()->routeIs(['khs.index', 'data_prestasi.index', 'transkrip.index', 'report_nilai_keseluruhan.index', 'report_nilai_mahasiswa.index']) ? 'text-red-500 font-bold' : '' }}">
                                             {{ __('Nilai') }}
-                                            <i class="fi fi-rr-caret-right"></i>
+                                            <i
+                                                class="fi fi-rr-caret-right {{ request()->routeIs(['khs.index', 'data_prestasi.index', 'transkrip.index', 'report_nilai_keseluruhan.index', 'report_nilai_mahasiswa.index']) ? 'text-red-500 font-bold' : '' }}"></i>
                                         </button>
                                         <div id="nilai-submenu"
                                             class="hidden absolute left-full top-0 -mt-10 ml-2 w-48 bg-white border shadow-lg rounded-md">
                                             <div class="relative">
                                                 <button id="anak-nilai-submenu-button"
-                                                    class="flex justify-between items-center w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 dark:text-gray-400 bg-white dark:bg-gray-800 focus:outline-none transition ease-in-out duration-150">
+                                                    class="flex justify-between items-center w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 dark:text-gray-400 bg-white dark:bg-gray-800 focus:outline-none transition ease-in-out duration-150 {{ request()->routeIs(['report_nilai_keseluruhan.index', 'report_nilai_mahasiswa.index']) ? 'text-red-500 font-bold' : '' }}">
                                                     {{ __('Mahasiswa') }}
-                                                    <i class="fi fi-rr-caret-right"></i>
+                                                    <i
+                                                        class="fi fi-rr-caret-right {{ request()->routeIs(['report_nilai_keseluruhan.index', 'report_nilai_mahasiswa.index']) ? 'text-red-500 font-bold' : '' }}"></i>
                                                 </button>
                                                 <div id="anak-nilai-submenu"
                                                     class="hidden absolute left-full top-0 ml-2 -mt-0 w-48 bg-white shadow-lg rounded-md border">
-                                                    <x-dropdown-link :href="route('report_nilai_keseluruhan.index')">
+                                                    <x-dropdown-link :href="route('report_nilai_keseluruhan.index')" :class="request()->routeIs('report_nilai_keseluruhan.index')
+                                                        ? 'text-red-500 font-bold'
+                                                        : ''">
                                                         {{ __('Keseluruhan') }}
                                                     </x-dropdown-link>
-                                                    <x-dropdown-link :href="route('report_nilai_mahasiswa.index')">
+                                                    <x-dropdown-link :href="route('report_nilai_mahasiswa.index')" :class="request()->routeIs('report_nilai_mahasiswa.index')
+                                                        ? 'text-red-500 font-bold'
+                                                        : ''">
                                                         {{ __('Per Mahasiswa') }}
                                                     </x-dropdown-link>
                                                 </div>
                                             </div>
-                                            <x-dropdown-link :href="route('khs.index')">
+                                            <x-dropdown-link :href="route('khs.index')" :class="request()->routeIs('khs.index') ? 'text-red-500 font-bold' : ''">
                                                 {{ __('KHS') }}
                                             </x-dropdown-link>
-                                            <x-dropdown-link :href="route('data_prestasi.index')">
+                                            <x-dropdown-link :href="route('data_prestasi.index')" :class="request()->routeIs('data_prestasi.index')
+                                                ? 'text-red-500 font-bold'
+                                                : ''">
                                                 {{ __('Data Prestasi') }}
                                             </x-dropdown-link>
-                                            <x-dropdown-link :href="route('transkrip.index')">
+                                            <x-dropdown-link :href="route('transkrip.index')" :class="request()->routeIs('transkrip.index')
+                                                ? 'text-red-500 font-bold'
+                                                : ''">
                                                 {{ __('Transkrip') }}
                                             </x-dropdown-link>
                                         </div>
@@ -260,25 +315,27 @@
                                 <x-slot name="trigger">
                                     <button
                                         class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-black dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                                        <div class="text-[16px] font-bold tracking-wide">Ujian</div>
+                                        <div
+                                            class="text-[16px] font-bold tracking-wide {{ request()->routeIs('ujian_uts_mhs.index', 'ujian_uas_mhs.index') || request()->routeIs('ujian_uts_mhs.index', 'ujian_uas_mhs.index') ? 'text-[#F2994A]' : '' }}">
+                                            Ujian</div>
 
-                                        <div class="ms-1">
-                                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd"
-                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                    clip-rule="evenodd" />
-                                            </svg>
+                                        <div class="ms-1 mt-1">
+                                            <i
+                                                class="fi fi-rr-caret-down {{ request()->routeIs('ujian_uts_mhs.index', 'ujian_uas_mhs.index') || request()->routeIs('ujian_uts_mhs.index', 'ujian_uas_mhs.index') ? 'text-[#F2994A]' : '' }}"></i>
                                         </div>
                                     </button>
                                 </x-slot>
 
                                 <x-slot name="content">
-                                    <x-dropdown-link :href="route('ujian_uts_mhs.index')">
+                                    <x-dropdown-link :href="route('ujian_uts_mhs.index')" :class="request()->routeIs('ujian_uts_mhs.index')
+                                        ? 'text-red-500 font-bold'
+                                        : ''">
                                         {{ __('UTS') }}
                                     </x-dropdown-link>
 
-                                    <x-dropdown-link :href="route('ujian_uas_mhs.index')">
+                                    <x-dropdown-link :href="route('ujian_uas_mhs.index')" :class="request()->routeIs('ujian_uas_mhs.index')
+                                        ? 'text-red-500 font-bold'
+                                        : ''">
                                         {{ __('UAS') }}
                                     </x-dropdown-link>
 
@@ -300,29 +357,33 @@
                                 <x-slot name="trigger">
                                     <button
                                         class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-black dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                                        <div class="text-[16px] font-bold tracking-wide">Nilai</div>
+                                        <div
+                                            class="text-[16px] font-bold tracking-wide {{ request()->routeIs('report_nilai_mahasiswa.edit', Auth::user()->email, 'report_khs_mahasiswa.edit', Auth::user()->email, 'report_dapres_mahasiswa.edit', Auth::user()->email) || request()->routeIs('report_nilai_mahasiswa.edit', Auth::user()->email, 'report_khs_mahasiswa.edit', Auth::user()->email, 'report_dapres_mahasiswa.edit', Auth::user()->email) ? 'text-[#F2994A]' : '' }}">
+                                            Nilai</div>
 
-                                        <div class="ms-1">
-                                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd"
-                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                    clip-rule="evenodd" />
-                                            </svg>
+                                        <div class="ms-1 mt-1">
+                                            <i
+                                                class="fi fi-rr-caret-down {{ request()->routeIs('report_nilai_mahasiswa.edit', Auth::user()->email, 'report_khs_mahasiswa.edit', Auth::user()->email, 'report_dapres_mahasiswa.edit', Auth::user()->email) || request()->routeIs('report_nilai_mahasiswa.edit', Auth::user()->email, 'report_khs_mahasiswa.edit', Auth::user()->email, 'report_dapres_mahasiswa.edit', Auth::user()->email) ? 'text-[#F2994A]' : '' }}"></i>
                                         </div>
                                     </button>
                                 </x-slot>
 
                                 <x-slot name="content">
-                                    <x-dropdown-link :href="route('report_nilai_mahasiswa.edit', Auth::user()->email)">
+                                    <x-dropdown-link :href="route('report_nilai_mahasiswa.edit', Auth::user()->email)" :class="request()->routeIs('report_nilai_mahasiswa.edit', Auth::user()->email)
+                                        ? 'text-red-500 font-bold'
+                                        : ''">
                                         {{ __('Keseluruhan') }}
                                     </x-dropdown-link>
 
-                                    <x-dropdown-link :href="route('report_khs_mahasiswa.edit', Auth::user()->email)">
+                                    <x-dropdown-link :href="route('report_khs_mahasiswa.edit', Auth::user()->email)" :class="request()->routeIs('report_khs_mahasiswa.edit', Auth::user()->email)
+                                        ? 'text-red-500 font-bold'
+                                        : ''">
                                         {{ __('KHS') }}
                                     </x-dropdown-link>
 
-                                    <x-dropdown-link :href="route('report_dapres_mahasiswa.edit', Auth::user()->email)">
+                                    <x-dropdown-link :href="route('report_dapres_mahasiswa.edit', Auth::user()->email)" :class="request()->routeIs('report_dapres_mahasiswa.edit', Auth::user()->email)
+                                        ? 'text-red-500 font-bold'
+                                        : ''">
                                         {{ __('Data Prestasi') }}
                                     </x-dropdown-link>
                                 </x-slot>
@@ -334,7 +395,10 @@
                 @can('role-O')
                     <!-- Navigation Links -->
                     <div class="hidden sm:flex sm:items-center sm:ms-6">
-                        <x-nav-link :href="route('jadwal_reguler.jadwal_mhs', str_replace('ortu', '', Auth::user()->email))" :active="request()->routeIs('jadwal_reguler.jadwal_mhs', str_replace('ortu', '', Auth::user()->email))">
+                        <x-nav-link :href="route('jadwal_reguler.jadwal_mhs', str_replace('ortu', '', Auth::user()->email))" :active="request()->routeIs(
+                            'jadwal_reguler.jadwal_mhs',
+                            str_replace('ortu', '', Auth::user()->email),
+                        )">
                             <div class="text-[16px] font-bold tracking-wide">Jadwal</div>
                         </x-nav-link>
                     </div>
@@ -344,8 +408,10 @@
                         <x-nav-link :href="route(
                             'report_presensi_mahasiswa.edit',
                             str_replace('ortu', '', Auth::user()->email),
-                        )" :active="request()->routeIs('report_presensi_mahasiswa.edit',
-                            str_replace('ortu', '', Auth::user()->email))">
+                        )" :active="request()->routeIs(
+                            'report_presensi_mahasiswa.edit',
+                            str_replace('ortu', '', Auth::user()->email),
+                        )">
                             <div class="text-[16px] font-bold tracking-wide">Presensi</div>
                         </x-nav-link>
                     </div>
@@ -356,15 +422,31 @@
                                 <x-slot name="trigger">
                                     <button
                                         class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                                        <div class="text-[16px] font-bold tracking-wide">Nilai</div>
+                                        <div
+                                            class="text-[16px] font-bold tracking-wide {{ request()->routeIs([
+                                                'report_nilai_mahasiswa.edit',
+                                                str_replace('ortu', '', Auth::user()->email),
+                                                'report_khs_mahasiswa.edit',
+                                                str_replace('ortu', '', Auth::user()->email),
+                                                'report_dapres_mahasiswa.edit',
+                                                str_replace('ortu', '', Auth::user()->email),
+                                            ])
+                                                ? 'text-[#F2994A]'
+                                                : '' }}">
+                                            Nilai</div>
 
-                                        <div class="ms-1">
-                                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd"
-                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                    clip-rule="evenodd" />
-                                            </svg>
+                                        <div class="ms-1 mt-1">
+                                            <i
+                                                class="fi fi-rr-caret-down {{ request()->routeIs([
+                                                    'report_nilai_mahasiswa.edit',
+                                                    str_replace('ortu', '', Auth::user()->email),
+                                                    'report_khs_mahasiswa.edit',
+                                                    str_replace('ortu', '', Auth::user()->email),
+                                                    'report_dapres_mahasiswa.edit',
+                                                    str_replace('ortu', '', Auth::user()->email),
+                                                ])
+                                                    ? 'text-[#F2994A]'
+                                                    : '' }}"></i>
                                         </div>
                                     </button>
                                 </x-slot>
@@ -373,21 +455,36 @@
                                     <x-dropdown-link :href="route(
                                         'report_nilai_mahasiswa.edit',
                                         str_replace('ortu', '', Auth::user()->email),
-                                    )">
+                                    )" :class="request()->routeIs(
+                                        'report_nilai_mahasiswa.edit',
+                                        str_replace('ortu', '', Auth::user()->email),
+                                    )
+                                        ? 'text-red-500 font-bold'
+                                        : ''">
                                         {{ __('Keseluruhan') }}
                                     </x-dropdown-link>
 
                                     <x-dropdown-link :href="route(
                                         'report_khs_mahasiswa.edit',
                                         str_replace('ortu', '', Auth::user()->email),
-                                    )">
+                                    )" :class="request()->routeIs(
+                                        'report_khs_mahasiswa.edit',
+                                        str_replace('ortu', '', Auth::user()->email),
+                                    )
+                                        ? 'text-red-500 font-bold'
+                                        : ''">
                                         {{ __('KHS') }}
                                     </x-dropdown-link>
 
                                     <x-dropdown-link :href="route(
                                         'report_dapres_mahasiswa.edit',
                                         str_replace('ortu', '', Auth::user()->email),
-                                    )">
+                                    )" :class="request()->routeIs(
+                                        'report_dapres_mahasiswa.edit',
+                                        str_replace('ortu', '', Auth::user()->email),
+                                    )
+                                        ? 'text-red-500 font-bold'
+                                        : ''">
                                         {{ __('Data Prestasi') }}
                                     </x-dropdown-link>
                                 </x-slot>
@@ -410,25 +507,27 @@
                                 <x-slot name="trigger">
                                     <button
                                         class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-black dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                                        <div class="text-[16px] font-bold tracking-wide">Ujian</div>
+                                        <div
+                                            class="text-[16px] font-bold tracking-wide {{ request()->routeIs(['ujian_uts.ujian_uts_dosen', Auth::user()->email, 'ujian_uas.ujian_uas_dosen', Auth::user()->email]) ? 'text-[#F2994A]' : '' }}">
+                                            Ujian</div>
 
-                                        <div class="ms-1">
-                                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd"
-                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                    clip-rule="evenodd" />
-                                            </svg>
+                                        <div class="ms-1 mt-1">
+                                            <i
+                                                class="fi fi-rr-caret-down {{ request()->routeIs(['ujian_uts.ujian_uts_dosen', Auth::user()->email, 'ujian_uas.ujian_uas_dosen', Auth::user()->email]) ? 'text-[#F2994A]' : '' }}"></i>
                                         </div>
                                     </button>
                                 </x-slot>
 
                                 <x-slot name="content">
-                                    <x-dropdown-link :href="route('ujian_uts.ujian_uts_dosen', Auth::user()->email)">
+                                    <x-dropdown-link :href="route('ujian_uts.ujian_uts_dosen', Auth::user()->email)" :class="request()->routeIs('ujian_uts.ujian_uts_dosen', Auth::user()->email)
+                                        ? 'text-red-500 font-bold'
+                                        : ''">
                                         {{ __('UTS') }}
                                     </x-dropdown-link>
 
-                                    <x-dropdown-link :href="route('ujian_uas.ujian_uas_dosen', Auth::user()->email)">
+                                    <x-dropdown-link :href="route('ujian_uas.ujian_uas_dosen', Auth::user()->email)" :class="request()->routeIs('ujian_uas.ujian_uas_dosen', Auth::user()->email)
+                                        ? 'text-red-500 font-bold'
+                                        : ''">
                                         {{ __('UAS') }}
                                     </x-dropdown-link>
 

@@ -1,7 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Data Baru') }}
+            <div class="flex items-center">Mahsiswa<i class="fi fi-rr-caret-right mt-1"></i> <span
+                    class="text-red-500">Data Baru</span></div>
         </h2>
     </x-slot>
 
@@ -11,8 +12,8 @@
                 <div class="w-full md:w-full p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 bg-amber-300 rounded-xl">
-                                <div class="flex items-center justify-between">
+                            <div class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
+                                <div class="flex items-center justify-center">
                                     <div>MELENGKAPI DATA MAHASISWA</div>
                                 </div>
                             </div>
@@ -21,17 +22,17 @@
 
                                     <div class="relative overflow-x-auto shadow-md rounded-lg">
                                         <table
-                                            class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border shadow-lg">
+                                            class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border">
                                             <thead
-                                                class="text-xs bg-gray-200 text-gray-700 uppercase py-[100px] dark:bg-gray-700 dark:text-gray-400">
-                                                <tr>
-                                                    <th scope="col" class="px-6 py-3 text-center">
+                                                class="text-md font-bold text-gray-700 uppercase py-[100px] dark:bg-gray-700 dark:text-gray-400">
+                                                <tr class="bg-white border dark:bg-gray-800 dark:border-gray-700">
+                                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
                                                         NO
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center">
                                                         NIM
                                                     </th>
-                                                    <th scope="col" class="px-6 py-3 text-center">
+                                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
                                                         <div class="flex items-center">
                                                             NAMA
                                                         </div>
@@ -41,7 +42,7 @@
                                                             NO HP
                                                         </div>
                                                     </th>
-                                                    <th scope="col" class="px-6 py-3 text-center">
+                                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
                                                         <div class="flex items-center">
                                                             STATUS
                                                         </div>
@@ -59,14 +60,14 @@
                                                 @endphp
                                                 @foreach ($mahasiswa as $m)
                                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                                        <td class="px-6 py-4 text-center">
+                                                        <td class="px-6 py-4 text-center bg-gray-100">
                                                             {{ $no++ }}
                                                         </td>
                                                         <th scope="row"
                                                             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                                             {{ $m->nim }}
                                                         </th>
-                                                        <td class="px-6 py-4">
+                                                        <td class="px-6 py-4 bg-gray-100">
                                                             {{ $m->nama }}
                                                         </td>
                                                         <td class="px-6 py-4">
@@ -88,7 +89,7 @@
                                                                     break;
                                                             }
                                                         @endphp
-                                                        <td class="px-6 py-4">
+                                                        <td class="px-6 py-4 bg-gray-100">
                                                             <span
                                                                 class="{{ $bg }} p-2 text-white rounded-full">{{ $keaktifan }}</span>
                                                         </td>
@@ -100,7 +101,7 @@
                                                                 data-tingkat="{{ $m->tingkat }}"
                                                                 data-status="{{ $m->status }}"
                                                                 onclick="editSourceModal(this)"
-                                                                class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
+                                                                class="bg-amber-500 hover:bg-amber-600 px-4 py-3 rounded-xl text-xs text-white">
                                                                 <i class="fas fa-edit"></i>
                                                             </button>
 
@@ -159,8 +160,7 @@
                     </div>
                     <div class="flex flex-col lg:flex-row gap-5">
                         <div class=" w-full">
-                            <label for="kelas"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            <label for="kelas" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                 Kelas <span class="text-red-500">*</span>
                             </label>
                             <select class="js-example-placeholder-single js-states form-control w-" name="kelas"

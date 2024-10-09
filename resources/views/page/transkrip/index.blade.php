@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Transkrip') }}
+            <div class="flex items-center">Report<i class="fi fi-rr-caret-right mt-1"></i> Nilai <i class="fi fi-rr-caret-right mt-1"></i> <span class="text-red-500">Transkrip</span></div>
         </h2>
     </x-slot>
 
@@ -11,8 +11,8 @@
                 <div class="w-full md:w-full p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 bg-amber-300 font-bold rounded-xl">
-                                <div class="flex items-center justify-between">
+                            <div class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
+                                <div class="flex items-center justify-center">
                                     <div>DATA MAHASISWA</div>
                                 </div>
                             </div>

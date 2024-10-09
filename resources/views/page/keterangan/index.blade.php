@@ -1,8 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Keterangan') }}
-        </h2>
+            <div class="flex items-center">Master<i class="fi fi-rr-caret-right mt-1"></i> Jadwal<i class="fi fi-rr-caret-right mt-1"></i> <span class="text-red-500">Keterangan</span></div>        </h2>
     </x-slot>
 
     <div class="py-12">

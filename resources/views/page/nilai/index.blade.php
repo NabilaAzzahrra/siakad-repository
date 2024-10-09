@@ -13,7 +13,7 @@
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                             <div class="">
                                 <div class="flex flex-col lg:flex-row items-center justify-between gap-4">
-                                    <div class="p-6 bg-amber-300 rounded-xl w-full font-bold">DATA NILAI</div>
+                                    <div class="w-full lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">DATA NILAI</div>
                                 </div>
                             </div>
                             <div class="flex w-full justify-center">

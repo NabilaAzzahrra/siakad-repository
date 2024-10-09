@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Konfigurasi') }}
+            <div class="flex items-center">Master<i class="fi fi-rr-caret-right mt-1"></i> <span class="text-red-500">Konfigurasi Ujian</span></div>
         </h2>
     </x-slot>
 
@@ -9,7 +9,7 @@
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-5/12 p-3 hidden">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                             <div class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
                                 FORM INPUT Konfigurasi

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Jadwal Mata Pelajaran') }}
+        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight flex text-wrap text-md">
+            <div class="flex items-center">Jadwal Materi Ajar<i class="fi fi-rr-caret-right mt-1"></i> <span class="text-red-500">Detail Jadwal Materi Ajar</span></div>
         </h2>
     </x-slot>
 

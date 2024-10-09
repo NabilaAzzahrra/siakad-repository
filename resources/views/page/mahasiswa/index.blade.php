@@ -25,8 +25,8 @@
                                 kebutuhan data lainnya.
                             </div>
                             <a href="{{ route('mahasiswa.create') }}"
-                                class="bg-sky-500 hover:bg-sky-700 text-white w-[105px] px-2 py-1 text-center font-bold rounded-lg flex items-center">
-                                Lihat Data <i class="fi fi-bs-angle-double-small-right flex pt-1"></i>
+                                class="bg-sky-500 hover:bg-sky-700 text-white w-[120px] px-2 py-1 text-center font-bold rounded-lg flex items-center">
+                                Lihat Data <i class="fi fi-bs-angle-double-small-right flex pl-2"></i>
                             </a>
                         </div>
                     @else
@@ -34,8 +34,8 @@
                     @endif
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 bg-amber-300 rounded-xl">
-                                <div class="flex items-center justify-between">
+                            <div class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
+                                <div class="flex items-center justify-center">
                                     <div>DATA MAHASISWA</div>
                                 </div>
                             </div>

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Informasi') }}
+            <div class="flex items-center">Master<i class="fi fi-rr-caret-right mt-1"></i> <span class="text-red-500">Informasi</span></div>
         </h2>
     </x-slot>
 
@@ -200,38 +200,6 @@
     </div>
 
     <script>
-        // const editSourceModal = (button) => {
-        //     const formModal = document.getElementById('formSourceModal');
-        //     const modalTarget = button.dataset.modalTarget;
-        //     const id = button.dataset.id;
-        //     const informasi = button.dataset.informasi;
-        //     const kategori = button.dataset.kategori;
-        //     const judul = button.dataset.judul;
-        //     let url = "{{ route('informasi.update', ':id') }}".replace(':id', id);
-        //     console.log(url);
-        //     let status = document.getElementById(modalTarget);
-        //     document.getElementById('title_source').innerText = `Update informasi ${kategori}`;
-        //     document.getElementById('informasis').value = informasi;
-        //     document.getElementById('juduls').value = judul;
-        //     let event = new Event('change');
-        //     document.querySelector('[name="kategoris"]').value = kategori;
-        //     document.querySelector('[name="kategoris"]').dispatchEvent(event);
-        //     document.getElementById('formSourceButton').innerText = 'Simpan';
-        //     document.getElementById('formSourceModal').setAttribute('action', url);
-        //     let csrfToken = document.createElement('input');
-        //     csrfToken.setAttribute('type', 'hidden');
-        //     csrfToken.setAttribute('value', '{{ csrf_token() }}');
-        //     formModal.appendChild(csrfToken);
-
-        //     let methodInput = document.createElement('input');
-        //     methodInput.setAttribute('type', 'hidden');
-        //     methodInput.setAttribute('name', '_method');
-        //     methodInput.setAttribute('value', 'PATCH');
-        //     formModal.appendChild(methodInput);
-
-        //     status.classList.toggle('hidden');
-        // }
-
         const editSourceModal = (button) => {
             const formModal = document.getElementById('formSourceModal');
             const modalTarget = button.dataset.modalTarget;

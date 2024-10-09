@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Jadwal Pelajaran') }}
+        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight flex text-wrap text-md">
+            <div class="flex items-center">Jadwal Materi Ajar<i class="fi fi-rr-caret-right mt-1"></i> <span class="text-red-500">Tambah Jadwal Materi Ajar</span></div>
         </h2>
     </x-slot>
 
@@ -10,7 +10,7 @@
             <div class="w-full p-3">
                 <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
-                        <div class="p-6 bg-amber-300 rounded-xl">
+                        <div class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
                             FORM INPUT JADWAL REGULER
                         </div>
                         <form action="{{ route('jadwal_reguler.store') }}" method="post">

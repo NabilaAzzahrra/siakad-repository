@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Jadwal Pelajaran') }}
+            {{ __('Jadwal Materi Ajar') }}
         </h2>
     </x-slot>
 
@@ -13,7 +13,7 @@
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                             <div class="">
                                 <div class="flex flex-col lg:flex-row items-center justify-between gap-5">
-                                    <div class="rounded-xl p-6 bg-amber-300 w-full">DATA JADWAL REGULER</div>
+                                    <div class="w-full lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">DATA JADWAL REGULER</div>
                                     <div  class="rounded-xl lg:p-6 p-2 text-sm lg:text-md bg-sky-300">
                                         <a href="{{ route('jadwal_reguler.create') }}" class="href">TAMBAH</a>
                                     </div>

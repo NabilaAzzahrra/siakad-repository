@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('pukul') }}
+            {{ __('UAS') }}
         </h2>
     </x-slot>
 
@@ -9,16 +9,16 @@
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-full p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 bg-red-500 rounded-xl">
+                            <div class="p-6 bg-amber-300 font-bold rounded-xl">
                                 <div class="flex items-center justify-between">
                                     <div>DATA UAS</div>
                                 </div>
                             </div>
                             <div class="flex justify-center">
-                                <div class="p-12" style="width:100%;overflow-x:auto;">
-                                    <div class="relative overflow-x-auto sm:rounded-lg shadow-lg">
+                                <div class="lg:p-12 pt-4" style="width:100%;overflow-x:auto;">
+                                    <div class="relative overflow-x-auto rounded-lg shadow-lg">
 
                                         <table
                                             class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border">
@@ -174,7 +174,7 @@
                                                         <td class="px-6 py-4">
                                                             @if ($uasItem)
                                                                 <a href="{{ asset('uas/' . $uasItem->file) }}" download
-                                                                    class="mr-2 bg-green-500 hover:bg-green-600 px-3 py-1 rounded-md text-xs text-white">
+                                                                    class="mr-2 bg-green-500 hover:bg-green-600 px-4 py-3 rounded-xl text-xs text-white">
                                                                     <i class="fa-solid fa-download"></i>
                                                                 </a>
                                                             @else
@@ -195,16 +195,16 @@
                                                         <td class="px-6 py-4">
                                                             @if ($uasItem)
                                                                 <a href="{{ route('ujian_uas.edit', $uasItem->id) }}"
-                                                                    class="mr-2 bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
+                                                                    class="mr-2 bg-amber-500 hover:bg-amber-600 px-4 py-3 rounded-xl text-xs text-white">
                                                                     <i class="fa-solid fa-file"></i>
                                                                 </a>
                                                                 <a href="{{ route('uas.edit', $uasItem->id_uas) }}"
-                                                                    class="mr-2 bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
+                                                                    class="mr-2 bg-amber-500 hover:bg-amber-600 px-4 py-3 rounded-xl text-xs text-white">
                                                                     <i class="fa-solid fa-list"></i>
                                                                 </a>
                                                             @else
                                                                 <a href="{{ route('uas.show', $m->id_jadwal) }}"
-                                                                    class="mr-2 bg-green-500 hover:bg-green-600 px-3 py-1 rounded-md text-xs text-white">
+                                                                    class="mr-2 bg-green-500 hover:bg-green-600 px-4 py-3 rounded-xl text-xs text-white">
                                                                     <i class="fa-solid fa-file"></i>
                                                                 </a>
                                                             @endif

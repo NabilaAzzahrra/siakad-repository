@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Edit Nilai Mahasiswa') }}
+            <div class="flex items-center">Nilai<i class="fi fi-rr-caret-right mt-1"></i> <span class="text-red-500">Edit Data Nilai</span></div>
         </h2>
     </x-slot>
 
@@ -13,7 +13,7 @@
                         <div class="bg-white lg:w-[500px] w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
                             <div class="p-6 text-gray-900 dark:text-gray-100 overflow-hidden">
                                 <div
-                                    class="bg-sky-200 p-3 rounded-xl font-extrabold text-sky-800 flex items-center justify-center text-[20px]">
+                                    class="bg-sky-200 lg:p-3 p-1 rounded-xl font-extrabold text-sky-800 flex items-center justify-center lg:text-[20px] text-sm w-full">
                                     DATA MATERI AJAR
                                 </div>
                                 <div class="mt-5">
@@ -91,7 +91,7 @@
                             <div class="p-6 text-gray-900 dark:text-gray-100">
                                 <div class="flex flex-col lg:flex-row lg:gap-5 gap-1">
                                     <div
-                                        class="bg-sky-200 p-3 rounded-xl font-extrabold text-sky-800 flex items-center justify-center lg:text-[20px] text-sm w-full">
+                                        class="bg-sky-200 lg:p-3 p-1 rounded-xl font-extrabold text-sky-800 flex items-center justify-center lg:text-[20px] text-sm w-full">
                                         FORM INPUT PRESENSI
                                     </div>
                                     @php
@@ -111,7 +111,7 @@
                                                 @method('PATCH')
                                                 <input type="hidden" value="1" name="verifikasi">
                                                 <button type="submit"
-                                                    class="bg-sky-200 p-3 rounded-xl font-extrabold text-sky-800 flex items-center justify-center lg:text-[18px] text-sm lg:w-[300px] w-full">
+                                                    class="bg-sky-200 lg:p-3 p-1 rounded-xl font-extrabold text-sky-800 flex items-center justify-center lg:text-[18px] text-sm lg:w-[300px] w-full">
                                                     <i
                                                         class="fi fi-sr-cross-circle flex items-center text-red-500 mr-3"></i>
                                                     {{ $text }}
@@ -119,7 +119,7 @@
                                             </form>
                                         @else
                                             <button disabled
-                                                class="bg-gray-200 p-3 rounded-xl font-extrabold text-gray-800 flex items-center justify-center lg:text-[18px] text-sm lg:w-[300px] w-full">
+                                                class="bg-gray-200 lg:p-3 p-1 rounded-xl font-extrabold text-gray-800 flex items-center justify-center lg:text-[18px] text-sm lg:w-[300px] w-full">
                                                 <i class="fi fi-sr-check-circle flex items-center text-green-500 mr-3"></i>
                                                 {{ $text }}
                                             </button>

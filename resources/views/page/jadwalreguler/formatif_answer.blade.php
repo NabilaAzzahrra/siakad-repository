@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Daftar Jawaban Tugas') }}
+            {{ __('Daftar Formatif') }}
         </h2>
     </x-slot>
 
@@ -11,8 +11,8 @@
                 <div class="w-full md:w-3/12 p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 bg-amber-300 rounded-xl font-bold">
-                                DATA TUGAS
+                            <div class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
+                                DATA FORMATIF
                             </div>
                             @foreach ($formatif as $d)
                             @endforeach
@@ -90,7 +90,7 @@
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                             <div class="flex flex-col lg:flex-row gap-2 items-center justify-between">
-                                <div class="p-6 bg-amber-300 rounded-xl w-full font-bold">DATA JAWABAN TUGAS</div>
+                                <div class="w-full lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">DATA JAWABAN FORMATIF</div>
                                 <div class="p-2 bg-blue-300 rounded-xl w-20"><a href="#"
                                         onclick="return jawaban_formatif()">TAMBAH</a></div>
                             </div>

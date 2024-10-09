@@ -11,7 +11,7 @@
                 <div class="w-full md:w-3/12 p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 bg-amber-300 rounded-xl flex items-center justify-between font-bold">
+                            <div class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
                                 DATA TUGAS
                             </div>
                             @foreach ($tugas as $d)
@@ -81,7 +81,7 @@
                 <div class="w-full md:w-9/12 p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 bg-amber-300 rounded-xl flex items-center justify-between font-bold">
+                            <div class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
                                 <div>DATA JAWABAN MAHASISWA</div>
                             </div>
                             <div class="flex justify-center">

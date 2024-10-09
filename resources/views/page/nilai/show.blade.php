@@ -2,6 +2,7 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Input Nilai Mahasiswa') }}
+            <div class="flex items-center">Nilai<i class="fi fi-rr-caret-right mt-1"></i> <span class="text-red-500">Tambah Data Nilai</span></div>
         </h2>
     </x-slot>
 

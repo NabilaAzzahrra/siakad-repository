@@ -15,7 +15,7 @@
                             <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                                 <div class="p-6 text-gray-900 dark:text-gray-100 overflow-hidden">
                                     <div
-                                        class="bg-sky-200 p-3 rounded-xl font-extrabold text-sky-800 flex items-center justify-center text-[20px]">
+                                        class="bg-sky-200 lg:p-3 rounded-xl font-extrabold text-sky-800 flex items-center justify-center text-[20px]">
                                         DATA PRESENSI
                                     </div>
                                     <div class="mt-5">
@@ -108,14 +108,14 @@
                             <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                                 <div class="p-6 text-gray-900 dark:text-gray-100">
                                     <div
-                                        class="bg-sky-200 p-3 rounded-xl font-extrabold text-sky-800 flex items-center justify-center text-[20px]">
+                                        class="bg-sky-200 lg:p-3 rounded-xl font-extrabold text-sky-800 flex items-center justify-center text-[20px]">
                                         FORM INPUT PRESENSI
                                     </div>
-                                    <div class="mt-10 mb-8">
+                                    <div class="mt-10 mb-8 border border-sky-200 lg:border-white p-2 rounded-xl">
                                         <div class="flex gap-5">
                                             <div class="w-full">
                                                 <label for="name"
-                                                   class="block text-sm font-medium text-gray-700 text-center">NIM</label>
+                                                    class="block text-sm font-medium text-gray-700 text-center">NIM</label>
                                             </div>
                                             <div class="w-full">
                                                 <label for="name"
