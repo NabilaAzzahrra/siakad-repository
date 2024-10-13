@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
             <div class="flex items-center">Mahsiswa<i class="fi fi-rr-caret-right mt-1"></i> <span
                     class="text-red-500">Data Baru</span></div>
         </h2>
@@ -12,7 +12,8 @@
                 <div class="w-full md:w-full p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
+                            <div
+                                class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
                                 <div class="flex items-center justify-center">
                                     <div>MELENGKAPI DATA MAHASISWA</div>
                                 </div>

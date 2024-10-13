@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
@@ -30,7 +30,7 @@
                                         </div>
                                         <input type="text" id="simple-search"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="Search branch name..." required onkeyup="searchData()" />
+                                            placeholder="Search ......" required onkeyup="searchData()" />
                                     </div>
                                 </form>
                             </div>
@@ -238,6 +238,56 @@
                                                 </tr>
                                             @endforeach
                                         @endcan
+
+                                        @can('role-O')
+                                            @foreach ($jadwal_mhs as $key => $j)
+                                                <tr class="bg-white border dark:bg-gray-800 dark:border-gray-700">
+                                                    <td class="px-6 py-4 text-center bg-gray-100">
+                                                        {{ $jadwal_mhs->perPage() * ($jadwal_mhs->currentPage() - 1) + $key + 1 }}
+                                                    </td>
+                                                    <td scope="row"
+                                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                        <div>
+                                                            {{ $j->detail_kurikulum->materi_ajar->materi_ajar }}
+                                                        </div>
+                                                    </td>
+                                                    <th scope="row"
+                                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white bg-gray-100">
+                                                        {{ $j->dosen->nama_dosen }}
+                                                    </th>
+                                                    <td scope="row"
+                                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                        <div>
+                                                            {{ $j->hari->hari }}
+                                                        </div>
+                                                    </td>
+                                                    <th scope="row"
+                                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white bg-gray-100">
+                                                        {{ $j->sesi->sesi }}
+                                                    </th>
+                                                    <td scope="row"
+                                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                        <div>
+                                                            {{ $j->sesi->pukul->pukul }}
+                                                        </div>
+                                                    </td>
+                                                    <th scope="row"
+                                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white bg-gray-100">
+                                                        {{ $j->detail_kurikulum->materi_ajar->sks }}
+                                                    </th>
+                                                    <td scope="row"
+                                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                        <div>
+                                                            {{ $j->ruang->ruang }}
+                                                        </div>
+                                                    </td>
+                                                    <th scope="row"
+                                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white bg-gray-100">
+                                                        {{ $j->kelas->kelas }}
+                                                    </th>
+                                                </tr>
+                                            @endforeach
+                                        @endcan
                                     </tbody>
                                 </table>
                             </div>
@@ -305,6 +355,32 @@
                                 @endforeach
                             @endcan
                             @can('role-D')
+                                @foreach ($informasi as $i)
+                                    <li class="mb-10 ms-6">
+                                        <span
+                                            class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
+                                            <img class="rounded-full shadow-lg" src="{{ url('img/user.png') }}"
+                                                alt="Bonnie image" />
+                                        </span>
+                                        <h3
+                                            class="flex text-sm  items-center mb-1 lg:text-lg font-semibold text-gray-900 dark:text-white text-wrap">
+                                            {{ $i->judul }} <span
+                                                class="bg-blue-100 text-blue-800 text-xs lg:text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 ms-3">{{ $i->kategori }}</span>
+                                        </h3>
+                                        <time
+                                            class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500 text-wrap">Released
+                                            on {{ date('F - d - Y', strtotime($i->created_at)) }}</time>
+                                        <div class="bg-gray-100 rounded-xl px-4 pt-2 pb-2 text-wrap">
+                                            <div
+                                                class="mb-2 text-xs lg:text-base font-normal text-gray-500 dark:text-gray-400 break-words">
+                                                {!! $i->informasi !!}
+                                            </div>
+                                        </div>
+
+                                    </li>
+                                @endforeach
+                            @endcan
+                            @can('role-O')
                                 @foreach ($informasi as $i)
                                     <li class="mb-10 ms-6">
                                         <span

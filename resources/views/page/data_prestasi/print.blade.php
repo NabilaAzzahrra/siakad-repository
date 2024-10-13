@@ -224,7 +224,7 @@
                 <div class="mb-4 left-0 right-0 text-center text-[#00426D] text-sm font-extrabold">
                     TASIKMALAYA
                 </div>
-                <div class="mb-4 left-0 right-0 text-center text-sm font-bold">
+                <div class="mb-8 left-0 right-0 text-center text-sm font-bold">
                     DATA PRESTASI AKADEMIK
                 </div>
                 <div class="ml-12 text-[10px]">

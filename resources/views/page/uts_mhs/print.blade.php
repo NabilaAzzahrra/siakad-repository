@@ -220,85 +220,124 @@
             <div class=" left-0 right-0 text-center text-[#00426D] text-sm font-extrabold">
                 TASIKMALAYA
             </div>
-            <div class=" top-[150px] left-0 right-0 text-center text-sm font-bold">
-                KEHADIRAN MAHASISWA
+            <div class="mt-6 left-0 right-0 text-center text-md font-bold">
+                KARTU UJIAN TENGAH SEMESTER
             </div>
 
-            <div class="mt-4 ml-24 left-0 right-0 text-center text-sm font-bold">
+            <div class="mt-6 ml-12 left-0 right-0 text-center text-sm font-bold">
                 <div class="flex">
                     <div>Peserta Didik</div>
                     <div class="ml-[114px]">:</div>
                     <div class="ml-4">{{ $mahasiswa->nama }}</div>
                 </div>
-                <div class="flex mt-2">
+                <div class="flex">
                     <div>Nomor Induk Peserta Didik</div>
                     <div class="ml-4">:</div>
                     <div class="ml-4">{{ $mahasiswa->nim }}</div>
                 </div>
-                <div class="flex mt-2">
+                <div class="flex">
                     <div>Kelas</div>
                     <div class="ml-[169px]">:</div>
                     <div class="ml-4">{{ $mahasiswa->kelas->kelas }}</div>
                 </div>
-                <div class="flex mt-2">
+                <div class="flex">
                     <div>Jurusan</div>
                     <div class="ml-[152px]">:</div>
                     <div class="ml-4">{{ $mahasiswa->kelas->jurusan->jurusan }}</div>
                 </div>
             </div>
 
-            <div class=" top-[320px] ml-[6px] mr-[90px] left-0 right-0 text-center text-sm">
-                <table class="border border-1 border-black w-full">
-                    <thead class="border border-1 border-black">
-                        <th class="border border-1 border-black">NO</th>
-                        <th class="border border-1 border-black">MATERI AJAR</th>
-                        @for ($i = 1; $i <= 14; $i++)
-                            <th scope="col" class="border border-1 border-black">
-                                <div>
-                                    P{{ $i }}
-                                </div>
-                            </th>
-                        @endfor
-                    </thead>
-                    <tbody>
-                        @php
-                            $no = 1;
-                        @endphp
-                        @foreach ($jadwal as $m)
-                            <tr class="border border-1 border-black">
-                                <td class="border border-1 border-black">
-                                    {{ $no++ }}
-                                </td>
-                                <td scope="row" class="border border-1 border-black text-left pl-2">
-                                    {{ $m->detail_kurikulum->materi_ajar->materi_ajar }}
-                                </td>
-                                @for ($i = 1; $i <= 14; $i++)
-                                    <td class="border border-1 border-black">
-                                        @php
-                                            $presensi = $presensiPerPertemuan[$m->id_jadwal]['P' . $i] ?? null;
-                                            $k = '-';
+            <div class=" top-[320px] ml-[6px] left-0 right-0 text-center text-sm">
 
-                                            if ($presensi) {
-                                                $ket = $presensi->keterangan;
-                                                if ($ket == 'HADIR') {
-                                                    $k = 'H';
-                                                } elseif ($ket == 'IZIN') {
-                                                    $k = 'I';
-                                                } elseif ($ket == 'ALPA') {
-                                                    $k = 'A';
-                                                } elseif ($ket == 'SAKIT') {
-                                                    $k = 'S';
-                                                }
-                                            }
-                                        @endphp
-                                        {{ $k }}
+                <div class="mt-2 text-xs w-full">
+                    <table class="border border-1 border-black">
+                        <thead class="border border-1 border-black bg-[#808080] text-white">
+                            <th class="border border-1 border-black w-20 h-10">NO</th>
+                            <th class="border border-1 border-black w-[500px]">MATERI AJAR</th>
+                            <th class="border border-1 border-black w-[100px]">KELAS</th>
+                            <th class="border border-1 border-black w-40">RUANG</th>
+                            <th class="border border-1 border-black w-[500px]">DOSEN</th>
+                            <th class="border border-1 border-black w-[350px]">JAM</th>
+                            <th class="border border-1 border-black w-[200px]">TANGGAL UJIAN</th>
+                            <th class="border border-1 border-black w-28">PARAF</th>
+                        </thead>
+                        <tbody>
+                            @php $no = 1; @endphp
+                            @foreach ($jadwal_reguler as $key => $j)
+                                @php
+                                    $utsItem = $uts->where('id_jadwal', $j->id_jadwal)->first();
+                                    $jawaban = null;
+                                    $hari = '';
+
+                                    if ($utsItem) {
+                                        $jawaban = $detail_uts
+                                            ->where('id_uts', $utsItem->id_uts)
+                                            ->where('nim', Auth::user()->email)
+                                            ->first();
+
+                                        $day = date('l', strtotime($utsItem->tgl_ujian));
+                                        switch ($day) {
+                                            case 'Monday':
+                                                $hari = 'SENIN';
+                                                break;
+                                            case 'Tuesday':
+                                                $hari = 'SELASA';
+                                                break;
+                                            case 'Wednesday':
+                                                $hari = 'RABU';
+                                                break;
+                                            case 'Thursday':
+                                                $hari = 'KAMIS';
+                                                break;
+                                            case 'Friday':
+                                                $hari = 'JUMAT';
+                                                break;
+                                            case 'Saturday':
+                                                $hari = 'SABTU';
+                                                break;
+                                            case 'Sunday':
+                                                $hari = 'MINGGU';
+                                                break;
+                                            default:
+                                                $hari = '';
+                                                break;
+                                        }
+                                    }
+                                @endphp
+                                <tr class="h-10">
+                                    <td class="border border-1 border-black text-center text-[11px]">
+                                        {{ $no++ }}
                                     </td>
-                                @endfor
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                <div class=" top-[80px] text-xs mt-4 flex items-center justify-start font-bold ml-10">
+                                    <td class="border border-1 border-black text-left pl-2 text-[11px]">
+                                        {{ $j->jadwal->detail_kurikulum->materi_ajar->materi_ajar }}</td>
+                                    <td class="border border-1 border-black text-center text-[11px]">
+                                        {{ $j->jadwal->kelas->kelas }}</td>
+                                    <td class="border border-1 border-black text-center text-[11px]">{{ $j->jadwal->ruang->ruang }}
+                                    </td>
+                                    <td class="border border-1 border-black text-left pl-2 text-[11px]">
+                                        {{ $j->jadwal->dosen->nama_dosen }}</td>
+                                    <td class="border border-1 border-black text-center text-[11px]">
+                                        @if ($utsItem)
+                                            {{ $utsItem->waktu_ujian }}
+                                        @else
+                                            {{ $j->jadwal->sesi->pukul->pukul }}
+                                        @endif
+                                    </td>
+                                    <td class="border border-1 border-black text-center text-[11px]">
+                                        @if ($utsItem)
+                                            {{ date('d-m-Y', strtotime($utsItem->tgl_ujian)) }}
+                                        @else
+                                            <span>Belum ditentukan</span>
+                                        @endif
+                                    </td>
+                                    <td class="border border-1 border-black text-center text-[11px]"></td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class=" top-[80px] text-xs mt-4 flex items-center justify-start ml-10">
                     <div class="flex text-left">
                         <div>
                             @php
@@ -348,8 +387,9 @@
                             @endphp
                             <div class="uppercase">Tasikmalaya, {{ date('d') }}
                                 {{ $bulan }} {{ date('Y') }}</div>
-                            <div class="mt-16 underline underline-offset-2">UNTUNG EKO SETYASARI, S.SOS., M.A</div>
-                            <div class="mt-0">Kepala Bagian Akademik</div>
+                            <div class="mt-16 underline underline-offset-2 font-bold">UNTUNG EKO SETYASARI, S.SOS., M.A
+                            </div>
+                            <div class="mt-0 italic">Head of Education</div>
                         </div>
                     </div>
                 </div>
@@ -361,5 +401,5 @@
 
 </html>
 <script>
-    window.print();
+    // window.print();
 </script>

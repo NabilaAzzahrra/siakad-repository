@@ -9,12 +9,19 @@
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-full p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 bg-amber-300 font-bold rounded-xl">
-                                <div class="flex items-center justify-between">
-                                    <div>UAS</div>
-                                </div>
+                            <div class="flex flex-col lg:flex-row items-center justify-between gap-5">
+                                <div
+                                    class="w-full lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
+                                    DATA UAS</div>
+                                @if ($mahasiswa->status == 1)
+                                    <div class="rounded-xl lg:p-6 p-2 text-sm lg:text-md bg-sky-300">
+                                        <a href="{{ route('ujian_uas_mhs.print_uas_mhs') }}" target="_blank"
+                                            class="href">PRINT</a>
+                                    </div>
+                                @else
+                                @endif
                             </div>
                             <div class="flex w-full justify-center">
                                 <div class="pt-12 w-full" style="width:100%;overflow-x:auto;">

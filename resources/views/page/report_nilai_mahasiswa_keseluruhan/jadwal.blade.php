@@ -58,7 +58,7 @@
                             <div class="p-6 mb-5 bg-amber-300 rounded-xl">
                                 <div class="flex items-center justify-between">
                                     <div>DATA PRESENSI</div>
-                                    <a href="{{ route('report_nilai_keseluruhan.show', $jadwal->id_jadwal) }}" class="bg-sky-300 p-2 rounded-xl text-white">PRINT</a>
+                                    <a href="{{ route('report_nilai_keseluruhan.show', $jadwal->id_jadwal) }}" target="_blank" class="bg-sky-300 p-2 rounded-xl text-white">PRINT</a>
                                 </div>
                             </div>
                             <div class="flex justify-start bg-white relative overflow-x-auto rounded-lg shadow-lg">

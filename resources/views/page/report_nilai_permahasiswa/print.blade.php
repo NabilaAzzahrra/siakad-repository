@@ -215,91 +215,157 @@
                 <img src="{{ asset('img/graphic.png') }}" alt="" width="15%" class="mx-auto">
             </div>
             <div class=" top-0 left-0 right-0 text-center -mt-[160px]">
-                <img src="{{ asset('img/logo.png') }}" width="10%" alt="Logo" class="mx-auto">
+                <img src="{{ asset('img/logo.png') }}" width="8%" alt="Logo" class="mx-auto">
             </div>
-            <div class=" top-[120px] left-0 right-0 text-center text-[#00426D] text-sm font-extrabold">
+            <div class=" top-[125px] left-0 right-0 text-center text-[#00426D] text-sm font-extrabold">
                 TASIKMALAYA
             </div>
             <div class=" top-[150px] left-0 right-0 text-center text-sm font-bold">
                 KEHADIRAN MAHASISWA
             </div>
 
-            <div class="mt-6 ml-24 left-0 right-0 text-center text-sm font-bold">
+            <div class="mt-6 ml-11 left-0 right-0 text-center text-xs font-bold">
                 <div class="flex">
                     <div>Peserta Didik</div>
-                    <div class="ml-[114px]">:</div>
+                    <div class="ml-[100px]">:</div>
                     <div class="ml-4">{{ $mahasiswa->nama }}</div>
                 </div>
-                <div class="flex mt-2">
+                <div class="flex">
                     <div>Nomor Induk Peserta Didik</div>
                     <div class="ml-4">:</div>
                     <div class="ml-4">{{ $mahasiswa->nim }}</div>
                 </div>
-                <div class="flex mt-2">
+                <div class="flex">
                     <div>Kelas</div>
-                    <div class="ml-[169px]">:</div>
+                    <div class="ml-[148px]">:</div>
                     <div class="ml-4">{{ $mahasiswa->kelas->kelas }}</div>
                 </div>
-                <div class="flex mt-2">
+                <div class="flex">
                     <div>Jurusan</div>
-                    <div class="ml-[152px]">:</div>
+                    <div class="ml-[133px]">:</div>
                     <div class="ml-4">{{ $mahasiswa->kelas->jurusan->jurusan }}</div>
                 </div>
             </div>
 
-            <div class="ml-[6px] mr-[90px] mt-6 left-0 right-0 text-center text-sm font-bold">
+            <div class="ml-[6px] mr-[90px] left-0 right-0 text-center text-sm">
                 <table class="border border-1 border-black w-full">
-                    <thead class="border border-1 border-black">
-                        <th class="border border-1 border-black">NO</th>
-                        <th class="border border-1 border-black">MATERI AJAR</th>
-                        <th class="border border-1 border-black">PRESENSI</th>
-                        <th class="border border-1 border-black">TUGAS</th>
-                        <th class="border border-1 border-black">FORMATIF</th>
-                        <th class="border border-1 border-black">UTS</th>
-                        <th class="border border-1 border-black">UAS</th>
+                    <thead class="border border-1 border-black text-[10px] text-white bg-[#808080]">
+                        <th class="border border-1 border-black text-[10px] text-white bg-[#808080] w-[50px]">NO</th>
+                        <th class="border border-1 border-black text-[10px] text-white bg-[#808080] w-[200px]">MATERI AJAR</th>
+                        <th class="border border-1 border-black text-[10px] text-white bg-[#808080] w-[70px]">SEMESTER</th>
+                        <th class="border border-1 border-black text-[10px] text-white bg-[#808080] w-[50px]">BOBOT</th>
+                        <th class="border border-1 border-black text-[10px] text-white bg-[#808080] w-[50px]">PRESENSI</th>
+                        <th class="border border-1 border-black text-[10px] text-white bg-[#808080] w-[50px]">TUGAS</th>
+                        <th class="border border-1 border-black text-[10px] text-white bg-[#808080] w-[50px]">FORMATIF</th>
+                        <th class="border border-1 border-black text-[10px] text-white bg-[#808080] w-[50px]">UTS</th>
+                        <th class="border border-1 border-black text-[10px] text-white bg-[#808080] w-[50px]">UAS</th>
+                        <th class="border border-1 border-black text-[10px] text-white bg-[#808080] w-[50px]">ANGKA</th>
+                        <th class="border border-1 border-black text-[10px] text-white bg-[#808080] w-[50px]">HURUF</th>
                     </thead>
                     <tbody>
                         @php
                             $no = 1;
+                            $presensi = 0;
+                            $tugas = 0;
+                            $formatif = 0;
+                            $uts = 0;
+                            $uas = 0;
                         @endphp
                         @foreach ($jadwal as $m)
+                            @php
+                                $presensi = isset($nilaiPerMahasiswa[$m->id_jadwal])
+                                    ? $nilaiPerMahasiswa[$m->id_jadwal]->presensi
+                                    : 0;
+                                $tugas = isset($nilaiPerMahasiswa[$m->id_jadwal])
+                                    ? $nilaiPerMahasiswa[$m->id_jadwal]->tugas
+                                    : 0;
+                                $formatif = isset($nilaiPerMahasiswa[$m->id_jadwal])
+                                    ? $nilaiPerMahasiswa[$m->id_jadwal]->formatif
+                                    : 0;
+                                $uts = isset($nilaiPerMahasiswa[$m->id_jadwal])
+                                    ? $nilaiPerMahasiswa[$m->id_jadwal]->uts
+                                    : 0;
+                                $uas = isset($nilaiPerMahasiswa[$m->id_jadwal])
+                                    ? $nilaiPerMahasiswa[$m->id_jadwal]->uas
+                                    : 0;
+
+                                $angka = ($presensi + $tugas + $formatif + $uts + $uas) / 5;
+                                if ($angka < 50) {
+                                    $huruf = "E";
+                                } elseif ($angka < 55) {
+                                    $huruf = "D";
+                                } elseif ($angka < 60) {
+                                    $huruf = "C-";
+                                } elseif ($angka < 65) {
+                                    $huruf = "C";
+                                } elseif ($angka < 70) {
+                                    $huruf = "C+";
+                                } elseif ($angka < 75) {
+                                    $huruf = "B-";
+                                } elseif ($angka < 80) {
+                                    $huruf = "B";
+                                } elseif ($angka < 85) {
+                                    $huruf = "B+";
+                                } elseif ($angka < 90) {
+                                    $huruf = "A-";
+                                } elseif ($angka > 90) {
+                                    $huruf = "A";
+                                }
+                            @endphp
                             <tr class="border border-1 border-black">
-                                <td class="border border-1 border-black">
+                                <td class="border border-1 border-black text-[11px] w-[40px] text-center">
                                     {{ $no++ }}
                                 </td>
-                                <th scope="row" class="border border-1 border-black text-left pl-2 text-[12px]">
+                                <td scope="row" class="border border-1 border-black text-left pl-2 text-[11px] w-[200px]">
                                     {{ $m->detail_kurikulum->materi_ajar->materi_ajar }}
-                                </th>
+                                </td>
+                                <td scope="row" class="border border-1 border-black text-center text-[11px] w-[60px]">
+                                    {{ $m->detail_kurikulum->materi_ajar->semester->semester }}
+                                </td>
+                                <td scope="row" class="border border-1 border-black text-center text-[11px] w-[50px]">
+                                    {{ $m->detail_kurikulum->materi_ajar->sks }}
+                                </td>
 
                                 {{-- PRESENSI --}}
-                                <td scope="row" class="border border-1 border-black text-left pl-2 w-[80px] text-center">
+                                <td scope="row" class="border border-1 border-black text-center text-[11px] w-[60px]">
                                     {{ $nilaiPerMahasiswa[$m->id_jadwal]->presensi ?? '-' }}
                                 </td>
 
                                 {{-- TUGAS --}}
-                                <td scope="row" class="border border-1 border-black text-left pl-2 w-[80px] text-center">
+                                <td scope="row" class="border border-1 border-black text-center text-[11px] w-[60px]">
                                     {{ $nilaiPerMahasiswa[$m->id_jadwal]->tugas ?? '-' }}
                                 </td>
 
                                 {{-- FORMATIF --}}
-                                <td scope="row" class="border border-1 border-black text-left pl-2 w-[80px] text-center">
+                                <td scope="row" class="border border-1 border-black text-center text-[11px] w-[60px]">
                                     {{ $nilaiPerMahasiswa[$m->id_jadwal]->formatif ?? '-' }}
                                 </td>
 
                                 {{-- UTS --}}
-                                <td scope="row" class="border border-1 border-black text-left pl-2 w-[80px] text-center">
+                                <td scope="row" class="border border-1 border-black text-center text-[11px] w-[60px]">
                                     {{ $nilaiPerMahasiswa[$m->id_jadwal]->uts ?? '-' }}
                                 </td>
 
                                 {{-- UAS --}}
-                                <td scope="row" class="border border-1 border-black text-left pl-2 w-[80px] text-center">
+                                <td scope="row" class="border border-1 border-black text-center text-[11px] w-[60px]">
                                     {{ $nilaiPerMahasiswa[$m->id_jadwal]->uas ?? '-' }}
                                 </td>
+
+                                {{-- ANGKA --}}
+                                <td scope="row" class="border border-1 border-black text-center text-[11px] w-[60px]">
+                                    {{ $angka }}
+                                </td>
+
+                                {{-- HURUF --}}
+                                <td scope="row" class="border border-1 border-black text-center text-[11px] w-[60px]">
+                                    {{ $huruf }}
+                                </td>
                             </tr>
+
                         @endforeach
                     </tbody>
                 </table>
-                <div class=" top-[80px] text-xs mt-12 flex items-center justify-start font-bold ml-10">
+                <div class=" top-[80px] text-xs mt-6 flex items-center justify-start font-bold ml-10">
                     <div class="flex text-left">
                         <div>
                             @php
@@ -350,6 +416,7 @@
                             <div class="uppercase">Tasikmalaya, {{ date('d') }}
                                 {{ $bulan }} {{ date('Y') }}</div>
                             <div class="mt-16 underline underline-offset-2">UNTUNG EKO SETYASARI, S.SOS., M.A</div>
+                            <div class="mt-0">Kepala Bagian Akademik</div>
                         </div>
                     </div>
                 </div>
@@ -361,5 +428,5 @@
 
 </html>
 <script>
-    window.print();
+    // window.print();
 </script>

@@ -1,7 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            <div class="flex items-center">Nilai<i class="fi fi-rr-caret-right mt-1"></i> <span class="text-red-500">Edit Data Nilai</span></div>
+        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
+            <div class="flex items-center">Nilai<i class="fi fi-rr-caret-right mt-1"></i> <span class="text-red-500">Edit
+                    Data Nilai</span></div>
         </h2>
     </x-slot>
 
@@ -150,8 +151,8 @@
                                     <div class="overflow-hidden rounded-xl border mt-5 mb-5">
                                         <input type="hidden" id="id_jadwal" name="id_jadwal"
                                             class="w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0"
-                                            placeholder="Masukkan Id Jadwal disini" value="{{ $presensi->id_jadwal }}"
-                                            readonly>
+                                            placeholder="Masukkan Id Jadwal disini"
+                                            value="{{ $presensi->id_jadwal }}" readonly>
                                         <div class="relative overflow-x-auto rounded-lg shadow-lg">
                                             <table
                                                 class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -256,7 +257,8 @@
                                             </table>
                                         </div>
                                     </div>
-                                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    <button type="submit"
+                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                         <i class="fi fi-rr-disk "></i>
                                     </button>
                                 </form>

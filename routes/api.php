@@ -16,6 +16,7 @@ use App\Http\Controllers\API\KonfigurasiAPIController;
 use App\Http\Controllers\API\KonfigurasiUjianAPIController;
 use App\Http\Controllers\API\KurikulumAPIController;
 use App\Http\Controllers\API\KurikulumDetailAPIController;
+use App\Http\Controllers\API\MahasiswaAPIController;
 use App\Http\Controllers\API\MateriajarAPIController;
 use App\Http\Controllers\API\NilaiAPIController;
 use App\Http\Controllers\API\PerhitunganAPIController;
@@ -64,6 +65,7 @@ Route::get('/detail_uts', [DetailUtsAPIController::class, 'get_all'])->name('det
 Route::get('/uas', [UasAPIController::class, 'get_all'])->name('uas.get');
 Route::get('/detail_uas', [DetailUasAPIController::class, 'get_all'])->name('detail_uas.get');
 Route::get('/formatif', [FormatifAPIController::class, 'get_all'])->name('formatif.get');
+Route::get('/mahasiswa', [MahasiswaAPIController::class, 'get_all'])->name('mahasiswa.get');
 // Route::get('/recruitment/{id}', [PukulAPIController::class, 'get_code'])->name('recruitment.get');
 
 Route::get('/user', function (Request $request) {

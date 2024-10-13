@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
             {{ __('Nilai') }}
         </h2>
     </x-slot>
@@ -13,7 +13,9 @@
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                             <div class="">
                                 <div class="flex flex-col lg:flex-row items-center justify-between gap-4">
-                                    <div class="w-full lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">DATA NILAI</div>
+                                    <div
+                                        class="w-full lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
+                                        DATA NILAI</div>
                                 </div>
                             </div>
                             <div class="flex w-full justify-center">
@@ -23,7 +25,7 @@
                                         <table
                                             class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border">
                                             <thead
-                                            class="text-md font-bold text-gray-700 uppercase py-[100px] dark:bg-gray-700 dark:text-gray-400">
+                                                class="text-md font-bold text-gray-700 uppercase py-[100px] dark:bg-gray-700 dark:text-gray-400">
                                                 <tr>
                                                     <th scope="col" class="px-6 py-3 text-center bg-gray-100">
                                                         NO

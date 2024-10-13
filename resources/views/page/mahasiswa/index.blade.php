@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
             {{ __('Mahasiswa') }}
         </h2>
     </x-slot>
@@ -10,15 +10,16 @@
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-full p-3">
                     @if (count($mahasiswa) > 0)
-                        <div class="bg-sky-200 w-full lg:w-1/2 p-5 rounded-xl mb-10 border border-2 shadow-xl border-sky-300">
+                        <div
+                            class="bg-emerald-200 w-full p-5 rounded-xl mb-10 border border-2 shadow-xl border-emerald-300">
                             <div class="text-xl font-extrabold flex items-center gap-3 text-sky-800">
                                 <div><i class="fi fi-br-info"></i></div>
                                 <div class="mb-1">DATA BARU</div>
                             </div>
-                            <div class="text-justify mt-2 font-bold text-sky-900 text-wrap mb-4">
+                            <div class="text-justify mt-2 text-sky-900 text-wrap mb-4">
                                 Hallo, disini terdapat
                                 <span
-                                    class="text-white font-bold bg-sky-700 p-1 rounded-lg">{{ count($mahasiswa) }}</span>
+                                    class="text-white bg-sky-700 p-1 rounded-lg">{{ count($mahasiswa) }}</span>
                                 data baru yang harus dilengkapi. Silakan periksa data tersebut
                                 dengan cermat sebelum melanjutkan. Pastikan semua informasi sudah benar dan lengkap
                                 untuk
@@ -34,7 +35,8 @@
                     @endif
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
+                            <div
+                                class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
                                 <div class="flex items-center justify-center">
                                     <div>DATA MAHASISWA</div>
                                 </div>
@@ -44,7 +46,8 @@
                                     <form action="{{ route('mahasiswa.store') }}" method="POST" class="formupdate">
                                         @csrf
                                         <div class="flex justify-end">
-                                            <button class="mb-3 p-2 text-sm lg:mb-2 lg:p-2 bg-sky-400 text-white rounded-xl">
+                                            <button
+                                                class="mb-3 p-2 text-sm lg:mb-2 lg:p-2 bg-sky-400 text-white rounded-xl">
                                                 SUBMIT
                                             </button>
                                         </div>

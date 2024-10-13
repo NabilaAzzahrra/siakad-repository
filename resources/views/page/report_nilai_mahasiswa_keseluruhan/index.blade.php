@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
             <div class="flex items-center">Report<i class="fi fi-rr-caret-right mt-1"></i> Nilai<i class="fi fi-rr-caret-right mt-1"></i> Mahasiswa <i class="fi fi-rr-caret-right mt-1"></i> <span class="text-red-500">Keseluruhan</span></div>
         </h2>
     </x-slot>

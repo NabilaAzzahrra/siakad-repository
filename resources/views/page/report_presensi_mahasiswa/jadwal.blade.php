@@ -14,7 +14,7 @@
                             <div class="p-6 bg-amber-300 font-bold rounded-xl">
                                 <div class="flex items-center justify-between">
                                     <div>DATA JADWAL</div>
-                                    <a href="{{ route('report_presensi_mahasiswa.show', $mahasiswa->nim) }}" class="bg-sky-300 text-white p-2 rounded-xl">PRINT</a>
+                                    <a href="{{ route('report_presensi_mahasiswa.show', $mahasiswa->nim) }}" target="_blank" class="bg-sky-300 text-white p-2 rounded-xl">PRINT</a>
                                 </div>
                             </div>
 

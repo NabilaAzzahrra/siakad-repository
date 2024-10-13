@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
             {{ __('Presensi') }}
         </h2>
     </x-slot>
@@ -9,7 +9,8 @@
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-center items-start">
                 <div class="w-full md:w-full p-3">
-                    <form action="{{ route('presensi.update', $presensi->id_presensi) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('presensi.update', $presensi->id_presensi) }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
                         <div class="flex flex-col lg:flex-row gap-5 items-start">
@@ -98,7 +99,8 @@
                                             </div>
                                             <div class="w-full">
                                                 <label for="materi"
-                                                    class="block text-sm font-medium text-gray-700">Materi Sebelumnya</label>
+                                                    class="block text-sm font-medium text-gray-700">Materi
+                                                    Sebelumnya</label>
                                                 <input type="text" id="materi_sebelumnya" name="materi_sebelumnya"
                                                     class="w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0"
                                                     placeholder="Masukkan Judul Materi disini"
@@ -106,7 +108,8 @@
                                             </div>
                                             <div class="w-full">
                                                 <label for="file"
-                                                    class="block text-sm font-medium text-gray-700">File Materi Baru</label>
+                                                    class="block text-sm font-medium text-gray-700">File Materi
+                                                    Baru</label>
                                                 <input type="file" id="file" name="file"
                                                     class="w-full border-0 mt-3 border-b-2 border-gray-300 focus:border-black focus:ring-0"
                                                     placeholder="Enter your name">
@@ -173,7 +176,8 @@
                                         </div>
                                         {{-- <hr class="mb-2 -mt-4 border border-1"> --}}
                                     @endforeach
-                                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-1">
+                                    <button type="submit"
+                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-1">
                                         <i class="fi fi-rr-disk "></i>
                                     </button>
                                 </div>

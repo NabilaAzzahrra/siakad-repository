@@ -1,7 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            <div class="flex items-center">Master<i class="fi fi-rr-caret-right mt-1"></i> <span class="text-red-500">Kurikulum</span></div>
+        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
+            <div class="flex items-center">Master<i class="fi fi-rr-caret-right mt-1"></i> <span
+                    class="text-red-500">Kurikulum</span></div>
         </h2>
     </x-slot>
 
@@ -11,7 +12,8 @@
                 <div class="w-full md:w-3/12 p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
+                            <div
+                                class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
                                 FORM INPUT KURIKULUM
                             </div>
                             <form action="{{ route('kurikulum.store') }}" method="post">
@@ -32,7 +34,8 @@
                                             placeholder="Masukan Tahun disini ..." required />
                                     </div>
                                     <button type="submit"
-                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i class="fi fi-rr-disk "></i></button>
+                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i
+                                            class="fi fi-rr-disk "></i></button>
                                 </div>
                             </form>
                         </div>
@@ -41,7 +44,8 @@
                 <div class="w-full md:w-9/12 p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
+                            <div
+                                class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
                                 DATA KURIKULUM
                             </div>
                             <div class="flex justify-center">
@@ -127,7 +131,7 @@
                     render: (data, type, row) => {
                         return data;
                     }
-                },{
+                }, {
                     data: 'tahun',
                     render: (data, type, row) => {
                         return data;
@@ -142,7 +146,8 @@
                             ':id',
                             data.id
                         );
-                        let detailUrl = `<a href=${UrlEbook} class="bg-emerald-500 hover:bg-emerald-600 px-3 py-1 rounded-xl text-xs text-white w-10 h-10 flex items-center justify-center"><i class="fas fa-eye"></i></a>`;
+                        let detailUrl =
+                            `<a href=${UrlEbook} class="bg-emerald-500 hover:bg-emerald-600 px-3 py-1 rounded-xl text-xs text-white w-10 h-10 flex items-center justify-center"><i class="fas fa-eye"></i></a>`;
                         let editUrl =
                             `<button type="button" data-id="${data.id}"
                                                         data-modal-target="sourceModal" data-kurikulum="${data.kurikulum}" data-tahun="${data.tahun}"
@@ -152,7 +157,7 @@
                                                     </button>`;
                         let deleteUrl =
                             `<button onclick="return kurikulumDelete('${data.id}','${data.kurikulum}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-xl h-10 w-10 text-xs text-white"><i class="fas fa-trash"></i></button>`;
-                            return `<div style="display: flex; justify-content: center; gap: 8px;">${detailUrl} ${editUrl} ${deleteUrl}</div>`;
+                        return `<div style="display: flex; justify-content: center; gap: 8px;">${detailUrl} ${editUrl} ${deleteUrl}</div>`;
                     }
                 }, ],
             });

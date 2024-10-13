@@ -30,6 +30,11 @@ class Mahasiswa extends Model
         return $this->belongsTo(Kelas::class, 'id_kelas', 'id');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'nim', 'email');
+    }
+
     public function detail()
     {
         return $this->hasMany(DetailFormatif::class, 'nim');

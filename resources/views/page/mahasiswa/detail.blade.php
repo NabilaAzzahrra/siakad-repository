@@ -1,7 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            <div class="flex items-center">Mahsiswa<i class="fi fi-rr-caret-right mt-1"></i> <span class="text-red-500">Detail Mahaiswa</span></div>
+        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
+            <div class="flex items-center">Mahsiswa<i class="fi fi-rr-caret-right mt-1"></i> <span
+                    class="text-red-500">Detail Mahaiswa</span></div>
         </h2>
     </x-slot>
 
@@ -11,7 +12,8 @@
                 <div class="w-full md:w-full p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
+                            <div
+                                class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
                                 <div class="flex items-center justify-center">
                                     <div>DATA MAHASISWA</div>
                                 </div>
@@ -22,14 +24,16 @@
                                         @csrf
                                         @method('PUT')
                                         <div class="flex justify-end">
-                                            <button type="submit" class="mb-2 lg:mb-0 p-2 bg-sky-400 text-white rounded-xl">
+                                            <button type="submit"
+                                                class="mb-2 lg:mb-0 p-2 bg-sky-400 text-white rounded-xl">
                                                 SUBMIT
                                             </button>
                                         </div>
                                         <div class="mb-5">
                                             <div class="flex flex-col lg:flex-row gap-5">
                                                 <div class="w-full">
-                                                    <label for="kelas" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                    <label for="kelas"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                                         Kelas
                                                     </label>
                                                     <select
@@ -38,23 +42,25 @@
                                                         onchange="getkelas()">
                                                         <option value="">Pilih...</option>
                                                         @foreach ($kelas as $k)
-                                                            <option value="{{ $k->id }}">{{ $k->kelas }}</option>
+                                                            <option value="{{ $k->id }}">{{ $k->kelas }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                                 <div class=" w-full">
-                                                    <label for="jurusan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jurusan</label>
+                                                    <label for="jurusan"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jurusan</label>
                                                     <input type="text" id="jurusan" name="jurusan"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                         placeholder="Masukan jurusan disini ..."
                                                         value="{{ old('jurusan') }}" readonly />
                                                 </div>
                                                 <div class=" w-full">
-                                                    <label for="tingkat" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                    <label for="tingkat"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                                         Tingkat
                                                     </label>
-                                                    <select
-                                                        class="js-example-placeholder-single js-states form-control"
+                                                    <select class="js-example-placeholder-single js-states form-control"
                                                         name="tingkat" data-placeholder="Pilih Tingkat">
                                                         <option value="">Pilih...</option>
                                                         <option value="1">1</option>
@@ -64,11 +70,11 @@
                                                     </select>
                                                 </div>
                                                 <div class=" w-full">
-                                                    <label for="status" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                    <label for="status"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                                         Akses Ujian
                                                     </label>
-                                                    <select
-                                                        class="js-example-placeholder-single js-states form-control"
+                                                    <select class="js-example-placeholder-single js-states form-control"
                                                         name="status" data-placeholder="Pilih Akses">
                                                         <option value="">Pilih...</option>
                                                         <option value="false">No Access</option>
@@ -76,11 +82,11 @@
                                                     </select>
                                                 </div>
                                                 <div class=" w-full">
-                                                    <label for="keaktifan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                    <label for="keaktifan"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                                         Keaktifan
                                                     </label>
-                                                    <select
-                                                        class="js-example-placeholder-single js-states form-control"
+                                                    <select class="js-example-placeholder-single js-states form-control"
                                                         name="keaktifan" data-placeholder="Pilih Keaktifan">
                                                         <option value="">Pilih...</option>
                                                         <option value="aktif">AKTIF</option>
@@ -93,41 +99,69 @@
 
                                         <div class="relative overflow-x-auto rounded-lg shadow-lg">
                                             @foreach ($stu_data as $index => $s)
-                                                <input type="hidden" value="{{ $s->nim }}" name="id{{ $index + 1 }}">
+                                                <input type="hidden" value="{{ $s->nim }}"
+                                                    name="id{{ $index + 1 }}">
                                             @endforeach
 
-                                            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border">
-                                                <thead class="text-md font-bold text-gray-700 uppercase dark:bg-gray-700 dark:text-gray-400">
+                                            <table
+                                                class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border">
+                                                <thead
+                                                    class="text-md font-bold text-gray-700 uppercase dark:bg-gray-700 dark:text-gray-400">
                                                     <tr>
-                                                        <th scope="col" class="px-6 py-3 text-center bg-gray-100">NO</th>
+                                                        <th scope="col" class="px-6 py-3 text-center bg-gray-100">NO
+                                                        </th>
                                                         <th scope="col" class="px-6 py-3 text-center">NIM</th>
-                                                        <th scope="col" class="px-6 py-3 text-center bg-gray-100">NAMA</th>
+                                                        <th scope="col" class="px-6 py-3 text-center bg-gray-100">
+                                                            NAMA</th>
                                                         <th scope="col" class="px-6 py-3 text-center">JURUSAN</th>
-                                                        <th scope="col" class="px-6 py-3 text-center bg-gray-100">KELAS</th>
+                                                        <th scope="col" class="px-6 py-3 text-center bg-gray-100">
+                                                            KELAS</th>
                                                         <th scope="col" class="px-6 py-3 text-center">TINGKAT</th>
-                                                        <th scope="col" class="px-6 py-3 text-center bg-gray-100">NO HP</th>
+                                                        <th scope="col" class="px-6 py-3 text-center bg-gray-100">NO
+                                                            HP</th>
                                                         <th scope="col" class="px-6 py-3 text-center">UJIAN</th>
-                                                        <th scope="col" class="px-6 py-3 text-center bg-gray-100">KEAKTIFAN</th>
+                                                        <th scope="col" class="px-6 py-3 text-center bg-gray-100">
+                                                            KEAKTIFAN</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($stu_data as $index => $m)
-                                                        <tr class="bg-white border dark:bg-gray-800 dark:border-gray-700">
-                                                            <td class="px-6 py-4 text-center bg-gray-100">{{ $index + 1 }}</td>
-                                                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $m->nim }}</td>
+                                                        <tr
+                                                            class="bg-white border dark:bg-gray-800 dark:border-gray-700">
+                                                            <td class="px-6 py-4 text-center bg-gray-100">
+                                                                {{ $index + 1 }}</td>
+                                                            <td
+                                                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                                {{ $m->nim }}</td>
                                                             <td class="px-6 py-4 bg-gray-100">{{ $m->nama }}</td>
                                                             <td class="px-6 py-4">{{ $m->kelas }}</td>
                                                             <td class="px-6 py-4 bg-gray-100">{{ $m->jurusan }}</td>
                                                             <td class="px-6 py-4">{{ $m->tingkat }}</td>
                                                             <td class="px-6 py-4 bg-gray-100">{{ $m->no_hp }}</td>
                                                             @php
-                                                                $statusClass = $m->status == 0 ? 'bg-red-500' : 'bg-green-500';
-                                                                $statusText = $m->status == 0 ? 'No Access' : 'Can Access';
-                                                                $keaktifanClass = $m->keaktifan == 'aktif' ? 'bg-green-500' : ($m->keaktifan == 'cuti' ? 'bg-amber-500' : 'bg-red-500');
-                                                                $keaktifanText = $m->keaktifan == 'aktif' ? 'AKTIF' : ($m->keaktifan == 'cuti' ? 'CUTI' : 'DO');
+                                                                $statusClass =
+                                                                    $m->status == 0 ? 'bg-red-500' : 'bg-green-500';
+                                                                $statusText =
+                                                                    $m->status == 0 ? 'No Access' : 'Can Access';
+                                                                $keaktifanClass =
+                                                                    $m->keaktifan == 'aktif'
+                                                                        ? 'bg-green-500'
+                                                                        : ($m->keaktifan == 'cuti'
+                                                                            ? 'bg-amber-500'
+                                                                            : 'bg-red-500');
+                                                                $keaktifanText =
+                                                                    $m->keaktifan == 'aktif'
+                                                                        ? 'AKTIF'
+                                                                        : ($m->keaktifan == 'cuti'
+                                                                            ? 'CUTI'
+                                                                            : 'DO');
                                                             @endphp
-                                                            <td class="px-6 py-4"><span class="{{ $statusClass }} p-2 text-white rounded-full">{{ $statusText }}</span></td>
-                                                            <td class="px-6 py-4 bg-gray-100"><span class="{{ $keaktifanClass }} p-2 text-white rounded-full">{{ $keaktifanText }}</span></td>
+                                                            <td class="px-6 py-4"><span
+                                                                    class="{{ $statusClass }} p-2 text-white rounded-full">{{ $statusText }}</span>
+                                                            </td>
+                                                            <td class="px-6 py-4 bg-gray-100"><span
+                                                                    class="{{ $keaktifanClass }} p-2 text-white rounded-full">{{ $keaktifanText }}</span>
+                                                            </td>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>

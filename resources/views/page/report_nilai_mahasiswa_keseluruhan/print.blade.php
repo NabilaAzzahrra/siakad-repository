@@ -289,7 +289,7 @@
                             <tr class="border border-1 border-black">
                                 <td class="border border-1 border-black">{{ $no++ }}</td>
                                 <td class="border border-1 border-black">{{ $m->nim }}</td>
-                                <td class="border border-1 border-black">{{ $m->nama }}</td>
+                                <td class="border border-1 border-black text-left pl-2">{{ $m->nama }}</td>
                                 <td class="border border-1 border-black">{{ $nilaiMahasiswa->presensi ?? '-' }}
                                 </td>
                                 <td class="border border-1 border-black">
@@ -303,7 +303,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                <div class=" top-[80px] text-xs mt-12 flex items-center justify-start font-bold ml-10">
+                <div class=" top-[80px] text-xs mt-6 flex items-center justify-start font-bold ml-10">
                     <div class="flex text-left">
                         <div>
                             @php

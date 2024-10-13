@@ -1,7 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            <div class="flex items-center">Ujian<i class="fi fi-rr-caret-right mt-1"></i> <span class="text-red-500">UTS</span></div>
+        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
+            <div class="flex items-center">Ujian<i class="fi fi-rr-caret-right mt-1"></i> <span
+                    class="text-red-500">UTS</span></div>
         </h2>
     </x-slot>
 
@@ -11,9 +12,13 @@
                 <div class="w-full md:w-full p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                                <div class="flex items-center justify-center font-bold">
-                                    <div>DATA UTS</div>
+                            <div class="flex flex-col lg:flex-row items-center justify-between gap-5">
+                                <div
+                                    class="w-full lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
+                                    DATA UTS</div>
+                                <div class="rounded-xl lg:p-6 p-2 text-sm lg:text-md bg-sky-300">
+                                    <a href="{{ route('ujian_uas_mhs.daftar_print_uas') }}" target="_blank"
+                                        class="href">PRINT</a>
                                 </div>
                             </div>
                             <div class="flex justify-center">
@@ -178,7 +183,9 @@
                                                                     <i class="fa-solid fa-download"></i>
                                                                 </a>
                                                             @else
-                                                                <div class="text-xs bg-red-500 text-white px-2 rounded-xl py-1">BELUM UPLOAD SOAL</div>
+                                                                <div
+                                                                    class="text-xs bg-red-500 text-white px-2 rounded-xl py-1">
+                                                                    BELUM UPLOAD SOAL</div>
                                                             @endif
                                                         </td>
                                                         <td class="px-6 py-4 bg-gray-100">
@@ -193,10 +200,14 @@
                                                                         BELUM VERIFIKASI
                                                                     </button>
                                                                 @else
-                                                                    <div class="text-xs bg-green-500 text-white px-2 rounded-xl py-1">SUDAH VERIFIKASI</div>
+                                                                    <div
+                                                                        class="text-xs bg-green-500 text-white px-2 rounded-xl py-1">
+                                                                        SUDAH VERIFIKASI</div>
                                                                 @endif
                                                             @else
-                                                                <div class="text-xs bg-red-500 text-white px-2 rounded-xl py-1">BELUM UPLOAD SOAL</div>
+                                                                <div
+                                                                    class="text-xs bg-red-500 text-white px-2 rounded-xl py-1">
+                                                                    BELUM UPLOAD SOAL</div>
                                                             @endif
                                                         </td>
                                                         <td class="px-6 py-4">

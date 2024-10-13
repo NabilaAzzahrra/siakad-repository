@@ -391,4 +391,113 @@ class JadwalregulerController extends Controller
             'jadwal_reguler' => $jadwal_reguler,
         ]);
     }
+
+    public function print_jadwal()
+    {
+        $konfigurasi = Konfigurasi::first();
+        $tahun_akademik = $konfigurasi->id_tahun_akademik;
+        $keterangan = $konfigurasi->id_keterangan;
+
+        $jadwal_reguler = Jadwalreguler::with([
+            'perhitungan',
+            'sesi',
+            'sesi.pukul',
+            'hari',
+            'ruang',
+            'tahun_akademik',
+            'dosen',
+            'kelas',
+            'kelas.jurusan',
+            'detail_kurikulum',
+            'detail_kurikulum.materi_ajar',
+            'detail_kurikulum.materi_ajar.semester',
+            'detail_kurikulum.materi_ajar.semester.keterangan'
+        ])
+            ->whereHas('tahun_akademik', function ($query) use ($tahun_akademik) {
+                $query->where('id_tahun_akademik', $tahun_akademik);
+            })
+            ->whereHas('detail_kurikulum.materi_ajar.semester.keterangan', function ($query) use ($keterangan) {
+                $query->where('id_keterangan', $keterangan);
+            })->get();
+
+        return view('page.jadwalreguler.print')->with([
+            'jadwal_reguler' => $jadwal_reguler,
+        ]);
+    }
+
+    public function print_jadwal_mhs(string $id)
+    {
+        $konfigurasi = Konfigurasi::first();
+        $tahun_akademik = $konfigurasi->id_tahun_akademik;
+        $keterangan = $konfigurasi->id_keterangan;
+
+        $ga = $konfigurasi->keterangan;
+
+        $mahasiswa = Mahasiswa::where('nim', $id)->first();
+
+        if ($mahasiswa) {
+            $tingkat = $mahasiswa->tingkat;
+
+            $jadwal_reguler = Nilai::with(['mahasiswa', 'jadwal', 'jadwal.detail_kurikulum.materi_ajar.semester'])
+                ->where('nim', $id)
+                ->whereHas('jadwal.detail_kurikulum.materi_ajar.semester', function ($query) use ($tahun_akademik, $keterangan, $ga, $tingkat) {
+                    $query->where('id_tahun_akademik', $tahun_akademik)
+                        ->where('id_keterangan', $keterangan);
+                    if ($tingkat === 2) {
+                        $semester = $ga ? 3 : 4;
+                    } elseif ($tingkat === 4) {
+                        $semester = $ga ? 5 : 6;
+                    } else {
+                        $semester = $ga ? 1 : 2;
+                    }
+                    $query->where('semester', $semester);
+                })
+                ->get();
+        } else {
+            $jadwal_reguler = collect();
+        }
+
+        return view('page.jadwalreguler.print_mhs')->with([
+            'jadwal_reguler' => $jadwal_reguler,
+        ]);
+    }
+
+    public function print_jadwal_dosen(string $id)
+    {
+        $konfigurasi = Konfigurasi::first();
+        $tahun_akademik = $konfigurasi->id_tahun_akademik;
+        $keterangan = $konfigurasi->id_keterangan;
+        $kode_dosen = Auth::user()->email;
+
+        $jadwal_reguler = Jadwalreguler::with([
+            'perhitungan',
+            'sesi',
+            'sesi.pukul',
+            'hari',
+            'ruang',
+            'tahun_akademik',
+            'dosen',
+            'kelas',
+            'kelas.jurusan',
+            'detail_kurikulum',
+            'detail_kurikulum.materi_ajar',
+            'detail_kurikulum.materi_ajar.semester',
+            'detail_kurikulum.materi_ajar.semester.keterangan'
+        ])
+            ->whereHas('tahun_akademik', function ($query) use ($tahun_akademik) {
+                $query->where('id_tahun_akademik', $tahun_akademik);
+            })
+            ->whereHas('detail_kurikulum.materi_ajar.semester.keterangan', function ($query) use ($keterangan) {
+                $query->where('id_keterangan', $keterangan);
+            })
+            ->whereHas('dosen', function ($query) use ($kode_dosen) {
+                $query->where('kode_dosen', $kode_dosen);
+            })
+            ->get();
+
+        return view('page.jadwalreguler.print')->with([
+            'jadwal_reguler' => $jadwal_reguler,
+        ]);
+    }
+
 }

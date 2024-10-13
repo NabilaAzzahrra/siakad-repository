@@ -15,30 +15,30 @@
                                 <div class="flex flex-col lg:flex-row items-center justify-between">
                                     <div>DATA NILAI <span class="uppercase text-white">{{ $mahasiswa->nama }}</span>
                                     </div>
-                                    <a href="{{ route('report_nilai_mahasiswa.show', $mahasiswa->nim) }}"
+                                    <a href="{{ route('report_nilai_mahasiswa.show', $mahasiswa->nim) }}" target="_blank"
                                         class="bg-sky-300 p-2 rounded-xl text-white">PRINT</a>
                                 </div>
                             </div>
                             <div class="flex flex-row lg:flex-row items-center gap-10">
                                 <div class="mt-5">
                                     <div class="flex">
-                                        <div class="">NAMA PESERTA DIDIK</div>
-                                        <div class="">:</div>
+                                        <div class="pr-4">NAMA PESERTA DIDIK</div>
+                                        <div class="pr-4">:</div>
                                         <div class="uppercase">{{ $mahasiswa->nama }}</div>
                                     </div>
                                     <div class="flex mt-1">
-                                        <div class="">NIM</div>
-                                        <div class="">:</div>
+                                        <div class="pr-[149px]">NIM</div>
+                                        <div class="pr-4">:</div>
                                         <div class="">{{ $mahasiswa->nim }}</div>
                                     </div>
                                     <div class="flex mt-1">
-                                        <div class="">KELAS</div>
-                                        <div class="">:</div>
+                                        <div class="pr-[131px]">KELAS</div>
+                                        <div class="pr-4">:</div>
                                         <div class="">{{ $mahasiswa->kelas->kelas }}</div>
                                     </div>
                                     <div class="flex mt-1">
-                                        <div class="">JURUSAN</div>
-                                        <div class="">:</div>
+                                        <div class="pr-[105px]">JURUSAN</div>
+                                        <div class="pr-4">:</div>
                                         <div class="">{{ $mahasiswa->kelas->jurusan->jurusan }}</div>
                                     </div>
                                 </div>
