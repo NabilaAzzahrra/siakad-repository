@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('formatif');
             $table->integer('uts');
             $table->integer('uas');
-            $table->boolean('verifikasi');
+            $table->boolean('verifikasi')->default(0);
             $table->timestamps();
         });
     }

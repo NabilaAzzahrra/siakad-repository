@@ -12,10 +12,13 @@
                 <div class="w-full md:w-full p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div
-                                class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                                <div class="flex items-center justify-center">
-                                    <div>DATA UAS</div>
+                            <div class="flex flex-col lg:flex-row items-center justify-between gap-5">
+                                <div
+                                    class="w-full lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
+                                    DATA UAS</div>
+                                <div class="rounded-xl lg:p-6 p-2 text-sm lg:text-md bg-sky-300">
+                                    <a href="{{ route('ujian_uas.daftar_print_uas') }}" target="_blank"
+                                        class="href">PRINT</a>
                                 </div>
                             </div>
                             <div class="flex justify-center">

@@ -21,6 +21,7 @@ return new class extends Migration
                 materi_ajar.materi_ajar,
                 materi_ajar.sks,
                 materi_ajar.id_semester,
+                materi_ajar.id_jurusan,
                 semester.semester,
                 jadwal_reguler.id_jadwal,
                 jadwal_reguler.id_hari,
@@ -37,8 +38,7 @@ return new class extends Migration
                 nilai.tugas,
                 nilai.formatif,
                 nilai.uts,
-                nilai.uas,
-                jurusan.id AS id_jurusan
+                nilai.uas
             FROM
                 detail_kurikulum
                 INNER JOIN materi_ajar ON materi_ajar.id = detail_kurikulum.id_materi_ajar

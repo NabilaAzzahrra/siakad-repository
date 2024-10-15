@@ -10,7 +10,7 @@ class Informasi extends Model
     use HasFactory;
 
     protected $fillable = [
-        'judul',
+        'title',
         'informasi',
         'kategori'
     ];

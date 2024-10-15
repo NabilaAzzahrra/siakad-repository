@@ -17,7 +17,7 @@
                                     class="w-full lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
                                     DATA UTS</div>
                                 <div class="rounded-xl lg:p-6 p-2 text-sm lg:text-md bg-sky-300">
-                                    <a href="{{ route('ujian_uas_mhs.daftar_print_uas') }}" target="_blank"
+                                    <a href="{{ route('ujian_uts.daftar_print_uts') }}" target="_blank"
                                         class="href">PRINT</a>
                                 </div>
                             </div>

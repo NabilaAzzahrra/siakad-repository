@@ -32,10 +32,12 @@ class InformasiController extends Controller
     public function store(Request $request)
     {
         $data = [
-            'judul' => $request->input('judul'),
+            'title' => $request->input('judul'),
             'informasi' => $request->input('informasi'),
             'kategori' => $request->input('kategori'),
         ];
+
+        // dd($data);
 
         Informasi::create($data);
 
@@ -66,7 +68,7 @@ class InformasiController extends Controller
     public function update(Request $request, string $id)
     {
         $data = [
-            'judul' => $request->input('judul'),
+            'title' => $request->input('judul'),
             'informasi' => $request->input('informasi'),
             'kategori' => $request->input('kategoris'),
         ];

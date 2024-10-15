@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('pertemuan');
             $table->string('materi')->nullable();
             $table->string('file_materi')->nullable();
+            $table->string('tgl_presensi')->nullable();
             $table->timestamps();
         });
     }

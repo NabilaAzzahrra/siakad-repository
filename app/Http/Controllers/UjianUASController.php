@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jadwalreguler;
+use App\Models\Kelas;
 use App\Models\Konfigurasi;
 use App\Models\Uas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UjianUASController extends Controller
 {
@@ -196,4 +198,102 @@ class UjianUASController extends Controller
             'uas' => $uas,
         ]);
     }
+
+    public function daftar_print_uas(Request $request)
+    {
+        $kelas = Kelas::all();
+        $tahun_angkatan = DB::table('mahasiswa')
+            ->select('tahun_angkatan')
+            ->groupBy('tahun_angkatan')
+            ->get();
+
+        $mahasiswa_lengkap = null;
+
+        if ($request->filled('tahun_angkatan') || $request->filled('kelas')) {
+            $query = DB::table('mahasiswa')
+                ->join('kelas', 'mahasiswa.id_kelas', '=', 'kelas.id')
+                ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id')
+                ->select('mahasiswa.*', 'kelas.kelas', 'jurusan.jurusan', 'kelas.id_jurusan')
+                ->whereNotNull('mahasiswa.id_kelas')
+                ->whereNotNull('mahasiswa.tingkat');
+
+            if ($request->filled('tahun_angkatan')) {
+                $query->where('mahasiswa.tahun_angkatan', $request->tahun_angkatan);
+            }
+
+            if ($request->filled('kelas')) {
+                $query->where('mahasiswa.id_kelas', $request->kelas);
+            }
+
+            $mahasiswa_lengkap = $query->orderBy('nama', 'ASC')->paginate(30);
+        }
+
+        return view('page.uas.daftar_print_uas')->with([
+            'mahasiswa_lengkap' => $mahasiswa_lengkap,
+            'kelas' => $kelas,
+            'tahun_angkatan' => $tahun_angkatan,
+        ]);
+    }
+
+    public function print_kartu_uas(Request $request)
+    {
+        $user_ids = $request->input('user_id');
+        $kelas = $request->input('kelas');
+
+        if (empty($user_ids)) {
+            return redirect()->back()->with('error', 'Pilih dulu');
+        }
+
+        $result = DB::table('mahasiswa')
+            ->join('kelas', 'mahasiswa.id_kelas', '=', 'kelas.id')
+            ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id')
+            ->whereIn('mahasiswa.nim', $user_ids)
+            ->select('mahasiswa.*', 'kelas.kelas', 'jurusan.jurusan', 'jurusan.id AS id_jurusan')
+            ->paginate(15);
+
+        if ($result->isEmpty()) {
+            return redirect()->back()->with('error', 'Data tidak ditemukan');
+        }
+
+        $konfigurasi = Konfigurasi::first();
+        $tahun_akademik = $konfigurasi->id_tahun_akademik;
+        $keterangan = $konfigurasi->id_keterangan;
+
+        $uas = Uas::all();
+
+        $jadwal_reguler = Jadwalreguler::with([
+            'perhitungan',
+            'sesi',
+            'sesi.pukul',
+            'hari',
+            'ruang',
+            'tahun_akademik',
+            'dosen',
+            'kelas',
+            'kelas.jurusan',
+            'detail_kurikulum',
+            'detail_kurikulum.materi_ajar',
+            'detail_kurikulum.materi_ajar.semester',
+            'detail_kurikulum.materi_ajar.semester.keterangan'
+        ])
+            ->whereHas('tahun_akademik', function ($query) use ($tahun_akademik) {
+                $query->where('id_tahun_akademik', $tahun_akademik);
+            })
+            ->whereHas('detail_kurikulum.materi_ajar.semester.keterangan', function ($query) use ($keterangan) {
+                $query->where('id_keterangan', $keterangan);
+            })
+            ->whereHas('kelas', function ($query) use ($kelas) {
+                $query->where('id_kelas', $kelas);
+            })
+            ->get();
+        // dd($jadwal_reguler);
+
+        return view('page.uas.print')->with([
+            'stu_data' => $result,
+            // 'kelas' => Kelas::all(),
+            'jadwal_reguler' => $jadwal_reguler,
+            'uas' => $uas
+        ]);
+    }
+
 }

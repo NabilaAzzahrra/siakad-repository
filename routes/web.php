@@ -76,6 +76,8 @@ Route::resource('detail_formatif', DetailFormatifController::class)->middleware(
 Route::resource('presensi', PresensiController::class)->middleware(['auth']);
 Route::resource('uts', UtsController::class)->middleware(['auth']);
 Route::resource('ujian_uts', UjianUTSController::class)->middleware(['auth']);
+Route::get('/daftar_print_uts', [UjianUTSController::class, 'daftar_print_uts'])->name('ujian_uts.daftar_print_uts');
+Route::post('/print_kartu_uts', [UjianUTSController::class, 'print_kartu_uts'])->name('ujian_uts.print_kartu_uts');
 Route::resource('ujian_uts_mhs', UjianUTSMhsController::class)->middleware(['auth']);
 Route::resource('ujian_uas_mhs', UjianUASMhsController::class)->middleware(['auth']);
 Route::resource('tugas', TugasPertemuanController::class)->middleware(['auth']);
@@ -84,6 +86,8 @@ Route::resource('nilai', NilaiController::class)->middleware(['auth']);
 Route::resource('report_dosen', ReportDosenController::class)->middleware(['auth']);
 Route::resource('konfigurasi_ujian', KonfigurasiUjianController::class)->middleware(['auth']);
 Route::resource('uas', UasController::class)->middleware(['auth']);
+Route::get('/daftar_print_uas', [UjianUASController::class, 'daftar_print_uas'])->name('ujian_uas.daftar_print_uas');
+Route::post('/print_kartu_uas', [UjianUASController::class, 'print_kartu_uas'])->name('ujian_uas.print_kartu_uas');
 Route::resource('ujian_uas', UjianUASController::class)->middleware(['auth']);
 Route::resource('report_keseluruhan', ReportMahasiswaKeseluruhanController::class)->middleware(['auth']);
 Route::resource('report_presensi_mahasiswa', ReportPresensiMahasiswaController::class)->middleware(['auth']);
@@ -132,7 +136,12 @@ Route::get('/cetak-pdf/{id_jadwal}', [ReportMahasiswaKeseluruhanController::clas
 
 Route::get('/dashboard', function (Request $request) {
     $konfigurasi = Konfigurasi::first();
-    if ($konfigurasi > 0 ) {
+    if (!$konfigurasi) {
+        return view('dashboard_konfig', [
+        ]);
+
+    }else{
+
         $tahun_akademik = $konfigurasi->id_tahun_akademik;
         $keterangan = $konfigurasi->id_keterangan;
 
@@ -260,9 +269,6 @@ Route::get('/dashboard', function (Request $request) {
             'informasi' => $informasi,
         ]);
 
-    }else{
-        return view('dashboard_konfig', [
-        ]);
     }
 
     // $ga = $konfigurasi->keterangan;
