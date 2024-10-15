@@ -3,13 +3,19 @@
 namespace Database\Seeders;
 
 use App\Models\Semester;
+use App\Models\Keterangan;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class SemesterSeeder extends Seeder
+class semesterSeeder extends Seeder
 {
-    public function run()
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
     {
+
         DB::table('semester')->insert([
             [
                 'id' => 1,
@@ -42,4 +48,3 @@ class SemesterSeeder extends Seeder
         ]);
     }
 }
-
