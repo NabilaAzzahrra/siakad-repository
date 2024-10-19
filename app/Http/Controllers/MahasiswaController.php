@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Kelas;
 use App\Models\Mahasiswa;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class MahasiswaController extends Controller
 {
@@ -258,9 +260,38 @@ class MahasiswaController extends Controller
 
         $datas = Mahasiswa::findOrFail($id);
         $datas->update($data);
-        return redirect()
-            ->route('mahasiswa.index')
-            ->with('message', 'Data Mahasiswa Sudah diupdate');
+        return back()->with('message_update', 'Data Berhasil diupdate');
+    }
+
+    public function profilUpdate(Request $request, string $id){
+        $nim = $request->input('nim');
+        $tgl_lahir = $request->input('tgl_lahir');
+        $emailOrtu = 'ortu' . $nim;
+
+        $data = [
+            'nama' => $request->input('nama'),
+            'tempat_lahir' => $request->input('tempat_lahir'),
+            'tgl_lahir' => $request->input('tgl_lahir'),
+            'no_hp' => $request->input('no_hp')
+        ];
+
+        $dataUser = [
+            'name' => $request->input('nama'),
+        ];
+
+        $dataUserOrtu = [
+            'password' => Hash::make($tgl_lahir),
+        ];
+
+        $datasUserOrtu = User::where('email', $emailOrtu)->first();
+        $datasUserOrtu->update($dataUserOrtu);
+
+        $datasUser = User::where('email', $nim)->first();
+        $datasUser->update($dataUser);
+
+        $datas = Mahasiswa::findOrFail($id);
+        $datas->update($data);
+        return back()->with('message_update', 'Data Berhasil diupdate');
     }
 
     /**
@@ -270,5 +301,4 @@ class MahasiswaController extends Controller
     {
         //
     }
-
 }

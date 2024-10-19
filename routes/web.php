@@ -120,6 +120,8 @@ Route::put('/edit_det', [MahasiswaController::class, 'edit_det'])->name('mahasis
 Route::get('/formatif/{id}', [JadwalregulerController::class, 'formatif'])->name('jadwal_reguler.formatif');
 Route::post('/formatif_add', [JadwalregulerController::class, 'formatif_add'])->name('jadwal_reguler.formatif_add');
 Route::patch('/formatif_update/{id}', [JadwalregulerController::class, 'formatif_update'])->name('jadwal_reguler.formatif_update');
+Route::patch('/profilUpdate/{id}', [MahasiswaController::class, 'profilUpdate'])->name('mahasiswa.profilUpdate');
+Route::patch('/updatePass/{id}', [ProfileController::class, 'updatePass'])->name('profile.updatePass');
 Route::delete('/formatif_destroy/{id}', [JadwalregulerController::class, 'formatif_destroy'])->name('jadwal_reguler.formatif_destroy');
 Route::get('/formatif_show/{id}', [JadwalregulerController::class, 'formatif_show'])->name('jadwal_reguler.formatif_show');
 Route::get('/formatif_answer/{id}', [JadwalregulerController::class, 'formatif_answer'])->name('jadwal_reguler.formatif_answer');

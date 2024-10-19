@@ -47,6 +47,6 @@ class User extends Authenticatable
     }
 
     public function mahasiswa() {
-        return $this->hasOne(Mahasiswa::class, 'nim');
+        return $this->hasMany(Mahasiswa::class, 'nim');
     }
 }
