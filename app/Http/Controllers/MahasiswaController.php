@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class MahasiswaController extends Controller
 {
@@ -263,7 +264,8 @@ class MahasiswaController extends Controller
         return back()->with('message_update', 'Data Berhasil diupdate');
     }
 
-    public function profilUpdate(Request $request, string $id){
+    public function profilUpdate(Request $request, string $id)
+    {
         $nim = $request->input('nim');
         $tgl_lahir = $request->input('tgl_lahir');
         $emailOrtu = 'ortu' . $nim;
@@ -300,5 +302,40 @@ class MahasiswaController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function importExcel(Request $request)
+    {
+        // dd('kepanggil');
+        // Validasi file
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls'
+        ]);
+
+        // Ambil file
+        $file = $request->file('file');
+
+        // Baca file Excel
+        $spreadsheet = IOFactory::load($file->getPathname());
+        $sheet = $spreadsheet->getActiveSheet()->toArray();
+
+        // Loop melalui baris di Excel
+        foreach ($sheet as $row) {
+            Mahasiswa::create([
+                'identity_user'   => $row[0],
+                'nim'             => $row[1],
+                'nama'            => $row[2],
+                'tempat_lahir'    => $row[3],
+                'tgl_lahir'       => $row[4],
+                'id_kelas'        => $row[5],
+                'tingkat'         => $row[6],
+                'no_hp'           => $row[7],
+                'status'          => $row[8],
+                'tahun_angkatan'  => $row[9],
+                'keaktifan'       => $row[10],
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Data berhasil diimport!');
     }
 }

@@ -18,8 +18,7 @@
                             </div>
                             <div class="text-justify mt-2 text-sky-900 text-wrap mb-4">
                                 Hallo, disini terdapat
-                                <span
-                                    class="text-white bg-sky-700 p-1 rounded-lg">{{ count($mahasiswa) }}</span>
+                                <span class="text-white bg-sky-700 p-1 rounded-lg">{{ count($mahasiswa) }}</span>
                                 data baru yang harus dilengkapi. Silakan periksa data tersebut
                                 dengan cermat sebelum melanjutkan. Pastikan semua informasi sudah benar dan lengkap
                                 untuk
@@ -41,6 +40,16 @@
                                     <div>DATA MAHASISWA</div>
                                 </div>
                             </div>
+                            <form action="{{ route('mahasiswa.importExcel') }}" method="POST"
+                                enctype="multipart/form-data">
+                                @csrf
+                                <input type="file" name="file" accept=".xls,.xlsx">
+                                <button type="submit"
+                                    class="mb-3 p-2 text-sm lg:mb-2 lg:p-2 bg-sky-400 text-white rounded-xl">
+                                    SUBMIT
+                                </button>
+                            </form>
+
                             <div class="flex justify-center">
                                 <div class="p-2" style="width:100%;overflow-x:auto;">
                                     <form action="{{ route('mahasiswa.store') }}" method="POST" class="formupdate">

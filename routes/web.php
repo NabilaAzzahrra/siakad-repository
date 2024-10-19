@@ -113,6 +113,7 @@ Route::get('/ujian_uas_dosen/{id}', [UjianUASController::class, 'ujian_uas_dosen
 Route::get('/nilai_dosen/{id}', [NilaiController::class, 'nilai_dosen'])->name('nilai.nilai_dosen');
 Route::get('/show_dosen/{id}', [ReportDosenController::class, 'show_dosen'])->name('report_dosen.show_dosen');
 Route::get('/r_mahasiswa', [ReportMahasiswaKeseluruhanController::class, 'r_mahasiswa'])->name('report_keseluruhan.r_mahasiswa');
+Route::post('/importExcel', [MahasiswaController::class, 'importExcel'])->name('mahasiswa.importExcel');
 
 Route::post('/download-zip', [DetailFormatifController::class, 'downloadZip']);
 Route::post('/kurikulum/detail', [KurikulumController::class, 'detail'])->name('kurikulum.detail')->middleware(['auth']);
