@@ -1,7 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight flex text-wrap text-md">
-            <div class="flex items-center">Jadwal Materi Ajar<i class="fi fi-rr-caret-right mt-1"></i> <span class="text-red-500">Detail Jadwal Materi Ajar</span></div>
+            <div class="flex items-center">Jadwal Materi Ajar<i class="fi fi-rr-caret-right mt-1"></i> <span
+                    class="text-red-500">Detail Jadwal Materi Ajar</span></div>
         </h2>
     </x-slot>
 
@@ -137,7 +138,8 @@
                                 <div
                                     class="bg-white border border-4 {{ $border }} mt-10 rounded-3xl h-[198px] flex pt-8 justify-start pl-4">
                                     <div>
-                                        <div class="font-bold text-left lg:text-[25px] text-[20px]">Pertemuan {{ $p->pertemuan }}</div>
+                                        <div class="font-bold text-left lg:text-[25px] text-[20px]">Pertemuan
+                                            {{ $p->pertemuan }}</div>
                                         <div class="font-bold text-left text-[12px] text-sky-800">
                                             @if ($p->tgl_presensi === null)
                                                 <div class="bg-red-100 w-44 text-red-500 rounded-full px-2">Belum
@@ -167,7 +169,7 @@
                                             @can('role-A')
                                                 @if ($p->tgl_presensi === null)
                                                     <a href="{{ $link }}"
-                                                        class="border border-gray-300 px-2 lg:py-3 py-2 text-xs rounded-full font-extrabold flex items-center justify-center {{ $hidePresensiButton }}">
+                                                        class="border border-gray-300 px-2 lg:py-1 py-2 text-xs rounded-full font-extrabold flex items-center justify-center {{ $hidePresensiButton }}">
                                                         <i
                                                             class="fi fi-sr-member-list text-sky-700 pr-1 flex items-center"></i>
                                                         <span class="pr-1 flex items-center lg:text-[18px]">Presensi
@@ -176,10 +178,10 @@
                                                     </a>
                                                 @else
                                                     <a href="{{ route('presensi.edit', $p->id_presensi) }}"
-                                                        class="border border-gray-300 px-2 lg:py-3 py-2 text-xs rounded-full font-extrabold flex items-center justify-center">
+                                                        class="border border-gray-300 px-2 lg:py-1 py-2 text-xs rounded-full font-extrabold flex items-center justify-center">
                                                         <i
                                                             class="fi fi-sr-member-list text-sky-700 pr-1 flex items-center"></i>
-                                                        <span class="pr-1 flex items-center lg:text-[18px]">Presensi
+                                                        <span class="pr-1 flex items-center lg:text-[15px]">Presensi
                                                         </span>
                                                         {!! $tgl_presensi !!}
                                                     </a>
@@ -187,25 +189,25 @@
                                             @endcan
                                             @can('role-D')
                                                 <a href="{{ $link }}"
-                                                    class="border border-gray-300 px-2 lg:py-3 py-2 text-xs rounded-full font-extrabold flex items-center justify-center
+                                                    class="border border-gray-300 px-2 lg:py-1 py-2 text-xs rounded-full font-extrabold flex items-center justify-center
                                                  {{ $hidePresensiButton }}">
                                                     <i class="fi fi-sr-member-list text-sky-700 pr-1 flex items-center"></i>
-                                                    <span class="pr-1 flex items-center lg:text-[18px]">Presensi
+                                                    <span class="pr-1 flex items-center lg:text-[15px]">Presensi
                                                     </span>
                                                     {!! $tgl_presensi !!}
                                                 </a>
                                             @endcan
                                             <a href="{{ $link_materi }}"
-                                                class="border border-gray-300 px-2 lg:py-3 py-2 text-xs rounded-full font-extrabold flex items-center justify-center">
+                                                class="border border-gray-300 px-2 lg:py-1 py-2 text-xs rounded-full font-extrabold flex items-center justify-center">
                                                 <i
                                                     class="fi fi-ss-book-open-cover text-green-500 pr-1 flex items-center"></i>
-                                                <span class="pr-1 flex items-center lg:text-[18px]">File Materi</span>
+                                                <span class="pr-1 flex items-center lg:text-[15px]">File Materi</span>
                                                 {!! $file_materi !!}
                                             </a>
                                             <a href="{{ route('tugas.show', $p->id_presensi) }}"
-                                                class="border border-gray-300 px-2 lg:py-3 py-2 text-xs rounded-full font-extrabold flex items-center justify-center ">
+                                                class="border border-gray-300 px-2 lg:py-1 py-2 text-xs rounded-full font-extrabold flex items-center justify-center ">
                                                 <i class="fi fi-sr-web-test text-amber-500 pr-1 flex items-center"></i>
-                                                <span class="pr-1 flex items-center lg:text-[18px]">Tugas</span>
+                                                <span class="pr-1 flex items-center lg:text-[15px]">Tugas</span>
                                             </a>
                                         </div>
                                     </div>

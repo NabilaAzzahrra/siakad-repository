@@ -118,6 +118,7 @@ Route::post('/importExcel', [MahasiswaController::class, 'importExcel'])->name('
 Route::post('/download-zip', [DetailFormatifController::class, 'downloadZip']);
 Route::post('/kurikulum/detail', [KurikulumController::class, 'detail'])->name('kurikulum.detail')->middleware(['auth']);
 Route::put('/edit_det', [MahasiswaController::class, 'edit_det'])->name('mahasiswa.edit_det');
+Route::put('/edit_detDataBaru', [MahasiswaController::class, 'edit_detDataBaru'])->name('mahasiswa.edit_detDataBaru');
 Route::get('/formatif/{id}', [JadwalregulerController::class, 'formatif'])->name('jadwal_reguler.formatif');
 Route::post('/formatif_add', [JadwalregulerController::class, 'formatif_add'])->name('jadwal_reguler.formatif_add');
 Route::patch('/formatif_update/{id}', [JadwalregulerController::class, 'formatif_update'])->name('jadwal_reguler.formatif_update');
@@ -136,6 +137,7 @@ Route::post('/download-zip-uts', [UtsController::class, 'downloadZip']);
 Route::post('/jawaban_uas_add', [UasController::class, 'jawaban_uas_add'])->name('uas.jawaban_uas_add');
 Route::post('/download-zip-uas', [UasController::class, 'downloadZip']);
 Route::get('/cetak-pdf/{id_jadwal}', [ReportMahasiswaKeseluruhanController::class, 'generatePDF'])->name('cetak-pdf');
+Route::post('/edit_databaru', [MahasiswaController::class, 'edit_databaru'])->name('mahasiswa.edit_databaru');
 
 Route::get('/dashboard', function (Request $request) {
     $konfigurasi = Konfigurasi::first();

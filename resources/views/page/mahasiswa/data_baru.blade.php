@@ -18,105 +18,121 @@
                                     <div>MELENGKAPI DATA MAHASISWA</div>
                                 </div>
                             </div>
-                            <div class="flex justify-center">
-                                <div class="p-2 pt-6" style="width:100%;overflow-x:auto;">
-
-                                    <div class="relative overflow-x-auto shadow-md rounded-lg">
-                                        <table
-                                            class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border">
-                                            <thead
-                                                class="text-md font-bold text-gray-700 uppercase py-[100px] dark:bg-gray-700 dark:text-gray-400">
-                                                <tr class="bg-white border dark:bg-gray-800 dark:border-gray-700">
-                                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
-                                                        NO
-                                                    </th>
-                                                    <th scope="col" class="px-6 py-3 text-center">
-                                                        NIM
-                                                    </th>
-                                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
-                                                        <div class="flex items-center">
-                                                            NAMA
-                                                        </div>
-                                                    </th>
-                                                    <th scope="col" class="px-6 py-3 text-center">
-                                                        <div class="flex items-center">
-                                                            NO HP
-                                                        </div>
-                                                    </th>
-                                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
-                                                        <div class="flex items-center">
-                                                            STATUS
-                                                        </div>
-                                                    </th>
-                                                    <th scope="col" class="px-6 py-3 text-center">
-                                                        <div class="flex items-center">
-
-                                                        </div>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @php
-                                                    $no = 1;
-                                                @endphp
-                                                @foreach ($mahasiswa as $m)
-                                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                                        <td class="px-6 py-4 text-center bg-gray-100">
-                                                            {{ $no++ }}
-                                                        </td>
-                                                        <th scope="row"
-                                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                            {{ $m->nim }}
+                            <form action="{{ route('mahasiswa.edit_databaru') }}" method="POST" class="formupdate">
+                                @csrf
+                                <div class="flex justify-center">
+                                    <div class="p-2 pt-6" style="width:100%;overflow-x:auto;">
+                                        <div class="flex justify-end">
+                                            <button
+                                                class="mb-3 p-2 text-sm lg:mb-4 lg:p-2 bg-sky-400 text-white rounded-xl">
+                                                SUBMIT
+                                            </button>
+                                        </div>
+                                        <div class="relative overflow-x-auto shadow-md rounded-lg">
+                                            <table
+                                                class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border">
+                                                <thead
+                                                    class="text-md font-bold text-gray-700 uppercase py-[100px] dark:bg-gray-700 dark:text-gray-400">
+                                                    <tr class="bg-white border dark:bg-gray-800 dark:border-gray-700">
+                                                        <th scope="col" class="px-6 py-3 text-center ">
+                                                            <input type="checkbox" class="rounded-md"
+                                                                onchange="checkAll(this)" name="check">
                                                         </th>
-                                                        <td class="px-6 py-4 bg-gray-100">
-                                                            {{ $m->nama }}
-                                                        </td>
-                                                        <td class="px-6 py-4">
-                                                            {{ $m->no_hp }}
-                                                        </td>
-                                                        @php
-                                                            switch ($m->keaktifan) {
-                                                                case 'aktif':
-                                                                    $keaktifan = 'AKTIF';
-                                                                    $bg = 'bg-green-500';
-                                                                    break;
-                                                                case 'cuti':
-                                                                    $keaktifan = 'CUTI';
-                                                                    $bg = 'bg-amber-500';
-                                                                    break;
-                                                                default:
-                                                                    $keaktifan = 'DO';
-                                                                    $bg = 'bg-red-500';
-                                                                    break;
-                                                            }
-                                                        @endphp
-                                                        <td class="px-6 py-4 bg-gray-100">
-                                                            <span
-                                                                class="{{ $bg }} p-2 text-white rounded-full">{{ $keaktifan }}</span>
-                                                        </td>
-                                                        <td class="px-6 py-4">
-                                                            <button type="button" data-id="{{ $m->id }}"
-                                                                data-modal-target="sourceModal"
-                                                                data-nim="{{ $m->nim }}"
-                                                                data-id_kelas="{{ $m->id_kelas }}"
-                                                                data-tingkat="{{ $m->tingkat }}"
-                                                                data-status="{{ $m->status }}"
-                                                                onclick="editSourceModal(this)"
-                                                                class="bg-amber-500 hover:bg-amber-600 px-4 py-3 rounded-xl text-xs text-white">
-                                                                <i class="fas fa-edit"></i>
-                                                            </button>
+                                                        <th scope="col" class="px-6 py-3 text-center bg-gray-100">
+                                                            NO
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-3 text-center">
+                                                            NIM
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-3 text-center bg-gray-100">
+                                                            <div class="flex items-center">
+                                                                NAMA
+                                                            </div>
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-3 text-center">
+                                                            <div class="flex items-center">
+                                                                NO HP
+                                                            </div>
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-3 text-center bg-gray-100">
+                                                            <div class="flex items-center">
+                                                                STATUS
+                                                            </div>
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-3 text-center">
+                                                            <div class="flex items-center">
 
-                                                        </td>
+                                                            </div>
+                                                        </th>
                                                     </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="mt-4">
-                                        {{ $mahasiswa->links() }}
+                                                </thead>
+                                                <tbody>
+                                                    @php
+                                                        $no = 1;
+                                                    @endphp
+                                                    @foreach ($mahasiswa as $m)
+                                                        <tr
+                                                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                            <td class="px-6 py-4 text-center ">
+                                                                <input type="checkbox" class="rounded-md"
+                                                                    name="user_id[]" value="{{ $m->nim }}">
+                                                            </td>
+                                                            <td class="px-6 py-4 text-center bg-gray-100">
+                                                                {{ $no++ }}
+                                                            </td>
+                                                            <th scope="row"
+                                                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                                {{ $m->nim }}
+                                                            </th>
+                                                            <td class="px-6 py-4 bg-gray-100">
+                                                                {{ $m->nama }}
+                                                            </td>
+                                                            <td class="px-6 py-4">
+                                                                {{ $m->no_hp }}
+                                                            </td>
+                                                            @php
+                                                                switch ($m->keaktifan) {
+                                                                    case 'aktif':
+                                                                        $keaktifan = 'AKTIF';
+                                                                        $bg = 'bg-green-500';
+                                                                        break;
+                                                                    case 'cuti':
+                                                                        $keaktifan = 'CUTI';
+                                                                        $bg = 'bg-amber-500';
+                                                                        break;
+                                                                    default:
+                                                                        $keaktifan = 'DO';
+                                                                        $bg = 'bg-red-500';
+                                                                        break;
+                                                                }
+                                                            @endphp
+                                                            <td class="px-6 py-4 bg-gray-100">
+                                                                <span
+                                                                    class="{{ $bg }} p-2 text-white rounded-full">{{ $keaktifan }}</span>
+                                                            </td>
+                                                            <td class="px-6 py-4">
+                                                                <button type="button" data-id="{{ $m->id }}"
+                                                                    data-modal-target="sourceModal"
+                                                                    data-nim="{{ $m->nim }}"
+                                                                    data-id_kelas="{{ $m->id_kelas }}"
+                                                                    data-tingkat="{{ $m->tingkat }}"
+                                                                    data-status="{{ $m->status }}"
+                                                                    onclick="editSourceModal(this)"
+                                                                    class="bg-amber-500 hover:bg-amber-600 px-4 py-3 rounded-xl text-xs text-white">
+                                                                    <i class="fas fa-edit"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="mt-4">
+                                            {{ $mahasiswa->links() }}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -161,7 +177,8 @@
                     </div>
                     <div class="flex flex-col lg:flex-row gap-5">
                         <div class=" w-full">
-                            <label for="kelas" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            <label for="kelas"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                 Kelas <span class="text-red-500">*</span>
                             </label>
                             <select class="js-example-placeholder-single js-states form-control w-" name="kelas"
@@ -258,5 +275,94 @@
                 document.getElementById('jurusan').value = '';
             }
         }
+    </script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectedItemsKey = 'selectedItems';
+            let selectedItems = JSON.parse(localStorage.getItem(selectedItemsKey)) || [];
+
+            function updateLocalStorage() {
+                localStorage.setItem(selectedItemsKey, JSON.stringify(selectedItems));
+            }
+
+            function updateCheckboxes() {
+                const checkboxes = document.querySelectorAll('input[name="user_id[]"]');
+                const checkAllBox = document.querySelector('input[name="check"]');
+                let allChecked = true;
+
+                checkboxes.forEach(checkbox => {
+                    if (selectedItems.includes(checkbox.value)) {
+                        checkbox.checked = true;
+                    } else {
+                        allChecked = false;
+                    }
+                });
+
+                checkAllBox.checked = allChecked;
+            }
+
+            function handleCheckboxChange(event) {
+                const checkbox = event.target;
+                const checkAllBox = document.querySelector('input[name="check"]');
+
+                if (checkbox.checked) {
+                    if (!selectedItems.includes(checkbox.value)) {
+                        selectedItems.push(checkbox.value);
+                    }
+                } else {
+                    selectedItems = selectedItems.filter(item => item !== checkbox.value);
+                }
+
+                updateLocalStorage();
+
+                const checkboxes = document.querySelectorAll('input[name="user_id[]"]');
+                checkAllBox.checked = Array.from(checkboxes).every(cb => cb.checked);
+            }
+
+            document.querySelectorAll('input[name="user_id[]"]').forEach(checkbox => {
+                checkbox.addEventListener('change', handleCheckboxChange);
+            });
+
+            document.querySelector('input[name="check"]').addEventListener('change', function(event) {
+                const checkAll = event.target;
+                const checkboxes = document.querySelectorAll('input[name="user_id[]"]');
+
+                checkboxes.forEach(checkbox => {
+                    if (!checkbox.disabled) {
+                        checkbox.checked = checkAll.checked;
+                        if (checkAll.checked) {
+                            if (!selectedItems.includes(checkbox.value)) {
+                                selectedItems.push(checkbox.value);
+                            }
+                        } else {
+                            selectedItems = selectedItems.filter(item => item !== checkbox.value);
+                        }
+                    }
+                });
+
+                updateLocalStorage();
+            });
+
+            // Load existing selections on page load
+            updateCheckboxes();
+
+            // Function to reset selections after a successful edit
+            function resetSelections() {
+                selectedItems = [];
+                updateLocalStorage();
+                updateCheckboxes();
+            }
+
+            // Example: Call this function after a successful data update
+            function onDataUpdateSuccess() {
+                resetSelections();
+                // Additional actions after data update can be added here
+            }
+
+            // Simulating a data update operation
+            setTimeout(() => {
+                onDataUpdateSuccess(); // Trigger reset after update
+            }, 1000); // Replace with your actual data update logic
+        });
     </script>
 </x-app-layout>

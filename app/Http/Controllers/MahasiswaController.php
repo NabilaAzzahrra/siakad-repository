@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jurusan;
 use App\Models\Kelas;
 use App\Models\Mahasiswa;
 use App\Models\User;
@@ -306,7 +307,6 @@ class MahasiswaController extends Controller
 
     public function importExcel(Request $request)
     {
-        // dd('kepanggil');
         // Validasi file
         $request->validate([
             'file' => 'required|mimes:xlsx,xls'
@@ -320,22 +320,244 @@ class MahasiswaController extends Controller
         $sheet = $spreadsheet->getActiveSheet()->toArray();
 
         // Loop melalui baris di Excel
-        foreach ($sheet as $row) {
+        foreach (array_slice($sheet, 1) as $row) {
+            $jurusanName = $row[11] ?? null;
+
+            // Pastikan jurusan tidak null atau kosong
+            if (!empty($jurusanName)) {
+                // Periksa apakah jurusan sudah ada
+                $jurusan = Jurusan::where('jurusan', $jurusanName)->first();
+
+                // Jika jurusan tidak ada, buat jurusan baru
+                if ($jurusan == null) {
+                    $jurusan = Jurusan::create(['jurusan' => $jurusanName]);
+                }
+            } else {
+                // Tangani jika jurusan tidak ada (misal: log error atau skip row)
+                continue; // Skip this row if jurusan is null
+            }
+
+            // Periksa apakah kelas sudah ada
+            $kelasName = $row[5];
+            $kelas = Kelas::where('kelas', $kelasName)->first();
+
+            // Jika kelas tidak ada, buat kelas baru
+            if ($kelas == null) {
+                $kelas = Kelas::create(['kelas' => $kelasName, 'id_dosen' => 1, 'id_jurusan' => $jurusan->id]);
+            }
+
+            $status = $row[8];
+            $statusValue = ($status == "NO ACCESS") ? 0 : 1;
+
+            // Masukkan data mahasiswa dengan id_kelas dari kelas yang sudah ada atau baru dibuat
             Mahasiswa::create([
                 'identity_user'   => $row[0],
                 'nim'             => $row[1],
                 'nama'            => $row[2],
                 'tempat_lahir'    => $row[3],
                 'tgl_lahir'       => $row[4],
-                'id_kelas'        => $row[5],
+                'id_kelas'        => $kelas->id,
                 'tingkat'         => $row[6],
                 'no_hp'           => $row[7],
-                'status'          => $row[8],
+                'status'          => $statusValue,
                 'tahun_angkatan'  => $row[9],
                 'keaktifan'       => $row[10],
+            ]);
+
+            // Buat akun user mahasiswa
+            User::create([
+                'name' => $row[2],
+                'email' => $row[1],
+                'password' => Hash::make($row[1]),
+                'role' => 'M'
+            ]);
+
+            // Buat akun user orang tua
+            User::create([
+                'name' => 'Orang Tua ' . $row[2],
+                'email' => 'ortu' . $row[1],
+                'password' => Hash::make($row[4]),
+                'role' => 'O'
             ]);
         }
 
         return redirect()->back()->with('success', 'Data berhasil diimport!');
+    }
+
+    public function edit_databaru(Request $request)
+    {
+        $user_ids = $request->input('user_id'); // Ambil data dari input user_id
+        if (empty($user_ids)) {
+            return redirect()->back()->with('error', 'Pilih dulu');
+        }
+
+        $kelas = Kelas::all();
+
+        // Looping untuk mendapatkan data berdasarkan user_ids yang di-checklist
+        $result = Mahasiswa::whereIn('mahasiswa.nim', $user_ids)
+            ->orderBy('nama', 'ASC')
+            ->paginate(15);
+
+        return view('page.mahasiswa.detailDatabaru')->with([
+            'stu_data' => $result,
+            'kelas' => $kelas,
+        ]);
+    }
+
+    public function edit_detDataBaru(Request $request)
+    {
+        foreach ($request->except('_token', '_method') as $key => $nim) {
+            if (str_starts_with($key, 'id')) {
+                $mahasiswa = Mahasiswa::where('nim', $nim)->first();
+
+                if ($mahasiswa) {
+                    $tingkat = $request->input('tingkat');
+                    $kelas = $request->input('kelas');
+                    $status = $request->input('status');
+                    $keaktifan = $request->input('keaktifan');
+
+                    // Check if no parameters are selected
+                    if (empty($tingkat) && empty($kelas) && empty($status) && empty($keaktifan)) {
+                        return redirect()->back()->with('alert', 'Pilih setidaknya satu bidang untuk diperbarui!');
+                    }
+
+                    $data = [];
+
+                    // Logic for all parameters selected
+                    if (!empty($kelas) && !empty($tingkat) && !empty($status) && !empty($keaktifan)) {
+                        if ($status == "true") {
+                            $st = 1;
+                        } else {
+                            $st = 0;
+                        }
+                        $data = [
+                            'id_kelas' => $kelas,
+                            'tingkat' => $tingkat,
+                            'status' => $st,
+                            'keaktifan' => $keaktifan,
+                        ];
+                    }
+                    // Logic for three parameters selected
+                    elseif (!empty($kelas) && !empty($tingkat) && !empty($status)) {
+                        if ($status == "true") {
+                            $st = 1;
+                        } else {
+                            $st = 0;
+                        }
+                        $data = [
+                            'id_kelas' => $kelas,
+                            'tingkat' => $tingkat,
+                            'status' => $st,
+                        ];
+                    } elseif (!empty($kelas) && !empty($tingkat) && !empty($keaktifan)) {
+                        $data = [
+                            'id_kelas' => $kelas,
+                            'tingkat' => $tingkat,
+                            'keaktifan' => $keaktifan,
+                        ];
+                    } elseif (!empty($kelas) && !empty($status) && !empty($keaktifan)) {
+                        if ($status == "true") {
+                            $st = 1;
+                        } else {
+                            $st = 0;
+                        }
+                        $data = [
+                            'id_kelas' => $kelas,
+                            'status' => $st,
+                            'keaktifan' => $keaktifan,
+                        ];
+                    } elseif (!empty($tingkat) && !empty($status) && !empty($keaktifan)) {
+                        if ($status == "true") {
+                            $st = 1;
+                        } else {
+                            $st = 0;
+                        }
+                        $data = [
+                            'tingkat' => $tingkat,
+                            'status' => $st,
+                            'keaktifan' => $keaktifan,
+                        ];
+                    }
+                    // Logic for two parameters selected
+                    elseif (!empty($kelas) && !empty($tingkat)) {
+                        $data = [
+                            'id_kelas' => $kelas,
+                            'tingkat' => $tingkat,
+                        ];
+                    } elseif (!empty($kelas) && !empty($status)) {
+                        if ($status == "true") {
+                            $st = 1;
+                        } else {
+                            $st = 0;
+                        }
+                        $data = [
+                            'id_kelas' => $kelas,
+                            'status' => $st,
+                        ];
+                    } elseif (!empty($kelas) && !empty($keaktifan)) {
+                        $data = [
+                            'id_kelas' => $kelas,
+                            'keaktifan' => $keaktifan,
+                        ];
+                    } elseif (!empty($tingkat) && !empty($status)) {
+                        if ($status == "true") {
+                            $st = 1;
+                        } else {
+                            $st = 0;
+                        }
+                        $data = [
+                            'tingkat' => $tingkat,
+                            'status' => $st,
+                        ];
+                    } elseif (!empty($tingkat) && !empty($keaktifan)) {
+                        $data = [
+                            'tingkat' => $tingkat,
+                            'keaktifan' => $keaktifan,
+                        ];
+                    } elseif (!empty($status) && !empty($keaktifan)) {
+                        if ($status == "true") {
+                            $st = 1;
+                        } else {
+                            $st = 0;
+                        }
+                        $data = [
+                            'status' => $st,
+                            'keaktifan' => $keaktifan,
+                        ];
+                    }
+                    // Logic for one parameter selected
+                    elseif (!empty($kelas)) {
+                        $data = [
+                            'id_kelas' => $kelas,
+                        ];
+                    } elseif (!empty($tingkat)) {
+                        $data = [
+                            'tingkat' => $tingkat,
+                        ];
+                    } elseif (!empty($status)) {
+                        if ($status == "true") {
+                            $st = 1;
+                        } else {
+                            $st = 0;
+                        }
+
+                        $data = [
+                            'status' => $st,
+                        ];
+                    } elseif (!empty($keaktifan)) {
+                        $data = [
+                            'keaktifan' => $keaktifan,
+                        ];
+                    }
+
+                    // Update the record with the selected data
+                    $mahasiswa->update($data);
+                }
+            }
+        }
+
+        return redirect()
+            ->route('mahasiswa.index')
+            ->with('message', 'Data Mahasiswa Sudah diupdate');
     }
 }
