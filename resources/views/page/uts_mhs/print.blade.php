@@ -241,7 +241,7 @@
                     <div class="ml-4">{{ $mahasiswa->kelas->kelas }}</div>
                 </div>
                 <div class="flex">
-                    <div>Jurusan</div>
+                    <div>Program Studi</div>
                     <div class="ml-[152px]">:</div>
                     <div class="ml-4">{{ $mahasiswa->kelas->jurusan->jurusan }}</div>
                 </div>

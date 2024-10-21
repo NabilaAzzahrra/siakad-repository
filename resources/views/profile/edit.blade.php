@@ -142,7 +142,7 @@
                                     </div>
                                 </div>
                                 <div class="w-full">
-                                    <div class="font-bold">Jurusan</div>
+                                    <div class="font-bold">Program Studi</div>
                                     <div
                                         class="border border-gray-200 border-2 hover:border-sky-500 rounded-xl flex justify-between items-center p-2">
                                         <div>
@@ -273,7 +273,7 @@
                                         </div>
                                         <div class="flex gap-2">
                                             <div class="w-full">
-                                                <div class="font-bold text-red-500 mr-3 w-32">Jurusan</div>
+                                                <div class="font-bold text-red-500 mr-3 w-32">Program Studi</div>
                                                 <div><span id="jurusan">...</span></div>
                                             </div>
                                             <div class="w-full">

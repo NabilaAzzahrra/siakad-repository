@@ -26,10 +26,10 @@
                                     </div>
                                     <div class="mb-5">
                                         <label for="jurusan"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">jurusan
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Program Studi
                                             <span class="text-red-500">*</span></label>
                                         <select class="js-example-placeholder-single js-states form-control w-full m-6"
-                                            name="id_jurusan" data-placeholder="Pilih jurusan">
+                                            name="id_jurusan" data-placeholder="Program Studi">
                                             <option value="">Pilih...</option>
                                             @foreach ($jurusan as $p)
                                                 <option value="{{ $p->id }}">{{ $p->jurusan }}</option>
@@ -68,8 +68,8 @@
                                         <thead>
                                             <tr>
                                                 <th class="w-7">No.</th>
-                                                <th>kelas</th>
-                                                <th>jurusan</th>
+                                                <th>Kelas</th>
+                                                <th>Program Studi</th>
                                                 <th>Pembimbing Akademik</th>
                                                 <th>Action</th>
                                             </tr>
@@ -108,10 +108,10 @@
                         </div>
                         <div class="mb-5">
                             <label for="id_jurusan"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">jurusan
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Program Studi
                                 <span class="text-red-500">*</span></label>
                             <select class="js-example-placeholder-single js-states form-control w-[930px] m-6"
-                                id="id_jurusan" name="id_jurusann" data-placeholder="Pilih Jurusan">
+                                id="id_jurusan" name="id_jurusann" data-placeholder="Program Studi">
                                 <option value="">Pilih...</option>
                                 @foreach ($jurusan as $p)
                                     <option value="{{ $p->id }}">{{ $p->jurusan }}</option>

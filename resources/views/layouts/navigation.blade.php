@@ -101,7 +101,7 @@
                                             <x-dropdown-link :href="route('jurusan.index')" :class="request()->routeIs('jurusan.index')
                                                 ? 'text-red-500 font-bold'
                                                 : ''">
-                                                {{ __('Jurusan') }}
+                                                {{ __('Program Studi') }}
                                             </x-dropdown-link>
                                             <x-dropdown-link :href="route('kelas.index')" :class="request()->routeIs('kelas.index')
                                                 ? 'text-red-500 font-bold'

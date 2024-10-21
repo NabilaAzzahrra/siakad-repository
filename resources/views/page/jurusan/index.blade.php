@@ -11,17 +11,17 @@
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                             <div class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                                FORM INPUT JURUSAN
+                                FORM INPUT PROGRAM STUDI
                             </div>
                             <form action="{{ route('jurusan.store') }}" method="post">
                                 @csrf
                                 <div class="p-4 rounded-xl">
                                     <div class="mb-5">
                                         <label for="jurusan"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">jurusan</label>
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Program Studi</label>
                                         <input type="text" id="jurusan" name="jurusan"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="Masukan Nama jurusan disini ..." required />
+                                            placeholder="Masukan Nama Program Studi disini ..." required />
                                     </div>
                                     <button type="submit"
                                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i class="fi fi-rr-disk "></i></button>
@@ -34,7 +34,7 @@
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                             <div class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                                DATA JURUSAN
+                                DATA PROGRAM STUDI
                             </div>
                             <div class="flex justify-center">
                                 <div class="p-12" style="width:100%;overflow-x:auto;">
@@ -42,7 +42,7 @@
                                         <thead>
                                             <tr>
                                                 <th class="w-7">No.</th>
-                                                <th>jurusan</th>
+                                                <th>Program Studi</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -74,10 +74,10 @@
                     <div class="flex flex-col  p-4 space-y-6">
 
                         <div>
-                            <label for="text" class="block mb-2 text-sm font-medium text-gray-900">jurusan</label>
+                            <label for="text" class="block mb-2 text-sm font-medium text-gray-900">Program Studi</label>
                             <input type="text" id="jurusans" name="jurusan"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                id="" placeholder="Masukan jurusan disini...">
+                                id="" placeholder="Masukan Program Studi disini...">
                         </div>
                     </div>
                     <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
@@ -141,7 +141,7 @@
             let url = "{{ route('jurusan.update', ':id') }}".replace(':id', id);
             console.log(url);
             let status = document.getElementById(modalTarget);
-            document.getElementById('title_source').innerText = `UPDATE JURUSAN ${jurusan}`;
+            document.getElementById('title_source').innerText = `UPDATE PROGRAM STUDI ${jurusan}`;
             document.getElementById('jurusans').value = jurusan;
             document.getElementById('formSourceButton').innerText = 'Simpan';
             document.getElementById('formSourceModal').setAttribute('action', url);
@@ -166,7 +166,7 @@
         }
 
         const jurusanDelete = async (id, jurusan) => {
-            let tanya = confirm(`Apakah anda yakin untuk menghapus jurusan ${jurusan} ?`);
+            let tanya = confirm(`Apakah anda yakin untuk menghapus Program Studi ${jurusan} ?`);
             if (tanya) {
                 await axios.post(`/jurusan/${id}`, {
                         '_method': 'DELETE',

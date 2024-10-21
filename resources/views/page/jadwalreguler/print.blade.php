@@ -237,7 +237,7 @@
                         <th class="border border-1 border-black w-28">SKS</th>
                         <th class="border border-1 border-black w-52">RUANG</th>
                         <th class="border border-1 border-black w-52">KELAS</th>
-                        <th class="border border-1 border-black w-[500px]">JURUSAN</th>
+                        <th class="border border-1 border-black w-[500px]">PROGRAM STUDI</th>
                     </thead>
                     <tbody>
                         @php $no = 1; @endphp

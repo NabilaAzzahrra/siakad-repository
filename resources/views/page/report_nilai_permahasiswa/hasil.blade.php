@@ -37,7 +37,7 @@
                                         <div class="">{{ $mahasiswa->kelas->kelas }}</div>
                                     </div>
                                     <div class="flex mt-1">
-                                        <div class="pr-[105px]">JURUSAN</div>
+                                        <div class="pr-[105px]">PROGRAM STUDI</div>
                                         <div class="pr-4">:</div>
                                         <div class="">{{ $mahasiswa->kelas->jurusan->jurusan }}</div>
                                     </div>
