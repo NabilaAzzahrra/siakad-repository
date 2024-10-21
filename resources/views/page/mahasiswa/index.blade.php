@@ -32,6 +32,27 @@
                     @else
                         <div></div>
                     @endif
+                    <div class="bg-white border border-2 border-sky-500 rounded-xl p-3 mb-4 -mt-6">
+                        <div class="font-bold text-xl text-sky-500 mb-2">IMPORT DATA DARI EXCEL</div>
+                        <form action="{{ route('mahasiswa.importExcel') }}" method="POST"
+                            enctype="multipart/form-data">
+                            @csrf
+                            <input type="file"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                name="file" accept=".xls,.xlsx">
+                            <div class="flex gap-4">
+                                <button type="submit"
+                                    class="mb-3 p-2 text-sm lg:mb-2 lg:p-2 bg-sky-400 text-white rounded-xl mt-4">
+                                    SUBMIT
+                                </button>
+                                <a href="{{ asset('contohExport/sample_data.xlsx') }}" download
+                                    class="mb-3 p-2 text-sm lg:mb-2 lg:p-2 bg-emerald-400 text-white rounded-xl mt-4">
+                                    DOWNLOAD FORMAT
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                             <div
@@ -40,16 +61,6 @@
                                     <div>DATA MAHASISWA</div>
                                 </div>
                             </div>
-                            <form action="{{ route('mahasiswa.importExcel') }}" method="POST"
-                                enctype="multipart/form-data">
-                                @csrf
-                                <input type="file" name="file" accept=".xls,.xlsx">
-                                <button type="submit"
-                                    class="mb-3 p-2 text-sm lg:mb-2 lg:p-2 bg-sky-400 text-white rounded-xl">
-                                    SUBMIT
-                                </button>
-                            </form>
-
                             <div class="flex justify-center">
                                 <div class="p-2" style="width:100%;overflow-x:auto;">
                                     <form action="{{ route('mahasiswa.store') }}" method="POST" class="formupdate">
