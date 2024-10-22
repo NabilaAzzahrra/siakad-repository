@@ -16,17 +16,31 @@ class MahasiswaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $mahasiswa = DB::table('mahasiswa')->where('id_kelas', null)->paginate(10);
+
+        $search = $request->input('search');
+
         $mahasiswa_lengkap = DB::table('mahasiswa')
             ->join('kelas', 'mahasiswa.id_kelas', '=', 'kelas.id')
             ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id')
             ->select('mahasiswa.*', 'kelas.kelas', 'jurusan.jurusan')
             ->whereNotNull('mahasiswa.id_kelas')
             ->whereNotNull('mahasiswa.tingkat')
+            ->when($search, function ($query) use ($search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('mahasiswa.nama', 'like', '%' . $search . '%')
+                        ->orWhere('kelas.kelas', 'like', '%' . $search . '%')
+                        ->orWhere('jurusan.jurusan', 'like', '%' . $search . '%');
+                });
+            })
             ->orderBy('nama', 'ASC')
             ->get();
+
+        if ($request->ajax()) {
+            return view('partials.mahasiswa', compact('mahasiswa_lengkap'))->render();
+        }
 
 
         return view('page.mahasiswa.index')->with([

@@ -7,6 +7,13 @@
 
     <div class="py-12">
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white p-4 rounded-xl mx-4 mb-3 shadow-xl">
+                <div>
+                    <div class="font-extrabold text-md">SIAKAD</div>
+                    <div class="font-extrabold text-2xl">Sistem Informasi Akademik</div>
+                    <div class="text-md  text-wrap">Sistem informasi akademik memudahkan pengelolaan data mahasiswa dan perkuliahan</div>
+                </div>
+            </div>
             <div class="flex flex-col gap-5 items-start md:flex-row justify-center p-3">
                 {{-- <div class="w-full p-3"> --}}
                 <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl rounded-lg sm:rounded-lg">

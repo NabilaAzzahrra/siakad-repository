@@ -26,7 +26,7 @@ class JadwalregulerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $konfigurasi = Konfigurasi::first();
         $tahun_akademik = $konfigurasi->id_tahun_akademik;
@@ -46,12 +46,24 @@ class JadwalregulerController extends Controller
             ->select('jadwal_reguler.*', 'jadwal_reguler.id as id_jadwal', 'jadwal_reguler.id_jadwal as kode_jadwal', 'detail_kurikulum.*', 'dosen.*', 'hari.*', 'sesi.*', 'sesi.id as kode_sesi', 'pukul.*', 'ruang.*', 'kelas.*', 'materi_ajar.*', 'semester.*', 'jurusan.*')
             ->where('id_tahun_akademik', $tahun_akademik)
             ->where('jadwal_reguler.id_keterangan', $keterangan)
+            ->when($request->input('search'), function ($query) use ($request) {
+                $search = $request->input('search');
+                $query->where(function ($query) use ($search) {
+                    $query->where('materi_ajar.materi_ajar', 'like', '%' . $search . '%')
+                        ->orWhere('dosen.nama_dosen', 'like', '%' . $search . '%')
+                        ->orWhere('ruang.ruang', 'like', '%' . $search . '%')
+                        ->orWhere('kelas.kelas', 'like', '%' . $search . '%');
+                });
+            })
             ->paginate(10);
 
-        return view('page.jadwalreguler.index')->with([
-            'jadwal_reguler' => $jadwal_reguler,
-        ]);
+        if ($request->ajax()) {
+            return view('partials.jadwalReguler', compact('jadwal_reguler'))->render();
+        }
+
+        return view('page.jadwalreguler.index', compact('jadwal_reguler'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -499,5 +511,4 @@ class JadwalregulerController extends Controller
             'jadwal_reguler' => $jadwal_reguler,
         ]);
     }
-
 }

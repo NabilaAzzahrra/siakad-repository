@@ -17,8 +17,12 @@ class NilaiController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $konfigurasi = Konfigurasi::first();
+        $tahun_akademik = $konfigurasi->id_tahun_akademik;
+        $keterangan = $konfigurasi->id_keterangan;
+
         $jadwal_reguler = DB::table('jadwal_reguler')
             ->join('detail_kurikulum', 'jadwal_reguler.id_detail_kurikulum', '=', 'detail_kurikulum.id_materi_ajar')
             ->join('dosen', 'jadwal_reguler.id_dosen', '=', 'dosen.id')
@@ -31,9 +35,26 @@ class NilaiController extends Controller
             ->join('semester', 'materi_ajar.id_semester', '=', 'semester.id')
             ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id')
             ->select('jadwal_reguler.*', 'jadwal_reguler.id as id_jadwal', 'jadwal_reguler.id_jadwal as kode_jadwal', 'detail_kurikulum.*', 'dosen.*', 'hari.*', 'sesi.*', 'sesi.id as kode_sesi', 'pukul.*', 'ruang.*', 'kelas.*', 'materi_ajar.*', 'semester.*', 'jurusan.*')
+            ->where('id_tahun_akademik', $tahun_akademik)
+            ->where('jadwal_reguler.id_keterangan', $keterangan)
+            ->when($request->input('search'), function ($query) use ($request) {
+                $search = $request->input('search');
+                $query->where(function ($query) use ($search) {
+                    $query->where('materi_ajar.materi_ajar', 'like', '%' . $search . '%')
+                        ->orWhere('dosen.nama_dosen', 'like', '%' . $search . '%')
+                        ->orWhere('ruang.ruang', 'like', '%' . $search . '%')
+                        ->orWhere('kelas.kelas', 'like', '%' . $search . '%');
+                });
+            })
             ->paginate(15);
+
+        if ($request->ajax()) {
+            $nilai = Nilai::all();
+            return view('partials.nilai', compact('jadwal_reguler', 'nilai'))->render(); // Update this partial view as needed
+        }
+
         $nilai = Nilai::all();
-        return view('page.nilai.index')->with([
+        return view('page.nilai.index', [
             'jadwal_reguler' => $jadwal_reguler,
             'nilai' => $nilai
         ]);
