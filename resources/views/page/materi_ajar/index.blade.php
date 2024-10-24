@@ -19,7 +19,7 @@
                                 <div class="p-4 rounded-xl">
                                     <div class="mb-5">
                                         <label for="materi_ajar"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">materi_ajar</label>
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Materi Ajar</label>
                                         <input type="text" id="materi_ajar" name="materi_ajar"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             placeholder="Masukan Nama materi_ajar disini ..." required />
@@ -45,10 +45,10 @@
                                     </div>
                                     <div class="mb-5">
                                         <label for="id_jurusan"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jurusan
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Program Studi
                                             <span class="text-red-500">*</span></label>
                                         <select class="js-example-placeholder-single js-states form-control w-full m-6"
-                                            name="id_jurusan" data-placeholder="Pilih Jurusan">
+                                            name="id_jurusan" data-placeholder="Pilih Program Studi">
                                             <option value="">Pilih...</option>
                                             @foreach ($jurusan as $j)
                                                 <option value="{{ $j->id }}">{{ $j->jurusan }}</option>
@@ -81,10 +81,10 @@
                                         <thead>
                                             <tr>
                                                 <th class="w-7">No.</th>
-                                                <th>materi_ajar</th>
+                                                <th>Materi Ajar</th>
                                                 <th>SKS</th>
                                                 <th>Semester</th>
-                                                <th>Jurusan</th>
+                                                <th>Program Studi</th>
                                                 <th>E-Book</th>
                                                 <th>Action</th>
                                             </tr>
@@ -118,7 +118,7 @@
 
                         <div class="">
                             <label for="text"
-                                class="block mb-2 text-sm font-medium text-gray-900">materi_ajar</label>
+                                class="block mb-2 text-sm font-medium text-gray-900">Materi Ajar</label>
                             <input type="text" id="materi_ajars" name="materi_ajar"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 id="" placeholder="Masukan materi_ajar disini...">
@@ -143,10 +143,10 @@
                         </div>
                         <div class="mb-5">
                             <label for="id_jurusan"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jurusan
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Program Studi
                                 <span class="text-red-500">*</span></label>
                             <select class="js-example-placeholder-single js-states form-control w-[930px] m-6"
-                                id="id_jurusan" name="id_jurusanl" data-placeholder="Pilih Jurusan">
+                                id="id_jurusan" name="id_jurusanl" data-placeholder="Pilih Program Studi">
                                 <option value="">Pilih...</option>
                                 @foreach ($jurusan as $j)
                                     <option value="{{ $j->id }}">{{ $j->jurusan }}</option>

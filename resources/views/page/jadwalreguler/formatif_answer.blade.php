@@ -136,7 +136,7 @@
                                                             <div class="flex items-center">NAMA</div>
                                                         </th>
                                                         <th scope="col" class="px-6 py-3 text-center">
-                                                            <div class="flex items-center">JURUSAN</div>
+                                                            <div class="flex items-center">PROGRAM STUDI</div>
                                                         </th>
                                                         <th scope="col" class="px-6 py-3 text-center bg-gray-100">
                                                             <div class="flex items-center">KELAS</div>
@@ -238,7 +238,7 @@
                                                             <div class="flex items-center">NAMA</div>
                                                         </th>
                                                         <th scope="col" class="px-6 py-3 text-center">
-                                                            <div class="flex items-center">JURUSAN</div>
+                                                            <div class="flex items-center">PROGRAM STUDI</div>
                                                         </th>
                                                         <th scope="col" class="px-6 py-3 text-center bg-gray-100">
                                                             <div class="flex items-center">KELAS</div>
@@ -336,7 +336,7 @@
                                                             <div class="flex items-center">NAMA</div>
                                                         </th>
                                                         <th scope="col" class="px-6 py-3 text-center">
-                                                            <div class="flex items-center">JURUSAN</div>
+                                                            <div class="flex items-center">PROGRAM STUDI</div>
                                                         </th>
                                                         <th scope="col" class="px-6 py-3 text-center bg-gray-100">
                                                             <div class="flex items-center">KELAS</div>

@@ -70,7 +70,7 @@
                                                 </div>
                                                 <div class="w-full">
                                                     <label for="name"
-                                                        class="block text-sm font-medium text-gray-700">Jurusan</label>
+                                                        class="block text-sm font-medium text-gray-700">Program Studi</label>
                                                     <input type="text" id="name"
                                                         class="w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0"
                                                         placeholder="Enter your name"
@@ -175,7 +175,7 @@
                                                 </div>
                                                 <div class="w-full">
                                                     <label for="name"
-                                                        class="block text-sm font-medium text-gray-700">Jurusan</label>
+                                                        class="block text-sm font-medium text-gray-700">Program Studi</label>
                                                     <input type="text" id="name"
                                                         class="w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0"
                                                         placeholder="Enter your name"

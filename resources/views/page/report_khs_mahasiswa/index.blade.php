@@ -68,7 +68,7 @@
                                                         </th>
                                                         <th scope="col" class="px-6 py-3 text-center">
                                                             <div class="flex items-center">
-                                                                JURUSAN
+                                                                PROGRAM STUDI
                                                             </div>
                                                         </th>
                                                         <th scope="col" class="px-6 py-3 text-center bg-gray-100">

@@ -261,7 +261,7 @@
                         <div>Tempat dan Tanggal Lahir</div>
                     </div>
                     <div class="flex -mt-1 font-bold">
-                        <div>Program</div>
+                        <div>Program Studi</div>
                         <div class="ml-[128px] mr-4">:</div>
                         <div class="">{{ $student->jurusan }}</div>
                     </div>
