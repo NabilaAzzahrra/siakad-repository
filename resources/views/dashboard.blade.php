@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
 
-            <div class="flex items-start justify-between">
+            <div class="flex flex-col lg:flex-row lg:items-start items-center lg:justify-between justify-center">
                 <div class="lg:w-1/2 w-full">
                     <div class="mx-4 text-wrap bg-white shadow-xl p-6 rounded-xl items-center">
                         <div class="font-bold text-red-500">Tahun Akademik
@@ -22,7 +22,7 @@
 
                     </div>
                 </div>
-                <div class="grid grid-cols-3 gap-5 mx-4">
+                <div class="grid lg:grid-cols-3 gap-5 mx-4 mt-4 lg:mt-0">
                     <div class="bg-[#005F9D] p-4 w-64 rounded-xl shadow-xl">
                         <div class="flex gap-2 font-bold items-center justify-between">
                             <div class="mt-3"><i class="fi fi-ss-building text-white" style="font-size: 40px;"></i>
@@ -119,10 +119,10 @@
                 @endcan
 
                 @can('role-A')
-                    <div class="bg-white w-1/2 dark:bg-gray-800 overflow-hidden shadow-xl rounded-lg sm:rounded-lg p-6">
+                    <div class="bg-white lg:w-1/2 w-full dark:bg-gray-800 overflow-hidden shadow-xl rounded-lg sm:rounded-lg p-6">
                         <div
-                            class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                            PRESENSI <span class="uppercase">MAHASISWA</span>
+                            class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left text-wrap bg-amber-300 rounded-xl font-bold">
+                            PRESENSI <span class="uppercase">MAHASISWA TIDAK HADIR</span>
                             HARI INI
                         </div>
                         <div class="mt-3">
@@ -130,18 +130,18 @@
                                 <div
                                     class="bg-red-100 p-2 px-6 mb-2 rounded-xl flex justify-between border border-2 border-red-300">
                                     <div>
-                                        <div>{{ $pm->presensi->jadwal->sesi->pukul->pukul }} WIB</div>
-                                        <div class="font-bold text-lg">
+                                        <div class="text-sm">{{ $pm->presensi->jadwal->sesi->pukul->pukul }} WIB</div>
+                                        <div class="font-bold lg:text-lg text-sm">
                                             {{ $pm->presensi->jadwal->detail_kurikulum->materi_ajar->materi_ajar }}
                                         </div>
-                                        <div class="">{{ $pm->presensi->jadwal->dosen->nama_dosen }}</div>
+                                        <div class="text-sm">{{ $pm->presensi->jadwal->dosen->nama_dosen }}</div>
                                     </div>
                                     <div class="text-right">
-                                        <div>{{ $pm->presensi->jadwal->ruang->ruang }}</div>
-                                        <div class="font-bold text-lg">
+                                        <div class="text-sm">{{ $pm->presensi->jadwal->ruang->ruang }}</div>
+                                        <div class="font-bold lg:text-lg text-sm text-wrap">
                                             {{ $pm->mahasiswa->nama }}
                                         </div>
-                                        <div>
+                                        <div class="text-sm">
                                             @php
                                                 if ($pm->keterangan == 'SAKIT') {
                                                     $bg = 'bg-emerald-300';
