@@ -43,10 +43,14 @@ use App\Http\Controllers\UjianUASMhsController;
 use App\Http\Controllers\UjianUTSController;
 use App\Http\Controllers\UjianUTSMhsController;
 use App\Http\Controllers\UtsController;
+use App\Models\DetailPresensi;
+use App\Models\Dosen;
 use App\Models\Informasi;
 use App\Models\Jadwalreguler;
+use App\Models\Jurusan;
 use App\Models\Konfigurasi;
 use App\Models\Mahasiswa;
+use App\Models\Presensi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -142,10 +146,8 @@ Route::post('/edit_databaru', [MahasiswaController::class, 'edit_databaru'])->na
 Route::get('/dashboard', function (Request $request) {
     $konfigurasi = Konfigurasi::first();
     if (!$konfigurasi) {
-        return view('dashboard_konfig', [
-        ]);
-
-    }else{
+        return view('dashboard_konfig', []);
+    } else {
 
         $tahun_akademik = $konfigurasi->id_tahun_akademik;
         $keterangan = $konfigurasi->id_keterangan;
@@ -227,7 +229,7 @@ Route::get('/dashboard', function (Request $request) {
                     $query->where('id_tahun_akademik', $tahun_akademik)
                         ->where('id_keterangan', $keterangan)
                         ->where('hari', $now)
-                    ->where('id_kelas', $id_kelas);
+                        ->where('id_kelas', $id_kelas);
                 })->paginate(10);
         } else if (Auth::user()->role == "D") {
             $jadwal_mhs = Jadwalreguler::with('hari', 'dosen', 'detail_kurikulum.materi_ajar', 'sesi', 'sesi.pukul', 'ruang', 'kelas')
@@ -250,6 +252,31 @@ Route::get('/dashboard', function (Request $request) {
                         ->where('id_kelas', $id_kelas_ortu);
                 })
                 ->paginate(10);
+
+            // PRESENSI MAHASISWA
+            $mhs = Mahasiswa::where('nim', str_replace('ortu', '', Auth::user()->email))->first();
+            $id_kelas_ortu = $mhs->id_kelas;
+
+            $nim = str_replace('ortu', '', Auth::user()->email);
+
+            $presensiRealtimeNoData = Jadwalreguler::with('hari', 'dosen', 'detail_kurikulum.materi_ajar', 'sesi.pukul', 'ruang', 'kelas')
+                ->whereHas('hari', function ($query) use ($now, $tahun_akademik, $keterangan, $id_kelas_ortu) {
+                    $query->where('id_tahun_akademik', $tahun_akademik)
+                        ->where('id_keterangan', $keterangan)
+                        ->where('hari', $now)
+                        ->where('id_kelas', $id_kelas_ortu);
+                })
+                ->get();
+
+            $presensiRealtime = DetailPresensi::with(['presensi', 'presensi.jadwal', 'presensi.jadwal.hari', 'presensi.jadwal.dosen', 'presensi.jadwal.detail_kurikulum.materi_ajar', 'presensi.jadwal.sesi.pukul', 'presensi.jadwal.ruang', 'presensi.jadwal.kelas'])
+                ->where('nim', $nim)
+                ->whereHas('presensi', function ($query) use ($now) {
+                    $query->where('tgl_presensi', date('Y-m-d'));
+                })
+                ->whereHas('presensi.jadwal.hari', function ($query) use ($now) {
+                    $query->where('hari', $now);
+                })
+                ->get();
         } else {
             $jadwal_mhs = null;
         }
@@ -268,12 +295,58 @@ Route::get('/dashboard', function (Request $request) {
             $informasi = Informasi::orderBy('created_at', 'desc')->take(3)->get();
         }
 
+        $totalPengajar = Dosen::count('id');
+        $totalPesertaDidik = Mahasiswa::where('id_kelas', '!=', null)->count();
+        $totalProgramStudi = Jurusan::count();
+
+        // PRESENSI MAHASISWA
+
+        $nim = str_replace('ortu', '', Auth::user()->email);
+
+        $presensiRealtimeNoData = Jadwalreguler::with('hari', 'dosen', 'detail_kurikulum.materi_ajar', 'sesi.pukul', 'ruang', 'kelas')
+            ->whereHas('hari', function ($query) use ($now, $tahun_akademik, $keterangan) {
+                $query->where('id_tahun_akademik', $tahun_akademik)
+                    ->where('id_keterangan', $keterangan)
+                    ->where('hari', $now);
+                // ->where('id_kelas', $id_kelas_ortu);
+            })
+            ->get();
+
+        $presensiRealtime = DetailPresensi::with(['presensi', 'presensi.jadwal', 'presensi.jadwal.hari', 'presensi.jadwal.dosen', 'presensi.jadwal.detail_kurikulum.materi_ajar', 'presensi.jadwal.sesi.pukul', 'presensi.jadwal.ruang', 'presensi.jadwal.kelas'])
+            ->where('nim', $nim)
+            ->whereHas('presensi', function ($query) use ($now) {
+                $query->where('tgl_presensi', date('Y-m-d'));
+            })
+            ->whereHas('presensi.jadwal.hari', function ($query) use ($now) {
+                $query->where('hari', $now);
+            })
+            ->get();
+
+        $presensiMahasiswa = DetailPresensi::with(['presensi', 'presensi.jadwal', 'presensi.jadwal.hari', 'presensi.jadwal.dosen', 'presensi.jadwal.detail_kurikulum.materi_ajar', 'presensi.jadwal.sesi.pukul', 'presensi.jadwal.ruang', 'presensi.jadwal.kelas', 'mahasiswa'])
+            ->where('keterangan', '!=', 'HADIR')
+            ->whereHas('presensi', function ($query) use ($now) {
+                $query->where('tgl_presensi', date('Y-m-d'));
+            })
+            ->whereHas('presensi.jadwal.hari', function ($query) use ($now) {
+                $query->where('hari', $now);
+            })
+            ->get();
+
+
+        // dd($presensiRealtime);
+
         return view('dashboard', [
             'jadwal' => $jadwal,
             'jadwal_mhs' => $jadwal_mhs,
             'informasi' => $informasi,
+            'konfigurasi' => $konfigurasi,
+            'totalPengajar' => $totalPengajar,
+            'totalPesertaDidik' => $totalPesertaDidik,
+            'totalProgramStudi' => $totalProgramStudi,
+            'presensiRealtimeNoData' => $presensiRealtimeNoData,
+            'presensiRealtime' => $presensiRealtime,
+            'presensiMahasiswa' => $presensiMahasiswa,
         ]);
-
     }
 
     // $ga = $konfigurasi->keterangan;
