@@ -13,8 +13,10 @@ class Uas extends Model
         'id_jadwal',
         'id_uas',
         'file',
+        'file_cadangan',
         'tgl_ujian',
         'waktu_ujian',
+        'tgl_ujian_susulan',
         'verifikasi'
     ];
 

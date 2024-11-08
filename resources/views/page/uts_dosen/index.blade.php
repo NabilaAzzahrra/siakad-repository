@@ -73,7 +73,12 @@
                                                     </th> --}}
                                                     <th scope="col" class="px-6 py-3 text-center ">
                                                         <div class="flex items-center">
-                                                            SOAL
+                                                            SOAL UTAMA
+                                                        </div>
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-center ">
+                                                        <div class="flex items-center">
+                                                            SOAL CADANGAN
                                                         </div>
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center bg-gray-100">
@@ -174,6 +179,16 @@
                                                         <td class="px-6 py-4">
                                                             @if ($utsItem)
                                                                 <a href="{{ asset('uts/' . $utsItem->file) }}" download
+                                                                    class="mr-2 bg-green-500 hover:bg-green-600 px-4 py-3 rounded-xl text-xs text-white">
+                                                                    <i class="fa-solid fa-download"></i>
+                                                                </a>
+                                                            @else
+                                                                G
+                                                            @endif
+                                                        </td>
+                                                        <td class="px-6 py-4">
+                                                            @if ($utsItem)
+                                                                <a href="{{ asset('uts/cadangan/' . $utsItem->file_cadangan) }}" download
                                                                     class="mr-2 bg-green-500 hover:bg-green-600 px-4 py-3 rounded-xl text-xs text-white">
                                                                     <i class="fa-solid fa-download"></i>
                                                                 </a>

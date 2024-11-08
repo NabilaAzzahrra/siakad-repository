@@ -143,27 +143,45 @@ class UtsController extends Controller
 
     public function jawaban_uts_add(Request $request)
     {
+        $konfigurasiUjian = KonfigurasiUjian::first();
+        if (!$konfigurasiUjian) {
+            return redirect()->back()->with('error', 'Konfigurasi ujian tidak ditemukan');
+        }
+
+        $tgl_susulan = $konfigurasiUjian->tgl_susulan;
+        $now = date('Y-m-d');
+
         $kode = $request->input('id_uts');
         $nim = $request->input('nim');
 
         if ($request->hasFile('file')) {
             $tugasFile = $request->file('file');
             $tugasFileName = $kode . '-' . $nim . '.' . $tugasFile->extension();
-            $tugasFilePath = $tugasFile->move(public_path('uts/jawaban/'), $tugasFileName);
-            $tugasFilePath = $tugasFileName;
+
+            // Pilih lokasi penyimpanan berdasarkan tanggal saat ini
+            if ($now < $tgl_susulan) {
+                $kategori = "UTAMA";
+                $fileLocation = 'uts/jawaban/' . $tugasFileName;
+                $tugasFile->move(public_path('uts/jawaban/'), $tugasFileName);
+            } else {
+                $kategori = "SUSULAN";
+                $fileLocation = 'uts/cadangan/jawaban/' . $tugasFileName;
+                $tugasFile->move(public_path('uts/cadangan/jawaban/'), $tugasFileName);
+            }
         } else {
             return redirect()->back()->with('error', 'Tugas tidak ditemukan');
         }
 
         $data = [
             'id_uts' => $kode,
-            'nim' => $request->input('nim'),
-            'file' => $tugasFilePath,
-            'tgl_pengumpulan' => date('Y-m-d'),
+            'nim' => $nim,
+            'file' => $fileLocation,
+            'kategori' => $kategori,
+            'tgl_pengumpulan' => $now,
         ];
 
         DetailUts::create($data);
 
-        return back()->with('message_delete', 'Data Jawaban Sudah di upload');
+        return back()->with('message_delete', 'Data Jawaban Sudah di-upload');
     }
 }

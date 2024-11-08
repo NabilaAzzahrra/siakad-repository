@@ -24,7 +24,22 @@
                             <div class="flex justify-center">
                                 <div class="lg:p-6 p-4" style="width:100%;overflow-x:auto;">
                                     <div class="relative overflow-x-auto rounded-lg shadow-lg">
-
+                                        @php
+                                            $hideShow = '';
+                                            $hideShowHer = '';
+                                            // HIDDEN/SHOW COLUMN QUESTION (SOAL UTAMA)
+                                            $dateNow = date('Y-m-d');
+                                            // dd($tgl_ujian_susulan, $dateNow);
+                                            if ($dateNow < $tgl_ujian_susulan) {
+                                                // dd('iniii');
+                                                $hideShow = '';
+                                                $hideShowHer = 'hidden';
+                                            } else {
+                                                // dd('ya allah');
+                                                $hideShow = 'hidden';
+                                                $hideShowHer = '';
+                                            }
+                                        @endphp
                                         <table
                                             class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border">
                                             <thead
@@ -76,9 +91,16 @@
                                                             JURUSAN
                                                         </div>
                                                     </th> --}}
-                                                    <th scope="col" class="px-6 py-3 text-center ">
+                                                    <th scope="col" class="px-6 py-3 text-center"
+                                                        {{ $hideShow }}>
                                                         <div class="flex items-center">
-                                                            SOAL
+                                                            SOAL UTAMA
+                                                        </div>
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-center"
+                                                        {{ $hideShowHer }}>
+                                                        <div class="flex items-center">
+                                                            SOAL CADANGAN
                                                         </div>
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center bg-gray-100">
@@ -176,9 +198,20 @@
                                                         {{-- <td class="px-6 py-4 ">
                                                             {{ $m->kelas->jurusan->jurusan }}
                                                         </td> --}}
-                                                        <td class="px-6 py-4">
+                                                        <td class="px-6 py-4" {{ $hideShow }}>
                                                             @if ($uasItem)
                                                                 <a href="{{ asset('uas/' . $uasItem->file) }}" download
+                                                                    class="mr-2 bg-green-500 hover:bg-green-600 px-4 py-3 rounded-xl text-xs text-white">
+                                                                    <i class="fa-solid fa-download"></i>
+                                                                </a>
+                                                            @else
+                                                                BELUM UPLOAD SOAL
+                                                            @endif
+                                                        </td>
+                                                        <td class="px-6 py-4" {{ $hideShowHer }}>
+                                                            @if ($uasItem)
+                                                                <a href="{{ asset('uas/cadangan/' . $uasItem->file_cadangan) }}"
+                                                                    download
                                                                     class="mr-2 bg-green-500 hover:bg-green-600 px-4 py-3 rounded-xl text-xs text-white">
                                                                     <i class="fa-solid fa-download"></i>
                                                                 </a>

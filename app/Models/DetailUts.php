@@ -13,6 +13,7 @@ class DetailUts extends Model
         'id_uts',
         'nim',
         'file',
+        'kategori',
         'tgl_pengumpulan',
     ];
 

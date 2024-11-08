@@ -13,7 +13,8 @@ class KonfigurasiUjian extends Model
         'id_tahun_akademik',
         'id_keterangan',
         'jenis_ujian',
-        'tgl_mulai'
+        'tgl_mulai',
+        'tgl_susulan'
     ];
 
     protected $table = 'konfigurasi_ujian';

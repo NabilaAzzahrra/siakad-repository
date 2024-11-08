@@ -13,8 +13,10 @@ class Uts extends Model
         'id_jadwal',
         'id_uts',
         'file',
+        'file_cadangan',
         'tgl_ujian',
         'waktu_ujian',
+        'tgl_ujian_susulan',
         'verifikasi'
     ];
 

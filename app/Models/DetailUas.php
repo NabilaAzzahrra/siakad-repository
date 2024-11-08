@@ -14,6 +14,7 @@ class DetailUas extends Model
         'nim',
         'file',
         'tgl_pengumpulan',
+        'kategori',
     ];
 
     protected $table = 'detail_uas';

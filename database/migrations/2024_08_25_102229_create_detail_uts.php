@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('id_uts');
             $table->string('nim');
             $table->string('file');
+            $table->string('kategori');
             $table->date('tgl_pengumpulan');
             $table->timestamps();
         });

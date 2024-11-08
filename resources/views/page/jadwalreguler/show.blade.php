@@ -172,7 +172,7 @@
                                                         class="border border-gray-300 px-2 lg:py-1 py-2 text-xs rounded-full font-extrabold flex items-center justify-center {{ $hidePresensiButton }}">
                                                         <i
                                                             class="fi fi-sr-member-list text-sky-700 pr-1 flex items-center"></i>
-                                                        <span class="pr-1 flex items-center lg:text-[18px]">Presensi
+                                                        <span class="pr-1 flex items-center lg:text-[15px]">Presensi
                                                         </span>
                                                         {!! $tgl_presensi !!}
                                                     </a>

@@ -143,23 +143,41 @@ class UasController extends Controller
 
     public function jawaban_uas_add(Request $request)
     {
+        $konfigurasiUjian = KonfigurasiUjian::first();
+        if (!$konfigurasiUjian) {
+            return redirect()->back()->with('error', 'Konfigurasi ujian tidak ditemukan');
+        }
+
+        $tgl_susulan = $konfigurasiUjian->tgl_susulan;
+        $now = date('Y-m-d');
+
         $kode = $request->input('id_uas');
         $nim = $request->input('nim');
 
         if ($request->hasFile('file')) {
             $tugasFile = $request->file('file');
             $tugasFileName = $kode . '-' . $nim . '.' . $tugasFile->extension();
-            $tugasFilePath = $tugasFile->move(public_path('uas/jawaban/'), $tugasFileName);
-            $tugasFilePath = $tugasFileName;
+
+            // Pilih lokasi penyimpanan berdasarkan tanggal saat ini
+            if ($now < $tgl_susulan) {
+                $kategori = "UTAMA";
+                $fileLocation = 'uas/jawaban/' . $tugasFileName;
+                $tugasFile->move(public_path('uas/jawaban/'), $tugasFileName);
+            } else {
+                $kategori = "SUSULAN";
+                $fileLocation = 'uas/cadangan/jawaban/' . $tugasFileName;
+                $tugasFile->move(public_path('uas/cadangan/jawaban/'), $tugasFileName);
+            }
         } else {
             return redirect()->back()->with('error', 'Tugas tidak ditemukan');
         }
 
         $data = [
             'id_uas' => $kode,
-            'nim' => $request->input('nim'),
-            'file' => $tugasFilePath,
-            'tgl_pengumpulan' => date('Y-m-d'),
+            'nim' => $nim,
+            'file' => $fileLocation,
+            'kategori' => $kategori,
+            'tgl_pengumpulan' => $now,
         ];
 
         DetailUas::create($data);

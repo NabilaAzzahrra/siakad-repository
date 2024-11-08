@@ -114,6 +114,9 @@
                                                         <div class="flex items-center">NAMA</div>
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center">
+                                                        <div class="flex items-center">KATEGORI</div>
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
                                                         <div class="flex items-center">DOWNLOAD</div>
                                                     </th>
                                                 </tr>
@@ -135,7 +138,9 @@
                                                         </th>
                                                         <td class="px-6 py-4 bg-gray-100 uppercase">
                                                             {{ $m->mahasiswa->nama }}</td>
-                                                        <td class="px-6 py-4 flex gap-3">
+                                                            <td class="px-6 py-4  uppercase">
+                                                                {{ $m->kategori }}</td>
+                                                        <td class="px-6 py-4 flex gap-3 bg-gray-100">
                                                             <a href="{{ asset('uts/jawaban/' . $m->file) }}"
                                                                 class="bg-sky-500 hover:bg-bg-red-300 px-4 py-3 rounded-xl text-xs text-white"
                                                                 download>

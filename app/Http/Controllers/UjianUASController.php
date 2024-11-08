@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Jadwalreguler;
 use App\Models\Kelas;
 use App\Models\Konfigurasi;
+use App\Models\KonfigurasiUjian;
 use App\Models\Uas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,9 +20,15 @@ class UjianUASController extends Controller
     {
         $jadwal = Jadwalreguler::all();
         $uas = Uas::all();
+        $konfigurasi = KonfigurasiUjian::first();
+        $tgl_ujian = $konfigurasi->tgl_ujian;
+        $tgl_ujian_susulan = $konfigurasi->tgl_susulan;
         return view('page.uas.index')->with([
             'jadwal' => $jadwal,
             'uas' => $uas,
+            'konfigurasi' => $konfigurasi,
+            'tgl_ujian' => $tgl_ujian,
+            'tgl_ujian_susulan' => $tgl_ujian_susulan,
         ]);
     }
 
@@ -38,48 +45,48 @@ class UjianUASController extends Controller
      */
     public function store(Request $request)
     {
+        // dd('inii');
         try {
             $id_jadwal = $request->input('id_jadwal');
             $id_uas = date('YmdHis');
 
-            if ($request->hasFile('file')) {
+            if ($request->hasFile('file') && $request->hasFile('file_cadangan')) {
                 $uasFile = $request->file('file');
                 $uasFileName = $id_uas . '-' . $id_jadwal . '.' . $uasFile->extension();
-                $uasFilePath = $uasFile->move(public_path('uas'), $uasFileName);
-                $uasFilePath = $uasFileName;
+                $uasFile->move(public_path('uas'), $uasFileName);
+
+                // Handle the backup UAS file upload
+                $uasFileCadangan = $request->file('file_cadangan');
+                $uasFileNameCadangan = $id_uas . '-' . $id_jadwal . '.' . $uasFileCadangan->extension();
+                $uasFileCadangan->move(public_path('uas/cadangan'), $uasFileNameCadangan);
 
                 $data = [
-                    'id_jadwal' => $request->input('id_jadwal'),
+                    'id_jadwal' => $id_jadwal,
                     'id_uas' => $id_uas,
                     'tgl_ujian' => $request->input('tgl_ujian'),
                     'waktu_ujian' => $request->input('waktu_ujian'),
-                    'file' => $uasFilePath,
+                    'tgl_ujian_susulan' => $request->input('tgl_ujian_susulan'),
+                    'file' => $uasFileName,
+                    'file_cadangan' => $uasFileNameCadangan,
                 ];
+                // dd($data);
 
                 Uas::create($data);
+
+                if (Auth::user()->role == 'A') {
+                    return redirect()
+                        ->route('ujian_uas.index')
+                        ->with('message', 'Data UAS Sudah ditambahkan');
+                } else {
+                    return redirect()
+                        ->route('ujian_uas.ujian_uas_dosen', Auth::user()->email)
+                        ->with('message', 'Data UAS Sudah diupdate');
+                }
             } else {
+                dd('iniii lah');
                 return redirect()->back()->with('error', 'Soal tidak ditemukan');
-
-                $data = [
-                    'id_jadwal' => $request->input('id_jadwal'),
-                    'id_uas' => $id_uas,
-                    'tgl_ujian' => $request->input('tgl_ujian'),
-                    'waktu_ujian' => $request->input('waktu_ujian'),
-                    'file' => $utsFilePath,
-                ];
-
-                Uas::create($data);
             }
 
-            if (Auth::user()->role == 'A') {
-                return redirect()
-                    ->route('ujian_uas.index')
-                    ->with('message', 'Data UAS Sudah ditambahkan');
-            } else {
-                return redirect()
-                    ->route('ujian_uas.ujian_uas_dosen', Auth::user()->email)
-                    ->with('message', 'Data UAS Sudah diupdate');
-            }
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
         }
@@ -116,10 +123,12 @@ class UjianUASController extends Controller
         }
 
         $uas->tgl_ujian = $request->input('tgl_ujian');
+        $uas->tgl_ujian_susulan = $request->input('tgl_ujian_susulan');
         $uas->waktu_ujian = $request->input('waktu_ujian');
 
         // Simpan nama file ebook lama untuk referensi
         $oldUas = $uas->file;
+        $oldUasCadangan = $uas->file_cadangan;
 
         $ko = $request->input('id_jadwal');
         $id_uas = $request->input('id_uas');
@@ -135,6 +144,19 @@ class UjianUASController extends Controller
             $file->move(public_path('uas'), $filename);
 
             $uas->file = $filename;
+        }
+
+        if ($request->hasFile('file_cadangan')) {
+            // Hapus ebook lama jika ada
+            if ($oldUasCadangan && file_exists(public_path('uas/cadangan/' . $oldUasCadangan))) {
+                unlink(public_path('uas/cadangan/' . $oldUasCadangan));
+            }
+
+            $file_cadangan = $request->file('file_cadangan');
+            $filename_cadangan = $ko . '-' . $id_uas . '.' . $file_cadangan->getClientOriginalExtension();
+            $file_cadangan->move(public_path('uas/cadangan'), $filename_cadangan);
+
+            $uas->file_cadangan = $filename_cadangan;
         }
 
         // Simpan perubahan ke database
@@ -295,5 +317,4 @@ class UjianUASController extends Controller
             'uas' => $uas
         ]);
     }
-
 }

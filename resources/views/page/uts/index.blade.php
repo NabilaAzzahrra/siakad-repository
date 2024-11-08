@@ -24,7 +24,19 @@
                             <div class="flex justify-center">
                                 <div class="lg:p-6 pt-2" style="width:100%;overflow-x:auto;">
                                     <div class="relative overflow-x-auto rounded-lg shadow-lg">
-
+                                        @php
+                                            $hideShow = '';
+                                            $hideShowHer = '';
+                                            // HIDDEN/SHOW COLUMN QUESTION (SOAL UTAMA)
+                                            $dateNow = date('Y-m-d');
+                                            if ($dateNow < $tgl_ujian_susulan) {
+                                                $hideShow = '';
+                                                $hideShowHer = 'hidden';
+                                            } else {
+                                                $hideShow = '';
+                                                $hideShowHer = 'hidden';
+                                            }
+                                        @endphp
                                         <table
                                             class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border">
                                             <thead
@@ -43,7 +55,12 @@
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center">
                                                         <div class="flex items-center">
-                                                            TANGGAL
+                                                            TANGGAL UTAMA
+                                                        </div>
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-center">
+                                                        <div class="flex items-center">
+                                                            TANGGAL SUSULAN
                                                         </div>
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center bg-gray-100">
@@ -76,9 +93,14 @@
                                                             JURUSAN
                                                         </div>
                                                     </th> --}}
-                                                    <th scope="col" class="px-6 py-3 text-center ">
+                                                    <th scope="col" class="px-6 py-3 text-center " {{$hideShow}}>
                                                         <div class="flex items-center">
-                                                            SOAL
+                                                            SOAL UTAMA
+                                                        </div>
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-center " {{$hideShowHer}}>
+                                                        <div class="flex items-center">
+                                                            SOAL CADANGAN
                                                         </div>
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center bg-gray-100">
@@ -132,6 +154,7 @@
                                                                     break;
                                                             }
                                                         }
+
                                                     @endphp
                                                     <tr class="bg-white border dark:bg-gray-800 dark:border-gray-700">
                                                         <td class="px-6 py-4 text-center bg-gray-100">
@@ -146,6 +169,13 @@
                                                         <td class="px-6 py-4 ">
                                                             @if ($utsItem)
                                                                 {{ date('d-m-Y', strtotime($utsItem->tgl_ujian)) }}
+                                                            @else
+                                                                <span>Belum ditentukan</span>
+                                                            @endif
+                                                        </td>
+                                                        <td class="px-6 py-4 ">
+                                                            @if ($utsItem)
+                                                                {{ date('d-m-Y', strtotime($utsItem->tgl_ujian_susulan)) }}
                                                             @else
                                                                 <span>Belum ditentukan</span>
                                                             @endif
@@ -176,9 +206,22 @@
                                                         {{-- <td class="px-6 py-4 ">
                                                             {{ $m->kelas->jurusan->jurusan }}
                                                         </td> --}}
-                                                        <td class="px-6 py-4">
+                                                        <td class="px-6 py-4" {{ $hideShow }}>
                                                             @if ($utsItem)
                                                                 <a href="{{ asset('uts/' . $utsItem->file) }}" download
+                                                                    class="mr-2 bg-green-500 hover:bg-green-600 px-4 py-3 rounded-xl text-xs text-white">
+                                                                    <i class="fa-solid fa-download"></i>
+                                                                </a>
+                                                            @else
+                                                                <div
+                                                                    class="text-xs bg-red-500 text-white px-2 rounded-xl py-1">
+                                                                    BELUM UPLOAD SOAL</div>
+                                                            @endif
+                                                        </td>
+                                                        <td class="px-6 py-4" {{ $hideShowHer }}>
+                                                            @if ($utsItem)
+                                                                <a href="{{ asset('uts/cadangan/' . $utsItem->file_cadangan) }}"
+                                                                    download
                                                                     class="mr-2 bg-green-500 hover:bg-green-600 px-4 py-3 rounded-xl text-xs text-white">
                                                                     <i class="fa-solid fa-download"></i>
                                                                 </a>

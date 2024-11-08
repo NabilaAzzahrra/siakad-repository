@@ -15,7 +15,7 @@ class KonfigurasiUjianController extends Controller
     {
         $konfigurasi = Konfigurasi::first();
         return view('page.konfigurasi_ujian.index')->with([
-            'konfigurasi'=>$konfigurasi,
+            'konfigurasi' => $konfigurasi,
         ]);
     }
 
@@ -37,6 +37,7 @@ class KonfigurasiUjianController extends Controller
             'id_keterangan' => $request->input('id_keterangan'),
             'jenis_ujian' => $request->input('jenis_ujian'),
             'tgl_mulai' => $request->input('tgl_mulai'),
+            'tgl_susulan' => $request->input('tgl_susulan'),
         ];
 
         KonfigurasiUjian::create($data);
@@ -70,6 +71,7 @@ class KonfigurasiUjianController extends Controller
         $data = [
             'jenis_ujian' => $request->input('jenis_ujians'),
             'tgl_mulai' => $request->input('tgl_mulais'),
+            'tgl_susulan' => $request->input('tgl_susulans'),
         ];
 
         $datas = KonfigurasiUjian::findOrFail($id);

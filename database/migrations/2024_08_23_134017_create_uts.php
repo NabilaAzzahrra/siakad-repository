@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('id_jadwal');
             $table->string('id_uts');
-            $table->string('file');
+            $table->string('file_utama');
+            $table->string('file_cadangan');
             $table->string('tgl_ujian');
             $table->string('waktu_ujian');
+            $table->string('tgl_ujian_susulan');
             $table->boolean('verifikasi');
             $table->timestamps();
         });

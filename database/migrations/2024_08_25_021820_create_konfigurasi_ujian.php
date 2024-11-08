@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('id_keterangan');
             $table->string('jenis_ujian');
             $table->date('tgl_mulai');
+            $table->date('tgl_susulan');
             $table->timestamps();
         });
     }
