@@ -67,7 +67,7 @@ class SemesterController extends Controller
     {
         $data = [
             'semester' => $request->input('semester'),
-            'id_keterangan' => $request->input('id_keterangan')
+            'id_keterangan' => $request->input('id_keteranganl')
         ];
 
         $datas = Semester::findOrFail($id);
@@ -84,6 +84,6 @@ class SemesterController extends Controller
     {
         $data = Semester::findOrFail($id);
         $data->delete();
-        return back()->with('message_delete','Data Semester Sudah dihapus');
+        return back()->with('message_delete', 'Data Semester Sudah dihapus');
     }
 }

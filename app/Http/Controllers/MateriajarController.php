@@ -36,31 +36,31 @@ class MateriajarController extends Controller
     public function store(Request $request)
     {
         try {
-        $materi = $request->input('materi_ajar');
-        $kode = date('YmdHis');
+            $materi = $request->input('materi_ajar');
+            $kode = date('YmdHis');
 
-        if ($request->hasFile('ebook')) {
-            $ebookFile = $request->file('ebook');
-            $ebookFileName = $kode . '-' . $materi . '.' . $ebookFile->extension();
-            $ebookFilePath = $ebookFile->move(public_path('uploads'), $ebookFileName);
-            $ebookFilePath = $ebookFileName;
-        } else {
-            return redirect()->back()->with('error', 'E-Book tidak ditemukan');
-        }
+            if ($request->hasFile('ebook')) {
+                $ebookFile = $request->file('ebook');
+                $ebookFileName = $kode . '-' . $materi . '.' . $ebookFile->extension();
+                $ebookFilePath = $ebookFile->move(public_path('uploads'), $ebookFileName);
+                $ebookFilePath = $ebookFileName;
+            } else {
+                return redirect()->back()->with('error', 'E-Book tidak ditemukan');
+            }
 
-        $data = [
-            'materi_ajar' => $request->input('materi_ajar'),
-            'sks' => $request->input('sks'),
-            'id_semester' => $request->input('id_semester'),
-            'id_jurusan' => $request->input('id_jurusan'),
-            'ebook' => $ebookFilePath,
-        ];
+            $data = [
+                'materi_ajar' => $request->input('materi_ajar'),
+                'sks' => $request->input('sks'),
+                'id_semester' => $request->input('id_semester'),
+                'id_jurusan' => $request->input('id_jurusan'),
+                'ebook' => $ebookFilePath,
+            ];
 
-        Materiajar::create($data);
+            Materiajar::create($data);
 
-        return redirect()
-            ->route('materi_ajar.index')
-            ->with('message', 'Data Materi Ajar Sudah ditambahkan');
+            return redirect()
+                ->route('materi_ajar.index')
+                ->with('message', 'Data Materi Ajar Sudah ditambahkan');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
         }
@@ -118,7 +118,7 @@ class MateriajarController extends Controller
             }
 
             $file = $request->file('ebook');
-            $filename = $ko . '-'. $materi . '.' . $file->getClientOriginalExtension();
+            $filename = $ko . '-' . $materi . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('uploads'), $filename);
 
             $materi_ajar->ebook = $filename;
@@ -130,7 +130,6 @@ class MateriajarController extends Controller
         return redirect()
             ->route('materi_ajar.index')
             ->with('message', 'Data Materi Ajar Sudah diupdate');
-
     }
 
     /**

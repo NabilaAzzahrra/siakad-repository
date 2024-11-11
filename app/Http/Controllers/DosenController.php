@@ -100,7 +100,6 @@ class DosenController extends Controller
 
         $datas_user = [
             'name' => $request->input('nama_dosen'),
-            'email' => $request->input('email'),
             'password' => $request->input('password'),
         ];
 
@@ -122,7 +121,7 @@ class DosenController extends Controller
     public function destroy(Request $request, string $id)
     {
         $data = Dosen::findOrFail($id);
-        $user = User::where('email', $data->email)->firstOrFail();
+        $user = User::where('email', $data->kode_dosen)->firstOrFail();
 
         $user->delete();
         $data->delete();

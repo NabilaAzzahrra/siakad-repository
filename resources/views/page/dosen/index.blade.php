@@ -199,13 +199,13 @@
                     render: (data) => {
                         let editUrl =
                             `<button type="button" data-id="${data.id}"
-                                                        data-modal-target="sourceModal" data-nama_dosen="${data.nama_dosen}" data-email="${data.email}" data-email_lama="${data.email}" data-no_hp="${data.no_hp}" data-password="${data.password}"
+                                                        data-modal-target="sourceModal" data-nama_dosen="${data.nama_dosen}" data-email="${data.email}" data-kode_dosen="${data.kode_dosen}" data-no_hp="${data.no_hp}" data-password="${data.password}"
                                                         onclick="editSourceModal(this)"
                                                         class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-xl h-10 w-10 text-xs text-white">
                                                        <i class="fas fa-edit"></i>
                                                     </button>`;
                         let deleteUrl =
-                            `<button onclick="return dosenDelete('${data.id}','${data.nama_dosen}','${data.email}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-xl h-10 w-10 text-xs text-white"><i class="fas fa-trash"></i></button>`;
+                            `<button onclick="return dosenDelete('${data.id}','${data.nama_dosen}','${data.kode_dosen}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-xl h-10 w-10 text-xs text-white"><i class="fas fa-trash"></i></button>`;
                         return `<div style="text-align:center">${editUrl} ${deleteUrl}</div>`;
                     }
                 }, ],
@@ -218,7 +218,7 @@
             const id = button.dataset.id;
             const nama_dosen = button.dataset.nama_dosen;
             const email = button.dataset.email;
-            const email_lama = button.dataset.email;
+            const kode_dosen = button.dataset.kode_dosen;
             const no_hp = button.dataset.no_hp;
             const password = button.dataset.password;
             let url = "{{ route('dosen.update', ':id') }}".replace(':id', id);
@@ -227,7 +227,7 @@
             document.getElementById('title_source').innerText = `Update Dosen ${nama_dosen}`;
             document.getElementById('nama_dosens').value = nama_dosen;
             document.getElementById('emails').value = email;
-            document.getElementById('email_lama').value = email_lama;
+            document.getElementById('email_lama').value = kode_dosen;
             document.getElementById('no_hps').value = no_hp;
             document.getElementById('passwords').value = password;
             document.getElementById('formSourceButton').innerText = 'Simpan';
@@ -252,8 +252,8 @@
             status.classList.toggle('hidden');
         }
 
-        const dosenDelete = async (id, nama_dosen, email) => {
-            let tanya = confirm(`Apakah anda yakin untuk menghapus dosen ${nama_dosen} dengan email ${email} ?`);
+        const dosenDelete = async (id, nama_dosen, kode_dosen) => {
+            let tanya = confirm(`Apakah anda yakin untuk menghapus dosen ${nama_dosen} dengan Kode Dosen ${kode_dosen} ?`);
             if (tanya) {
                 try {
                     await axios.post(`/dosen/${id}`, {

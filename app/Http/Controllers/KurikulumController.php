@@ -85,6 +85,7 @@ class KurikulumController extends Controller
      */
     public function destroy(string $id)
     {
+        Detailkurikulum::where('id_kurikulum', $id)->delete();
         $data = Kurikulum::findOrFail($id);
         $data->delete();
         return back()->with('message_delete', 'Data Kurikulum Sudah dihapus');
