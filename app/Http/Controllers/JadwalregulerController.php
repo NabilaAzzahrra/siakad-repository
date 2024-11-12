@@ -202,13 +202,19 @@ class JadwalregulerController extends Controller
         $jadwal = Jadwalreguler::where('id_jadwal', $id_jadwal)->first();
 
         if ($jadwal) {
+            // Dapatkan semua id_presensi yang terkait dengan id_jadwal ini
+            $presensiIds = Presensi::where('id_jadwal', $id_jadwal)->pluck('id_presensi');
+
+            // Hapus semua detail presensi yang terkait dengan id_presensi ini
+            DetailPresensi::whereIn('id_presensi', $presensiIds)->delete();
+
             // Hapus semua presensi yang terkait dengan id_jadwal ini
             Presensi::where('id_jadwal', $id_jadwal)->delete();
 
             // Hapus jadwal reguler
             $jadwal->delete();
 
-            return back()->with('message_delete', 'Data Jadwal Reguler sudah dihapus');
+            return back()->with('message_delete', 'Data Jadwal Reguler dan detail presensi sudah dihapus');
         } else {
             return back()->with('message_delete', 'Data Jadwal Reguler tidak ditemukan');
         }

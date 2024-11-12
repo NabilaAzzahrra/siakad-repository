@@ -35,32 +35,6 @@
                                 </x-slot>
 
                                 <x-slot name="content">
-                                    <x-dropdown-link :href="route('perhitungan.index')" :class="request()->routeIs('perhitungan.index') ? 'text-red-500 font-bold' : ''">
-                                        {{ __('Perhitungan') }}
-                                    </x-dropdown-link>
-
-                                    <x-dropdown-link :href="route('konfigurasi.index')" :class="request()->routeIs('konfigurasi.index') ? 'text-red-500 font-bold' : ''">
-                                        {{ __('Konfigurasi Akademik') }}
-                                    </x-dropdown-link>
-
-                                    <x-dropdown-link :href="route('konfigurasi_ujian.index')" :class="request()->routeIs('konfigurasi_ujian.index')
-                                        ? 'text-red-500 font-bold'
-                                        : ''">
-                                        {{ __('Konfigurasi Ujian') }}
-                                    </x-dropdown-link>
-
-                                    <x-dropdown-link :href="route('kurikulum.index')" :class="request()->routeIs('kurikulum.index') ? 'text-red-500 font-bold' : ''">
-                                        {{ __('Kurikulum') }}
-                                    </x-dropdown-link>
-
-                                    <x-dropdown-link :href="route('dosen.index')" :class="request()->routeIs('dosen.index') ? 'text-red-500 font-bold' : ''">
-                                        {{ __('Dosen') }}
-                                    </x-dropdown-link>
-
-                                    <x-dropdown-link :href="route('informasi.index')" :class="request()->routeIs('informasi.index') ? 'text-red-500 font-bold' : ''">
-                                        {{ __('Informasi') }}
-                                    </x-dropdown-link>
-
                                     <div class="relative">
                                         <button id="jadwal-button"
                                             class="flex justify-between items-center w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 dark:text-gray-400 bg-white dark:bg-gray-800 focus:outline-none transition ease-in-out duration-150 {{ request()->routeIs([
@@ -81,7 +55,7 @@
                                             <i class="fi fi-rr-caret-right"></i>
                                         </button>
                                         <div id="jadwal-submenu"
-                                            class="hidden absolute left-full top-0 ml-2 -mt-[220px] w-48 bg-white shadow-lg rounded-md border">
+                                            class="hidden absolute left-full top-0 ml-2 -mt-1 w-48 bg-white shadow-lg rounded-md border">
                                             <x-dropdown-link :href="route('hari.index')" :class="request()->routeIs('hari.index') ? 'text-red-500 font-bold' : ''">
                                                 {{ __('Hari') }}
                                             </x-dropdown-link>
@@ -108,11 +82,6 @@
                                                 : ''">
                                                 {{ __('Kelas') }}
                                             </x-dropdown-link>
-                                            <x-dropdown-link :href="route('materi_ajar.index')" :class="request()->routeIs('materi_ajar.index')
-                                                ? 'text-red-500 font-bold'
-                                                : ''">
-                                                {{ __('Materi Ajar') }}
-                                            </x-dropdown-link>
                                             <x-dropdown-link :href="route('semester.index')" :class="request()->routeIs('semester.index')
                                                 ? 'text-red-500 font-bold'
                                                 : ''">
@@ -128,8 +97,39 @@
                                                 : ''">
                                                 {{ __('Tahun Akademik') }}
                                             </x-dropdown-link>
+                                            <x-dropdown-link :href="route('materi_ajar.index')" :class="request()->routeIs('materi_ajar.index')
+                                                ? 'text-red-500 font-bold'
+                                                : ''">
+                                                {{ __('Materi Ajar') }}
+                                            </x-dropdown-link>
                                         </div>
                                     </div>
+
+                                    <x-dropdown-link :href="route('dosen.index')" :class="request()->routeIs('dosen.index') ? 'text-red-500 font-bold' : ''">
+                                        {{ __('Dosen') }}
+                                    </x-dropdown-link>
+
+                                    <x-dropdown-link :href="route('kurikulum.index')" :class="request()->routeIs('kurikulum.index') ? 'text-red-500 font-bold' : ''">
+                                        {{ __('Kurikulum') }}
+                                    </x-dropdown-link>
+
+                                    <x-dropdown-link :href="route('perhitungan.index')" :class="request()->routeIs('perhitungan.index') ? 'text-red-500 font-bold' : ''">
+                                        {{ __('Perhitungan') }}
+                                    </x-dropdown-link>
+
+                                    <x-dropdown-link :href="route('informasi.index')" :class="request()->routeIs('informasi.index') ? 'text-red-500 font-bold' : ''">
+                                        {{ __('Informasi') }}
+                                    </x-dropdown-link>
+
+                                    <x-dropdown-link :href="route('konfigurasi.index')" :class="request()->routeIs('konfigurasi.index') ? 'text-red-500 font-bold' : ''">
+                                        {{ __('Konfigurasi Akademik') }}
+                                    </x-dropdown-link>
+
+                                    <x-dropdown-link :href="route('konfigurasi_ujian.index')" :class="request()->routeIs('konfigurasi_ujian.index')
+                                        ? 'text-red-500 font-bold'
+                                        : ''">
+                                        {{ __('Konfigurasi Ujian') }}
+                                    </x-dropdown-link>
 
                                 </x-slot>
                             </x-dropdown>
