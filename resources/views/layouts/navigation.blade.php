@@ -152,7 +152,7 @@
 
                     <!-- Navigation Links -->
                     <div class="hidden sm:flex sm:items-center sm:ms-6">
-                        <x-nav-link :href="route('nilai.index')" :active="request()->routeIs('nilai.index')">
+                        <x-nav-link :href="route('nilai.index')" :active="request()->routeIs(['nilai.index', 'nilai.show'])">
                             <div class="text-[16px] font-bold tracking-wide">Nilai</div>
                         </x-nav-link>
                     </div>
