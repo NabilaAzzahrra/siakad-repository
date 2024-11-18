@@ -102,12 +102,12 @@
                                                         </th>
                                                         <th scope="col" class="px-6 py-3 text-center">
                                                             <div class="flex items-center">
-                                                                JURUSAN
+                                                                KELAS
                                                             </div>
                                                         </th>
                                                         <th scope="col" class="px-6 py-3 text-center bg-gray-100">
                                                             <div class="flex items-center">
-                                                                KELAS
+                                                                JURUSAN
                                                             </div>
                                                         </th>
                                                         <th scope="col" class="px-6 py-3 text-center">
