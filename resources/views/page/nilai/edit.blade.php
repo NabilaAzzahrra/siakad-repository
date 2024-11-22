@@ -96,51 +96,51 @@
                                         FORM INPUT PRESENSI
                                     </div>
                                     @php
-                                        if ($nilaiMateri->verifikasi == 0) {
-                                            $text = 'BELUM VERIFIKASI';
-                                            $route = route('nilai.nilai_verifikasi', $nilaiMateri->id_jadwal);
-                                        } else {
-                                            $text = 'SUDAH VERIFIKASI';
-                                            $route = null;
-                                        }
+                                    if ($nilaiMateri->verifikasi == 0) {
+                                    $text = 'BELUM VERIFIKASI';
+                                    $route = route('nilai.nilai_verifikasi', $nilaiMateri->id_jadwal);
+                                    } else {
+                                    $text = 'SUDAH VERIFIKASI';
+                                    $route = null;
+                                    }
                                     @endphp
 
                                     @can('role-A')
-                                        @if ($route)
-                                            <form action="{{ $route }}" method="POST">
-                                                @csrf
-                                                @method('PATCH')
-                                                <input type="hidden" value="1" name="verifikasi">
-                                                <button type="submit"
-                                                    class="bg-sky-200 lg:p-3 p-1 rounded-xl font-extrabold text-sky-800 flex items-center justify-center lg:text-[18px] text-sm lg:w-[300px] w-full">
-                                                    <i
-                                                        class="fi fi-sr-cross-circle flex items-center text-red-500 mr-3"></i>
-                                                    {{ $text }}
-                                                </button>
-                                            </form>
-                                        @else
-                                            <button disabled
-                                                class="bg-gray-200 lg:p-3 p-1 rounded-xl font-extrabold text-gray-800 flex items-center justify-center lg:text-[18px] text-sm lg:w-[300px] w-full">
-                                                <i class="fi fi-sr-check-circle flex items-center text-green-500 mr-3"></i>
-                                                {{ $text }}
-                                            </button>
-                                        @endif
+                                    @if ($route)
+                                    <form action="{{ $route }}" method="POST">
+                                        @csrf
+                                        @method('PATCH')
+                                        <input type="hidden" value="1" name="verifikasi">
+                                        <button type="submit"
+                                            class="bg-sky-200 lg:p-3 p-1 rounded-xl font-extrabold text-sky-800 flex items-center justify-center lg:text-[18px] text-sm lg:w-[300px] w-full">
+                                            <i
+                                                class="fi fi-sr-cross-circle flex items-center text-red-500 mr-3"></i>
+                                            {{ $text }}
+                                        </button>
+                                    </form>
+                                    @else
+                                    <button disabled
+                                        class="bg-gray-200 lg:p-3 p-1 rounded-xl font-extrabold text-gray-800 flex items-center justify-center lg:text-[18px] text-sm lg:w-[300px] w-full">
+                                        <i class="fi fi-sr-check-circle flex items-center text-green-500 mr-3"></i>
+                                        {{ $text }}
+                                    </button>
+                                    @endif
                                     @endcan
 
                                     @can('role-D')
-                                        @if ($route)
-                                            <button disabled
-                                                class="bg-sky-200 p-3 rounded-xl font-extrabold text-sky-800 flex items-center justify-center text-[18px] w-[300px]">
-                                                <i class="fi fi-sr-cross-circle flex items-center text-red-500 mr-3"></i>
-                                                {{ $text }}
-                                            </button>
-                                        @else
-                                            <button disabled
-                                                class="bg-gray-200 p-3 rounded-xl font-extrabold text-gray-800 flex items-center justify-center text-[18px] w-[300px]">
-                                                <i class="fi fi-sr-check-circle flex items-center text-green-500 mr-3"></i>
-                                                {{ $text }}
-                                            </button>
-                                        @endif
+                                    @if ($route)
+                                    <button disabled
+                                        class="bg-sky-200 p-3 rounded-xl font-extrabold text-sky-800 flex items-center justify-center text-[18px] w-[300px]">
+                                        <i class="fi fi-sr-cross-circle flex items-center text-red-500 mr-3"></i>
+                                        {{ $text }}
+                                    </button>
+                                    @else
+                                    <button disabled
+                                        class="bg-gray-200 p-3 rounded-xl font-extrabold text-gray-800 flex items-center justify-center text-[18px] w-[300px]">
+                                        <i class="fi fi-sr-check-circle flex items-center text-green-500 mr-3"></i>
+                                        {{ $text }}
+                                    </button>
+                                    @endif
                                     @endcan
 
                                 </div>
@@ -199,60 +199,77 @@
                                                 </thead>
                                                 <tbody>
                                                     @php
-                                                        $no = 1;
+                                                    $no = 1;
                                                     @endphp
                                                     @foreach ($nilai as $m)
+                                                        @php
+                                                            $jumlahPresensi = DB::table('detail_presensi')
+                                                            ->join('presensi', 'presensi.id_presensi', '=', 'detail_presensi.id_presensi')
+                                                            ->join('jadwal_reguler', 'jadwal_reguler.id_jadwal', '=', 'presensi.id_jadwal')
+                                                            ->where('jadwal_reguler.id_jadwal', $m->id_jadwal)
+                                                            ->where('detail_presensi.nim', $m->nim)
+                                                            ->where('detail_presensi.keterangan', 'HADIR')
+                                                            ->count();
+
+                                                            $kehadiran = null;
+                                                            $jumlah_hadir = $jumlahPresensi;
+                                                            if ($jumlah_hadir < 14) {
+                                                                $kehadiran = $jumlah_hadir * 7;
+                                                            } else {
+                                                                $kehadiran = 100;
+                                                            }
+                                                        @endphp
                                                         <tr
-                                                            class="bg-white border dark:bg-gray-800 dark:border-gray-700">
-                                                            <td class="px-6 py-4 text-center bg-gray-100">
-                                                                {{ $no++ }}
-                                                            </td>
-                                                            <th scope="row"
-                                                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                                {{ $m->nim }}
-                                                                <input type="hidden" id="nim" name="nim[]"
-                                                                    class="w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0"
-                                                                    value="{{ $m->nim }}" readonly>
-                                                                <input type="hidden" id="id_nilai"
-                                                                    name="id_nilai[]"
-                                                                    class="w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0"
-                                                                    value="{{ $m->id_nilai }}" readonly>
-                                                            </th>
-                                                            <td class="px-6 py-4 bg-gray-100 uppercase">
-                                                                {{ $m->mahasiswa->nama }}
-                                                                <input type="hidden" id="nama" name="nama[]"
-                                                                    class="w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0 uppercase"
-                                                                    value="{{ $m->mahasiswa->nama }}" readonly>
-                                                            </td>
-                                                            <td class="px-6 py-4">
-                                                                <input type="text" id="presensi"
-                                                                    name="presensi[]"
-                                                                    class="w-[50px] lg:w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0 uppercase"
-                                                                    value="{{ $m->presensi }}" readonly>
-                                                            </td>
-                                                            <td class="px-6 py-4 bg-gray-100">
-                                                                <input type="text" id="tugas" name="tugas[]"
-                                                                    class="w-[50px] lg:w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0 uppercase"
-                                                                    value="{{ $m->tugas }}">
-                                                            </td>
-                                                            <td class="px-6 py-4">
-                                                                <input type="text" id="formatif"
-                                                                    name="formatif[]"
-                                                                    class="w-[50px] lg:w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0 uppercase"
-                                                                    value="{{ $m->formatif }}">
-                                                            </td>
-                                                            <td class="px-6 py-4 bg-gray-100">
-                                                                <input type="text" id="uts" name="uts[]"
-                                                                    class="w-[50px] lg:w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0 uppercase"
-                                                                    value="{{ $m->uts }}">
-                                                            </td>
-                                                            <td class="px-6 py-4">
-                                                                <input type="text" id="uas" name="uas[]"
-                                                                    class="w-[50px] lg:w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0 uppercase"
-                                                                    value="{{ $m->uas }}">
-                                                            </td>
+                                                        class="bg-white border dark:bg-gray-800 dark:border-gray-700">
+                                                        <td class="px-6 py-4 text-center bg-gray-100">
+                                                            {{ $no++ }}
+                                                        </td>
+                                                        <th scope="row"
+                                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                            {{ $m->nim }}
+                                                            <input type="hidden" id="nim" name="nim[]"
+                                                                class="w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0"
+                                                                value="{{ $m->nim }}" readonly>
+                                                            <input type="hidden" id="id_nilai"
+                                                                name="id_nilai[]"
+                                                                class="w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0"
+                                                                value="{{ $m->id_nilai }}" readonly>
+                                                        </th>
+                                                        <td class="px-6 py-4 bg-gray-100 uppercase">
+                                                            {{ $m->mahasiswa->nama }}
+                                                            <input type="hidden" id="nama" name="nama[]"
+                                                                class="w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0 uppercase"
+                                                                value="{{ $m->mahasiswa->nama }}" readonly>
+                                                        </td>
+                                                        <td class="px-6 py-4">
+                                                            <input type="text" id="presensi"
+                                                                name="presensi[]"
+                                                                class="w-[50px] lg:w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0 uppercase"
+                                                                value="{{ $kehadiran }}" readonly>
+                                                        </td>
+                                                        <td class="px-6 py-4 bg-gray-100">
+                                                            <input type="text" id="tugas" name="tugas[]"
+                                                                class="w-[50px] lg:w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0 uppercase"
+                                                                value="{{ $m->tugas }}">
+                                                        </td>
+                                                        <td class="px-6 py-4">
+                                                            <input type="text" id="formatif"
+                                                                name="formatif[]"
+                                                                class="w-[50px] lg:w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0 uppercase"
+                                                                value="{{ $m->formatif }}">
+                                                        </td>
+                                                        <td class="px-6 py-4 bg-gray-100">
+                                                            <input type="text" id="uts" name="uts[]"
+                                                                class="w-[50px] lg:w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0 uppercase"
+                                                                value="{{ $m->uts }}">
+                                                        </td>
+                                                        <td class="px-6 py-4">
+                                                            <input type="text" id="uas" name="uas[]"
+                                                                class="w-[50px] lg:w-full border-0 border-b-2 border-gray-300 focus:border-black focus:ring-0 uppercase"
+                                                                value="{{ $m->uas }}">
+                                                        </td>
                                                         </tr>
-                                                    @endforeach
+                                                        @endforeach
                                                 </tbody>
                                             </table>
                                         </div>

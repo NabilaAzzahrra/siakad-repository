@@ -119,6 +119,7 @@ class DataPrestasiController extends Controller
             $detail_kurikulum_1 = DB::table('vw_data_prestasi')
                 ->where('semester', 1)
                 ->where('id_jurusan', $id_jurusan)
+                ->select('id_materi_ajar', 'materi_ajar', DB::raw('MAX(id) as max_id'), DB::raw('GROUP_CONCAT(nim) as nims'), DB::raw('MAX(sks) as sks'), DB::raw('MAX(id_jadwal) as id_jadwal'), DB::raw('MAX(id_perhitungan) as id_perhitungan'))
                 ->groupBy('id_materi_ajar')
                 ->get();
 
@@ -148,6 +149,7 @@ class DataPrestasiController extends Controller
             $detail_kurikulum_2 = DB::table('vw_data_prestasi')
                 ->where('semester', 2)
                 ->where('id_jurusan', $id_jurusan)
+                ->select('id_materi_ajar', 'materi_ajar', DB::raw('MAX(id) as max_id'), DB::raw('GROUP_CONCAT(nim) as nims'), DB::raw('MAX(sks) as sks'), DB::raw('MAX(id_jadwal) as id_jadwal'), DB::raw('MAX(id_perhitungan) as id_perhitungan'))
                 ->groupBy('id_materi_ajar')
                 ->get();
 
@@ -178,6 +180,7 @@ class DataPrestasiController extends Controller
             $detail_kurikulum_3 = DB::table('vw_data_prestasi')
                 ->where('semester', 3)
                 ->where('id_jurusan', $id_jurusan)
+                ->select('id_materi_ajar', 'materi_ajar', DB::raw('MAX(id) as max_id'), DB::raw('GROUP_CONCAT(nim) as nims'), DB::raw('MAX(sks) as sks'), DB::raw('MAX(id_jadwal) as id_jadwal'), DB::raw('MAX(id_perhitungan) as id_perhitungan'))
                 ->groupBy('id_materi_ajar')
                 ->get();
 
@@ -208,6 +211,7 @@ class DataPrestasiController extends Controller
             $detail_kurikulum_4 = DB::table('vw_data_prestasi')
                 ->where('semester', 4)
                 ->where('id_jurusan', $id_jurusan)
+                ->select('id_materi_ajar', 'materi_ajar', DB::raw('MAX(id) as max_id'), DB::raw('GROUP_CONCAT(nim) as nims'), DB::raw('MAX(sks) as sks'), DB::raw('MAX(id_jadwal) as id_jadwal'), DB::raw('MAX(id_perhitungan) as id_perhitungan'))
                 ->groupBy('id_materi_ajar')
                 ->get();
 

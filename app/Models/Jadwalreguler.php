@@ -13,6 +13,7 @@ class Jadwalreguler extends Model
         'id_jadwal',
         'id_hari',
         'id_sesi',
+        'id_sesi2',
         'id_detail_kurikulum',
         'id_ruang',
         'id_dosen',
@@ -28,6 +29,11 @@ class Jadwalreguler extends Model
     public function sesi()
     {
         return $this->belongsTo(Sesi::class, 'id_sesi', 'id');
+    }
+
+    public function sesi2()
+    {
+        return $this->belongsTo(Sesi::class, 'id_sesi2', 'id');
     }
 
     public function ruang()

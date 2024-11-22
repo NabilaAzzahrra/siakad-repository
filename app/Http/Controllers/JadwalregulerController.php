@@ -36,15 +36,41 @@ class JadwalregulerController extends Controller
             ->join('detail_kurikulum', 'jadwal_reguler.id_detail_kurikulum', '=', 'detail_kurikulum.id_materi_ajar')
             ->join('dosen', 'jadwal_reguler.id_dosen', '=', 'dosen.id')
             ->join('hari', 'jadwal_reguler.id_hari', '=', 'hari.id')
-            ->join('sesi', 'jadwal_reguler.id_sesi', '=', 'sesi.id')
-            ->join('pukul', 'sesi.id_pukul', '=', 'pukul.id')
+            ->join('sesi as sesi1', 'jadwal_reguler.id_sesi', '=', 'sesi1.id') // Alias untuk sesi pertama
+            // Ganti join biasa dengan leftJoin untuk sesi2
+            ->leftJoin('sesi as sesi2', 'jadwal_reguler.id_sesi2', '=', 'sesi2.id') // Alias untuk sesi kedua
+            ->join('pukul as pukul1', 'sesi1.id_pukul', '=', 'pukul1.id')
+            ->leftJoin('pukul as pukul2', 'sesi2.id_pukul', '=', 'pukul2.id') // Ganti join biasa dengan leftJoin untuk pukul2
             ->join('ruang', 'jadwal_reguler.id_ruang', '=', 'ruang.id')
             ->join('kelas', 'jadwal_reguler.id_kelas', '=', 'kelas.id')
             ->join('materi_ajar', 'detail_kurikulum.id_materi_ajar', '=', 'materi_ajar.id')
             ->join('semester', 'materi_ajar.id_semester', '=', 'semester.id')
             ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id')
-            ->select('jadwal_reguler.*', 'jadwal_reguler.id as id_jadwal', 'jadwal_reguler.id_jadwal as kode_jadwal', 'detail_kurikulum.*', 'dosen.*', 'hari.*', 'sesi.*', 'sesi.id as kode_sesi', 'pukul.*', 'ruang.*', 'kelas.*', 'materi_ajar.*', 'semester.*', 'jurusan.*')
-            ->where('id_tahun_akademik', $tahun_akademik)
+            ->select(
+                'jadwal_reguler.*',
+                'jadwal_reguler.id as id_jadwal',
+                'jadwal_reguler.id_sesi2 as sesi2',
+                'jadwal_reguler.id_jadwal as kode_jadwal',
+                'detail_kurikulum.*',
+                'dosen.*',
+                'hari.*',
+                'sesi1.*',
+                'sesi2.*',
+                'sesi1.id as kode_sesi1',
+                'sesi2.id as kode_sesi2',
+                'sesi1.sesi as sesi1',
+                'sesi2.sesi as sesi2',
+                'pukul1.*',
+                'pukul2.*',
+                'pukul1.pukul as pukul1',
+                'pukul2.pukul as pukul2',
+                'ruang.*',
+                'kelas.*',
+                'materi_ajar.*',
+                'semester.*',
+                'jurusan.*'
+            )
+            ->where('jadwal_reguler.id_tahun_akademik', $tahun_akademik)
             ->where('jadwal_reguler.id_keterangan', $keterangan)
             ->when($request->input('search'), function ($query) use ($request) {
                 $search = $request->input('search');
@@ -56,6 +82,7 @@ class JadwalregulerController extends Controller
                 });
             })
             ->paginate(10);
+
 
         if ($request->ajax()) {
             return view('partials.jadwalReguler', compact('jadwal_reguler'))->render();
@@ -100,6 +127,7 @@ class JadwalregulerController extends Controller
         $data = [
             'id_jadwal' => $id_jadwal,
             'id_sesi' => $request->input('sesi'),
+            'id_sesi2' => $request->input('sesi_dua'),
             'id_hari' => $request->input('hari'),
             'id_detail_kurikulum' => $request->input('kurikulum'),
             'id_ruang' => $request->input('ruang'),
@@ -155,8 +183,61 @@ class JadwalregulerController extends Controller
         $kelas = Kelas::all();
         $hari = Hari::all();
         $kurikulum = Detailkurikulum::where('id_kurikulum', $id_kurikulum)->get();
-        $jadwal = Jadwalreguler::where('id', $id)->first();
+        $jadwal = Jadwalreguler::with('sesi')->where('id', $id)->first();
         return view('page.jadwalreguler.edit')->with([
+            'sesi' => $sesi,
+            'kurikulum' => $kurikulum,
+            'ruang' => $ruang,
+            'dosen' => $dosen,
+            'konfigurasi' => $konfigurasi,
+            'kelas' => $kelas,
+            'jadwal' => $jadwal,
+            'hari' => $hari,
+        ]);
+    }
+
+    public function editJadwal($id)
+    {
+        $konfigurasi = Konfigurasi::first();
+        $id_kurikulum = $konfigurasi->id_kurikulum;
+        $sesi = Sesi::all();
+        $ruang = Ruang::all();
+        $dosen = Dosen::all();
+        $kelas = Kelas::all();
+        $hari = Hari::all();
+        $kurikulum = Detailkurikulum::where('id_kurikulum', $id_kurikulum)->get();
+        $jadwal = DB::table('jadwal_reguler')
+            ->join('hari', 'jadwal_reguler.id_hari', '=', 'hari.id')
+            ->leftJoin('sesi as sesi1', 'jadwal_reguler.id_sesi', '=', 'sesi1.id')
+            ->leftJoin('sesi as sesi2', 'jadwal_reguler.id_sesi2', '=', 'sesi2.id')
+            ->leftJoin('pukul as pukul1', 'sesi1.id_pukul', '=', 'pukul1.id') // Gunakan LEFT JOIN agar konsisten dengan sesi1
+            ->leftJoin('pukul as pukul2', 'sesi2.id_pukul', '=', 'pukul2.id')
+            ->join('detail_kurikulum', 'jadwal_reguler.id_detail_kurikulum', '=', 'detail_kurikulum.id_materi_ajar') // Gunakan LEFT JOIN agar konsisten dengan sesi1
+            ->join('materi_ajar', 'detail_kurikulum.id_materi_ajar', '=', 'materi_ajar.id')
+            ->join('semester', 'materi_ajar.id_semester', '=', 'semester.id')
+            ->join('ruang', 'jadwal_reguler.id_ruang', '=', 'ruang.id')
+            ->join('dosen', 'jadwal_reguler.id_dosen', '=', 'dosen.id')
+            ->join('kelas', 'jadwal_reguler.id_kelas', '=', 'kelas.id')
+            ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id')
+            ->where('jadwal_reguler.id', $id)
+            ->select(
+                'jadwal_reguler.*',
+                'jadwal_reguler.id as id_jadwal',
+                'pukul1.*',
+                'hari.*', // Pastikan hanya kolom yang dibutuhkan yang disertakan untuk menghindari konflik nama kolom
+                'sesi1.*', // Pastikan hanya kolom yang dibutuhkan yang disertakan untuk menghindari konflik nama kolom
+                // 'sesi2.*', // Pastikan hanya kolom yang dibutuhkan yang disertakan untuk menghindari konflik nama kolom
+                'sesi2.sesi as sesi2', // Pastikan hanya kolom yang dibutuhkan yang disertakan untuk menghindari konflik nama kolom
+                'pukul2.pukul as pukul2', // Pastikan hanya kolom yang dibutuhkan yang disertakan untuk menghindari konflik nama kolom
+                'materi_ajar.*', // Pastikan hanya kolom yang dibutuhkan yang disertakan untuk menghindari konflik nama kolom
+                'semester.*',
+                'ruang.*', 
+                'dosen.*', 
+                'jurusan.*', 
+            )
+            ->first();
+
+        return view('page.jadwalreguler.editJadwal')->with([
             'sesi' => $sesi,
             'kurikulum' => $kurikulum,
             'ruang' => $ruang,
@@ -175,6 +256,7 @@ class JadwalregulerController extends Controller
     {
         $data = [
             'id_sesi' => $request->input('sesi'),
+            'id_sesi2' => $request->input('sesi_dua'),
             'id_hari' => $request->input('hari'),
             'id_detail_kurikulum' => $request->input('kurikulum'),
             'id_ruang' => $request->input('ruang'),

@@ -16,8 +16,7 @@
                         <form action="{{ route('jadwal_reguler.store') }}" method="post">
                             @csrf
                             <div class="p-4 rounded-xl">
-                                <input type="hidden" value="{{ $konfigurasi->jml_pertemuan }}" name="jml_pertemuan"
-                                    >
+                                <input type="hidden" value="{{ $konfigurasi->jml_pertemuan }}" name="jml_pertemuan">
                                 <div class="flex flex-col lg:flex-row gap-5">
                                     <div class="flex w-full gap-5">
                                         <div class="lg:mb-5 w-full">
@@ -30,7 +29,7 @@
                                                 name="hari" data-placeholder="Pilih Hari">
                                                 <option value="">Pilih...</option>
                                                 @foreach ($hari as $k)
-                                                    <option value="{{ $k->id }}">{{ $k->hari }}</option>
+                                                <option value="{{ $k->id }}">{{ $k->hari }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -44,33 +43,60 @@
                                                 name="sesi" data-placeholder="Pilih Sesi" onchange="getsesi()">
                                                 <option value="">Pilih...</option>
                                                 @foreach ($sesi as $k)
-                                                    <option value="{{ $k->id }}">{{ $k->sesi }}</option>
+                                                <option value="{{ $k->id }}">{{ $k->sesi }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
 
-                                    <div class="lg:mb-5 w-full">
-                                        <label for="pukul"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pukul</label>
-                                        <input type="text" id="pukul" name="pukul"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="Masukan Pukul disini ..." value="{{ old('pukul') }}"
-                                            readonly />
+                                    <div class="flex gap-5 w-full">
+                                        <div class="lg:mb-5 w-full">
+                                            <label for="pukul"
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pukul</label>
+                                            <input type="text" id="pukul" name="pukul"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder="Masukan Pukul disini ..." value="{{ old('pukul') }}"
+                                                readonly />
+                                        </div>
+                                        <div class="lg:mb-5 w-full">
+                                            <label for="sesi_dua"
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                Sesi <span class="text-red-500">*</span>
+                                            </label>
+                                            <select
+                                                class="js-example-placeholder-single js-states form-control w-full m-6"
+                                                name="sesi_dua" data-placeholder="Pilih Sesi" onchange="getsesiDua()">
+                                                <option value="">Pilih...</option>
+                                                @foreach ($sesi as $k)
+                                                <option value="{{ $k->id }}">{{ $k->sesi }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div class="lg:mb-5 w-full">
-                                        <label for="kurikulum"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Materi
-                                            Ajar <span class="text-red-500">*</span></label>
-                                        <select class="js-example-placeholder-single js-states form-control w-full m-6"
-                                            name="kurikulum" data-placeholder="Pilih Materi Ajar"
-                                            onchange="getdetailkurikulum()">
-                                            <option value="">Pilih...</option>
-                                            @foreach ($kurikulum as $k)
+                                    <div class="flex gap-5 w-full">
+                                        <div class="lg:mb-5 w-full">
+                                            <label for="pukul_dua"
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pukul</label>
+                                            <input type="text" id="pukul_dua" name="pukul_dua"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder="Masukan Pukul disini ..." value="{{ old('pukul') }}"
+                                                readonly />
+                                        </div>
+                                        <div class="lg:mb-5 w-full">
+                                            <label for="kurikulum"
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Materi
+                                                Ajar <span class="text-red-500">*</span></label>
+                                            <select class="js-example-placeholder-single js-states form-control w-full m-6"
+                                                name="kurikulum" data-placeholder="Pilih Materi Ajar"
+                                                onchange="getdetailkurikulum()">
+                                                <option value="">Pilih...</option>
+                                                @foreach ($kurikulum as $k)
                                                 <option value="{{ $k->id_materi_ajar }}">
-                                                    {{ $k->materi_ajar->materi_ajar }}</option>
-                                            @endforeach
-                                        </select>
+                                                    {{ $k->materi_ajar->materi_ajar }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
 
                                     <div class="flex w-full mb-5 lg:mb-0 gap-5">
@@ -102,7 +128,7 @@
                                             name="ruang" data-placeholder="Pilih Ruang">
                                             <option value="">Pilih...</option>
                                             @foreach ($ruang as $k)
-                                                <option value="{{ $k->id }}">{{ $k->ruang }}</option>
+                                            <option value="{{ $k->id }}">{{ $k->ruang }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -115,7 +141,7 @@
                                             name="dosen" data-placeholder="Pilih Dosen">
                                             <option value="">Pilih...</option>
                                             @foreach ($dosen as $k)
-                                                <option value="{{ $k->id }}">{{ $k->nama_dosen }}</option>
+                                            <option value="{{ $k->id }}">{{ $k->nama_dosen }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -128,7 +154,7 @@
                                             name="kelas" data-placeholder="Pilih Kelas" onchange="getkelas()">
                                             <option value="">Pilih...</option>
                                             @foreach ($kelas as $k)
-                                                <option value="{{ $k->id }}">{{ $k->kelas }}</option>
+                                            <option value="{{ $k->id }}">{{ $k->kelas }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -180,18 +206,36 @@
         }
     };
 
+    const getsesiDua = async () => {
+        var selectedOption = document.querySelector('[name="sesi_dua"] option:checked');
+        var sesiId = selectedOption.value;
+
+        if (sesiId) {
+            await axios.get(`/api/pukul/${sesiId}`)
+                .then((response) => {
+                    console.log(response.data);
+                    document.getElementById('pukul_dua').value = response.data.pukul.pukul;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        } else {
+            document.getElementById('pukul_dua').value = '';
+        }
+    };
+
     const getdetailkurikulum = async () => {
         var selectedOption = document.querySelector('[name="kurikulum"] option:checked');
         var kurikulumId = selectedOption.value;
 
         if (kurikulumId) {
-            await axios.get(`/api/kurikulum_detail_det/${kurikulumId}`)
+            await axios.get(`/api/kurikulum_matkul/${kurikulumId}`)
                 .then((response) => {
+                    console.log(response.data.kurikulum.semester.semester);
                     const data = response.data;
-                    if (data && data.kurikulum && data.kurikulum.materi_ajar) {
-                        document.getElementById('semester').value = data.kurikulum.materi_ajar.semester
-                            .semester;
-                        document.getElementById('sks').value = data.kurikulum.materi_ajar.sks;
+                    if (data && data.kurikulum.semester) {
+                        document.getElementById('semester').value = response.data.kurikulum.semester.semester;
+                        document.getElementById('sks').value = response.data.kurikulum.sks;
                     }
                 })
                 .catch((error) => {

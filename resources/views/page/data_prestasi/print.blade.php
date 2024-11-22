@@ -138,7 +138,6 @@
 
         .page::before {
             content: "";
-            position: ;
             top: 0;
             left: 0;
             width: 189px;
@@ -149,7 +148,6 @@
 
         .page::after {
             content: "";
-            position: ;
             bottom: 0;
             right: 0;
             width: 794px;
@@ -183,7 +181,6 @@
 
             .page::before {
                 content: "";
-                position: ;
                 top: 0;
                 left: 0;
                 width: 189px;
@@ -194,7 +191,6 @@
 
             .page::after {
                 content: "";
-                position: ;
                 bottom: 0;
                 right: 0;
                 width: 794px;

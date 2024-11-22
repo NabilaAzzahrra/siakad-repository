@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('id_jadwal');
             $table->integer('id_hari');
             $table->integer('id_sesi');
+            $table->integer('id_sesi2')->nullable();
             $table->integer('id_detail_kurikulum');
             $table->integer('id_ruang');
             $table->integer('id_dosen');
