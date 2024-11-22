@@ -97,6 +97,11 @@ class NilaiController extends Controller
             $nilaiMateri->formatif = $request->formatif[$key];
             $nilaiMateri->uas = $request->uas[$key];
             $nilaiMateri->uts = $request->uts[$key];
+            if (Auth::user()->role == 'A') {
+                $nilaiMateri->verifikasi = 1;
+            }else{
+                $nilaiMateri->verifikasi = 0;
+            }
 
             // Simpan detail nilai
             $nilaiMateri->save();

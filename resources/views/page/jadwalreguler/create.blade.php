@@ -185,13 +185,13 @@
         var kurikulumId = selectedOption.value;
 
         if (kurikulumId) {
-            await axios.get(`/api/kurikulum_detail_det/${kurikulumId}`)
+            await axios.get(`/api/kurikulum_matkul/${kurikulumId}`)
                 .then((response) => {
+                    console.log(response.data.kurikulum.semester.semester);
                     const data = response.data;
-                    if (data && data.kurikulum && data.kurikulum.materi_ajar) {
-                        document.getElementById('semester').value = data.kurikulum.materi_ajar.semester
-                            .semester;
-                        document.getElementById('sks').value = data.kurikulum.materi_ajar.sks;
+                    if (data && data.kurikulum.semester) {
+                        document.getElementById('semester').value = response.data.kurikulum.semester.semester;
+                        document.getElementById('sks').value = response.data.kurikulum.sks;
                     }
                 })
                 .catch((error) => {

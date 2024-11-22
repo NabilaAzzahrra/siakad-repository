@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Detailkurikulum;
+use App\Models\Materiajar;
 use Illuminate\Http\Request;
 
 class KurikulumDetailAPIController extends Controller
@@ -19,6 +20,14 @@ class KurikulumDetailAPIController extends Controller
     public function get_id_det($id)
     {
         $kurikulum = Detailkurikulum::with(['materi_ajar', 'materi_ajar.semester','materi_ajar.jurusan', 'materi_ajar.semester.keterangan'])->where('id', $id)->first();
+        return response()->json([
+            'kurikulum' => $kurikulum,
+        ]);
+    }
+
+    public function get_id_matkul($id)
+    {
+        $kurikulum = Materiajar::with(['semester','jurusan', 'semester.keterangan'])->where('id', $id)->first();
         return response()->json([
             'kurikulum' => $kurikulum,
         ]);

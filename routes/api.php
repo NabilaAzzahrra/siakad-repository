@@ -52,6 +52,7 @@ Route::get('/detail_presensi', [DetailPresensiAPIController::class, 'get_all'])-
 Route::get('/pukul/{id}', [PukulAPIController::class, 'get_id']);
 Route::get('/kurikulum_detail/{id}', [KurikulumDetailAPIController::class, 'get_id']);
 Route::get('/kurikulum_detail_det/{id}', [KurikulumDetailAPIController::class, 'get_id_det']);
+Route::get('/kurikulum_matkul/{id}', [KurikulumDetailAPIController::class, 'get_id_matkul']);
 Route::get('/kelas/{id}', [KelasAPIController::class, 'get_id']);
 Route::get('/hari', [HariAPIController::class, 'get_all'])->name('hari.get');
 Route::get('/detail_formatif', [DetailFormatifAPIController::class, 'get_all'])->name('detail.get');
