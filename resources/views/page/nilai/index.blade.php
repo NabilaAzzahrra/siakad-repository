@@ -157,7 +157,7 @@
                                                                 </a>
                                                             @else
                                                                 <a href="{{ route('nilai.show', $j->kode_jadwal) }}"
-                                                                    class="mr-2 bg-green-500 hover:bg-green-600 px-4 py-3 rounded-xl text-xs text-white">
+                                                                    class="mr-2 bg-red-500 hover:bg-red-600 px-4 py-3 rounded-xl text-xs text-white">
                                                                     <i class="fa-solid fa-file"></i>
                                                                 </a>
                                                             @endif

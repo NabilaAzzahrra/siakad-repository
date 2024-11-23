@@ -9,7 +9,12 @@
     <div class="py-12">
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-center">
-                <div class="w-full md:w-5/12 p-3 hidden">
+
+                @php
+                $hide = empty($konfigurasiUjian) ? '' : 'hidden';
+                @endphp
+                @if ($hide)
+                <div class="w-full md:w-5/12 p-3 {{ $hide }}">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                             <div
@@ -62,6 +67,8 @@
                         </div>
                     </div>
                 </div>
+                @endif
+
                 <div class="w-full md:w-7/12 p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
@@ -211,7 +218,7 @@
                         }
                         return '';
                     }
-                },{
+                }, {
                     data: 'tgl_susulan',
                     render: (data, type, row) => {
                         if (data) {

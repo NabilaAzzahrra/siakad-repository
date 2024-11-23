@@ -8,28 +8,31 @@
     <div class="py-12">
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-center">
-                <div class="w-full md:w-5/12 p-3">
+
+                @php
+                $hide = empty($konfigurasi) ? '' : 'hidden';
+                @endphp
+
+                @if ($hide)
+                <div class="w-full md:w-5/12 p-3 {{ $hide }}">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                             <div class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
                                 FORM INPUT KONFIGURASI
                             </div>
-                            <form action="{{ route('konfigurasi.store') }}" method="post">
+                            <form action="{{ route('konfigurasi.store') }}" method="post" id="konfigurasiForm">
                                 @csrf
                                 <div class="p-4 rounded-xl">
                                     <div class="flex flex-col lg:flex-row gap-5">
                                         <div class="lg:mb-5 mb-0 w-full">
                                             <label for="tahun_akademik"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tahun
-                                                Akademik
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tahun Akademik
                                                 <span class="text-red-500">*</span></label>
-                                            <select
-                                                class="js-example-placeholder-single js-states form-control w-full m-6"
+                                            <select class="js-example-placeholder-single js-states form-control w-full m-6"
                                                 name="tahun_akademik" data-placeholder="Pilih Tahun Akademik">
                                                 <option value="">Pilih...</option>
                                                 @foreach ($tahun_akademik as $ta)
-                                                    <option value="{{ $ta->id }}">{{ $ta->tahunakademik }}
-                                                    </option>
+                                                <option value="{{ $ta->id }}">{{ $ta->tahunakademik }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -37,12 +40,11 @@
                                             <label for="keterangan"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Keterangan
                                                 <span class="text-red-500">*</span></label>
-                                            <select
-                                                class="js-example-placeholder-single js-states form-control w-full m-6"
+                                            <select class="js-example-placeholder-single js-states form-control w-full m-6"
                                                 name="keterangan" data-placeholder="Pilih Keterangan">
                                                 <option value="">Pilih...</option>
                                                 @foreach ($keterangan as $k)
-                                                    <option value="{{ $k->id }}">{{ $k->keterangan }}</option>
+                                                <option value="{{ $k->id }}">{{ $k->keterangan }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -52,12 +54,11 @@
                                             <label for="kurikulum"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kurikulum
                                                 <span class="text-red-500">*</span></label>
-                                            <select
-                                                class="js-example-placeholder-single js-states form-control w-full m-6"
+                                            <select class="js-example-placeholder-single js-states form-control w-full m-6"
                                                 name="kurikulum" data-placeholder="Pilih Kurikulum">
                                                 <option value="">Pilih...</option>
                                                 @foreach ($kurikulum as $k)
-                                                    <option value="{{ $k->id }}">{{ $k->kurikulum }}</option>
+                                                <option value="{{ $k->id }}">{{ $k->kurikulum }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -65,13 +66,11 @@
                                             <label for="perhitungan"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Perhitungan
                                                 <span class="text-red-500">*</span></label>
-                                            <select
-                                                class="js-example-placeholder-single js-states form-control w-full m-6"
+                                            <select class="js-example-placeholder-single js-states form-control w-full m-6"
                                                 name="perhitungan" data-placeholder="Pilih Perhitungan">
                                                 <option value="">Pilih...</option>
                                                 @foreach ($perhitungan as $k)
-                                                    <option value="{{ $k->id }}">{{ $k->nama_perhitungan }}
-                                                    </option>
+                                                <option value="{{ $k->id }}">{{ $k->nama_perhitungan }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -80,15 +79,19 @@
                                         <label for="text" class="block mb-2 text-sm font-medium text-gray-900">Jumlah Pertemuan</label>
                                         <input type="number" id="jml_pertemuan" name="jml_pertemuan"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600"
-                                            id="" placeholder="Masukan Jumlah Pertemuan disini...">
+                                            placeholder="Masukan Jumlah Pertemuan disini...">
                                     </div>
                                     <button type="submit"
-                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i class="fi fi-rr-disk "></i></button>
+                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                        <i class="fi fi-rr-disk "></i>
+                                    </button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
+                @endif
+
                 <div class="w-full md:w-7/12 p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
@@ -115,6 +118,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -143,7 +147,7 @@
                                 id="id_tahun_akademiks" name="id_tahun_akademiks" data-placeholder="Pilih Tahun Akademik">
                                 <option value="">Pilih...</option>
                                 @foreach ($tahun_akademik as $p)
-                                    <option value="{{ $p->id }}">{{ $p->tahunakademik }}</option>
+                                <option value="{{ $p->id }}">{{ $p->tahunakademik }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -155,7 +159,7 @@
                                 id="id_keterangans" name="id_keterangans" data-placeholder="Pilih Keterangan">
                                 <option value="">Pilih...</option>
                                 @foreach ($keterangan as $p)
-                                    <option value="{{ $p->id }}">{{ $p->keterangan }}</option>
+                                <option value="{{ $p->id }}">{{ $p->keterangan }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -169,7 +173,7 @@
                                 id="id_kurikulums" name="id_kurikulums" data-placeholder="Pilih Kurikulum">
                                 <option value="">Pilih...</option>
                                 @foreach ($kurikulum as $p)
-                                    <option value="{{ $p->id }}">{{ $p->kurikulum }}</option>
+                                <option value="{{ $p->id }}">{{ $p->kurikulum }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -181,7 +185,7 @@
                                 id="id_perhitungans" name="id_perhitungans" data-placeholder="Pilih Perhitungan">
                                 <option value="">Pilih...</option>
                                 @foreach ($perhitungan as $p)
-                                    <option value="{{ $p->id }}">{{ $p->nama_perhitungan }}</option>
+                                <option value="{{ $p->id }}">{{ $p->nama_perhitungan }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -241,7 +245,7 @@
                     render: (data, type, row) => {
                         return data.nama_perhitungan;
                     }
-                },{
+                }, {
                     data: 'jml_pertemuan',
                     render: (data, type, row) => {
                         return data;

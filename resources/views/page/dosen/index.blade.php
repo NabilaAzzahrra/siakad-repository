@@ -37,7 +37,7 @@
                                         <label for="no_hp_dosen"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No HP
                                             Dosen</label>
-                                        <input type="text" id="no_hp_dosen" name="no_hp_dosen"
+                                        <input type="number" id="no_hp_dosen" name="no_hp_dosen"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             placeholder="Masukan No HP Dosen disini ..." required />
                                     </div>
@@ -267,5 +267,35 @@
                 }
             }
         }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const noHpInput = document.getElementById('no_hp_dosen');
+
+            // Fungsi untuk memvalidasi dan memformat input nomor HP
+            noHpInput.addEventListener('input', function(event) {
+                let value = event.target.value;
+
+                // Jika input pertama kali, mulai dengan '62'
+                if (value.length === 1 && value !== '6') {
+                    event.target.value = '62'; // Ubah input pertama menjadi '62'
+                }
+
+                // Setelah kode negara 62, hanya angka '8' yang bisa dimasukkan
+                if (value.length === 3 && value[2] !== '8') {
+                    event.target.value = '628'; // Set '628' jika lebih dari 2 digit dan bukan '8'
+                }
+
+                // Pastikan hanya angka yang bisa dimasukkan setelah kode negara dan angka 8
+                if (value.length > 3 && !/^\d+$/.test(value)) {
+                    event.target.value = value.replace(/[^0-9]/g, ''); // Hapus karakter non-numeric
+                }
+
+                // Jika lebih dari 3 digit, pastikan formatnya valid (misalnya no HP Indonesia)
+                if (value.length > 3 && value[2] !== '8') {
+                    event.target.value = '628'; // Set kembali ke '628' jika format tidak benar
+                }
+            });
+        });
     </script>
 </x-app-layout>
