@@ -16,9 +16,9 @@ class dosenSeeder extends Seeder
     public function run(): void
     {
         DB::table('dosen')->insert([
-            ['kode_dosen' => '001', 'nama_dosen' => 'Nabila Azzahra', 'email' => 'nabila@gmail.com', 'no_hp' => '088218267306', 'password' => Hash::make('password')],
-            ['kode_dosen' => '002', 'nama_dosen' => 'Haisyam Maulana', 'email' => 'haisyam@gmail.com', 'no_hp' => '08573240129', 'password' => Hash::make('password')],
-            ['kode_dosen' => '003', 'nama_dosen' => 'Ade Fuad', 'email' => 'adefuad@gmail.com', 'no_hp' => '082194173208', 'password' => Hash::make('password')],
+            ['kode_dosen' => '001', 'nama_dosen' => 'Nabila Azzahra', 'email' => 'nabila@gmail.com', 'no_hp' => '088218267306', 'password' => '12345678'],
+            ['kode_dosen' => '002', 'nama_dosen' => 'Haisyam Maulana', 'email' => 'haisyam@gmail.com', 'no_hp' => '08573240129', 'password' => '12345678'],
+            ['kode_dosen' => '003', 'nama_dosen' => 'Ade Fuad', 'email' => 'adefuad@gmail.com', 'no_hp' => '082194173208', 'password' => '12345678'],
         ]);
 
     }

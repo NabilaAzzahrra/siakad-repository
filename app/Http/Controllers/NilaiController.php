@@ -150,6 +150,7 @@ class NilaiController extends Controller
     public function edit(string $id)
     {
         $presensi = Presensi::with(['jadwal', 'jadwal.kelas'])->where('id_jadwal', $id)->first();
+        $id_presensi = $presensi->id_presensi;
         $nilaiMateri = Nilai::with(['jadwal', 'jadwal.kelas'])->where('id_jadwal', $id)->first();
         $mahasiswa = Mahasiswa::where('id_kelas', $presensi->jadwal->id_kelas)
             ->orderBy('nama', 'asc')
@@ -157,6 +158,12 @@ class NilaiController extends Controller
         $nilai = Nilai::where('id_jadwal', $id)
             ->get();
         $jadwal = Jadwalreguler::where('id_jadwal', $id)->first();
+        foreach ($nilai as $m) {
+            $m->jumlah_hadir = DetailPresensi::where('id_presensi', $id_presensi)
+                ->where('nim', $m->nim)
+                ->where('keterangan', 'HADIR')
+                ->count();
+        }
         return view('page.nilai.edit')->with([
             'jadwal' => $jadwal,
             'presensi' => $presensi,
@@ -183,6 +190,11 @@ class NilaiController extends Controller
             $nilaiMateri->formatif = $request->formatif[$key];
             $nilaiMateri->uas = $request->uas[$key];
             $nilaiMateri->uts = $request->uts[$key];
+            if (Auth::user()->role == 'A') {
+                $nilaiMateri->verifikasi = 1;
+            }else{
+                $nilaiMateri->verifikasi = 0;
+            }
             // Simpan detail presensi
             $nilaiMateri->save();
         }
