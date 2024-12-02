@@ -49,6 +49,13 @@
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             placeholder="Masukan Password Dosen disini ..." required />
                                     </div>
+                                    <div class="mb-5">
+                                        <label for="tgl_lahir"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal Lahir</label>
+                                        <input type="date" id="tgl_lahir" name="tgl_lahir"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            placeholder="Masukan Password Dosen disini ..." required />
+                                    </div>
                                     <button type="submit"
                                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i class="fi fi-rr-disk "></i></button>
                                 </div>
@@ -73,6 +80,7 @@
                                                 <th>Email Dosen</th>
                                                 <th>No HP Dosen</th>
                                                 <th>Password Dosen</th>
+                                                <th>Tanggal Lahir</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -138,6 +146,12 @@
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 id="" placeholder="Masukan Password Dosen disini...">
                         </div>
+                        <div>
+                            <label for="text" class="block mb-2 text-sm font-medium text-gray-900">Tanggal Lahir</label>
+                            <input type="date" id="tgl_lahirs" name="tgl_lahir"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                id="" placeholder="Masukan Password Dosen disini...">
+                        </div>
                     </div>
                     <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
                         <button type="submit" id="formSourceButton"
@@ -192,6 +206,11 @@
                         return data;
                     }
                 }, {
+                    data: 'tgl_lahir',
+                    render: (data, type, row) => {
+                        return data;
+                    }
+                }, {
                     data: {
                         no: 'no',
                         name: 'name'
@@ -199,7 +218,7 @@
                     render: (data) => {
                         let editUrl =
                             `<button type="button" data-id="${data.id}"
-                                                        data-modal-target="sourceModal" data-nama_dosen="${data.nama_dosen}" data-email="${data.email}" data-kode_dosen="${data.kode_dosen}" data-no_hp="${data.no_hp}" data-password="${data.password}"
+                                                        data-modal-target="sourceModal" data-nama_dosen="${data.nama_dosen}" data-email="${data.email}" data-kode_dosen="${data.kode_dosen}" data-no_hp="${data.no_hp}" data-password="${data.password}" data-tgl_lahir="${data.tgl_lahir}"
                                                         onclick="editSourceModal(this)"
                                                         class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-xl h-10 w-10 text-xs text-white">
                                                        <i class="fas fa-edit"></i>
@@ -221,6 +240,7 @@
             const kode_dosen = button.dataset.kode_dosen;
             const no_hp = button.dataset.no_hp;
             const password = button.dataset.password;
+            const tgl_lahir = button.dataset.tgl_lahir;
             let url = "{{ route('dosen.update', ':id') }}".replace(':id', id);
             console.log(url);
             let status = document.getElementById(modalTarget);
@@ -230,6 +250,7 @@
             document.getElementById('email_lama').value = kode_dosen;
             document.getElementById('no_hps').value = no_hp;
             document.getElementById('passwords').value = password;
+            document.getElementById('tgl_lahirs').value = tgl_lahir;
             document.getElementById('formSourceButton').innerText = 'Simpan';
             document.getElementById('formSourceModal').setAttribute('action', url);
             let csrfToken = document.createElement('input');

@@ -60,6 +60,12 @@ class UjianUASController extends Controller
                 $uasFileNameCadangan = $id_uas . '-' . $id_jadwal . '.' . $uasFileCadangan->extension();
                 $uasFileCadangan->move(public_path('uas/cadangan'), $uasFileNameCadangan);
 
+                if (Auth::user()->role == 'A') {
+                    $verifikasi = 1;
+                } else {
+                    $verifikasi = 0;
+                }
+
                 $data = [
                     'id_jadwal' => $id_jadwal,
                     'id_uas' => $id_uas,
@@ -68,6 +74,7 @@ class UjianUASController extends Controller
                     'tgl_ujian_susulan' => $request->input('tgl_ujian_susulan'),
                     'file' => $uasFileName,
                     'file_cadangan' => $uasFileNameCadangan,
+                    'verifikasi' => $verifikasi,
                 ];
                 // dd($data);
 
@@ -83,7 +90,7 @@ class UjianUASController extends Controller
                         ->with('message', 'Data UAS Sudah diupdate');
                 }
             } else {
-                dd('iniii lah');
+                // dd('iniii lah');
                 return redirect()->back()->with('error', 'Soal tidak ditemukan');
             }
 

@@ -144,57 +144,71 @@
                                                                     break;
                                                             }
                                                         }
+                                                        $hide = '';
                                                     @endphp
                                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                                         <td class="px-6 py-4 text-center bg-gray-100">
                                                             {{ $no++ }}
                                                         </td>
                                                         <td class="px-6 py-4 text-center">
-                                                            {{ $j->jadwal->detail_kurikulum->materi_ajar->materi_ajar }}
+                                                            {{ $j->detail_kurikulum->materi_ajar->materi_ajar }}
                                                         </td>
                                                         <td class="px-6 py-4 bg-gray-100">
-                                                            {{ $j->jadwal->dosen->nama_dosen }}
+                                                            {{ $j->dosen->nama_dosen }}
                                                         </td>
                                                         <td class="px-6 py-4 ">
-                                                            @if ($uasItem)
-                                                                {{ date('d-m-Y', strtotime($uasItem->tgl_ujian)) }}
-                                                            @else
-                                                                <span>Belum ditentukan</span>
-                                                            @endif
+                                                        @if ($uasItem)
+                                                            {{ date('d-m-Y', strtotime($uasItem->tgl_ujian)) }}
+
+                                                            @php
+                                                                $hide = 'hidden'; // Default value
+
+                                                                if ($uasItem->tgl_ujian == date('Y-m-d')) {
+                                                                    $endTime = str_replace('.', ':', explode(' - ', $uasItem->waktu_ujian)[1] ?? '');
+                                                                    if (date('H:i') <= $endTime) {
+                                                                        $hide = ''; // Show if current time is within the allowed range
+                                                                    }
+                                                                }
+                                                            @endphp
+                                                        @else
+                                                            <span>Belum ditentukan</span>
+                                                        @endif
                                                         </td>
                                                         <td class="px-6 py-4 bg-gray-100 bg-gray-100">
                                                             @if ($uasItem)
                                                                 {{ $hari }}
+                                                                
                                                             @else
-                                                                {{ $j->jadwal->hari->hari }}
+                                                                {{ $j->hari->hari }}
+                                                                
                                                             @endif
                                                         </td>
                                                         <td class="px-6 py-4">
-                                                            {{ $j->jadwal->sesi->sesi }}
+                                                            {{ $j->sesi->sesi }}
                                                         </td>
                                                         <td class="px-6 py-4 bg-gray-100">
                                                             @if ($uasItem)
                                                                 {{ $uasItem->waktu_ujian }}
                                                             @else
-                                                                {{ $j->jadwal->sesi->pukul->pukul }}
+                                                                {{ $j->sesi->pukul->pukul }}
                                                             @endif
                                                         </td>
                                                         <td class="px-6 py-4">
-                                                            {{ $j->jadwal->detail_kurikulum->materi_ajar->semester->semester }}
+                                                            {{ $j->detail_kurikulum->materi_ajar->semester->semester }}
                                                         </td>
                                                         <td class="px-6 py-4 bg-gray-100">
-                                                            {{ $j->jadwal->detail_kurikulum->materi_ajar->sks }}
+                                                            {{ $j->detail_kurikulum->materi_ajar->sks }}
                                                         </td>
                                                         <td class="px-6 py-4">
-                                                            {{ $j->jadwal->ruang->ruang }}
+                                                            {{ $j->ruang->ruang }}
                                                         </td>
                                                         <td class="px-6 py-4 bg-gray-100">
-                                                            {{ $j->jadwal->kelas->kelas }}
+                                                            {{ $j->kelas->kelas }}
                                                         </td>
                                                         <td class="px-6 py-4">
-                                                            {{ $j->jadwal->kelas->jurusan->jurusan }}
+                                                            {{ $j->kelas->jurusan->jurusan }}
                                                         </td>
-                                                        <td class="px-6 py-4 bg-gray-100">
+                                                        <td class="px-6 py-4 bg-gray-100" {{$hide}}>
                                                             @if ($uasItem)
                                                                 <a href="{{ asset('uas/' . $uasItem->file) }}" download
                                                                     class="mr-2 bg-green-500 hover:bg-green-600 px-4 py-3 rounded-xl text-xs text-white">
@@ -205,7 +219,7 @@
                                                                     Terdapat Soal</div>
                                                             @endif
                                                         </td>
-                                                        <td class="px-6 py-4">
+                                                        <td class="px-6 py-4" {{$hide}}>
                                                             @if ($uasItem)
                                                                 @if ($jawaban)
                                                                     {{-- If the student's submission exists in detail_uas --}}

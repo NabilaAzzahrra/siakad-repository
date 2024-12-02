@@ -16,10 +16,10 @@ return new class extends Migration
             $table->string('id_jadwal');
             $table->string('id_uas');
             $table->string('file_utama');
-            $table->string('file_cadangan');
+            $table->string('file_cadangan')->null();
             $table->string('tgl_ujian');
             $table->string('waktu_ujian');
-            $table->string('tgl_ujian_susulan');
+            $table->string('tgl_ujian_susulan')->null();
             $table->boolean('verifikasi');
             $table->timestamps();
         });

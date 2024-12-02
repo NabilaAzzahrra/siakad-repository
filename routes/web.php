@@ -72,8 +72,7 @@ Route::resource('kurikulum', KurikulumController::class)->middleware(['auth']);
 Route::resource('detail', DetailController::class)->middleware(['auth']);
 Route::resource('jadwal_reguler', JadwalregulerController::class)->middleware(['auth']);
 Route::resource('dosen', DosenController::class)->middleware(['auth']);
-Route::resource('konfigurasi', KonfigurasiController::class)->middleware(['auth']);
-Route::resource('perhitungan', PerhitunganController::class)->middleware(['auth']);
+Route::resource('konfigurasi', KonfigurasiController::class)->middleware(['auth']); Route::resource('perhitungan', PerhitunganController::class)->middleware(['auth']);
 Route::resource('hari', HariController::class)->middleware(['auth']);
 Route::resource('mahasiswa', MahasiswaController::class)->middleware(['auth']);
 Route::resource('detail_formatif', DetailFormatifController::class)->middleware(['auth']);
@@ -225,16 +224,29 @@ Route::get('/dashboard', function (Request $request) {
         if (Auth::user()->role == "M") {
             $mhs = Mahasiswa::where('nim', Auth::user()->email)->first();
             $id_kelas = $mhs->id_kelas;
+            $tingkat = $mhs->tingkat;
 
-            $jadwal_mhs = Jadwalreguler::with('hari', 'dosen', 'detail_kurikulum.materi_ajar', 'sesi', 'sesi.pukul', 'ruang', 'kelas')
-                ->whereHas('hari', function ($query) use ($now, $tahun_akademik, $keterangan, $id_kelas) {
+            $tingkat = $mhs->tingkat;
+            $ga = $konfigurasi->keterangan;
+            if ($tingkat === 2) {
+                $semester = $ga ? 3 : 4;
+            } elseif ($tingkat === 4) {
+                $semester = $ga ? 5 : 6;
+            } else {
+                $semester = $ga ? 1 : 2;
+            }
+
+            $jadwal_mhs = Jadwalreguler::with('hari', 'dosen', 'detail_kurikulum.materi_ajar', 'detail_kurikulum.materi_ajar.semester', 'sesi', 'sesi.pukul', 'ruang', 'kelas')
+                ->whereHas('hari', function ($query) use ($now, $tahun_akademik, $keterangan, $id_kelas, $tingkat) {
                     $query->where('id_tahun_akademik', $tahun_akademik)
                         ->where('id_keterangan', $keterangan)
                         ->where('hari', $now)
                         ->where('id_kelas', $id_kelas);
+                })->whereHas('detail_kurikulum.materi_ajar.semester', function ($query) use ($semester) {
+                    $query->where('semester', $semester);
                 })->paginate(10);
         } else if (Auth::user()->role == "D") {
-            $jadwal_mhs = Jadwalreguler::with('hari', 'dosen', 'detail_kurikulum.materi_ajar', 'sesi', 'sesi.pukul', 'ruang', 'kelas')
+            $jadwal_mhs = Jadwalreguler::with('hari', 'dosen', 'detail_kurikulum.materi_ajar', 'detail_kurikulum.materi_ajar.semester', 'sesi', 'sesi.pukul', 'ruang', 'kelas')
                 ->whereHas('hari', function ($query) use ($now, $tahun_akademik, $keterangan) {
                     $query->where('id_tahun_akademik', $tahun_akademik)
                         ->where('id_keterangan', $keterangan)
@@ -245,15 +257,26 @@ Route::get('/dashboard', function (Request $request) {
         } else if (Auth::user()->role == "O") {
             $mhs = Mahasiswa::where('nim', str_replace('ortu', '', Auth::user()->email))->first();
             $id_kelas_ortu = $mhs->id_kelas;
+            $tingkat = $mhs->tingkat;
+            $tingkat = $mhs->tingkat;
+            $ga = $konfigurasi->keterangan;
+            if ($tingkat === 2) {
+                $semester = $ga ? 3 : 4;
+            } elseif ($tingkat === 4) {
+                $semester = $ga ? 5 : 6;
+            } else {
+                $semester = $ga ? 1 : 2;
+            }
             // dd($id_kelas_ortu);
-            $jadwal_mhs = Jadwalreguler::with('hari', 'dosen', 'detail_kurikulum.materi_ajar', 'sesi.pukul', 'ruang', 'kelas')
+            $jadwal_mhs = Jadwalreguler::with('hari', 'dosen', 'detail_kurikulum.materi_ajar', 'detail_kurikulum.materi_ajar.semester', 'sesi.pukul', 'ruang', 'kelas')
                 ->whereHas('hari', function ($query) use ($now, $tahun_akademik, $keterangan, $id_kelas_ortu) {
                     $query->where('id_tahun_akademik', $tahun_akademik)
                         ->where('id_keterangan', $keterangan)
                         ->where('hari', $now)
                         ->where('id_kelas', $id_kelas_ortu);
-                })
-                ->paginate(10);
+                })->whereHas('detail_kurikulum.materi_ajar.semester', function ($query) use ($semester) {
+                    $query->where('semester', $semester);
+                })->paginate(10);
 
             // PRESENSI MAHASISWA
             $mhs = Mahasiswa::where('nim', str_replace('ortu', '', Auth::user()->email))->first();
@@ -294,7 +317,7 @@ Route::get('/dashboard', function (Request $request) {
         } else if (Auth::user()->role == "O") {
             $informasi = Informasi::where('kategori', 'ORANG TUA')->orderBy('created_at', 'desc')->take(3)->get();
         } else {
-            $informasi = Informasi::orderBy('created_at', 'desc')->take(3)->get();
+            $informasi = Informasi::orderBy('created_at', 'desc')->take(1)->get();
         }
 
         $totalPengajar = Dosen::count('id');
@@ -333,11 +356,24 @@ Route::get('/dashboard', function (Request $request) {
                 $query->where('hari', $now);
             })
             ->get();
+        $month = date('m');
+        $today = date('Y-m-d');
+        $month = date('m');
+        $day = date('d');
 
+        $dosenUlangtahun = Dosen::select('*')
+            ->selectRaw('
+                CASE 
+                    WHEN MONTH(tgl_lahir) = ? AND DAY(tgl_lahir) >= ? THEN DATEDIFF(DATE(CONCAT(YEAR(?), "-", MONTH(tgl_lahir), "-", DAY(tgl_lahir))), ?)
+                    ELSE DATEDIFF(DATE(CONCAT(YEAR(?)+1, "-", MONTH(tgl_lahir), "-", DAY(tgl_lahir))), ?)
+                END as diff_days
+            ', [$month, $day, $today, $today, $today, $today])
+            ->whereRaw('MONTH(tgl_lahir) = ? OR (MONTH(tgl_lahir) = ? AND DAY(tgl_lahir) >= ?)', [$month, $month, $day])
+            ->orderBy('diff_days', 'ASC')
+            ->paginate(3);
+        // dd($dosenUlangtahun);
 
-        // dd($presensiRealtime);
-
-        return view('dashboard', [
+        return view('dashboard', compact('dosenUlangtahun'), [
             'jadwal' => $jadwal,
             'jadwal_mhs' => $jadwal_mhs,
             'informasi' => $informasi,
@@ -348,6 +384,7 @@ Route::get('/dashboard', function (Request $request) {
             'presensiRealtimeNoData' => $presensiRealtimeNoData,
             'presensiRealtime' => $presensiRealtime,
             'presensiMahasiswa' => $presensiMahasiswa,
+            'dosenUlangtahun' => $dosenUlangtahun,
         ]);
     }
 

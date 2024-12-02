@@ -14,7 +14,8 @@ class Dosen extends Model
         'nama_dosen',
         'email',
         'no_hp',
-        'password'
+        'password',
+        'tgl_lahir',
     ];
 
     protected $table = 'dosen';

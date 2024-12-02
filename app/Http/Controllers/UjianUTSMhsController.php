@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\DetailUts;
+use App\Models\Jadwalreguler;
 use App\Models\Konfigurasi;
+use App\Models\KonfigurasiUjian;
 use App\Models\Mahasiswa;
 use App\Models\Nilai;
 use App\Models\Uts;
@@ -25,33 +27,42 @@ class UjianUTSMhsController extends Controller
         $ga = $konfigurasi->keterangan;
 
         $mahasiswa = Mahasiswa::where('nim', $id)->first();
+        $kelas = $mahasiswa->id_kelas;
         $uts = Uts::all();
         $detail_uts = DetailUts::where('nim', $id)->get();
 
+        $konfigurasiUjian = KonfigurasiUjian::first();
+
         if ($mahasiswa) {
             $tingkat = $mahasiswa->tingkat;
+            if ($tingkat === 2) {
+                $semester = $ga ? 3 : 4;
+            } elseif ($tingkat === 4) {
+                $semester = $ga ? 5 : 6;
+            } else {
+                $semester = $ga ? 1 : 2;
+            }
 
-            $jadwal_reguler = Nilai::with(['mahasiswa', 'jadwal', 'jadwal.detail_kurikulum.materi_ajar.semester'])
-                ->where('nim', $id)
-                ->whereHas('jadwal.detail_kurikulum.materi_ajar.semester', function ($query) use ($tahun_akademik, $keterangan, $ga, $tingkat) {
-                    $query->where('id_tahun_akademik', $tahun_akademik)
-                        ->where('id_keterangan', $keterangan);
-                    if ($tingkat === 2) {
-                        $semester = $ga ? 3 : 4;
-                    } elseif ($tingkat === 4) {
-                        $semester = $ga ? 5 : 6;
-                    } else {
-                        $semester = $ga ? 1 : 2;
-                    }
+            $jadwal_reguler = Jadwalreguler::with([
+                'detail_kurikulum',
+                'detail_kurikulum.materi_ajar',
+                'detail_kurikulum.materi_ajar.semester'
+            ])
+                ->where('id_kelas', $kelas)
+                ->where('id_keterangan', $keterangan)
+                ->where('id_tahun_akademik', $tahun_akademik)
+                ->whereHas('detail_kurikulum.materi_ajar.semester', function ($query) use ($semester) {
                     $query->where('semester', $semester);
                 })
                 ->get();
+            // dd($jadwal_reguler);
         } else {
             $jadwal_reguler = collect();
         }
 
         return view('page.uts_mhs.index')->with([
             'mahasiswa' => $mahasiswa,
+            'konfigurasiUjian' => $konfigurasiUjian,
             'jadwal_reguler' => $jadwal_reguler,
             'uts' => $uts,
             'detail_uts' => $detail_uts,
