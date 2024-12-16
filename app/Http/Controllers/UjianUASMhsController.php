@@ -11,6 +11,7 @@ use App\Models\Nilai;
 use App\Models\Uas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class UjianUASMhsController extends Controller
 {
@@ -59,13 +60,55 @@ class UjianUASMhsController extends Controller
         } else {
             $jadwal_reguler = collect();
         }
-        return view('page.uas_mhs.index')->with([
-            'mahasiswa' => $mahasiswa,
-            'konfigurasiUjian' => $konfigurasiUjian,
-            'jadwal_reguler' => $jadwal_reguler,
-            'uas' => $uas,
-            'detail_uas' => $detail_uas,
-        ]);
+
+        // KEBUTUHAN INTEGRASI
+            $nik = $mahasiswa->nik;
+            $tingkat  = $mahasiswa->tingkat;
+            $bulan  = date('m', strtotime($konfigurasiUjian->tgl_mulai));
+            $tahun  = date('Y', strtotime($konfigurasiUjian->tgl_mulai));
+    
+            $url = "https://backend-misilv4.politekniklp3i-tasikmalaya.ac.id/service/keuangan/detail-rencana/{$nik}/{$tingkat}/{$bulan}/{$tahun}";
+        // ===================
+        
+        
+
+        try {
+            $response = Http::withHeaders([
+                'X-Auth-Token' => 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdWdpYW50aSJ9.a_xOEdZgwSr8JTqp7ZqEGvyGrlHNzhPutOiAu5_zLC5wQxtiEwSic6lq-IOq3ztVQRe-jZPF1NzrDpHIwYEKHw',
+            ])->get($url);
+
+            if ($response->successful()) {
+                $data = $response->json();
+
+                if (!empty($data)) {
+                    return view('page.uas_mhs.index')->with([
+                        'mahasiswa' => $mahasiswa,
+                        'konfigurasiUjian' => $konfigurasiUjian,
+                        'jadwal_reguler' => $jadwal_reguler,
+                        'uas' => $uas,
+                        'detail_uas' => $detail_uas,
+                    ]);
+                } else {
+                    return view('page.uts_mhs.pembayaran')->with([
+                        'mahasiswa' => $mahasiswa,
+                        'konfigurasiUjian' => $konfigurasiUjian,
+                        // 'jadwal_reguler' => $jadwal_reguler,
+                        // 'uts' => $uts,
+                        // 'detail_uts' => $detail_uts,
+                    ]);
+                }
+            } else {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Gagal mendapatkan data.',
+                ], $response->status());
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage(),
+            ], 500);
+        }
     }
 
     public function print_uas_mhs()

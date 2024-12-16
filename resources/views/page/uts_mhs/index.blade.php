@@ -145,8 +145,8 @@
                                                 $hari = '';
                                                 break;
                                                 }
-                                            }
-                                            $hide = '';
+                                                }
+                                                $hide = '';
                                                 @endphp
                                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                                     <td class="px-6 py-4 text-center bg-gray-100">
@@ -161,19 +161,19 @@
                                                     <td class="px-6 py-4 ">
                                                         @if ($utsItem)
                                                         {{ date('d-m-Y', strtotime($utsItem->tgl_ujian)) }}
-                                                            @php
-                                                                $hide = 'hidden'; // Default value
+                                                        @php
+                                                        $hide = 'hidden'; // Default value
 
-                                                                if ($utsItem->tgl_ujian == date('Y-m-d')) {
-                                                                    $endTime = str_replace('.', ':', explode(' - ', $utsItem->waktu_ujian)[1]);
-                                                                    if (date('H:i') <= $endTime) {
-                                                                        $hide = ''; // Show if current time is within the allowed range
-                                                                    }
-                                                                }
+                                                        if ($utsItem->tgl_ujian == date('Y-m-d')) {
+                                                        $endTime = str_replace('.', ':', explode(' - ', $utsItem->waktu_ujian)[1]);
+                                                        if (date('H:i') <= $endTime) {
+                                                            $hide='' ; // Show if current time is within the allowed range
+                                                            }
+                                                            }
                                                             @endphp
-                                                        @else
-                                                        <span>Belum ditentukan</span>
-                                                        @endif
+                                                            @else
+                                                            <span>Belum ditentukan</span>
+                                                            @endif
                                                     </td>
                                                     <td class="px-6 py-4 bg-gray-100">
                                                         @if ($utsItem)
@@ -188,7 +188,7 @@
                                                     <td class="px-6 py-4 bg-gray-100">
                                                         @if ($utsItem)
                                                         {{ $utsItem->waktu_ujian }}
-                                                            
+
                                                         @else
                                                         {{ $j->sesi->pukul->pukul }}
                                                         @endif
@@ -309,6 +309,7 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         const editSourceModalUpload = (button) => {
             const formModal = document.getElementById('formSourceModalUpload');

@@ -399,82 +399,82 @@ class MahasiswaController extends Controller
     // }
 
     public function importExcel(Request $request)
-{
-    // Validasi file
-    $request->validate([
-        'file' => 'required|mimes:xlsx,xls'
-    ]);
-
-    // Ambil file
-    $file = $request->file('file');
-
-    // Baca file Excel
-    $spreadsheet = IOFactory::load($file->getPathname());
-    $sheet = $spreadsheet->getActiveSheet()->toArray();
-
-    // Loop melalui baris di Excel
-    foreach (array_slice($sheet, 1) as $row) {
-        $jurusanName = $row[11] ?? null;
-
-        // Pastikan jurusan tidak null atau kosong
-        if (!empty($jurusanName)) {
-            // Periksa apakah jurusan sudah ada
-            $jurusan = Jurusan::firstOrCreate(['jurusan' => $jurusanName]);
-        } else {
-            // Skip jika jurusan kosong
-            continue;
-        }
-
-        // Periksa apakah kelas sudah ada
-        $kelasName = $row[5];
-        $kelas = Kelas::firstOrCreate(['kelas' => $kelasName], [
-            'id_dosen' => 1,
-            'id_jurusan' => $jurusan->id
+    {
+        // Validasi file
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls'
         ]);
 
-        $status = $row[8];
-        $statusValue = ($status == "NO ACCESS") ? 0 : 1;
+        // Ambil file
+        $file = $request->file('file');
 
-        // Perbarui atau buat data mahasiswa
-        $mahasiswa = Mahasiswa::updateOrCreate(
-            ['nim' => $row[1]], // Kondisi pengecekan
-            [
-                'identity_user'   => $row[0],
-                'nama'            => $row[2],
-                'tempat_lahir'    => $row[3],
-                'tgl_lahir'       => $row[4],
-                'id_kelas'        => $kelas->id,
-                'tingkat'         => $row[6],
-                'no_hp'           => $row[7],
-                'status'          => $statusValue,
-                'tahun_angkatan'  => $row[9],
-                'keaktifan'       => $row[10],
-            ]
-        );
+        // Baca file Excel
+        $spreadsheet = IOFactory::load($file->getPathname());
+        $sheet = $spreadsheet->getActiveSheet()->toArray();
 
-        // Perbarui atau buat akun user mahasiswa
-        User::updateOrCreate(
-            ['email' => $row[1]], // Kondisi pengecekan berdasarkan email
-            [
-                'name' => $row[2],
-                'password' => Hash::make($row[1]),
-                'role' => 'M'
-            ]
-        );
+        // Loop melalui baris di Excel
+        foreach (array_slice($sheet, 1) as $row) {
+            $jurusanName = $row[11] ?? null;
 
-        // Perbarui atau buat akun user orang tua
-        User::updateOrCreate(
-            ['email' => 'ortu' . $row[1]], // Kondisi pengecekan berdasarkan email
-            [
-                'name' => 'Orang Tua ' . $row[2],
-                'password' => Hash::make($row[4]),
-                'role' => 'O'
-            ]
-        );
+            // Pastikan jurusan tidak null atau kosong
+            if (!empty($jurusanName)) {
+                // Periksa apakah jurusan sudah ada
+                $jurusan = Jurusan::firstOrCreate(['jurusan' => $jurusanName, 'id_fakultas' => 2]);
+            } else {
+                // Skip jika jurusan kosong
+                continue;
+            }
+
+            // Periksa apakah kelas sudah ada
+            $kelasName = $row[5];
+            $kelas = Kelas::firstOrCreate(['kelas' => $kelasName], [
+                'id_dosen' => 7,
+                'id_jurusan' => $jurusan->id
+            ]);
+
+            $status = $row[8];
+            $statusValue = ($status == "NO ACCESS") ? 0 : 1;
+
+            // Perbarui atau buat data mahasiswa
+            $mahasiswa = Mahasiswa::updateOrCreate(
+                ['nim' => $row[1]], // Kondisi pengecekan
+                [
+                    'nik'   => $row[0],
+                    'nama'            => $row[2],
+                    'tempat_lahir'    => $row[3],
+                    'tgl_lahir'       => $row[4],
+                    'id_kelas'        => $kelas->id,
+                    'tingkat'         => $row[6],
+                    'no_hp'           => $row[7],
+                    'status'          => 1,
+                    'tahun_angkatan'  => $row[9],
+                    'keaktifan'       => $row[10],
+                ]
+            );
+
+            // Perbarui atau buat akun user mahasiswa
+            User::updateOrCreate(
+                ['email' => $row[1]], // Kondisi pengecekan berdasarkan email
+                [
+                    'name' => $row[2],
+                    'password' => Hash::make($row[1]),
+                    'role' => 'M'
+                ]
+            );
+
+            // Perbarui atau buat akun user orang tua
+            User::updateOrCreate(
+                ['email' => 'ortu' . $row[1]], // Kondisi pengecekan berdasarkan email
+                [
+                    'name' => 'Orang Tua ' . $row[2],
+                    'password' => Hash::make($row[4]),
+                    'role' => 'O'
+                ]
+            );
+        }
+
+        return redirect()->back()->with('success', 'Data berhasil diimport!');
     }
-
-    return redirect()->back()->with('success', 'Data berhasil diimport!');
-}
 
 
     public function edit_databaru(Request $request)

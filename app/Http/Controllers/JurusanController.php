@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fakultas;
 use App\Models\Jurusan;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,10 @@ class JurusanController extends Controller
      */
     public function index()
     {
-        return view('page.jurusan.index');
+        $fakultas = Fakultas::all();
+        return view('page.jurusan.index')->with([
+            'fakultas' => $fakultas
+        ]);
     }
 
     /**
@@ -29,7 +33,8 @@ class JurusanController extends Controller
     public function store(Request $request)
     {
         $data = [
-            'jurusan' => $request->input('jurusan')
+            'jurusan' => $request->input('jurusan'),
+            'id_fakultas' => $request->input('fakultas')
         ];
 
         Jurusan::create($data);
@@ -61,7 +66,8 @@ class JurusanController extends Controller
     public function update(Request $request, string $id)
     {
         $data = [
-            'jurusan' => $request->input('jurusan')
+            'jurusan' => $request->input('jurusan'),
+            'id_fakultas' => $request->input('fakultass')
         ];
 
         $datas = Jurusan::findOrFail($id);

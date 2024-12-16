@@ -25,11 +25,11 @@
                                     <button
                                         class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-black dark:text-gray-400 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                                         <div
-                                            class="text-[16px] font-bold tracking-wide {{ request()->routeIs(['perhitungan.index', 'konfigurasi.index', 'konfigurasi_ujian.index', 'kurikulum.index', 'dosen.index', 'informasi.index', 'hari.index', 'pukul.index', 'ruang.index', 'sesi.index', 'jurusan.index', 'kelas.index', 'materi_ajar.index', 'semester.index', 'keterangan.index', 'tahunakademik.index']) || request()->routeIs(['perhitungan.index', 'konfigurasi.index', 'konfigurasi_ujian.index', 'kurikulum.index', 'dosen.index', 'informasi.index', 'hari.index', 'pukul.index', 'ruang.index', 'sesi.index', 'jurusan.index', 'kelas.index', 'materi_ajar.index', 'semester.index', 'keterangan.index', 'tahunakademik.index']) ? 'text-[#F2994A]' : '' }}">
+                                            class="text-[16px] font-bold tracking-wide {{ request()->routeIs(['perhitungan.index', 'konfigurasi.index','fakultas.index', 'konfigurasi_ujian.index', 'kurikulum.index', 'dosen.index', 'informasi.index', 'hari.index', 'pukul.index', 'ruang.index', 'sesi.index', 'jurusan.index', 'kelas.index', 'materi_ajar.index', 'semester.index', 'keterangan.index', 'tahunakademik.index']) || request()->routeIs(['perhitungan.index', 'konfigurasi.index', 'konfigurasi_ujian.index', 'kurikulum.index', 'dosen.index', 'informasi.index', 'hari.index', 'pukul.index', 'ruang.index', 'sesi.index', 'jurusan.index', 'kelas.index', 'materi_ajar.index', 'semester.index', 'keterangan.index', 'tahunakademik.index']) ? 'text-[#F2994A]' : '' }}">
                                             Master</div>
                                         <div class="ms-1 mt-1">
                                             <i
-                                                class="fi fi-rr-caret-down {{ request()->routeIs(['perhitungan.index', 'konfigurasi.index', 'konfigurasi_ujian.index', 'kurikulum.index', 'dosen.index', 'informasi.index', 'hari.index', 'pukul.index', 'ruang.index', 'sesi.index', 'jurusan.index', 'kelas.index', 'materi_ajar.index', 'semester.index', 'keterangan.index', 'tahunakademik.index']) || request()->routeIs(['perhitungan.index', 'konfigurasi.index', 'konfigurasi_ujian.index', 'kurikulum.index', 'dosen.index', 'informasi.index', 'hari.index', 'pukul.index', 'ruang.index', 'sesi.index', 'jurusan.index', 'kelas.index', 'materi_ajar.index', 'semester.index', 'keterangan.index', 'tahunakademik.index']) ? 'text-[#F2994A]' : '' }}"></i>
+                                                class="fi fi-rr-caret-down {{ request()->routeIs(['perhitungan.index', 'konfigurasi.index','fakultas.index', 'konfigurasi_ujian.index', 'kurikulum.index', 'dosen.index', 'informasi.index', 'hari.index', 'pukul.index', 'ruang.index', 'sesi.index', 'jurusan.index', 'kelas.index', 'materi_ajar.index', 'semester.index', 'keterangan.index', 'tahunakademik.index']) || request()->routeIs(['perhitungan.index', 'konfigurasi.index', 'konfigurasi_ujian.index', 'kurikulum.index', 'dosen.index', 'informasi.index', 'hari.index', 'pukul.index', 'ruang.index', 'sesi.index', 'jurusan.index', 'kelas.index', 'materi_ajar.index', 'semester.index', 'keterangan.index', 'tahunakademik.index']) ? 'text-[#F2994A]' : '' }}"></i>
                                         </div>
                                     </button>
                                 </x-slot>
@@ -48,6 +48,7 @@
                                                 'semester.index',
                                                 'keterangan.index',
                                                 'tahunakademik.index',
+                                                'fakultas.index',
                                             ])
                                                 ? 'text-red-500 font-bold'
                                                 : '' }}">
@@ -71,6 +72,11 @@
                                             </x-dropdown-link>
                                             <x-dropdown-link :href="route('sesi.index')" :class="request()->routeIs('sesi.index') ? 'text-red-500 font-bold' : ''">
                                                 {{ __('Sesi') }}
+                                            </x-dropdown-link>
+                                            <x-dropdown-link :href="route('fakultas.index')" :class="request()->routeIs('fakultas.index')
+                                                ? 'text-red-500 font-bold'
+                                                : ''">
+                                                {{ __('Fakultas') }}
                                             </x-dropdown-link>
                                             <x-dropdown-link :href="route('jurusan.index')" :class="request()->routeIs('jurusan.index')
                                                 ? 'text-red-500 font-bold'
@@ -129,6 +135,10 @@
                                         ? 'text-red-500 font-bold'
                                         : ''">
                                         {{ __('Konfigurasi Ujian') }}
+                                    </x-dropdown-link>
+
+                                    <x-dropdown-link :href="route('dosenPembimbing.index')" :class="request()->routeIs('dosenPembimbing.index') ? 'text-red-500 font-bold' : ''">
+                                        {{ __('Dosen Pembimbing') }}
                                     </x-dropdown-link>
 
                                 </x-slot>
@@ -389,6 +399,13 @@
                                 </x-slot>
                             </x-dropdown>
                         </li>
+                    </div>
+
+                    <!-- Navigation Links -->
+                    <div class="hidden sm:flex sm:items-center sm:ms-6">
+                        <x-nav-link :href="route('appProjek.edit', Auth::user()->email)" :active="request()->routeIs('appProjek.edit', Auth::user()->email)">
+                            <div class="text-[16px] font-bold tracking-wide">Project</div>
+                        </x-nav-link>
                     </div>
                 @endcan
 
@@ -668,6 +685,9 @@
                             <x-responsive-nav-link :href="route('sesi.index')" :active="request()->routeIs('sesi.index')">
                                 {{ __('Sesi') }}
                             </x-responsive-nav-link>
+                            <x-responsive-nav-link :href="route('fakultas.index')" :active="request()->routeIs('fakultas.index')">
+                                {{ __('Fakultas') }}
+                            </x-responsive-nav-link>
                             <x-responsive-nav-link :href="route('jurusan.index')" :active="request()->routeIs('jurusan.index')">
                                 {{ __('Jurusan') }}
                             </x-responsive-nav-link>
@@ -863,6 +883,12 @@
                         {{ __('Data Prestasi') }}
                     </x-responsive-nav-link>
                 </div>
+            </div>
+
+            <div class="space-y-1">
+                <x-responsive-nav-link :href="route('appProjek.edit', Auth::user()->email)" :active="request()->routeIs('appProjek.edit', Auth::user()->email)">
+                    {{ __('Project') }}
+                </x-responsive-nav-link>
             </div>
         @endcan
 

@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\AppProjController;
+use App\Http\Controllers\BimbinganController;
 use App\Http\Controllers\DataPrestasiController;
 use App\Http\Controllers\DetailController;
 use App\Http\Controllers\DetailFormatif;
 use App\Http\Controllers\DetailFormatifController;
 use App\Http\Controllers\DosenController;
+use App\Http\Controllers\FakultasController;
 use App\Http\Controllers\HariController;
 use App\Http\Controllers\InformasiController;
 use App\Http\Controllers\JadwalregulerController;
@@ -19,9 +22,12 @@ use App\Http\Controllers\KurikulumController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MateriajarController;
 use App\Http\Controllers\NilaiController;
+use App\Http\Controllers\PembimbingController;
+use App\Http\Controllers\PembimbingProjectController;
 use App\Http\Controllers\PerhitunganController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PukulController;
 use App\Http\Controllers\ReportDapresMahasiswaController;
 use App\Http\Controllers\ReportDosenController;
@@ -30,6 +36,7 @@ use App\Http\Controllers\ReportMahasiswaKeseluruhanController;
 use App\Http\Controllers\ReportNilaiKeseluruhanController;
 use App\Http\Controllers\ReportNilaiMahasiswaController;
 use App\Http\Controllers\ReportPresensiMahasiswaController;
+use App\Http\Controllers\RevisiController;
 use App\Http\Controllers\RuangController;
 use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\SesiController;
@@ -103,6 +110,7 @@ Route::resource('data_prestasi', DataPrestasiController::class)->middleware(['au
 Route::resource('krs_mhs', KrsMhsController::class)->middleware(['auth']);
 Route::resource('transkrip', TranskripController::class)->middleware(['auth']);
 Route::resource('informasi', InformasiController::class)->middleware(['auth']);
+Route::resource('dosenPembimbing', PembimbingProjectController::class)->middleware(['auth']);
 
 Route::get('/print_jadwal', [JadwalRegulerController::class, 'print_jadwal'])->name('jadwal_reguler.print_jadwal');
 Route::get('/print_jadwal_mhs/{id}', [JadwalRegulerController::class, 'print_jadwal_mhs'])->name('jadwal_reguler.print_jadwal_mhs');
@@ -143,6 +151,12 @@ Route::post('/jawaban_uas_add', [UasController::class, 'jawaban_uas_add'])->name
 Route::post('/download-zip-uas', [UasController::class, 'downloadZip']);
 Route::get('/cetak-pdf/{id_jadwal}', [ReportMahasiswaKeseluruhanController::class, 'generatePDF'])->name('cetak-pdf');
 Route::post('/edit_databaru', [MahasiswaController::class, 'edit_databaru'])->name('mahasiswa.edit_databaru');
+
+Route::resource('fakultas', FakultasController::class)->middleware(['auth']);
+Route::resource('appProjek', ProjectController::class)->middleware(['auth']);
+Route::resource('bimbingan', BimbinganController::class)->middleware(['auth']);
+Route::resource('app_proj', AppProjController::class)->middleware(['auth']);
+Route::resource('revisiProj', RevisiController::class)->middleware(['auth']);
 
 Route::get('/dashboard', function (Request $request) {
     $konfigurasi = Konfigurasi::first();

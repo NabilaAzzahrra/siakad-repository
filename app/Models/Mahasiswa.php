@@ -10,7 +10,7 @@ class Mahasiswa extends Model
     use HasFactory;
 
     protected $fillable = [
-        'identity_user',
+        'nik',
         'nim',
         'nama',
         'id_kelas',
@@ -53,6 +53,11 @@ class Mahasiswa extends Model
     public function detail_uts()
     {
         return $this->hasMany(DetailUts::class, 'id_uts');
+    }
+
+    public function appProj()
+    {
+        return $this->hasMany(AppProj::class, 'nim');
     }
 
 }

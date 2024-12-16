@@ -29,4 +29,9 @@ class Dosen extends Model
     {
         return $this->hasMany(Dosen::class, 'di_dosen');
     }
+
+    public function pembimbingProj()
+    {
+        return $this->hasMany(PembimbingProject::class, 'id_dosen');
+    }
 }

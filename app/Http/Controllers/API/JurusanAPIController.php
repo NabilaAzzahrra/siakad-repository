@@ -10,7 +10,7 @@ class JurusanAPIController extends Controller
 {
     public function get_all()
     {
-        $jurusan = Jurusan::all();
+        $jurusan = Jurusan::with(['fakultas'])->get();
         return response()->json([
             'jurusan'=>$jurusan,
         ]);

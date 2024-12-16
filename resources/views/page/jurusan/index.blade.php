@@ -1,7 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            <div class="flex items-center">Master<i class="fi fi-rr-caret-right mt-1"></i> Jadwal<i class="fi fi-rr-caret-right mt-1"></i> <span class="text-red-500">Jurusan</span></div>        </h2>
+            <div class="flex items-center">Master<i class="fi fi-rr-caret-right mt-1"></i> Jadwal<i class="fi fi-rr-caret-right mt-1"></i> <span class="text-red-500">Jurusan</span></div>
+        </h2>
     </x-slot>
 
     <div class="py-12">
@@ -23,6 +24,18 @@
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             placeholder="Masukan Nama Program Studi disini ..." required />
                                     </div>
+                                    <div class="mb-5">
+                                        <label for="pukul"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fakultas
+                                            <span class="text-red-500">*</span></label>
+                                        <select class="js-example-placeholder-single js-states form-control w-full m-6"
+                                            name="fakultas" data-placeholder="Pilih Fakultas">
+                                            <option value="">Pilih...</option>
+                                            @foreach ($fakultas as $p)
+                                            <option value="{{ $p->id }}">{{ $p->fakultas }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     <button type="submit"
                                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i class="fi fi-rr-disk "></i></button>
                                 </div>
@@ -43,6 +56,7 @@
                                             <tr>
                                                 <th class="w-7">No.</th>
                                                 <th>Program Studi</th>
+                                                <th>Fakultas</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -79,6 +93,18 @@
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 id="" placeholder="Masukan Program Studi disini...">
                         </div>
+                        <div class="mb-5">
+                            <label for="pukul"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fakultas
+                                <span class="text-red-500">*</span></label>
+                            <select class="js-example-placeholder-single js-states form-control w-full m-6"
+                                name="fakultass" data-placeholder="Pilih Fakultas">
+                                <option value="">Pilih...</option>
+                                @foreach ($fakultas as $p)
+                                <option value="{{ $p->id }}">{{ $p->fakultas }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
                         <button type="submit" id="formSourceButton"
@@ -112,15 +138,21 @@
                     render: (data, type, row) => {
                         return data;
                     }
+                },{
+                    data: 'fakultas',
+                    render: (data, type, row) => {
+                        return data.fakultas;
+                    }
                 }, {
                     data: {
-                        no: 'no',
+                        id: 'id',
+                        id_fakultas: 'id_fakultas',
                         name: 'name'
                     },
                     render: (data) => {
                         let editUrl =
                             `<button type="button" data-id="${data.id}"
-                                                        data-modal-target="sourceModal" data-jurusan="${data.jurusan}"
+                                                        data-modal-target="sourceModal" data-jurusan="${data.jurusan}" data-id_fakultas="${data.id_fakultas}"
                                                         onclick="editSourceModal(this)"
                                                         class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-xl h-10 w-10 text-xs text-white">
                                                        <i class="fas fa-edit"></i>
@@ -138,11 +170,15 @@
             const modalTarget = button.dataset.modalTarget;
             const id = button.dataset.id;
             const jurusan = button.dataset.jurusan;
+            const id_fakultas = button.dataset.id_fakultas;
             let url = "{{ route('jurusan.update', ':id') }}".replace(':id', id);
             console.log(url);
             let status = document.getElementById(modalTarget);
             document.getElementById('title_source').innerText = `UPDATE PROGRAM STUDI ${jurusan}`;
             document.getElementById('jurusans').value = jurusan;
+            document.querySelector('[name="fakultass"]').value = id_fakultas;
+            let event = new Event('change');
+            document.querySelector('[name="fakultass"]').dispatchEvent(event);
             document.getElementById('formSourceButton').innerText = 'Simpan';
             document.getElementById('formSourceModal').setAttribute('action', url);
             let csrfToken = document.createElement('input');

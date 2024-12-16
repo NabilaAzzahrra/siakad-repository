@@ -36,7 +36,7 @@ class IntegrationPMBOnline extends Controller
             $new_nim = $yearNow . "0252001" . $newNumber;
 
             $data = [
-                'identity_user' => $request->identity_user,
+                'nik' => $request->nik,
                 'nim' => $new_nim,
                 'nama' => $request->name,
                 'tempat_lahir' => $request->place_of_birth,
