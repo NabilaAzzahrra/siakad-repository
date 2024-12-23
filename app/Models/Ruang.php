@@ -19,4 +19,8 @@ class Ruang extends Model
     {
         return $this->hasMany(Jadwalreguler::class, 'id_ruang');
     }
+    public function penguji()
+    {
+        return $this->hasMany(Penguji::class, 'id_ruang');
+    }
 }

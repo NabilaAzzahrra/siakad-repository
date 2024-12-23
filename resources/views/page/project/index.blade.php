@@ -102,39 +102,79 @@
                                     </div>
                                 </div>
                                 <hr class="border w-20 {{ $border }}">
+                                @php
+                                    if ($verifikasiDaftar) {
+                                        $bDaftar = 'bg-emerald-500';
+                                        $border = 'border-black';
+                                    } else {
+                                        $bDaftar = 'bg-red-500';
+                                        $border = '';
+                                    }
+
+                                @endphp
                                 <div class="relative">
                                     <div
-                                        class="absolute top-4 left-10 bg-red-500 text-white w-6 h-6 flex items-center justify-center rounded-full shadow-md">
-                                        <i class="fas fa-times"></i>
+                                        class="absolute top-4 left-10 {{ $bDaftar }} text-white w-6 h-6 flex items-center justify-center rounded-full shadow-md">
+                                        @if ($verifikasiDaftar)
+                                            <i class="fas fa-check"></i>
+                                        @else
+                                            <i class="fas fa-times"></i>
+                                        @endif
                                     </div>
                                     <div
-                                        class="flex flex-col items-center border-2 w-28 h-28 rounded-full justify-center p-3">
+                                        class="flex flex-col items-center border-2 {{ $border }} w-28 h-28 rounded-full justify-center p-3">
                                         <img src="{{ url('project/daftar-sidang.png') }}" alt="Daftar"
                                             class="w-14 h-14 mb-2">
                                         <div class="text-center text-sm font-medium">Daftar</div>
                                     </div>
                                 </div>
                                 <hr class="border w-20">
+                                @php
+                                    if ($verifikasiSidang) {
+                                        $bSidang = 'bg-emerald-500';
+                                        $border = 'border-black';
+                                    } else {
+                                        $bSidang = 'bg-red-500';
+                                        $border = '';
+                                    }
+                                @endphp
                                 <div class="relative">
                                     <div
-                                        class="absolute top-4 left-10 bg-red-500 text-white w-6 h-6 flex items-center justify-center rounded-full shadow-md">
-                                        <i class="fas fa-times"></i>
+                                        class="absolute top-4 left-10 {{ $bSidang }} text-white w-6 h-6 flex items-center justify-center rounded-full shadow-md">
+                                        @if ($verifikasiSidang)
+                                            <i class="fas fa-check"></i>
+                                        @else
+                                            <i class="fas fa-times"></i>
+                                        @endif
                                     </div>
                                     <div
-                                        class="flex flex-col items-center border-2 w-28 h-28 rounded-full justify-center p-3">
+                                        class="flex flex-col items-center border-2 {{ $border }} w-28 h-28 rounded-full justify-center p-3">
                                         <img src="{{ url('project/sidang.png') }}" alt="Sidang"
                                             class="w-14 h-14 mb-2">
                                         <div class="text-center text-sm font-medium">Sidang</div>
                                     </div>
                                 </div>
                                 <hr class="border w-20">
+                                @php
+                                    if ($verifikasiRevisi) {
+                                        $bRevisi = 'bg-emerald-500';
+                                        $border = 'border-black';
+                                    } else {
+                                        $bRevisi = 'bg-red-500';
+                                        $border = '';
+                                    }
+                                @endphp
                                 <div class="relative">
                                     <div
-                                        class="absolute top-4 left-10 bg-red-500 text-white w-6 h-6 flex items-center justify-center rounded-full shadow-md">
-                                        <i class="fas fa-times"></i>
+                                        class="absolute top-4 left-10 {{ $bRevisi }} text-white w-6 h-6 flex items-center justify-center rounded-full shadow-md">
+                                        @if ($verifikasiRevisi)
+                                            <i class="fas fa-check"></i>
+                                        @else
+                                            <i class="fas fa-times"></i>
+                                        @endif
                                     </div>
                                     <div
-                                        class="flex flex-col items-center border-2 w-28 h-28 rounded-full justify-center p-3">
+                                        class="flex flex-col items-center border-2 {{ $border }} w-28 h-28 rounded-full justify-center p-3">
                                         <img src="{{ url('project/revisi.png') }}" alt="Revisi"
                                             class="w-14 h-14 mb-2">
                                         <div class="text-center text-sm font-medium">Revisi</div>
@@ -382,6 +422,10 @@
                                         <form action="{{ route('app_proj.store') }}" method="post"
                                             enctype="multipart/form-data">
                                             @csrf
+                                            <input type="hidden" id="id_dosen" name="id_dosen"
+                                                value="{{ $idDosen }}"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder="Masukan Tanggal disini ..." required />
                                             <div class="p-4 rounded-xl">
                                                 <div class="flex gap-5">
                                                     <div class="mb-5 w-full">
@@ -497,6 +541,195 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div id="Sidang" class="tab-content border border-2 p-2 rounded-xl"
+                                        style="display:none;">
+                                        <div class="flex gap-5 items-start">
+                                            <div class="flex items-center p-4 border-2 rounded-xl gap-4">
+                                                <!-- Bagian Tanggal -->
+                                                <div class="text-center text-red-500">
+                                                    <div class="text-lg font-bold">
+                                                        {{ date('l', strtotime($penguji->tgl_sidang)) }}</div>
+                                                    <div class="text-4xl font-bold">
+                                                        {{ date('d', strtotime($penguji->tgl_sidang)) }}</div>
+                                                </div>
+                                                <!-- Garis Vertikal -->
+                                                <div class="w-px h-12 bg-gray-300"></div>
+                                                <!-- Bagian Detail -->
+                                                <div class="flex flex-col gap-1">
+                                                    <div class="text-gray-700">{{ $penguji->pukul }} WIB | <span
+                                                            class="font-bold">{{ $penguji->ruang }}</span></div>
+                                                    <div class="text-gray-700">{{ $penguji->nama_dosen_penguji }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="w-full">
+                                                <div class="relative overflow-x-auto">
+                                                    <table
+                                                        class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                        <thead
+                                                            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                                            <tr>
+                                                                <th scope="col" class="px-6 py-3">
+                                                                    BAGIAN
+                                                                </th>
+                                                                <th scope="col" class="px-6 py-3">
+                                                                    REVISI
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr
+                                                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                                <th scope="row"
+                                                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                                    BAB I
+                                                                </th>
+                                                                <td class="px-6 py-4">
+                                                                    {{ $detailRevisi->bab_satu }}
+                                                                </td>
+                                                            </tr>
+                                                            <tr
+                                                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                                <th scope="row"
+                                                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                                    BAB II
+                                                                </th>
+                                                                <td class="px-6 py-4">
+                                                                    {{ $detailRevisi->bab_dua }}
+                                                                </td>
+                                                            </tr>
+                                                            <tr
+                                                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                                <th scope="row"
+                                                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                                    BAB III
+                                                                </th>
+                                                                <td class="px-6 py-4">
+                                                                    {{ $detailRevisi->bab_tiga }}
+                                                                </td>
+                                                            </tr>
+                                                            <tr
+                                                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                                <th scope="row"
+                                                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                                    BAB IV
+                                                                </th>
+                                                                <td class="px-6 py-4">
+                                                                    {{ $detailRevisi->bab_empat }}
+                                                                </td>
+                                                            </tr>
+                                                            <tr
+                                                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                                <th scope="row"
+                                                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                                    BAB V
+                                                                </th>
+                                                                <td class="px-6 py-4">
+                                                                    {{ $detailRevisi->bab_lima }}
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="Revisi" class="tab-content border border-2 p-2 rounded-xl"
+                                        style="display:none;">
+                                        <div class="flex gap-5">
+                                            <div class="bg-gray-100 w-full">
+                                                <form action="{{ route('revisiProj.store') }}" method="post"
+                                                    enctype="multipart/form-data">
+                                                    @csrf
+                                                    <input type="hidden" id="id_dosen" name="id_dosen"
+                                                        value="{{ $idDosen }}"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                        placeholder="Masukan Tanggal disini ..." required />
+                                                    <div class="p-4 rounded-xl">
+                                                        <div class="flex gap-5">
+                                                            <div class="mb-5 w-full">
+                                                                <label for="file"
+                                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Revisi</label>
+                                                                <input type="file" id="file" name="file"
+                                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                                    placeholder="Masukan Tanggal disini ..."
+                                                                    required />
+                                                            </div>
+                                                        </div>
+                                                        <button type="submit"
+                                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i
+                                                                class="fi fi-rr-disk "></i></button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="w-full">
+                                                @php
+                                                    if ($revisiVerifikasi) {
+                                                        if ($revisiVerifikasi === 'BELUM') {
+                                                            $bg = 'bg-red-200';
+                                                        } else {
+                                                            $bg = 'bg-emerald-200';
+                                                        }
+                                                    } else {
+                                                        $bg = 'bg-emerald-200';
+                                                    }
+                                                @endphp
+                                                <div class="font-bold">Data Revisi <span
+                                                        class="text-xs {{ $bg }} px-4 rounded-xl">{{ $revisiVerifikasi }}</span>
+                                                </div>
+                                                <div class="flex">
+
+                                                    <div class="w-full">
+                                                        <p class="font-bold mt-4">Data Mahasiswa</p>
+                                                        <table>
+                                                            <tr>
+                                                                <td>Nim</td>
+                                                                <td class="pr-2 pl-2">:</td>
+                                                                <td>{{ $revisiNim }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Nama</td>
+                                                                <td class="pr-2 pl-2">:</td>
+                                                                <td>{{ $revisiMahasiswa }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Kelas</td>
+                                                                <td class="pr-2 pl-2">:</td>
+                                                                <td>{{ $revisiKelas }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Jurusan</td>
+                                                                <td class="pr-2 pl-2">:</td>
+                                                                <td>{{ $revisiJurusan }}</td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div class="w-full">
+                                                        <p class="font-bold mt-4">Data Project</p>
+                                                        <table>
+                                                            <tr>
+                                                                <td>Judul</td>
+                                                                <td class="pr-2 pl-2">:</td>
+                                                                <td>{{ $appProjJudul }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Pembimbing</td>
+                                                                <td class="pr-2 pl-2">:</td>
+                                                                <td>{{ $namaDosen }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Laporan</td>
+                                                                <td class="pr-2 pl-2">:</td>
+                                                                <td><a href="{{ asset('revisi/' . $revisiFile) }}"
+                                                                        target="_blank">Lihat</a></td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                             </div>
@@ -551,10 +784,10 @@
                     const uploads = data.useruploads;
 
                     // Default status
-                    let statusIjazah = 'x';
-                    let statusFoto = 'x';
-                    let statusKTP = 'x';
-                    let statusKK = 'x';
+                    let statusIjazah = '<img src="/img/delete.png" class="h-4 w-4" alt="Ijazah Preview">';
+                    let statusFoto = '<img src="/img/delete.png" class="h-4 w-4" alt="Foto Preview">';
+                    let statusKTP = '<img src="/img/delete.png" class="h-4 w-4" alt="KTP Preview">';
+                    let statusKK = '<img src="/img/delete.png" class="h-4 w-4" alt="KK Preview">';
 
                     const iden = data.data.identity;
 
@@ -562,18 +795,16 @@
                     uploads.forEach(upload => {
                         if (upload.fileupload.namefile === 'ijazah') {
                             statusIjazah =
-                                `<a href="https://uploadhub.politekniklp3i-tasikmalaya.ac.id/preview?identity=${identity}&filename=${identity}-ijazah.pdf" target="_blank"><div
-                                        class="absolute bg-emerald-200 text-white w-4 h-4 flex items-center justify-center rounded-full shadow-md">
-                                            <i class="fas fa-check"></i></div></a>`;
+                                `<a href="https://uploadhub.politekniklp3i-tasikmalaya.ac.id/preview?identity=${identity}&filename=${identity}-ijazah.pdf" target="_blank"><img src="/img/check.png" class="h-4 w-4" alt="Ijazah Preview"></a>`;
                         } else if (upload.fileupload.namefile === 'foto') {
                             statusFoto =
-                                `<a href="https://uploadhub.politekniklp3i-tasikmalaya.ac.id/preview?identity=${identity}&filename=${identity}-foto.jpeg" target="_blank">ada</a>`;
+                                `<a href="https://uploadhub.politekniklp3i-tasikmalaya.ac.id/preview?identity=${identity}&filename=${identity}-foto.jpeg" target="_blank"><img src="/img/check.png" class="h-4 w-4" alt="Foto Preview"></a>`;
                         } else if (upload.fileupload.namefile === 'kk') {
                             statusKK =
-                                `<a href="https://uploadhub.politekniklp3i-tasikmalaya.ac.id/preview?identity=${identity}&filename=${identity}-kk.pdf" target="_blank">ada</a>`;
+                                `<a href="https://uploadhub.politekniklp3i-tasikmalaya.ac.id/preview?identity=${identity}&filename=${identity}-kk.pdf" target="_blank"><img src="/img/check.png" class="h-4 w-4" alt="KK Preview"></a>`;
                         } else if (upload.fileupload.namefile === 'ktp') {
                             statusKTP =
-                                `<a href="https://uploadhub.politekniklp3i-tasikmalaya.ac.id/preview?identity=${identity}&filename=${identity}-ktp.pdf" target="_blank">ada</a>`;
+                                `<a href="https://uploadhub.politekniklp3i-tasikmalaya.ac.id/preview?identity=${identity}&filename=${identity}-ktp.pdf" target="_blank"><img src="/img/check.png" class="h-4 w-4" alt="KTP Preview"></a>`;
                         }
                     });
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AppProj;
 use App\Models\Bimbingan;
+use App\Models\DetailRevisi;
 use App\Models\Dosen;
 use App\Models\FilePengajuanProject;
 use App\Models\JudulProject;
@@ -11,9 +12,11 @@ use App\Models\Mahasiswa;
 use App\Models\Pembimbing;
 use App\Models\PembimbingProject;
 use App\Models\PengajuanJudul;
+use App\Models\Penguji;
 use App\Models\Revisi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
@@ -105,8 +108,22 @@ class ProjectController extends Controller
         $bimbingan = Bimbingan::where('nim', Auth::user()->email)->paginate('5');
         $appProj = AppProj::with(['mahasiswa'])->where('nim', Auth::user()->email)->first();
         $revisi = Revisi::where('nim', Auth::user()->email)->first();
+        $detailRevisi = DetailRevisi::where('nim', Auth::user()->email)->first();
 
         $pembimbing = Pembimbing::where('nim', Auth::user()->email)->first();
+
+        $penguji = DB::table('app_proj')
+            ->join('dosen as dosen_pembimbing', 'dosen_pembimbing.id', '=', 'app_proj.id_dosen')
+            ->join('mahasiswa', 'mahasiswa.nim', '=', 'app_proj.nim')
+            ->join('kelas', 'mahasiswa.id_kelas', '=', 'kelas.id')
+            ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id')
+            ->leftJoin('penguji', 'penguji.nim', '=', 'app_proj.nim')
+            ->leftJoin('dosen as dosen_penguji', 'dosen_penguji.id', '=', 'penguji.id_penguji')
+            ->leftJoin('ruang', 'ruang.id', '=', 'penguji.id_ruang')
+            ->select('app_proj.*', 'ruang.*', 'penguji.*', 'dosen_pembimbing.*', 'dosen_penguji.id as id_dosen_penguji', 'dosen_penguji.nama_dosen as nama_dosen_penguji', 'mahasiswa.*', 'kelas.kelas', 'jurusan.jurusan')
+            ->where('verifikasi', 'SUDAH')
+            ->where('penguji.nim', Auth::user()->email)
+            ->first();
 
         $dosen = PembimbingProject::all();
 
@@ -131,9 +148,17 @@ class ProjectController extends Controller
         if ($revisi == null) {
             $revisiFile = '';
             $revisiVerifikasi = '';
+            $revisiNim = Auth::user()->email;
+            $revisiMahasiswa = Auth::user()->name;
+            $revisiKelas = '';
+            $revisiJurusan = '';
         } else {
             $revisiFile = $revisi->file;
             $revisiVerifikasi = $revisi->verifikasi;
+            $revisiNim = $revisi->nim;
+            $revisiMahasiswa = $revisi->mahasiswa->nama;
+            $revisiKelas = $revisi->mahasiswa->kelas->kelas;
+            $revisiJurusan = $revisi->mahasiswa->kelas->jurusan->jurusan;
         }
 
         if ($file == null) {
@@ -166,6 +191,17 @@ class ProjectController extends Controller
             ->where('verifikasi', 'SUDAH')
             ->count();
 
+        $verifikasiDaftar = AppProj::where('nim', Auth::user()->email)
+            ->where('verifikasi', 'SUDAH')
+            ->first();
+
+        $verifikasiSidang = DetailRevisi::where('nim', Auth::user()->email)
+            ->first();
+
+        $verifikasiRevisi = Revisi::where('nim', Auth::user()->email)
+            ->where('verifikasi', 'SUDAH')
+            ->first();
+
         return view('page.project.index')->with([
             'mahasiswa' => $mahasiswa,
             'pembimbing' => $pembimbing,
@@ -184,14 +220,23 @@ class ProjectController extends Controller
             'appProjFile' => $appProjFile,
             'revisiFile' => $revisiFile,
             'revisiVerifikasi' => $revisiVerifikasi,
+            'revisiNim' => $revisiNim,
+            'revisiMahasiswa' => $revisiMahasiswa,
+            'revisiKelas' => $revisiKelas,
+            'revisiJurusan' => $revisiJurusan,
             'verifikasiPengajuan' => $verifikasiPengajuan,
             'verifikasiPembimbing' => $verifikasiPembimbing,
             'verifikasiBimbingan' => $verifikasiBimbingan,
+            'verifikasiDaftar' => $verifikasiDaftar,
+            'verifikasiSidang' => $verifikasiSidang,
+            'verifikasiRevisi' => $verifikasiRevisi,
             'fileFile' => $fileFile,
             'fileVerifikasi' => $fileVerifikasi,
             'namaDosen' => $namaDosen,
             'idDosen' => $idDosen,
+            'penguji' => $penguji,
             'namaDosenVerifikasi' => $namaDosenVerifikasi,
+            'detailRevisi' => $detailRevisi,
         ]);
     }
 

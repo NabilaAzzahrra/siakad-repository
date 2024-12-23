@@ -24,6 +24,7 @@ use App\Http\Controllers\MateriajarController;
 use App\Http\Controllers\NilaiController;
 use App\Http\Controllers\PembimbingController;
 use App\Http\Controllers\PembimbingProjectController;
+use App\Http\Controllers\PengujiController;
 use App\Http\Controllers\PerhitunganController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\ProfileController;
@@ -157,6 +158,9 @@ Route::resource('appProjek', ProjectController::class)->middleware(['auth']);
 Route::resource('bimbingan', BimbinganController::class)->middleware(['auth']);
 Route::resource('app_proj', AppProjController::class)->middleware(['auth']);
 Route::resource('revisiProj', RevisiController::class)->middleware(['auth']);
+Route::resource('penguji', PengujiController::class)->middleware(['auth']);
+Route::post('/pengujiAdd', [PengujiController::class, 'pengujiAdd'])->name('penguji.pengujiAdd');
+
 
 Route::get('/dashboard', function (Request $request) {
     $konfigurasi = Konfigurasi::first();

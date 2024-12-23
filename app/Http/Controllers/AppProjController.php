@@ -44,6 +44,7 @@ class AppProjController extends Controller
         $dataFile = [
             'nim' => Auth::user()->email,
             'judul' => $request->input('judul'),
+            'id_dosen' => $request->input('id_dosen'),
             'file' => $pengajuanFilePath,
             'verifikasi' => 'BELUM',
         ];

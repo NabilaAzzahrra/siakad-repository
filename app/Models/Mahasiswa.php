@@ -60,4 +60,8 @@ class Mahasiswa extends Model
         return $this->hasMany(AppProj::class, 'nim');
     }
 
+    public function revisi()
+    {
+        return $this->hasMany(Revisi::class, 'nim');
+    }
 }

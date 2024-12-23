@@ -11,6 +11,7 @@ class AppProj extends Model
 
     protected $fillable = [
         'nim',
+        'id_dosen',
         'judul',
         'file',
         'verifikasi',
@@ -21,5 +22,9 @@ class AppProj extends Model
     public function mahasiswa()
     {
         return $this->belongsTo(Mahasiswa::class, 'nim', 'nim');
+    }
+    public function dosen()
+    {
+        return $this->belongsTo(Dosen::class, 'id_dosen', 'id');
     }
 }

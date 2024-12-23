@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('app_proj', function (Blueprint $table) {
+        Schema::create('detail_revisi', function (Blueprint $table) {
             $table->id();
+            $table->string('kode_sidang');
             $table->string('nim');
-            $table->string('id_dosen');
-            $table->string('judul');
-            $table->string('file');
-            $table->string('verifikasi');
+            $table->text('bab_satu');
+            $table->text('bab_dua');
+            $table->text('bab_tiga');
+            $table->text('bab_empat');
+            $table->text('bab_lima');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('app_proj');
+        Schema::dropIfExists('detail_revisi');
     }
 };

@@ -43,6 +43,7 @@ class RevisiController extends Controller
 
         $dataFile = [
             'nim' => Auth::user()->email,
+            'id_dosen' => $request->input('id_dosen'),
             'file' => $pengajuanFilePath,
             'verifikasi' => 'BELUM',
         ];

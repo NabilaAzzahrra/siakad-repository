@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('revisi', function (Blueprint $table) {
             $table->id();
             $table->string('nim');
+            $table->integer('id_dosen');
             $table->string('file');
             $table->string('verifikasi');
             $table->timestamps();
