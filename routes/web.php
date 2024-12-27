@@ -24,6 +24,7 @@ use App\Http\Controllers\MateriajarController;
 use App\Http\Controllers\NilaiController;
 use App\Http\Controllers\PembimbingController;
 use App\Http\Controllers\PembimbingProjectController;
+use App\Http\Controllers\PengajuanJudulController;
 use App\Http\Controllers\PengujiController;
 use App\Http\Controllers\PerhitunganController;
 use App\Http\Controllers\PresensiController;
@@ -112,6 +113,9 @@ Route::resource('krs_mhs', KrsMhsController::class)->middleware(['auth']);
 Route::resource('transkrip', TranskripController::class)->middleware(['auth']);
 Route::resource('informasi', InformasiController::class)->middleware(['auth']);
 Route::resource('dosenPembimbing', PembimbingProjectController::class)->middleware(['auth']);
+Route::resource('pengajuanJudul', PengajuanJudulController::class)->middleware(['auth']);
+Route::get('/get-pengajuan-judul', [PengajuanJudulController::class, 'getPengajuanJudul']);
+Route::patch('/update-pengajuan-judul/{id}', [PengajuanJudulController::class, 'update'])->name('pengajuanJudul.update');
 
 Route::get('/print_jadwal', [JadwalRegulerController::class, 'print_jadwal'])->name('jadwal_reguler.print_jadwal');
 Route::get('/print_jadwal_mhs/{id}', [JadwalRegulerController::class, 'print_jadwal_mhs'])->name('jadwal_reguler.print_jadwal_mhs');

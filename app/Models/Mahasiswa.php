@@ -64,4 +64,8 @@ class Mahasiswa extends Model
     {
         return $this->hasMany(Revisi::class, 'nim');
     }
+    public function pembimbing()
+    {
+        return $this->hasMany(Pembimbing::class, 'nim');
+    }
 }

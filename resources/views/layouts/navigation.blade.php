@@ -330,7 +330,7 @@
                                         {{ __('Dosen Pembimbing') }}
                                     </x-dropdown-link>
 
-                                    <x-dropdown-link :href="route('dosenPembimbing.index')" :class="request()->routeIs('dosenPembimbing.index')
+                                    <x-dropdown-link :href="route('pengajuanJudul.index')" :class="request()->routeIs('pengajuanJudul.index')
                                         ? 'text-red-500 font-bold'
                                         : ''">
                                         {{ __('Pengajuan Judul') }}

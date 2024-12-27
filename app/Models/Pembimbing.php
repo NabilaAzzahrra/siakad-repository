@@ -21,4 +21,9 @@ class Pembimbing extends Model
     {
         return $this->belongsTo(PembimbingProject::class, 'id_dosen', 'id');
     }
+
+    public function mahasiswa()
+    {
+        return $this->belongsTo(Mahasiswa::class, 'nim', 'nim');
+    }
 }
