@@ -15,7 +15,7 @@ class IntegrationPMBOnline extends Controller
 
         // return response($request->all());
 
-        if ($request->major === "TO24L") {
+        if ($request->major === "TO25L") {
             $yearNow = date('y');
 
             $lastNIM = Mahasiswa::where('nim', 'like', $yearNow . '%')
@@ -33,7 +33,8 @@ class IntegrationPMBOnline extends Controller
                 $newNumber = '0001';
             }
 
-            $new_nim = $yearNow . "0252001" . $newNumber;
+            //$new_nim = $yearNow . "0252001" . $newNumber;
+            $new_nim = '25' . "0252001" . $newNumber;
 
             $data = [
                 'nik' => $request->nik,
@@ -42,8 +43,8 @@ class IntegrationPMBOnline extends Controller
                 'tempat_lahir' => $request->place_of_birth,
                 'tgl_lahir' => $request->date_of_birth,
                 'tahun_angkatan' => $request->pmb,
-                'id_kelas' => null,
-                'tingkat' => null,
+                'id_kelas' => 11,
+                'tingkat' => 1,
                 'no_hp' => $request->phone,
                 'status' => false,
                 'keaktifan' => "aktif",
