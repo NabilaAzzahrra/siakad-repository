@@ -131,12 +131,12 @@
                                                                 NO HP
                                                             </div>
                                                         </th>
-                                                        <th scope="col" class="px-6 py-3 text-center">
+                                                        <!-- <th scope="col" class="px-6 py-3 text-center">
                                                             <div class="flex items-center">
                                                                 UJIAN
                                                             </div>
-                                                        </th>
-                                                        <th scope="col" class="px-6 py-3 text-center bg-gray-100">
+                                                        </th> -->
+                                                        <th scope="col" class="px-6 py-3 text-center ">
                                                             <div class="flex items-center">
                                                                 KEAKTIFAN
                                                             </div>
@@ -187,10 +187,10 @@
                                                                     $bg = 'bg-green-500';
                                                                 @endphp
                                                             @endif
-                                                            <td class="px-6 py-4">
+                                                            <!-- <td class="px-6 py-4">
                                                                 <span
                                                                     class="{{ $bg }} p-2 text-white rounded-full">{{ $sts }}</span>
-                                                            </td>
+                                                            </td> -->
                                                             @php
                                                                 switch ($m->keaktifan) {
                                                                     case 'aktif':
@@ -207,7 +207,7 @@
                                                                         break;
                                                                 }
                                                             @endphp
-                                                            <td class="px-6 py-4 bg-gray-100">
+                                                            <td class="px-6 py-4">
                                                                 <span
                                                                     class="{{ $bg }} p-2 text-white rounded-full">{{ $keaktifan }}</span>
                                                             </td>

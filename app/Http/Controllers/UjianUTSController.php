@@ -45,57 +45,61 @@ class UjianUTSController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    try {
-        $id_jadwal = $request->input('id_jadwal');
-        $id_uts = date('YmdHis');
+    {
+        try {
+            $id_jadwal = $request->input('id_jadwal');
+            $id_uts = date('YmdHis');
+            
+            if ($request->hasFile('file') && $request->hasFile('file_cadangan')) {
+                // Handle the main UTS file upload
+                $utsFile = $request->file('file');
+                $utsFileName = $id_uts . '-' . $id_jadwal . '.' . $utsFile->extension();
+                $utsFile->move(public_path('uts'), $utsFileName);
+                
+                // Handle the backup UTS file upload
+                $utsFileCadangan = $request->file('file_cadangan');
+                $utsFileNameCadangan = $id_uts . '-' . $id_jadwal . '.' . $utsFileCadangan->extension();
+                $utsFileCadangan->move(public_path('uts/cadangan'), $utsFileNameCadangan);
 
-        if ($request->hasFile('file') && $request->hasFile('file_cadangan')) {
-            // Handle the main UTS file upload
-            $utsFile = $request->file('file');
-            $utsFileName = $id_uts . '-' . $id_jadwal . '.' . $utsFile->extension();
-            $utsFile->move(public_path('uts'), $utsFileName);
+                if (Auth::user()->role == 'A') {
+                    $verifikasi = 1;
+                } else {
+                    $verifikasi = 0;
+                }
+                
+                // Prepare data for insertion
+                $data = [
+                    'id_jadwal' => $id_jadwal,
+                    'id_uts' => $id_uts,
+                    'tgl_ujian' => $request->input('tgl_ujian'),
+                    'waktu_ujian' => $request->input('waktu_ujian'),
+                    'tgl_ujian_susulan' => $request->input('tgl_ujian_susulan'),
+                    'file' => $utsFileName,
+                    'file_cadangan' => $utsFileNameCadangan,
+                    'verifikasi' => $verifikasi,
+                ];
+                
+                Uts::create($data);
 
-            // Handle the backup UTS file upload
-            $utsFileCadangan = $request->file('file_cadangan');
-            $utsFileNameCadangan = $id_uts . '-' . $id_jadwal . '.' . $utsFileCadangan->extension();
-            $utsFileCadangan->move(public_path('uts/cadangan'), $utsFileNameCadangan);
-
-            // Prepare data for insertion
-            $data = [
-                'id_jadwal' => $id_jadwal,
-                'id_uts' => $id_uts,
-                'tgl_ujian' => $request->input('tgl_ujian'),
-                'waktu_ujian' => $request->input('waktu_ujian'),
-                'tgl_ujian_susulan' => $request->input('tgl_ujian_susulan'),
-                'file' => $utsFileName,
-                'file_cadangan' => $utsFileNameCadangan,
-            ];
-
-            // dd($data);
-
-            Uts::create($data);
-
-            // Redirect based on user role
-            if (Auth::user()->role == 'A') {
-                return redirect()
-                ->route('ujian_uts.index')
-                ->with('message', 'Data UTS Sudah ditambahkan');
+                // Redirect based on user role
+                if (Auth::user()->role == 'A') {
+                    return redirect()
+                        ->route('ujian_uts.index')
+                        ->with('message', 'Data UTS Sudah ditambahkan');
+                } else {
+                    return redirect()
+                        ->route('ujian_uts.ujian_uts_dosen', Auth::user()->email)
+                        ->with('message', 'Data UTS Sudah ditambahkan');
+                }
             } else {
-                return redirect()
-                ->route('ujian_uts.ujian_uts_dosen', Auth::user()->email)
-                ->with('message', 'Data UTS Sudah ditambahkan');
+                // Redirect back if files are missing
+                return redirect()->back()->with('error', 'Soal tidak ditemukan');
             }
-        } else {
-            // dd($data);
-            // Redirect back if files are missing
-            return redirect()->back()->with('error', 'Soal tidak ditemukan');
+        } catch (\Exception $e) {
+            // Handle any errors that occur during the process
+            return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
         }
-    } catch (\Exception $e) {
-        // Handle any errors that occur during the process
-        return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
     }
-}
 
 
     /**

@@ -14,7 +14,8 @@ class Dosen extends Model
         'nama_dosen',
         'email',
         'no_hp',
-        'password'
+        'password',
+        'tgl_lahir',
     ];
 
     protected $table = 'dosen';
@@ -27,5 +28,23 @@ class Dosen extends Model
     public function kelas()
     {
         return $this->hasMany(Dosen::class, 'di_dosen');
+    }
+
+    public function pembimbingProj()
+    {
+        return $this->hasMany(PembimbingProject::class, 'id_dosen');
+    }
+    public function appProj()
+    {
+        return $this->hasMany(AppProj::class, 'id_dosen');
+    }
+
+    public function penguji()
+    {
+        return $this->hasMany(Penguji::class, 'id_penguji');
+    }
+    public function pembimbing()
+    {
+        return $this->hasMany(Penguji::class, 'id_dosen');
     }
 }

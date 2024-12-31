@@ -20,11 +20,13 @@ class KonfigurasiController extends Controller
         $keterangan = Keterangan::all();
         $kurikulum = Kurikulum::all();
         $perhitungan = Perhitungan::all();
+        $konfigurasi=Konfigurasi::all();
         return view('page.konfigurasi.index')->with([
             'tahun_akademik'=>$tahun_akademik,
             'keterangan'=>$keterangan,
             'kurikulum'=>$kurikulum,
             'perhitungan'=>$perhitungan,
+            'konfigurasi'=>$konfigurasi,
         ]);
     }
 

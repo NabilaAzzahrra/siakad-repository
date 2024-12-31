@@ -14,8 +14,10 @@ class KonfigurasiUjianController extends Controller
     public function index()
     {
         $konfigurasi = Konfigurasi::first();
+        $konfigurasiUjian = KonfigurasiUjian::first();
         return view('page.konfigurasi_ujian.index')->with([
             'konfigurasi' => $konfigurasi,
+            'konfigurasiUjian' => $konfigurasiUjian,
         ]);
     }
 

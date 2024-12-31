@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('mahasiswa', function (Blueprint $table) {
             $table->id();
-            $table->string('identity_user', 50)->unique()->nullable();
+            $table->string('nik', 50)->unique()->nullable();
             $table->string('nim')->nullable()->unique();
             $table->string('nama');
             $table->string('tempat_lahir');
@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('id_kelas')->nullable();
             $table->integer('tingkat')->nullable();
             $table->string('no_hp')->unique();
-            $table->boolean('status')->default(false);
+            $table->boolean('status')->default(true);
             $table->integer('tahun_angkatan');
             $table->string('keaktifan')->default('aktif');
             $table->timestamps();

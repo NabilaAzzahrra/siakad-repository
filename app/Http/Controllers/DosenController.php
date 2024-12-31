@@ -52,6 +52,7 @@ class DosenController extends Controller
             'email' => $request->input('email_dosen'),
             'no_hp' => $request->input('no_hp_dosen'),
             'password' => $request->input('password'),
+            'tgl_lahir' => $request->input('tgl_lahir'),
         ];
 
         $datas = [
@@ -96,6 +97,7 @@ class DosenController extends Controller
             'email' => $request->input('email'),
             'no_hp' => $request->input('no_hp'),
             'password' => $request->input('password'),
+            'tgl_lahir' => $request->input('tgl_lahir'),
         ];
 
         $datas_user = [

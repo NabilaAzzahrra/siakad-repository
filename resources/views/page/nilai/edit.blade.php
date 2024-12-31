@@ -91,6 +91,9 @@
                         <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                             <div class="p-6 text-gray-900 dark:text-gray-100">
                                 <div class="flex flex-col lg:flex-row lg:gap-5 gap-1">
+                                    <button id="exportExcel" class="bg-amber-200 lg:p-3 p-1 rounded-xl font-extrabold text-amber-800 flex items-center justify-center lg:text-[18px] text-sm lg:w-[300px] w-full">
+                                        <i class="fi fi-sr-file-excel mr-4"></i> Export Excel
+                                    </button>
                                     <div
                                         class="bg-sky-200 lg:p-3 p-1 rounded-xl font-extrabold text-sky-800 flex items-center justify-center lg:text-[20px] text-sm w-full">
                                         FORM INPUT PRESENSI
@@ -202,22 +205,22 @@
                                                     $no = 1;
                                                     @endphp
                                                     @foreach ($nilai as $m)
-                                                        @php
-                                                            $jumlahPresensi = DB::table('detail_presensi')
-                                                            ->join('presensi', 'presensi.id_presensi', '=', 'detail_presensi.id_presensi')
-                                                            ->join('jadwal_reguler', 'jadwal_reguler.id_jadwal', '=', 'presensi.id_jadwal')
-                                                            ->where('jadwal_reguler.id_jadwal', $m->id_jadwal)
-                                                            ->where('detail_presensi.nim', $m->nim)
-                                                            ->where('detail_presensi.keterangan', 'HADIR')
-                                                            ->count();
+                                                    @php
+                                                    $jumlahPresensi = DB::table('detail_presensi')
+                                                    ->join('presensi', 'presensi.id_presensi', '=', 'detail_presensi.id_presensi')
+                                                    ->join('jadwal_reguler', 'jadwal_reguler.id_jadwal', '=', 'presensi.id_jadwal')
+                                                    ->where('jadwal_reguler.id_jadwal', $m->id_jadwal)
+                                                    ->where('detail_presensi.nim', $m->nim)
+                                                    ->where('detail_presensi.keterangan', 'HADIR')
+                                                    ->count();
 
-                                                            $kehadiran = null;
-                                                            $jumlah_hadir = $jumlahPresensi;
-                                                            if ($jumlah_hadir < 14) {
-                                                                $kehadiran = $jumlah_hadir * 7;
-                                                            } else {
-                                                                $kehadiran = 100;
-                                                            }
+                                                    $kehadiran = null;
+                                                    $jumlah_hadir = $jumlahPresensi;
+                                                    if ($jumlah_hadir < 14) {
+                                                        $kehadiran=$jumlah_hadir * 7;
+                                                        } else {
+                                                        $kehadiran=100;
+                                                        }
                                                         @endphp
                                                         <tr
                                                         class="bg-white border dark:bg-gray-800 dark:border-gray-700">
@@ -286,6 +289,41 @@
             </div>
         </div>
     </div>
+    <script>
+    document.getElementById('exportExcel').addEventListener('click', function () {
+        // Ambil elemen tabel
+        let table = document.querySelector('table');
+        let tableData = [];
+        let rows = table.querySelectorAll('tr');
+
+        // Looping melalui setiap baris tabel
+        rows.forEach((row, rowIndex) => {
+            let rowData = [];
+            let cells = row.querySelectorAll('th, td');
+            cells.forEach((cell) => {
+                // Jika ada input, ambil nilai dari atribut value
+                let input = cell.querySelector('input');
+                if (input) {
+                    rowData.push(input.value.trim());
+                } else {
+                    // Ambil teks langsung jika tidak ada input
+                    rowData.push(cell.textContent.trim());
+                }
+            });
+            tableData.push(rowData);
+        });
+
+        // Buat workbook dan worksheet dari SheetJS
+        let worksheet = XLSX.utils.aoa_to_sheet(tableData);
+        let workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Data Nilai');
+
+        // Download file Excel
+        XLSX.writeFile(workbook, 'Data_Nilai.xlsx');
+    });
+</script>
+
+
     <script>
         function verifyNilai(route, idJadwal) {
             if (idJadwal) {

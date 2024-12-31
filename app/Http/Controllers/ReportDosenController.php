@@ -15,12 +15,24 @@ class ReportDosenController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $dosen = DB::table('dosen')->paginate(30);
-        return view('page.report.dosen')->with([
-            'dosen' => $dosen,
-        ]);
+        $dosen = Dosen::query()  // Gunakan model Eloquent
+            ->when($request->input('search'), function ($query) use ($request) {
+                $search = $request->input('search');
+                $query->where('nama_dosen', 'like', '%' . $search . '%')
+                    ->orWhere('email', 'like', '%' . $search . '%')
+                    ->orWhere('no_hp', 'like', '%' . $search . '%');
+            })
+            ->paginate(30);
+
+        // Untuk AJAX request
+        if ($request->ajax()) {
+            return view('partials.reportDosen', compact('dosen'))->render();
+        }
+
+        // Untuk request biasa (non-AJAX)
+        return view('page.report.dosen', compact('dosen'));
     }
 
     /**

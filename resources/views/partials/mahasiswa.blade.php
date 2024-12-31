@@ -28,12 +28,12 @@
             <td class="px-6 py-4 bg-gray-100">
                 {{ $m->no_hp }}
             </td>
-            <td class="px-6 py-4">
+            <!-- <td class="px-6 py-4">
                 <span class="{{ $m->status ? 'bg-green-500' : 'bg-red-500' }} p-2 text-white rounded-full">
                     {{ $m->status ? 'Can Access' : 'No Access' }}
                 </span>
-            </td>
-            <td class="px-6 py-4 bg-gray-100">
+            </td> -->
+            <td class="px-6 py-4">
                 <span
                     class="{{ $m->keaktifan == 'aktif' ? 'bg-green-500' : ($m->keaktifan == 'cuti' ? 'bg-amber-500' : 'bg-red-500') }} p-2 text-white rounded-full">
                     {{ strtoupper($m->keaktifan) }}

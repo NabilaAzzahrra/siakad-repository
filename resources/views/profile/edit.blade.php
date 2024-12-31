@@ -19,7 +19,7 @@
                                 <div>{{ $mahasiswa->nim }}</div>
                                 <div class="text-sm">{{ $mahasiswa->kelas->jurusan->jurusan }}</div>
                                 <input type="hidden" class="form-control" id="identity" name="identity"
-                                    value={{ $mahasiswa->identity_user }}>
+                                    value={{ $mahasiswa->nik }}>
                             </div>
                         </div>
 
@@ -633,7 +633,7 @@
         const identity = document.getElementById('identity').value;
         console.log(identity);
 
-        await axios.get(`https://api.politekniklp3i-tasikmalaya.ac.id/pmb/applicants/${identity}`, {
+        await axios.get(`https://pmb-api.politekniklp3i-tasikmalaya.ac.id/applicants/nik/${identity}`, {
                 headers: {
                     'lp3i-api-key': 'aEof9XqcH34k3g6IbJcQLxGY',
                 }

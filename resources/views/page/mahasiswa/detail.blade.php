@@ -69,7 +69,7 @@
                                                         <option value="4">4</option>
                                                     </select>
                                                 </div>
-                                                <div class=" w-full">
+                                                <!-- <div class=" w-full">
                                                     <label for="status"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                                         Akses Ujian
@@ -80,7 +80,7 @@
                                                         <option value="false">No Access</option>
                                                         <option value="true">Can Access</option>
                                                     </select>
-                                                </div>
+                                                </div> -->
                                                 <div class=" w-full">
                                                     <label for="keaktifan"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -119,8 +119,8 @@
                                                         <th scope="col" class="px-6 py-3 text-center">TINGKAT</th>
                                                         <th scope="col" class="px-6 py-3 text-center bg-gray-100">NO
                                                             HP</th>
-                                                        <th scope="col" class="px-6 py-3 text-center">UJIAN</th>
-                                                        <th scope="col" class="px-6 py-3 text-center bg-gray-100">
+                                                        <!-- <th scope="col" class="px-6 py-3 text-center">UJIAN</th> -->
+                                                        <th scope="col" class="px-6 py-3 text-center">
                                                             KEAKTIFAN</th>
                                                     </tr>
                                                 </thead>
@@ -156,10 +156,10 @@
                                                                             ? 'CUTI'
                                                                             : 'DO');
                                                             @endphp
-                                                            <td class="px-6 py-4"><span
+                                                            <!-- <td class="px-6 py-4"><span
                                                                     class="{{ $statusClass }} p-2 text-white rounded-full">{{ $statusText }}</span>
-                                                            </td>
-                                                            <td class="px-6 py-4 bg-gray-100"><span
+                                                            </td> -->
+                                                            <td class="px-6 py-4"><span
                                                                     class="{{ $keaktifanClass }} p-2 text-white rounded-full">{{ $keaktifanText }}</span>
                                                             </td>
                                                         </tr>

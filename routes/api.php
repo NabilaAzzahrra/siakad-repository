@@ -5,6 +5,7 @@ use App\Http\Controllers\API\DetailPresensiAPIController;
 use App\Http\Controllers\API\DetailUasAPIController;
 use App\Http\Controllers\API\DetailUtsAPIController;
 use App\Http\Controllers\API\DosenAPIController;
+use App\Http\Controllers\API\FakultasAPIController;
 use App\Http\Controllers\API\FormatifAPIController;
 use App\Http\Controllers\API\HariAPIController;
 use App\Http\Controllers\API\IntegrationPMBOnline;
@@ -67,6 +68,7 @@ Route::get('/uas', [UasAPIController::class, 'get_all'])->name('uas.get');
 Route::get('/detail_uas', [DetailUasAPIController::class, 'get_all'])->name('detail_uas.get');
 Route::get('/formatif', [FormatifAPIController::class, 'get_all'])->name('formatif.get');
 Route::get('/mahasiswa', [MahasiswaAPIController::class, 'get_all'])->name('mahasiswa.get');
+Route::get('/fakultas', [FakultasAPIController::class, 'get_all'])->name('fakultas.get');
 // Route::get('/recruitment/{id}', [PukulAPIController::class, 'get_code'])->name('recruitment.get');
 
 Route::get('/user', function (Request $request) {

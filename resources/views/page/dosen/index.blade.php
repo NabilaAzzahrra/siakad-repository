@@ -37,7 +37,7 @@
                                         <label for="no_hp_dosen"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No HP
                                             Dosen</label>
-                                        <input type="text" id="no_hp_dosen" name="no_hp_dosen"
+                                        <input type="number" id="no_hp_dosen" name="no_hp_dosen"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             placeholder="Masukan No HP Dosen disini ..." required />
                                     </div>
@@ -46,6 +46,13 @@
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password
                                             Dosen</label>
                                         <input type="password" id="password" name="password"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            placeholder="Masukan Password Dosen disini ..." required />
+                                    </div>
+                                    <div class="mb-5">
+                                        <label for="tgl_lahir"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal Lahir</label>
+                                        <input type="date" id="tgl_lahir" name="tgl_lahir"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             placeholder="Masukan Password Dosen disini ..." required />
                                     </div>
@@ -73,6 +80,7 @@
                                                 <th>Email Dosen</th>
                                                 <th>No HP Dosen</th>
                                                 <th>Password Dosen</th>
+                                                <th>Tanggal Lahir</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -138,6 +146,12 @@
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 id="" placeholder="Masukan Password Dosen disini...">
                         </div>
+                        <div>
+                            <label for="text" class="block mb-2 text-sm font-medium text-gray-900">Tanggal Lahir</label>
+                            <input type="date" id="tgl_lahirs" name="tgl_lahir"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                id="" placeholder="Masukan Password Dosen disini...">
+                        </div>
                     </div>
                     <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
                         <button type="submit" id="formSourceButton"
@@ -192,6 +206,11 @@
                         return data;
                     }
                 }, {
+                    data: 'tgl_lahir',
+                    render: (data, type, row) => {
+                        return data;
+                    }
+                }, {
                     data: {
                         no: 'no',
                         name: 'name'
@@ -199,7 +218,7 @@
                     render: (data) => {
                         let editUrl =
                             `<button type="button" data-id="${data.id}"
-                                                        data-modal-target="sourceModal" data-nama_dosen="${data.nama_dosen}" data-email="${data.email}" data-kode_dosen="${data.kode_dosen}" data-no_hp="${data.no_hp}" data-password="${data.password}"
+                                                        data-modal-target="sourceModal" data-nama_dosen="${data.nama_dosen}" data-email="${data.email}" data-kode_dosen="${data.kode_dosen}" data-no_hp="${data.no_hp}" data-password="${data.password}" data-tgl_lahir="${data.tgl_lahir}"
                                                         onclick="editSourceModal(this)"
                                                         class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-xl h-10 w-10 text-xs text-white">
                                                        <i class="fas fa-edit"></i>
@@ -221,6 +240,7 @@
             const kode_dosen = button.dataset.kode_dosen;
             const no_hp = button.dataset.no_hp;
             const password = button.dataset.password;
+            const tgl_lahir = button.dataset.tgl_lahir;
             let url = "{{ route('dosen.update', ':id') }}".replace(':id', id);
             console.log(url);
             let status = document.getElementById(modalTarget);
@@ -230,6 +250,7 @@
             document.getElementById('email_lama').value = kode_dosen;
             document.getElementById('no_hps').value = no_hp;
             document.getElementById('passwords').value = password;
+            document.getElementById('tgl_lahirs').value = tgl_lahir;
             document.getElementById('formSourceButton').innerText = 'Simpan';
             document.getElementById('formSourceModal').setAttribute('action', url);
             let csrfToken = document.createElement('input');
@@ -267,5 +288,35 @@
                 }
             }
         }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const noHpInput = document.getElementById('no_hp_dosen');
+
+            // Fungsi untuk memvalidasi dan memformat input nomor HP
+            noHpInput.addEventListener('input', function(event) {
+                let value = event.target.value;
+
+                // Jika input pertama kali, mulai dengan '62'
+                if (value.length === 1 && value !== '6') {
+                    event.target.value = '62'; // Ubah input pertama menjadi '62'
+                }
+
+                // Setelah kode negara 62, hanya angka '8' yang bisa dimasukkan
+                if (value.length === 3 && value[2] !== '8') {
+                    event.target.value = '628'; // Set '628' jika lebih dari 2 digit dan bukan '8'
+                }
+
+                // Pastikan hanya angka yang bisa dimasukkan setelah kode negara dan angka 8
+                if (value.length > 3 && !/^\d+$/.test(value)) {
+                    event.target.value = value.replace(/[^0-9]/g, ''); // Hapus karakter non-numeric
+                }
+
+                // Jika lebih dari 3 digit, pastikan formatnya valid (misalnya no HP Indonesia)
+                if (value.length > 3 && value[2] !== '8') {
+                    event.target.value = '628'; // Set kembali ke '628' jika format tidak benar
+                }
+            });
+        });
     </script>
 </x-app-layout>
