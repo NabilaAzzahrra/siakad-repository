@@ -313,12 +313,12 @@
                                     <button
                                         class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-black dark:text-gray-400 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                                         <div
-                                            class="text-[16px] font-bold tracking-wide {{ request()->routeIs('dosenPembimbing.index') || request()->routeIs('penguji.index') || request()->routeIs('sidang.index') || request()->routeIs('daftarSidang.index') || request()->routeIs('bimbinganMahasiswa.index') || request()->routeIs('penguji.index') ? 'text-[#F2994A]' : '' }}">
+                                            class="text-[16px] font-bold tracking-wide {{ request()->routeIs('dosenPembimbing.index') || request()->routeIs('revisiProj.index') || request()->routeIs('penguji.index') || request()->routeIs('sidang.index') || request()->routeIs('daftarSidang.index') || request()->routeIs('bimbinganMahasiswa.index') || request()->routeIs('penguji.index') ? 'text-[#F2994A]' : '' }}">
                                             Project</div>
 
                                         <div class="ms-1 mt-1">
                                             <i
-                                                class="fi fi-rr-caret-down {{ request()->routeIs('dosenPembimbing.index') || request()->routeIs('penguji.index') || request()->routeIs('sidang.index') || request()->routeIs('daftarSidang.index') || request()->routeIs('bimbinganMahasiswa.index') || request()->routeIs('penguji.index') ? 'text-[#F2994A]' : '' }}"></i>
+                                                class="fi fi-rr-caret-down {{ request()->routeIs('dosenPembimbing.index') ||request()->routeIs('revisiProj.index') || request()->routeIs('penguji.index') || request()->routeIs('sidang.index') || request()->routeIs('daftarSidang.index') || request()->routeIs('bimbinganMahasiswa.index') || request()->routeIs('penguji.index') ? 'text-[#F2994A]' : '' }}"></i>
                                         </div>
                                     </button>
                                 </x-slot>
@@ -354,7 +354,7 @@
                                         {{ __('Sidang') }}
                                     </x-dropdown-link>
 
-                                    <x-dropdown-link :href="route('penguji.index')" :class="request()->routeIs('penguji.index') ? 'text-red-500 font-bold' : ''">
+                                    <x-dropdown-link :href="route('revisiProj.index')" :class="request()->routeIs('revisiProj.index') ? 'text-red-500 font-bold' : ''">
                                         {{ __('Revisi') }}
                                     </x-dropdown-link>
                                 </x-slot>

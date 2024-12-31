@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Revisi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class RevisiController extends Controller
 {
@@ -13,7 +14,35 @@ class RevisiController extends Controller
      */
     public function index()
     {
-        //
+        $data = DB::table('revisi')
+            ->join('mahasiswa', 'mahasiswa.nim', '=', 'revisi.nim')
+            ->join('penguji', 'penguji.nim', '=', 'revisi.nim')
+            ->join('penguji as pengujiSidang', 'pengujiSidang.nim', '=', 'revisi.nim')
+            ->join('penguji as pembimbingSidang', 'pembimbingSidang.nim', '=', 'revisi.nim')
+            ->join('dosen as dosenPenguji', 'dosenPenguji.id', '=', 'pengujiSidang.id_penguji')
+            ->join('dosen as dosenPembimbing', 'dosenPembimbing.id', '=', 'pembimbingSidang.id_penguji')
+            ->join('kelas', 'kelas.id', '=', 'mahasiswa.id_kelas')
+            ->join('jurusan', 'jurusan.id', '=', 'kelas.id_jurusan')
+            ->join('app_proj', 'app_proj.nim', '=', 'revisi.nim')
+            ->join('ruang', 'ruang.id', '=', 'penguji.id_ruang')
+            ->select(
+                'mahasiswa.*', // Semua data dari tabel mahasiswa
+                'revisi.*', // Semua data dari tabel revisi
+                'revisi.verifikasi as verifikasi_revisi', // Semua data dari tabel revisi
+                'kelas.kelas as nama_kelas', // Nama kelas
+                'jurusan.jurusan as nama_jurusan', // Nama jurusan
+                'app_proj.*', // Semua data dari tabel app_proj
+                'penguji.tgl_sidang', // Semua data dari tabel app_proj
+                'penguji.pukul', // Semua data dari tabel app_proj
+                'ruang.ruang', // Semua data dari tabel app_proj
+                'dosenPenguji.nama_dosen as nama_dosen_penguji', // Nama dosen penguji
+                'dosenPembimbing.nama_dosen as nama_dosen_pembimbing' // Nama dosen pembimbing
+            )
+            ->paginate(10);
+
+        return view('page.revisi.index')->with([
+            'data' => $data,
+        ]);
     }
 
     /**

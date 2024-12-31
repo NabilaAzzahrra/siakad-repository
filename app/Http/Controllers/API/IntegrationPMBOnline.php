@@ -15,7 +15,7 @@ class IntegrationPMBOnline extends Controller
 
         // return response($request->all());
 
-        if ($request->major === "TO24L") {
+        if ($request->major === "TO25L") {
             $yearNow = date('y');
 
             $lastNIM = Mahasiswa::where('nim', 'like', $yearNow . '%')
@@ -77,7 +77,7 @@ class IntegrationPMBOnline extends Controller
             ]);
         } else {
             return response()->json([
-            'message'=> 'GA BOLEH YA, NO NO' 
+            'message'=> 'GA BOLEH YA, NO NO'
             ]);
         }
     }
