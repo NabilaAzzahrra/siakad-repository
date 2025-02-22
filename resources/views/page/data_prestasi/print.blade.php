@@ -736,6 +736,7 @@
                                     $no = 1;
                                     $jumlahSks_4 = 0;
                                     $jumlahMutu_4 = 0;
+                                    $jumlahMutuAp = 0;
                                     $indexPrestasi_4 = 0;
                                 @endphp
                                 @foreach ($detail_kurikulum_4 as $dk4)
@@ -817,6 +818,7 @@
                                             } elseif ($huruf_4 == 'A') {
                                                 $grade_4 = '4.0';
                                             }
+
                                             $sks_4 = $dk4->sks;
                                             $mutu_4 = $grade_4 * $sks_4;
                                             $jumlahSks_4 += $sks_4;
@@ -842,23 +844,91 @@
                                             $sks_4 = $dk4->sks;
                                             $jumlahSks_4 += $sks_4;
                                         }
+
+                                        // NILAI APLIKASI PROJECT
+                                        $nilaiAplikasi = $nilaiAplikasiProject->where('nim', $student->nim)->first();
+                                        if (!$nilaiAplikasi) {
+                                            $apPresensi = 0;
+                                            $apTugas = 0;
+                                            $apFormatif = 0;
+                                            $apUts = 0;
+                                            $apUas = 0;
+                                            $jumlahNilaiAp = 0;
+                                        } else {
+                                            $apPresensi = $nilaiAplikasi->presensi;
+                                            $apTugas = $nilaiAplikasi->tugas;
+                                            $apFormatif = $nilaiAplikasi->formatif;
+                                            $apUts = $nilaiAplikasi->uts;
+                                            $apUas = $nilaiAplikasi->uas;
+                                            $jumlahNilaiAp =
+                                                ($apPresensi + $apTugas + $apFormatif + $apUts + $apUas) / 5;
+
+                                            if ($jumlahNilaiAp < 50) {
+                                                $hurufAp = 'E';
+                                            } elseif ($jumlahNilaiAp < 55) {
+                                                $hurufAp = 'D';
+                                            } elseif ($jumlahNilaiAp < 60) {
+                                                $hurufAp = 'C-';
+                                            } elseif ($jumlahNilaiAp < 65) {
+                                                $hurufAp = 'C';
+                                            } elseif ($jumlahNilaiAp < 70) {
+                                                $hurufAp = 'C+';
+                                            } elseif ($jumlahNilaiAp < 75) {
+                                                $hurufAp = 'B-';
+                                            } elseif ($jumlahNilaiAp < 80) {
+                                                $hurufAp = 'B';
+                                            } elseif ($jumlahNilaiAp < 85) {
+                                                $hurufAp = 'B+';
+                                            } elseif ($jumlahNilaiAp < 90) {
+                                                $hurufAp = 'A-';
+                                            } else {
+                                                $hurufAp = 'A';
+                                            }
+
+                                            if ($hurufAp == 'E') {
+                                                $gradeAp = '0.0';
+                                            } elseif ($hurufAp == 'D') {
+                                                $gradeAp = '1.0';
+                                            } elseif ($hurufAp == 'C-') {
+                                                $gradeAp = '1.6';
+                                            } elseif ($hurufAp == 'C') {
+                                                $gradeAp = '2.0';
+                                            } elseif ($hurufAp == 'C+') {
+                                                $gradeAp = '2.3';
+                                            } elseif ($hurufAp == 'B-') {
+                                                $gradeAp = '2.6';
+                                            } elseif ($hurufAp == 'B') {
+                                                $gradeAp = '3.0';
+                                            } elseif ($hurufAp == 'B+') {
+                                                $gradeAp = '3.3';
+                                            } elseif ($hurufAp == 'A-') {
+                                                $gradeAp = '3.6';
+                                            } elseif ($hurufAp == 'A') {
+                                                $gradeAp = '4.0';
+                                            }
+
+                                            $mutuAp = $gradeAp * $sks_4;
+                                            $jumlahMutuAp += $mutuAp;
+                                            $indexPrestasiAp = $jumlahMutuAp / $jumlahSks_4;
+                                        }
                                     @endphp
                                     <tr>
                                         <td class="border border-1 border-black">{{ $no++ }}</td>
                                         <td class="border border-1 border-black text-left pl-2">
                                             {{ $dk4->materi_ajar }}</td>
                                         <td class="border border-1 border-black">
-                                            {{ $huruf_4 }}
+                                            {{ $nilaiAplikasi ? $hurufAp : $huruf_4 }}
                                         </td>
                                         <td class="border border-1 border-black">
-                                            {{ $grade_4 }}
+                                            {{ $nilaiAplikasi ? $gradeAp : $grade_4 }}
                                         </td>
                                         <td class="border border-1 border-black">
                                             {{ $dk4->sks }}
                                         </td>
                                         <td class="border border-1 border-black">
-                                            {{ $mutu_4 }}
+                                            {{ $nilaiAplikasi ? $mutuAp : $mutu_4 }}
                                         </td>
+
                                     </tr>
                                 @endforeach
                                 <tr>
@@ -866,7 +936,8 @@
                                         {{ number_format($indexPrestasi_4, 2) }}
                                     </td>
                                     <td class="border border-1 border-black">{{ $jumlahSks_4 }}</td>
-                                    <td class="border border-1 border-black">{{ $jumlahMutu_4 }}</td>
+                                    <td class="border border-1 border-black">
+                                        {{ $dk4->id_materi_ajar == 10 ? $jumlahMutuAp : $jumlahMutu_4 }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -878,24 +949,29 @@
                         $ip1 = $indexPrestasi_1;
                         $ip2 = $indexPrestasi_2;
                         $ip3 = $indexPrestasi_3;
-                        $ip4 = $indexPrestasi_4;
+                        $ip4 = $nilaiAplikasi ? $indexPrestasiAp : $indexPrestasi_4;
 
+                        // $ipArray = [$ip1, $ip2, $ip3, $ip4];
+
+                        // $filteredIPs = array_filter($ipArray, function ($ip) {
+                        //     return $ip != 0;
+                        // });
+
+                        // $jumlah_ip = count($filteredIPs);
                         $ipArray = [$ip1, $ip2, $ip3, $ip4];
+                                $jumlah_ip = count($ipArray);
 
-                        $filteredIPs = array_filter($ipArray, function ($ip) {
-                            return $ip != 0;
-                        });
+                                $total_ip = array_sum($ipArray);
 
-                        $jumlah_ip = count($filteredIPs);
-
-                        $total_ip = array_sum($filteredIPs);
+                        // $total_ip = array_sum($filteredIPs);
 
                         if ($jumlah_ip > 0) {
                             $ipk = $total_ip / $jumlah_ip;
                         }
                     @endphp
 
-                    <div class="text-xs mt-4 flex items-center justify-start font-bold ml-10">INDEKS PRESTASI KUMULATIF : {{ number_format($ipk, 2) }}</div>
+                    <div class="text-xs mt-4 flex items-center justify-start font-bold ml-10">INDEKS PRESTASI KUMULATIF
+                        : {{ number_format($ipk, 2) }}</div>
                 </div>
                 <div class="italic text-left text-xs ml-10 mt-4 mr-4 font-normal">
                     <div>Catatan:</div>
@@ -967,5 +1043,5 @@
 
 </html>
 <script>
-    window.print();
+    // window.print();
 </script>

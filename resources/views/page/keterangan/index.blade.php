@@ -1,7 +1,9 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            <div class="flex items-center">Master<i class="fi fi-rr-caret-right mt-1"></i> Jadwal<i class="fi fi-rr-caret-right mt-1"></i> <span class="text-red-500">Keterangan</span></div>        </h2>
+            <div class="flex items-center">Master<i class="fi fi-rr-caret-right mt-1"></i> Jadwal<i
+                    class="fi fi-rr-caret-right mt-1"></i> <span class="text-red-500">Keterangan</span></div>
+        </h2>
     </x-slot>
 
     <div class="py-12">
@@ -10,7 +12,8 @@
                 <div class="w-full md:w-3/12 p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
+                            <div
+                                class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
                                 FORM INPUT KETERANGAN
                             </div>
                             <form action="{{ route('keterangan.store') }}" method="post">
@@ -24,7 +27,8 @@
                                             placeholder="Masukan keterangan disini ..." required />
                                     </div>
                                     <button type="submit"
-                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i class="fi fi-rr-disk "></i></button>
+                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i
+                                            class="fi fi-rr-disk "></i></button>
                                 </div>
                             </form>
                         </div>
@@ -33,7 +37,8 @@
                 <div class="w-full md:w-9/12 p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
+                            <div
+                                class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
                                 DATA KETERANGAN
                             </div>
                             <div class="flex justify-center">
@@ -74,7 +79,8 @@
                     <div class="flex flex-col  p-4 space-y-6">
 
                         <div class="mb-5">
-                            <label for="text" class="block mb-2 text-sm font-medium text-gray-900">Keterangan</label>
+                            <label for="text"
+                                class="block mb-2 text-sm font-medium text-gray-900">Keterangan</label>
                             <input type="text" id="keterangans" name="keterangan"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 id="" placeholder="Masukan keterangan disini...">
@@ -167,22 +173,85 @@
         }
 
         const keteranganDelete = async (id, keterangan) => {
-            let tanya = confirm(`Apakah anda yakin untuk menghapus keterangan ${keterangan} ?`);
-            if (tanya) {
-                await axios.post(`/keterangan/${id}`, {
-                        '_method': 'DELETE',
-                        '_token': $('meta[name="csrf-token"]').attr('content')
-                    })
-                    .then(function(response) {
-                        // Handle success
-                        location.reload();
-                    })
-                    .catch(function(error) {
-                        // Handle error
-                        alert('Error deleting record');
-                        console.log(error);
-                    });
-            }
+            Swal.fire({
+                title: `Apakah Anda yakin?`,
+                text: `Data keterangan ${keterangan} akan dihapus secara permanen!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await axios.post(`/keterangan/${id}`, {
+                            '_method': 'DELETE',
+                            '_token': $('meta[name="csrf-token"]').attr('content')
+                        })
+                        .then(function(response) {
+                            Swal.fire({
+                                title: 'Terhapus!',
+                                text: `Data keterangan ${keterangan} berhasil dihapus.`,
+                                icon: 'success',
+                                confirmButtonText: 'OK',
+                                allowOutsideClick: false
+                            }).then(() => {
+                                // Refresh halaman setelah menekan tombol OK
+                                location.reload();
+                            });
+                        })
+                        .catch(function(error) {
+                            // Alert jika terjadi kesalahan
+                            Swal.fire({
+                                title: 'Gagal!',
+                                text: 'Terjadi kesalahan saat menghapus data.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                            console.log(error);
+                        });
+                }
+            });
         }
     </script>
+    @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+
+        @if (session('message_insert'))
+            <script>
+                Swal.fire({
+                    title: 'Berhasil!',
+                    text: "{{ session('message_insert') }}",
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        const swalBtn = Swal.getConfirmButton();
+                        swalBtn.disabled = false;
+                        swalBtn.textContent = "OK";
+                    }
+                });
+            </script>
+        @endif
+
+        @if (session('message_update'))
+            <script>
+                Swal.fire({
+                    title: 'Update Berhasil!',
+                    text: "{{ session('message_update') }}",
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        const swalBtn = Swal.getConfirmButton();
+                        swalBtn.disabled = false;
+                        swalBtn.textContent = "OK";
+                    }
+                });
+            </script>
+        @endif
+
+    @endpush
+
 </x-app-layout>

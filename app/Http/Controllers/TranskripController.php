@@ -239,6 +239,7 @@ class TranskripController extends Controller
                 $nilaiPerMahasiswa4[$itemNilai4->nim][$itemNilai4->id_jadwal] = $itemNilai4;
             }
         }
+        $nilaiAplikasiProject = Nilai::whereIn('nilai.nim', $user_ids)->get();
 
         return view('page.transkrip.print')->with([
             'stu_data' => $result,
@@ -256,6 +257,7 @@ class TranskripController extends Controller
             'detail_kurikulum_3' => $detail_kurikulum_3,
             'detail_kurikulum_4' => $detail_kurikulum_4,
             'bulan_tahuns' => $bulan_tahuns,
+            'nilaiAplikasiProject' => $nilaiAplikasiProject
         ]);
     }
 

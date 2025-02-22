@@ -230,7 +230,7 @@
                     TRANSKRIP AKADEMIK
                 </div>
                 <div class=" top-[180px] left-0 right-0 text-center text-sm font-bold">
-                    No. {{ $formatted_hasil }}.T001.025.T.{{date('my', strtotime($bulan_tahuns))}}
+                    No. {{ $formatted_hasil }}.T001.025.T.{{ date('my', strtotime($bulan_tahuns)) }}
                 </div>
                 @php
                     $hasil++;
@@ -715,6 +715,7 @@
                                 $no = 1;
                                 $jumlahSks_4 = 0;
                                 $jumlahMutu_4 = 0;
+                                $jumlahMutuAp = 0;
                                 $indexPrestasi_4 = 0;
                             @endphp
                             @foreach ($detail_kurikulum_4 as $dk4)
@@ -818,6 +819,73 @@
                                         $sks_4 = $dk4->sks;
                                         $jumlahSks_4 += $sks_4;
                                     }
+
+                                    // NILAI APLIKASI PROJECT
+                                    $nilaiAplikasi = $nilaiAplikasiProject->where('nim', $student->nim)->first();
+                                    if (!$nilaiAplikasi) {
+                                        $apPresensi = 0;
+                                        $apTugas = 0;
+                                        $apFormatif = 0;
+                                        $apUts = 0;
+                                        $apUas = 0;
+                                        $jumlahNilaiAp = 0;
+                                    } else {
+                                        $apPresensi = $nilaiAplikasi->presensi;
+                                        $apTugas = $nilaiAplikasi->tugas;
+                                        $apFormatif = $nilaiAplikasi->formatif;
+                                        $apUts = $nilaiAplikasi->uts;
+                                        $apUas = $nilaiAplikasi->uas;
+                                        $jumlahNilaiAp = ($apPresensi + $apTugas + $apFormatif + $apUts + $apUas) / 5;
+
+                                        if ($jumlahNilaiAp < 50) {
+                                            $hurufAp = 'E';
+                                        } elseif ($jumlahNilaiAp < 55) {
+                                            $hurufAp = 'D';
+                                        } elseif ($jumlahNilaiAp < 60) {
+                                            $hurufAp = 'C-';
+                                        } elseif ($jumlahNilaiAp < 65) {
+                                            $hurufAp = 'C';
+                                        } elseif ($jumlahNilaiAp < 70) {
+                                            $hurufAp = 'C+';
+                                        } elseif ($jumlahNilaiAp < 75) {
+                                            $hurufAp = 'B-';
+                                        } elseif ($jumlahNilaiAp < 80) {
+                                            $hurufAp = 'B';
+                                        } elseif ($jumlahNilaiAp < 85) {
+                                            $hurufAp = 'B+';
+                                        } elseif ($jumlahNilaiAp < 90) {
+                                            $hurufAp = 'A-';
+                                        } else {
+                                            $hurufAp = 'A';
+                                        }
+
+                                        if ($hurufAp == 'E') {
+                                            $gradeAp = '0.0';
+                                        } elseif ($hurufAp == 'D') {
+                                            $gradeAp = '1.0';
+                                        } elseif ($hurufAp == 'C-') {
+                                            $gradeAp = '1.6';
+                                        } elseif ($hurufAp == 'C') {
+                                            $gradeAp = '2.0';
+                                        } elseif ($hurufAp == 'C+') {
+                                            $gradeAp = '2.3';
+                                        } elseif ($hurufAp == 'B-') {
+                                            $gradeAp = '2.6';
+                                        } elseif ($hurufAp == 'B') {
+                                            $gradeAp = '3.0';
+                                        } elseif ($hurufAp == 'B+') {
+                                            $gradeAp = '3.3';
+                                        } elseif ($hurufAp == 'A-') {
+                                            $gradeAp = '3.6';
+                                        } elseif ($hurufAp == 'A') {
+                                            $gradeAp = '4.0';
+                                        }
+
+                                        $mutuAp = $gradeAp * $sks_4;
+                                        $jumlahMutuAp += $mutuAp;
+
+                                        $indexPrestasiAp = $jumlahMutuAp / $jumlahSks_4;
+                                    }
                                 @endphp
                                 <tr>
                                     <td class="border border-1 border-black text-[10px] font-normal"
@@ -832,13 +900,13 @@
                                     </td>
                                     <td class="border border-1 border-black text-[10px] font-normal"
                                         style="padding: 0; line-height: 1; padding-left: 10px; padding-top:2px; padding-bottom:2px;">
-                                        {{ $grade_4 }}</td>
+                                        {{ $nilaiAplikasi ? $gradeAp : $grade_4 }}</td>
                                     <td class="border border-1 border-black text-[10px] font-normal"
                                         style="padding: 0; line-height: 1; padding-left: 10px; padding-top:2px; padding-bottom:2px;">
-                                        {{ $huruf_4 }}</td>
+                                        {{ $nilaiAplikasi ? $hurufAp : $huruf_4 }}</td>
                                     <td class="border border-1 border-black text-[10px] font-normal"
                                         style="padding: 0; line-height: 1; padding-left: 10px; padding-top:2px; padding-bottom:2px;">
-                                        {{ $mutu_4 }}</td>
+                                        {{ $nilaiAplikasi ? $mutuAp : $mutu_4 }}</td>
                                 </tr>
                             @endforeach
                             @php
@@ -855,7 +923,7 @@
                                 $ip1 = $indexPrestasi_1;
                                 $ip2 = $indexPrestasi_2;
                                 $ip3 = $indexPrestasi_3;
-                                $ip4 = $indexPrestasi_4;
+                                $ip4 = $nilaiAplikasi ? $indexPrestasiAp : $indexPrestasi_4;
 
                                 $ipArray = [$ip1, $ip2, $ip3, $ip4];
                                 $jumlah_ip = count($ipArray);
@@ -864,6 +932,18 @@
 
                                 if ($jumlah_ip > 0) {
                                     $ipk = $total_ip / $jumlah_ip;
+                                }
+
+                                if ($ipk < 2) {
+                                    $hasilIndexPrestasiK = 'KURANG';
+                                } elseif ($ipk < 2.6) {
+                                    $hasilIndexPrestasiK = 'CUKUP';
+                                } elseif ($ipk < 3) {
+                                    $hasilIndexPrestasiK = 'BAIK';
+                                } elseif ($ipk < 3.6) {
+                                    $hasilIndexPrestasiK = 'MEMUASKAN';
+                                } elseif ($ipk >= 3.6) {
+                                    $hasilIndexPrestasiK = 'SANGAT MEMUASKAN';
                                 }
 
                             @endphp
@@ -877,17 +957,18 @@
                                 <th colspan="2" class="border border-1 border-black text-[10px]"
                                     style="padding: 0; line-height: 1; padding-top:2px; padding-bottom:2px;"></th>
                                 <th class="border border-1 border-black text-[10px]"
-                                    style="padding: 0; line-height: 1; padding-top:2px; padding-bottom:2px;">00.00</th>
+                                    style="padding: 0; line-height: 1; padding-top:2px; padding-bottom:2px;">
+                                    {{ $jumlah_ip }}</th>
                             </tr>
                             <tr>
                                 <th colspan="2" class="border border-1 border-black text-[10px] text-left"
                                     style="padding: 0; line-height: 1; padding-top:2px; padding-bottom:2px; padding-left:4px;">
                                     GRADE
                                     POINT
-                                    AVERAGE: 0.64</th>
+                                    AVERAGE: {{ number_format($ipk, 2) }}</th>
                                 <th colspan="4" class="border border-1 border-black text-[10px] text-left"
                                     style="padding: 0; line-height: 1; padding-top:2px; padding-bottom:2px; padding-left:4px;">
-                                    REMARK: KURANG</th>
+                                    REMARK: {{ $hasilIndexPrestasiK }}</th>
                             </tr>
                         </tbody>
                     </table>

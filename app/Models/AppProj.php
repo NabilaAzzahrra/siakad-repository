@@ -27,4 +27,12 @@ class AppProj extends Model
     {
         return $this->belongsTo(Dosen::class, 'id_dosen', 'id');
     }
+    public function penguji()
+    {
+        return $this->belongsTo(Penguji::class, 'nim', 'nim');
+    }
+    public function revisi()
+    {
+        return $this->hasMany(Revisi::class, 'nim');
+    }
 }

@@ -111,6 +111,7 @@ class ProjectController extends Controller
         $detailRevisi = DetailRevisi::where('nim', Auth::user()->email)->first();
 
         $pembimbing = Pembimbing::where('nim', Auth::user()->email)->first();
+        $penguji = Penguji::where('nim', Auth::user()->email)->first();
 
         $penguji = DB::table('app_proj')
             ->join('dosen as dosen_pembimbing', 'dosen_pembimbing.id', '=', 'app_proj.id_dosen')
@@ -125,7 +126,14 @@ class ProjectController extends Controller
             ->where('penguji.nim', Auth::user()->email)
             ->first();
 
+        $countBimbingan = Bimbingan::where('nim', $id)->where('verifikasi', 'SUDAH')->count();
+        $verifiAppProj = AppProj::where('nim', $id)->first();
+
         $dosen = PembimbingProject::all();
+
+        //dd($judul);
+        $read = $judul->count() > 0 ? 'readonly' : '';
+
 
         if ($appProj == null) {
             $appProjVerifikasi = '';
@@ -146,15 +154,19 @@ class ProjectController extends Controller
         }
 
         if ($revisi == null) {
+            $revisiData = '';
             $revisiFile = '';
-            $revisiVerifikasi = '';
+            $revisiVerifikasiPembimbing = '';
+            $revisiVerifikasiPenguji = '';
             $revisiNim = Auth::user()->email;
             $revisiMahasiswa = Auth::user()->name;
             $revisiKelas = '';
             $revisiJurusan = '';
         } else {
+            $revisiData = 'hidden';
             $revisiFile = $revisi->file;
-            $revisiVerifikasi = $revisi->verifikasi;
+            $revisiVerifikasiPembimbing = $revisi->verifikasi_pembimbing;
+            $revisiVerifikasiPenguji = $revisi->verifikasi_penguji;
             $revisiNim = $revisi->nim;
             $revisiMahasiswa = $revisi->mahasiswa->nama;
             $revisiKelas = $revisi->mahasiswa->kelas->kelas;
@@ -179,6 +191,36 @@ class ProjectController extends Controller
             $idDosen = $pembimbing->pembimbingProjek->dosen->id;
         }
 
+        if(!$penguji){
+            $pengujiNama='';
+            $idPenguji = '';
+            $hariPenguji = '';
+            $tglPenguji = '';
+            $pukulPenguji = '';
+            $ruangPenguji = '';
+        }else{
+            $pengujiNama = $penguji->nama_dosen_penguji;
+            $idPenguji = $penguji->id_penguji;
+            $hariPenguji = date('l', strtotime($penguji->tgl_sidang));
+            $tglPenguji = date('d', strtotime($penguji->tgl_sidang));
+            $pukulPenguji = $penguji->ruang;
+            $ruangPenguji = $penguji->pukul;
+        }
+
+        if(!$detailRevisi){
+            $bab_satu = '';
+            $bab_dua = '';
+            $bab_tiga = '';
+            $bab_empat = '';
+            $bab_lima = '';
+        }else{
+            $bab_satu = $detailRevisi->bab_satu;
+            $bab_dua = $detailRevisi->bab_dua;
+            $bab_tiga = $detailRevisi->bab_tiga;
+            $bab_empat = $detailRevisi->bab_empat;
+            $bab_lima = $detailRevisi->bab_lima;
+        }
+
         $verifikasiPengajuan = PengajuanJudul::where('nim', Auth::user()->email)
             ->where('verifikasi', 'SUDAH')
             ->first();
@@ -199,7 +241,8 @@ class ProjectController extends Controller
             ->first();
 
         $verifikasiRevisi = Revisi::where('nim', Auth::user()->email)
-            ->where('verifikasi', 'SUDAH')
+            ->where('verifikasi_pembimbing', 'SUDAH')
+            ->where('verifikasi_penguji', 'SUDAH')
             ->first();
 
         return view('page.project.index')->with([
@@ -219,7 +262,8 @@ class ProjectController extends Controller
             'appProjJudul' => $appProjJudul,
             'appProjFile' => $appProjFile,
             'revisiFile' => $revisiFile,
-            'revisiVerifikasi' => $revisiVerifikasi,
+            'revisiVerifikasiPembimbing' => $revisiVerifikasiPembimbing,
+            'revisiVerifikasiPenguji' => $revisiVerifikasiPenguji,
             'revisiNim' => $revisiNim,
             'revisiMahasiswa' => $revisiMahasiswa,
             'revisiKelas' => $revisiKelas,
@@ -237,6 +281,21 @@ class ProjectController extends Controller
             'penguji' => $penguji,
             'namaDosenVerifikasi' => $namaDosenVerifikasi,
             'detailRevisi' => $detailRevisi,
+            'read' => $read,
+            'countBimbingan' => $countBimbingan,
+            'verifiAppProj' => $verifiAppProj,
+            'bab_satu' => $bab_satu,
+            'bab_dua' => $bab_dua,
+            'bab_tiga' => $bab_tiga,
+            'bab_empat' => $bab_empat,
+            'bab_lima' => $bab_lima,
+            'revisiData' => $revisiData,
+            'idPenguji' => $idPenguji,
+            'pengujiNama' => $pengujiNama,
+            'hariPenguji' => $hariPenguji,
+            'tglPenguji' => $tglPenguji,
+            'pukulPenguji' => $pukulPenguji,
+            'ruangPenguji' => $ruangPenguji,
         ]);
     }
 

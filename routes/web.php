@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AppProjController;
 use App\Http\Controllers\BimbinganController;
+use App\Http\Controllers\BimbinganMahasiswaController;
+use App\Http\Controllers\DaftarSidangController;
 use App\Http\Controllers\DataPrestasiController;
 use App\Http\Controllers\DetailController;
 use App\Http\Controllers\DetailFormatif;
@@ -19,13 +21,18 @@ use App\Http\Controllers\KonfigurasiController;
 use App\Http\Controllers\KonfigurasiUjianController;
 use App\Http\Controllers\KrsMhsController;
 use App\Http\Controllers\KurikulumController;
+use App\Http\Controllers\MahasiswaBimbinganController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MateriajarController;
 use App\Http\Controllers\NilaiController;
+use App\Http\Controllers\NilaiPembimbingController;
+use App\Http\Controllers\NilaiPengujiController;
 use App\Http\Controllers\PembimbingController;
 use App\Http\Controllers\PembimbingProjectController;
 use App\Http\Controllers\PengajuanJudulController;
+use App\Http\Controllers\PengajuanJudulMahasiswaController;
 use App\Http\Controllers\PengujiController;
+use App\Http\Controllers\PengujiSidangController;
 use App\Http\Controllers\PerhitunganController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\ProfileController;
@@ -42,6 +49,8 @@ use App\Http\Controllers\RevisiController;
 use App\Http\Controllers\RuangController;
 use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\SesiController;
+use App\Http\Controllers\SidangController;
+use App\Http\Controllers\SidangMahasiswaController;
 use App\Http\Controllers\TahunakademikController;
 use App\Http\Controllers\TranskripController;
 use App\Http\Controllers\TugasController;
@@ -52,6 +61,8 @@ use App\Http\Controllers\UjianUASMhsController;
 use App\Http\Controllers\UjianUTSController;
 use App\Http\Controllers\UjianUTSMhsController;
 use App\Http\Controllers\UtsController;
+use App\Http\Controllers\verifikasiPembimbingController;
+use App\Http\Controllers\verifikasiPemngujiController;
 use App\Models\DetailPresensi;
 use App\Models\Dosen;
 use App\Models\Informasi;
@@ -81,7 +92,8 @@ Route::resource('kurikulum', KurikulumController::class)->middleware(['auth']);
 Route::resource('detail', DetailController::class)->middleware(['auth']);
 Route::resource('jadwal_reguler', JadwalregulerController::class)->middleware(['auth']);
 Route::resource('dosen', DosenController::class)->middleware(['auth']);
-Route::resource('konfigurasi', KonfigurasiController::class)->middleware(['auth']); Route::resource('perhitungan', PerhitunganController::class)->middleware(['auth']);
+Route::resource('konfigurasi', KonfigurasiController::class)->middleware(['auth']);
+Route::resource('perhitungan', PerhitunganController::class)->middleware(['auth']);
 Route::resource('hari', HariController::class)->middleware(['auth']);
 Route::resource('mahasiswa', MahasiswaController::class)->middleware(['auth']);
 Route::resource('detail_formatif', DetailFormatifController::class)->middleware(['auth']);
@@ -116,6 +128,7 @@ Route::resource('dosenPembimbing', PembimbingProjectController::class)->middlewa
 Route::resource('pengajuanJudul', PengajuanJudulController::class)->middleware(['auth']);
 Route::get('/get-pengajuan-judul', [PengajuanJudulController::class, 'getPengajuanJudul']);
 Route::patch('/update-pengajuan-judul/{id}', [PengajuanJudulController::class, 'update'])->name('pengajuanJudul.update');
+Route::patch('/update-daftar-sidang/{id}', [DaftarSidangController::class, 'update'])->name('daftarSidang.update');
 
 Route::get('/print_jadwal', [JadwalRegulerController::class, 'print_jadwal'])->name('jadwal_reguler.print_jadwal');
 Route::get('/print_jadwal_mhs/{id}', [JadwalRegulerController::class, 'print_jadwal_mhs'])->name('jadwal_reguler.print_jadwal_mhs');
@@ -163,8 +176,23 @@ Route::resource('bimbingan', BimbinganController::class)->middleware(['auth']);
 Route::resource('app_proj', AppProjController::class)->middleware(['auth']);
 Route::resource('revisiProj', RevisiController::class)->middleware(['auth']);
 Route::resource('penguji', PengujiController::class)->middleware(['auth']);
+Route::resource('bimbinganMahasiswa', BimbinganMahasiswaController::class)->middleware(['auth']);
 Route::post('/pengujiAdd', [PengujiController::class, 'pengujiAdd'])->name('penguji.pengujiAdd');
 
+Route::resource('daftarSidang', DaftarSidangController::class)->middleware(['auth']);
+Route::resource('pengujiSidang', PengujiSidangController::class)->middleware(['auth']);
+Route::resource('sidang', SidangController::class)->middleware(['auth']);
+Route::resource('mahasiswaBimbingan', MahasiswaBimbinganController::class)->middleware(['auth']);
+Route::resource('pengajuanJudulMahasiswa', PengajuanJudulMahasiswaController::class)->middleware(['auth']);
+Route::resource('sidangMahasiswa', SidangMahasiswaController::class)->middleware(['auth']);
+Route::resource('verifikasiPembimbing', verifikasiPembimbingController::class)->middleware(['auth']);
+Route::resource('verifikasiPenguji', verifikasiPemngujiController::class)->middleware(['auth']);
+Route::resource('nilaiPenguji', NilaiPengujiController::class)->middleware(['auth']);
+Route::resource('inputNilaiPembimbing', NilaiPembimbingController::class)->middleware(['auth']);
+
+// Route::patch('/verifikasi/{id}', [MahasiswaBimbinganController::class, 'verifikasi'])->name('mahasiswaBimbingan.verifikasi');
+Route::get('/mahasiswaBimbingan/verifikasi/{id}', [MahasiswaBimbinganController::class, 'verifikasi'])->name('mahasiswaBimbingan.verifikasi');
+Route::get('/pengajuanJudulMahasiswa/verifikasi/{id}', [PengajuanJudulMahasiswaController::class, 'verifikasi'])->name('pengajuanJudulMahasiswa.verifikasi');
 
 Route::get('/dashboard', function (Request $request) {
     $konfigurasi = Konfigurasi::first();
@@ -384,16 +412,10 @@ Route::get('/dashboard', function (Request $request) {
         $day = date('d');
 
         $dosenUlangtahun = Dosen::select('*')
-            ->selectRaw('
-                CASE 
-                    WHEN MONTH(tgl_lahir) = ? AND DAY(tgl_lahir) >= ? THEN DATEDIFF(DATE(CONCAT(YEAR(?), "-", MONTH(tgl_lahir), "-", DAY(tgl_lahir))), ?)
-                    ELSE DATEDIFF(DATE(CONCAT(YEAR(?)+1, "-", MONTH(tgl_lahir), "-", DAY(tgl_lahir))), ?)
-                END as diff_days
-            ', [$month, $day, $today, $today, $today, $today])
+            ->selectRaw('CASE WHEN MONTH(tgl_lahir) = ? AND DAY(tgl_lahir) >= ? THEN DATEDIFF(DATE(CONCAT(YEAR(?), "-", MONTH(tgl_lahir), "-", DAY(tgl_lahir))), ?)ELSE DATEDIFF(DATE(CONCAT(YEAR(?)+1, "-", MONTH(tgl_lahir), "-", DAY(tgl_lahir))), ?) END as diff_days ', [$month, $day, $today, $today, $today, $today])
             ->whereRaw('MONTH(tgl_lahir) = ? OR (MONTH(tgl_lahir) = ? AND DAY(tgl_lahir) >= ?)', [$month, $month, $day])
             ->orderBy('diff_days', 'ASC')
             ->paginate(3);
-        // dd($dosenUlangtahun);
 
         return view('dashboard', compact('dosenUlangtahun'), [
             'jadwal' => $jadwal,

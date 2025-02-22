@@ -36,7 +36,7 @@ class KeteranganController extends Controller
 
         return redirect()
             ->route('keterangan.index')
-            ->with('message', 'Data Keterangan Sudah ditambahkan');
+            ->with('message_insert', 'Data Keterangan Sudah ditambahkan');
     }
 
     /**
@@ -68,7 +68,7 @@ class KeteranganController extends Controller
         $datas->update($data);
         return redirect()
             ->route('keterangan.index')
-            ->with('message', 'Data Keterangan Sudah diupdate');
+            ->with('message_update', 'Data Keterangan Sudah diupdate');
     }
 
     /**

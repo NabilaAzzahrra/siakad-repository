@@ -60,7 +60,7 @@ class MateriajarController extends Controller
 
             return redirect()
                 ->route('materi_ajar.index')
-                ->with('message', 'Data Materi Ajar Sudah ditambahkan');
+                ->with('message_insert', 'Data Materi Ajar Sudah ditambahkan');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
         }
@@ -129,7 +129,7 @@ class MateriajarController extends Controller
 
         return redirect()
             ->route('materi_ajar.index')
-            ->with('message', 'Data Materi Ajar Sudah diupdate');
+            ->with('message_update', 'Data Materi Ajar Sudah diupdate');
     }
 
     /**

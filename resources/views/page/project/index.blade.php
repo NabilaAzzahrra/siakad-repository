@@ -217,7 +217,8 @@
                                                                 1</label>
                                                             <input type="text" id="judul1" name="judul1"
                                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                                placeholder="Masukan Nama Judul disini ..." required />
+                                                                placeholder="Masukan Nama Judul disini ..." required
+                                                                {{ $read }} />
                                                         </div>
                                                         <div class="mb-5">
                                                             <label for="judul2"
@@ -225,7 +226,8 @@
                                                                 2</label>
                                                             <input type="text" id="judul2" name="judul2"
                                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                                placeholder="Masukan Nama Judul disini ..." required />
+                                                                placeholder="Masukan Nama Judul disini ..." required
+                                                                {{ $read }} />
                                                         </div>
                                                         <div class="mb-5">
                                                             <label for="file"
@@ -233,14 +235,16 @@
                                                                 Bab 1</label>
                                                             <input type="file" id="file" name="file"
                                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                                placeholder="Masukan Nama Judul disini ..." required />
+                                                                placeholder="Masukan Nama Judul disini ..." required
+                                                                {{ $judul->isNotEmpty() ? 'disabled' : '' }} />
                                                         </div>
                                                         <div class="mb-5">
                                                             <label for="judul2"
                                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pembimbing</label>
                                                             <select
                                                                 class="js-example-placeholder-single js-states form-control w-full m-6"
-                                                                name="dosen" data-placeholder="Pilih Dosen">
+                                                                name="dosen" data-placeholder="Pilih Dosen"
+                                                                {{ $judul->isNotEmpty() ? 'disabled' : '' }}>
                                                                 <option value="">
                                                                     PILIH</option>
                                                                 @foreach ($dosen as $k)
@@ -419,8 +423,16 @@
                                         <span class="font-bold">Note : </span> Jika belum di upload silahkan login ke
                                         pmb online dengan username dan password pada profile<span
                                             class="text-red-500 fornt-bold">*</span>
+                                        @php
+                                            if ($countBimbingan < 7) {
+                                                $h = 'hidden';
+                                            } elseif ($verifiAppProj) {
+                                                $h = 'hidden';
+                                            } else {
+                                                $h = '';
+                                        } @endphp
                                         <form action="{{ route('app_proj.store') }}" method="post"
-                                            enctype="multipart/form-data">
+                                            {{ $h }} enctype="multipart/form-data">
                                             @csrf
                                             <input type="hidden" id="id_dosen" name="id_dosen"
                                                 value="{{ $idDosen }}"
@@ -449,7 +461,7 @@
                                             </div>
                                         </form>
 
-                                        <div class="border-2 rounded-xl p-4">
+                                        <div class="border-2 rounded-xl p-4 mt-4">
                                             @php
                                                 if ($appProjVerifikasi) {
                                                     if ($appProjVerifikasi === 'BELUM') {
@@ -548,17 +560,17 @@
                                                 <!-- Bagian Tanggal -->
                                                 <div class="text-center text-red-500">
                                                     <div class="text-lg font-bold">
-                                                        {{ date('l', strtotime($penguji->tgl_sidang)) }}</div>
+                                                        {{ $hariPenguji }}</div>
                                                     <div class="text-4xl font-bold">
-                                                        {{ date('d', strtotime($penguji->tgl_sidang)) }}</div>
+                                                        {{ $tglPenguji }}</div>
                                                 </div>
                                                 <!-- Garis Vertikal -->
                                                 <div class="w-px h-12 bg-gray-300"></div>
                                                 <!-- Bagian Detail -->
                                                 <div class="flex flex-col gap-1">
-                                                    <div class="text-gray-700">{{ $penguji->pukul }} WIB | <span
-                                                            class="font-bold">{{ $penguji->ruang }}</span></div>
-                                                    <div class="text-gray-700">{{ $penguji->nama_dosen_penguji }}
+                                                    <div class="text-gray-700">{{ $pukulPenguji }} WIB | <span
+                                                            class="font-bold">{{ $ruangPenguji }}</span></div>
+                                                    <div class="text-gray-700">{{ $pengujiNama }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -585,7 +597,7 @@
                                                                     BAB I
                                                                 </th>
                                                                 <td class="px-6 py-4">
-                                                                    {{ $detailRevisi->bab_satu }}
+                                                                    {{ $bab_satu == '' ? '' : $bab_satu }}
                                                                 </td>
                                                             </tr>
                                                             <tr
@@ -595,7 +607,7 @@
                                                                     BAB II
                                                                 </th>
                                                                 <td class="px-6 py-4">
-                                                                    {{ $detailRevisi->bab_dua }}
+                                                                    {{ $bab_dua  == '' ? '' : $bab_dua }}
                                                                 </td>
                                                             </tr>
                                                             <tr
@@ -605,7 +617,7 @@
                                                                     BAB III
                                                                 </th>
                                                                 <td class="px-6 py-4">
-                                                                    {{ $detailRevisi->bab_tiga }}
+                                                                    {{ $bab_tiga  == '' ? '' : $bab_tiga }}
                                                                 </td>
                                                             </tr>
                                                             <tr
@@ -615,7 +627,7 @@
                                                                     BAB IV
                                                                 </th>
                                                                 <td class="px-6 py-4">
-                                                                    {{ $detailRevisi->bab_empat }}
+                                                                    {{ $bab_empat  == '' ? '' : $bab_empat  }}
                                                                 </td>
                                                             </tr>
                                                             <tr
@@ -625,7 +637,7 @@
                                                                     BAB V
                                                                 </th>
                                                                 <td class="px-6 py-4">
-                                                                    {{ $detailRevisi->bab_lima }}
+                                                                    {{ $bab_lima  == '' ? '' : $bab_lima }}
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -637,12 +649,16 @@
                                     <div id="Revisi" class="tab-content border border-2 p-2 rounded-xl"
                                         style="display:none;">
                                         <div class="flex gap-5">
-                                            <div class="bg-gray-100 w-full">
+                                            <div class="bg-gray-100 w-full" {{ $revisiData }}>
                                                 <form action="{{ route('revisiProj.store') }}" method="post"
                                                     enctype="multipart/form-data">
                                                     @csrf
-                                                    <input type="hidden" id="id_dosen" name="id_dosen"
+                                                    <input type="hidden" id="id_pembimbing" name="id_pembimbing"
                                                         value="{{ $idDosen }}"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                        placeholder="Masukan Tanggal disini ..." required />
+                                                    <input type="hidden" id="id_penguji" name="id_penguji"
+                                                        value="{{ $idPenguji }}"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                         placeholder="Masukan Tanggal disini ..." required />
                                                     <div class="p-4 rounded-xl">
@@ -664,18 +680,27 @@
                                             </div>
                                             <div class="w-full">
                                                 @php
-                                                    if ($revisiVerifikasi) {
-                                                        if ($revisiVerifikasi === 'BELUM') {
-                                                            $bg = 'bg-red-200';
+                                                    if ($revisiVerifikasiPembimbing) {
+                                                        if ($revisiVerifikasiPembimbing === 'BELUM') {
+                                                            $bgPembimbing = 'bg-red-200';
                                                         } else {
-                                                            $bg = 'bg-emerald-200';
+                                                            $bgPembimbing = 'bg-emerald-200';
                                                         }
                                                     } else {
-                                                        $bg = 'bg-emerald-200';
+                                                        $bgPembimbing = '';
+                                                    }
+
+                                                    if ($revisiVerifikasiPenguji) {
+                                                        if ($revisiVerifikasiPenguji === 'BELUM') {
+                                                            $bgPenguji = 'bg-red-200';
+                                                        } else {
+                                                            $bgPenguji = 'bg-emerald-200';
+                                                        }
+                                                    } else {
+                                                        $bgPenguji = '';
                                                     }
                                                 @endphp
-                                                <div class="font-bold">Data Revisi <span
-                                                        class="text-xs {{ $bg }} px-4 rounded-xl">{{ $revisiVerifikasi }}</span>
+                                                <div class="font-bold">Data Revisi
                                                 </div>
                                                 <div class="flex">
 
@@ -695,12 +720,12 @@
                                                             <tr>
                                                                 <td>Kelas</td>
                                                                 <td class="pr-2 pl-2">:</td>
-                                                                <td>{{ $revisiKelas }}</td>
+                                                                <td>{{ $mahasiswa->kelas->kelas }}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Jurusan</td>
                                                                 <td class="pr-2 pl-2">:</td>
-                                                                <td>{{ $revisiJurusan }}</td>
+                                                                <td>{{ $mahasiswa->kelas->jurusan->jurusan }}</td>
                                                             </tr>
                                                         </table>
                                                     </div>
@@ -718,10 +743,40 @@
                                                                 <td>{{ $namaDosen }}</td>
                                                             </tr>
                                                             <tr>
+                                                                <td>Penguji</td>
+                                                                <td class="pr-2 pl-2">:</td>
+                                                                <td>{{ $pengujiNama }}</td>
+                                                            </tr>
+                                                            <tr>
                                                                 <td>Laporan</td>
                                                                 <td class="pr-2 pl-2">:</td>
-                                                                <td><a href="{{ asset('revisi/' . $revisiFile) }}"
-                                                                        target="_blank">Lihat</a></td>
+                                                                <td>
+                                                                    @if (!$revisiFile)
+                                                                        Belum melakukan upload revisi
+                                                                    @else
+                                                                        <a href="{{ asset('revisi/' . $revisiFile) }}"
+                                                                            target="_blank">Lihat</a>
+                                                                    @endif
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div class="w-full">
+                                                        <p class="font-bold mt-4">Verifikasi</p>
+                                                        <table>
+                                                            <tr>
+                                                                <td>Verifikasi Pembimbing</td>
+                                                                <td class="pr-2 pl-2">:</td>
+                                                                <td><span
+                                                                        class="{{ $bgPembimbing }} text-sm px-2 rounded-xl">{{ $revisiVerifikasiPembimbing }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Verifikasi Penguji</td>
+                                                                <td class="pr-2 pl-2">:</td>
+                                                                <td><span
+                                                                        class="{{ $bgPenguji }} text-sm px-2 rounded-xl">{{ $revisiVerifikasiPenguji }}</span>
+                                                                </td>
                                                             </tr>
                                                         </table>
                                                     </div>
@@ -733,7 +788,6 @@
                                 </div>
 
                             </div>
-
                         </div>
                     </div>
                 </div>

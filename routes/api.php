@@ -58,7 +58,9 @@ Route::get('/kelas/{id}', [KelasAPIController::class, 'get_id']);
 Route::get('/hari', [HariAPIController::class, 'get_all'])->name('hari.get');
 Route::get('/detail_formatif', [DetailFormatifAPIController::class, 'get_all'])->name('detail.get');
 Route::post('/integration/pmb', [IntegrationPMBOnline::class, 'integrate']);
+
 Route::get('/integration', [IntegrationPMBOnline::class, 'get_all'])->name('integration.get');
+
 Route::get('/tugas', [TugasPertemuanAPIController::class, 'get_all'])->name('tugas.get');
 Route::get('/nilai', [NilaiAPIController::class, 'get_all'])->name('nilai.get');
 Route::get('/konfigurasi_ujian', [KonfigurasiUjianAPIController::class, 'get_all'])->name('konfigurasi_ujian.get');

@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('revisi', function (Blueprint $table) {
             $table->id();
             $table->string('nim');
-            $table->integer('id_dosen');
+            $table->integer('id_pembimbing');
+            $table->integer('id_penguji');
             $table->string('file');
-            $table->string('verifikasi');
+            $table->string('verifikasi_pembimbing');
+            $table->string('verifikasi_penguji');
             $table->timestamps();
         });
     }

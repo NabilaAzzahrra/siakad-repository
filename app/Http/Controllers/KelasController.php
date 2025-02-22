@@ -45,7 +45,7 @@ class KelasController extends Controller
 
         return redirect()
             ->route('kelas.index')
-            ->with('message', 'Data Kelas Sudah ditambahkan');
+            ->with('message_insert', 'Data Kelas Sudah ditambahkan');
     }
 
     /**
@@ -79,7 +79,7 @@ class KelasController extends Controller
         $datas->update($data);
         return redirect()
             ->route('kelas.index')
-            ->with('message', 'Data Kelas Sudah diupdate');
+            ->with('message_update', 'Data Kelas Sudah diupdate');
     }
 
     /**

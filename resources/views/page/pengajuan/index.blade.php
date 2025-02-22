@@ -124,7 +124,7 @@
             <div class="w-full md:w-1/2 relative bg-white rounded-lg shadow mx-5">
                 <div class="flex items-start justify-between p-4 border-b rounded-t">
                     <h3 class="text-xl font-semibold text-gray-900" id="title_source">
-                        Tambah Sumber Database
+                        DETAIL PENGAJUAN JUDUL DAN PEMBIMBING PROJECT
                     </h3>
                     <button type="button" onclick="sourceModalClose(this)" data-modal-target="sourceModal"
                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center">
@@ -133,25 +133,58 @@
                 </div>
                 <form method="POST" id="formSourceModal">
                     @csrf
-                    <div class="flex flex-col p-4 space-y-6">
+                    <div class="flex flex-col p-4 space-y-2">
                         <input type="hidden" id="id" name="id">
-                        <input type="text" id="nim" name="nim" placeholder="Masukkan NIM" required>
-                        <input type="text" id="verifikasi" name="verifikasi" placeholder="Masukkan Verifikasi"
-                            required>
+                        <input type="hidden" id="nim" name="nim" placeholder="Masukkan NIM" required>
+                        {{-- <input type="text" id="verifikasi" name="verifikasi" placeholder="Masukkan Verifikasi" required> --}}
 
-                        <div class="flex justify-center">
-                            <span class="text-sm text-slate-500 mr-2">Light</span>
-                            <input type="checkbox" id="toggle" class="hidden">
-                            <label for="toggle">
-                                <div class="w-9 h-5 bg-slate-500 rounded-full flex items-center p-1 cursor-pointer">
-                                    <div class="w-4 h-4 bg-white rounded-full toggle-circle"></div>
-                                </div>
-                            </label>
-                            <span class="text-sm text-slate-500 ml-2">Darks</span>
+                        <div>
+                            <table>
+                                <tr>
+                                    <td class="pl-2 pr-2"><i class="fi fi-sr-student"></i></td>
+                                    <td>Nama</td>
+                                    <td class="pl-4 pr-4">:</td>
+                                    <td>{{ $m->mahasiswa->nama ?? '' }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pl-2 pr-2"><i class="fi fi-sr-id-card-clip-alt"></i></td>
+                                    <td>Nim</td>
+                                    <td class="pl-4 pr-4">:</td>
+                                    <td>{{ $m->nim ?? '' }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pl-2 pr-2"><i class="fi fi-ss-customer-service"></i></td>
+                                    <td>Jurusan</td>
+                                    <td class="pl-4 pr-4">:</td>
+                                    <td>{{ $m->mahasiswa->kelas->jurusan->jurusan ?? '' }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pl-2 pr-2"><i class="fi fi-sr-chalkboard-user"></i></td>
+                                    <td>Pembimbing</td>
+                                    <td class="pl-4 pr-4">:</td>
+                                    <td>{{ $m->pembimbingProjek->dosen->nama_dosen ?? '' }}</td>
+                                </tr>
+                            </table>
                         </div>
 
+                        <div class="flex items-center">
+                            <i class="fi fi-ss-rectangle-list mt-1 mr-2"></i>
+                            <p>Judul yang di ajukan</p>
+                        </div>
                         <div id="judul-container">
                             <!-- Tempat untuk menampilkan data judul -->
+                        </div>
+
+                        <div>
+                            <p>Verifikasi <span class="text-red-500">*</span></p>
+                            <label>
+                                <input type="radio" id="verifikasi-sudah" name="verifikasi" value="SUDAH">
+                                SUDAH
+                            </label>
+                            <label class="ml-4">
+                                <input type="radio" id="verifikasi-belum" name="verifikasi" value="BELUM">
+                                BELUM
+                            </label>
                         </div>
 
                         <div class="">
@@ -192,7 +225,13 @@
             // Isi nilai input di dalam modal
             document.getElementById('id').value = id;
             document.getElementById('nim').value = nim;
-            document.getElementById('verifikasi').value = verifikasi;
+
+            // Atur nilai radio button untuk verifikasi
+            if (verifikasi === 'SUDAH') {
+                document.getElementById('verifikasi-sudah').checked = true;
+            } else if (verifikasi === 'BELUM') {
+                document.getElementById('verifikasi-belum').checked = true;
+            }
 
             // Perbarui nilai dropdown menggunakan Select2
             const selectElement = document.querySelector('[name="id_dosen"]');
@@ -204,6 +243,7 @@
             // Trigger AJAX untuk mengambil judul terkait
             fetchJudul(nim);
         }
+
 
         function sourceModalClose(button) {
             const modal = button.getAttribute('data-modal-target');
@@ -222,10 +262,18 @@
                 success: function(response) {
                     const container = $('#judul-container');
                     container.empty(); // Bersihkan kontainer
-
                     if (response.length > 0) {
                         response.forEach(item => {
-                            container.append('<p>' + item.judul + '</p>');
+                            container.append(
+                                '<p class="font-bold text-wrap bg-amber-50 mb-2 rounded-xl p-4">' +
+                                item.judul +
+                                ' ' + // Menambahkan spasi antara judul dan status verifikasi
+                                (item.verifikasi == "SUDAH" ?
+                                    '<img src="/img/check.png" alt="verifikasi sukses" width="20" height="20" style="display: inline-block; margin-left: 8px;" />' :
+                                    '<img src="/img/delete.png" alt="verifikasi gagal" width="20" height="20" style="display: inline-block; margin-left: 8px;" />'
+                                ) +
+                                '</p>'
+                            );
                         });
                     } else {
                         container.append('<p>Tidak ada data ditemukan</p>');
@@ -240,25 +288,28 @@
         $(document).on('submit', '#formSourceModal', function(e) {
             e.preventDefault(); // Mencegah reload halaman otomatis
 
+            // Ambil data dari form
             const formData = {
                 nim: $('#nim').val(),
                 id: $('#id').val(),
-                verifikasi: $('#verifikasi').val(),
+                verifikasi: $('input[name="verifikasi"]:checked').val(), // Ambil nilai yang dipilih
                 id_dosen: $('#id_dosen').val(),
                 _token: $('input[name="_token"]').val(), // Ambil CSRF token
-                _method: 'PATCH' // Menambahkan _method untuk mengeksekusi PATCH
+                _method: 'PATCH' // Menambahkan _method untuk PATCH
             };
 
+            // Kirim data via AJAX
             $.ajax({
-                url: `/update-pengajuan-judul/${formData.id}`,
+                url: `/update-pengajuan-judul/${formData.id}`, // Endpoint sesuai rute Laravel
                 method: 'POST', // Gunakan POST dengan _method untuk PATCH
                 data: formData,
                 success: function(response) {
                     alert(response.message || 'Data berhasil diperbarui.');
                     sourceModalClose(); // Menutup modal
-                    location.reload(); // Reload halaman setelah berhasil update
+                    location.reload();
                 },
                 error: function(xhr) {
+                    // Tangani error validasi atau server
                     if (xhr.responseJSON && xhr.responseJSON.errors) {
                         let errorMessage = 'Terjadi kesalahan:\n';
                         Object.entries(xhr.responseJSON.errors).forEach(([key, value]) => {
@@ -272,11 +323,24 @@
             });
         });
 
+
         function sourceModalClose() {
             // Menutup modal dengan mengubah kelas 'hidden' dan menghapus inputan
             $('#sourceModal').addClass('hidden');
             $('#formSourceModal')[0].reset(); // Reset form inputan
         }
+    </script>
+    <script>
+        const toggle = document.getElementById('toggle');
+        const statusText = document.getElementById('status');
+
+        toggle.addEventListener('change', function() {
+            if (toggle.checked) {
+                statusText.textContent = 'Belum'; // Teks berubah ke 'Belum' saat checked
+            } else {
+                statusText.textContent = 'Sudah'; // Teks berubah ke 'Sudah' saat unchecked
+            }
+        });
     </script>
 
 </x-app-layout>

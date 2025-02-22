@@ -11,9 +11,11 @@ class Revisi extends Model
 
     protected $fillable = [
         'nim',
-        'id_dosen',
+        'id_pembimbing',
+        'id_penguji',
         'file',
-        'verifikasi'
+        'verifikasi_pembimbing',
+        'verifikasi_penguji'
     ];
 
     protected $table = 'revisi';
@@ -21,5 +23,10 @@ class Revisi extends Model
     public function mahasiswa()
     {
         return $this->belongsTo(Mahasiswa::class, 'nim', 'nim');
+    }
+
+    public function appProj()
+    {
+        return $this->belongsTo(AppProj::class, 'nim', 'nim');
     }
 }

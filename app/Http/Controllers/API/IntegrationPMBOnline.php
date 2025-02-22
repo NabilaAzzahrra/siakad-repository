@@ -78,7 +78,7 @@ class IntegrationPMBOnline extends Controller
             ]);
         } else {
             return response()->json([
-            'message'=> 'GA BOLEH YA, NO NO' 
+            'message'=> 'GA BOLEH YA, NO NO'
             ]);
         }
     }

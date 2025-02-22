@@ -36,7 +36,7 @@ class PukulController extends Controller
 
         return redirect()
             ->route('pukul.index')
-            ->with('message', 'Data Pukul Sudah ditambahkan');
+            ->with('message_insert', 'Data Pukul Sudah ditambahkan');
     }
 
     /**
@@ -68,7 +68,7 @@ class PukulController extends Controller
         $datas->update($data);
         return redirect()
             ->route('pukul.index')
-            ->with('message', 'Data Pukul Sudah diupdate');
+            ->with('message_update', 'Data Pukul Sudah diupdate');
     }
 
     /**

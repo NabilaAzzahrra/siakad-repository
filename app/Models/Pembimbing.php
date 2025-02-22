@@ -26,4 +26,5 @@ class Pembimbing extends Model
     {
         return $this->belongsTo(Mahasiswa::class, 'nim', 'nim');
     }
+
 }

@@ -36,7 +36,7 @@ class TahunakademikController extends Controller
 
         return redirect()
             ->route('tahunakademik.index')
-            ->with('message', 'Data Tahun Akademik Sudah ditambahkan');
+            ->with('message_insert', 'Data Tahun Akademik Sudah ditambahkan');
     }
 
     /**
@@ -68,7 +68,7 @@ class TahunakademikController extends Controller
         $datas->update($data);
         return redirect()
             ->route('tahunakademik.index')
-            ->with('message', 'Data Tahun Akademik Sudah diupdate');
+            ->with('message_update', 'Data Tahun Akademik Sudah diupdate');
     }
 
     /**

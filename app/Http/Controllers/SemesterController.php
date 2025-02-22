@@ -41,7 +41,7 @@ class SemesterController extends Controller
 
         return redirect()
             ->route('semester.index')
-            ->with('message', 'Data Semester Sudah ditambahkan');
+            ->with('message_insert', 'Data Semester Sudah ditambahkan');
     }
 
     /**
@@ -74,7 +74,7 @@ class SemesterController extends Controller
         $datas->update($data);
         return redirect()
             ->route('semester.index')
-            ->with('message', 'Data Semester Sudah diupdate');
+            ->with('message_update', 'Data Semester Sudah diupdate');
     }
 
     /**

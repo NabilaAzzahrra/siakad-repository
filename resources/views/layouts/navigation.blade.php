@@ -299,13 +299,6 @@
                         </li>
                     </div>
 
-                    <!-- Navigation Links -->
-                    {{-- <div class="hidden sm:flex sm:items-center sm:ms-6">
-                        <x-nav-link :href="route('penguji.index')" :active="request()->routeIs(['penguji.index', 'penguji.show'])">
-                            <div class="text-[16px] font-bold tracking-wide">Penguji</div>
-                        </x-nav-link>
-                    </div> --}}
-
                     <div class="hidden sm:flex sm:items-center sm:ms-6">
                         <li class="relative list-none">
                             <x-dropdown>
@@ -313,12 +306,12 @@
                                     <button
                                         class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-black dark:text-gray-400 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                                         <div
-                                            class="text-[16px] font-bold tracking-wide {{ request()->routeIs('dosenPembimbing.index') || request()->routeIs('penguji.index') ? 'text-[#F2994A]' : '' }}">
+                                            class="text-[16px] font-bold tracking-wide {{ request()->routeIs('dosenPembimbing.index') || request()->routeIs('revisiProj.index') || request()->routeIs('penguji.index') || request()->routeIs('sidang.index') || request()->routeIs('daftarSidang.index') || request()->routeIs('bimbinganMahasiswa.index') || request()->routeIs('penguji.index') ? 'text-[#F2994A]' : '' }}">
                                             Project</div>
 
                                         <div class="ms-1 mt-1">
                                             <i
-                                                class="fi fi-rr-caret-down {{ request()->routeIs('dosenPembimbing.index') || request()->routeIs('penguji.index') ? 'text-[#F2994A]' : '' }}"></i>
+                                                class="fi fi-rr-caret-down {{ request()->routeIs('dosenPembimbing.index') || request()->routeIs('revisiProj.index') || request()->routeIs('penguji.index') || request()->routeIs('sidang.index') || request()->routeIs('daftarSidang.index') || request()->routeIs('bimbinganMahasiswa.index') || request()->routeIs('penguji.index') ? 'text-[#F2994A]' : '' }}"></i>
                                         </div>
                                     </button>
                                 </x-slot>
@@ -336,30 +329,34 @@
                                         {{ __('Pengajuan Judul') }}
                                     </x-dropdown-link>
 
-                                    <x-dropdown-link :href="route('dosenPembimbing.index')" :class="request()->routeIs('dosenPembimbing.index')
+                                    <x-dropdown-link :href="route('bimbinganMahasiswa.index')" :class="request()->routeIs('bimbinganMahasiswa.index')
                                         ? 'text-red-500 font-bold'
                                         : ''">
                                         {{ __('Bimbingan') }}
                                     </x-dropdown-link>
 
-                                    <x-dropdown-link :href="route('dosenPembimbing.index')" :class="request()->routeIs('dosenPembimbing.index')
-                                        ? 'text-red-500 font-bold'
-                                        : ''">
+                                    <x-dropdown-link :href="route('daftarSidang.index')" :class="request()->routeIs('daftarSidang.index') ? 'text-red-500 font-bold' : ''">
                                         {{ __('Daftar') }}
-                                    </x-dropdown-link>
-                                    
-                                    <x-dropdown-link :href="route('dosenPembimbing.index')" :class="request()->routeIs('dosenPembimbing.index')
-                                        ? 'text-red-500 font-bold'
-                                        : ''">
-                                        {{ __('Penguji') }}
                                     </x-dropdown-link>
 
                                     <x-dropdown-link :href="route('penguji.index')" :class="request()->routeIs('penguji.index') ? 'text-red-500 font-bold' : ''">
+                                        {{ __('Penguji') }}
+                                    </x-dropdown-link>
+
+                                    <x-dropdown-link :href="route('sidang.index')" :class="request()->routeIs('sidang.index') ? 'text-red-500 font-bold' : ''">
                                         {{ __('Sidang') }}
                                     </x-dropdown-link>
-                                    
-                                    <x-dropdown-link :href="route('penguji.index')" :class="request()->routeIs('penguji.index') ? 'text-red-500 font-bold' : ''">
+
+                                    <x-dropdown-link :href="route('revisiProj.index')" :class="request()->routeIs('revisiProj.index') ? 'text-red-500 font-bold' : ''">
                                         {{ __('Revisi') }}
+                                    </x-dropdown-link>
+
+                                    <x-dropdown-link :href="route('inputNilaiPembimbing.create')" :class="request()->routeIs('inputNilaiPembimbing.create') ? 'text-red-500 font-bold' : ''">
+                                        {{ __('Verifikasi Nilai Pembimbing') }}
+                                    </x-dropdown-link>
+
+                                    <x-dropdown-link :href="route('nilaiPenguji.index')" :class="request()->routeIs('revisiProj.index') ? 'text-red-500 font-bold' : ''">
+                                        {{ __('Verifikasi Nilai Penguji') }}
                                     </x-dropdown-link>
                                 </x-slot>
                             </x-dropdown>
@@ -635,6 +632,54 @@
                         <x-nav-link :href="route('report_keseluruhan.r_mahasiswa')" :active="request()->routeIs('report_keseluruhan.r_mahasiswa')">
                             <div class="text-[16px] font-bold tracking-wide">Report Presensi Mahasiswa</div>
                         </x-nav-link>
+                    </div>
+
+                    <div class="hidden sm:flex sm:items-center sm:ms-6">
+                        <li class="relative list-none">
+                            <x-dropdown>
+                                <x-slot name="trigger">
+                                    <button
+                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-black dark:text-gray-400 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                                        <div
+                                            class="text-[16px] font-bold tracking-wide {{ request()->routeIs('mahasiswaBimbingan.index') || request()->routeIs('pengajuanJudulMahasiswa.index') || request()->routeIs('sidangMahasiswa.index') || request()->routeIs('sidang.index') || request()->routeIs('daftarSidang.index') || request()->routeIs('bimbinganMahasiswa.index') || request()->routeIs('penguji.index') ? 'text-[#F2994A]' : '' }}">
+                                            Project</div>
+
+                                        <div class="ms-1 mt-1">
+                                            <i
+                                                class="fi fi-rr-caret-down {{ request()->routeIs('mahasiswaBimbingan.index') || request()->routeIs('pengajuanJudulMahasiswa.index') || request()->routeIs('sidangMahasiswa.index') || request()->routeIs('sidang.index') || request()->routeIs('daftarSidang.index') || request()->routeIs('bimbinganMahasiswa.index') || request()->routeIs('penguji.index') ? 'text-[#F2994A]' : '' }}"></i>
+                                        </div>
+                                    </button>
+                                </x-slot>
+
+                                <x-slot name="content">
+                                    <x-dropdown-link :href="route('pengajuanJudulMahasiswa.index')" :class="request()->routeIs('pengajuanJudulMahasiswa.index')
+                                        ? 'text-red-500 font-bold'
+                                        : ''">
+                                        {{ __('Pengajuan Judul') }}
+                                    </x-dropdown-link>
+                                    <x-dropdown-link :href="route('mahasiswaBimbingan.index')" :class="request()->routeIs('mahasiswaBimbingan.index')
+                                        ? 'text-red-500 font-bold'
+                                        : ''">
+                                        {{ __('Mahasiswa Bimbingan') }}
+                                    </x-dropdown-link>
+                                    <x-dropdown-link :href="route('sidangMahasiswa.index')" :class="request()->routeIs('sidangMahasiswa.index')
+                                        ? 'text-red-500 font-bold'
+                                        : ''">
+                                        {{ __('Sidang') }}
+                                    </x-dropdown-link>
+                                    <x-dropdown-link :href="route('verifikasiPembimbing.index')" :class="request()->routeIs('verifikasiPembimbing.index')
+                                        ? 'text-red-500 font-bold'
+                                        : ''">
+                                        {{ __('Verifikasi Pembimbing') }}
+                                    </x-dropdown-link>
+                                    <x-dropdown-link :href="route('verifikasiPenguji.index')" :class="request()->routeIs('verifikasiPenguji.index')
+                                        ? 'text-red-500 font-bold'
+                                        : ''">
+                                        {{ __('Verifikasi Penguji') }}
+                                    </x-dropdown-link>
+                                </x-slot>
+                            </x-dropdown>
+                        </li>
                     </div>
                 @endcan
 

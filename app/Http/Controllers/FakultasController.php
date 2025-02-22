@@ -36,7 +36,7 @@ class FakultasController extends Controller
 
         return redirect()
             ->route('fakultas.index')
-            ->with('message', 'Data Fakultas Sudah ditambahkan');
+            ->with('message_insert', 'Data Fakultas Sudah ditambahkan');
     }
 
     /**
@@ -68,7 +68,7 @@ class FakultasController extends Controller
         $datas->update($data);
         return redirect()
             ->route('fakultas.index')
-            ->with('message', 'Data Fakultas Sudah diupdate');
+            ->with('message_update', 'Data Fakultas Sudah diupdate');
     }
 
     /**

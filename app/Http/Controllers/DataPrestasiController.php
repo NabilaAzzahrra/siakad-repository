@@ -239,6 +239,8 @@ class DataPrestasiController extends Controller
                 $nilaiPerMahasiswa4[$itemNilai4->nim][$itemNilai4->id_jadwal] = $itemNilai4;
             }
         }
+        $nilaiAplikasiProject = Nilai::whereIn('nilai.nim', $user_ids)->get();
+        //dd($nilaiAplikasiProject);
 
         return view('page.data_prestasi.print')->with([
             'stu_data' => $result,
@@ -255,6 +257,7 @@ class DataPrestasiController extends Controller
             'detail_kurikulum_2' => $detail_kurikulum_2,
             'detail_kurikulum_3' => $detail_kurikulum_3,
             'detail_kurikulum_4' => $detail_kurikulum_4,
+            'nilaiAplikasiProject' => $nilaiAplikasiProject
         ]);
     }
 

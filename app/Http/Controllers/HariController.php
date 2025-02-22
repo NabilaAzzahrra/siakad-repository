@@ -36,7 +36,7 @@ class HariController extends Controller
 
         return redirect()
             ->route('hari.index')
-            ->with('message', 'Data Hari Sudah ditambahkan');
+            ->with('message_insert', 'Data Sudah ditambahkan');
     }
 
     /**
@@ -68,7 +68,7 @@ class HariController extends Controller
         $datas->update($data);
         return redirect()
             ->route('hari.index')
-            ->with('message', 'Data Hari Sudah diupdate');
+            ->with('message_update', 'Data Sudah diupdate');
     }
 
     /**
@@ -78,6 +78,6 @@ class HariController extends Controller
     {
         $data = Hari::findOrFail($id);
         $data->delete();
-        return back()->with('message_delete','Data Hari Sudah dihapus');
+        return back()->with('message_delete', 'Data Sudah dihapus');
     }
 }

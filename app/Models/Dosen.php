@@ -43,4 +43,13 @@ class Dosen extends Model
     {
         return $this->hasMany(Penguji::class, 'id_penguji');
     }
+    public function pembimbing()
+    {
+        return $this->hasMany(Penguji::class, 'id_dosen');
+    }
+
+    public function verifikasiPembimbing()
+    {
+        return $this->hasMany(NilaiPembimbing::class, 'id_pembimbing');
+    }
 }

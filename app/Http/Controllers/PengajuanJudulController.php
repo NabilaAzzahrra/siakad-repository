@@ -82,13 +82,13 @@ class PengajuanJudulController extends Controller
     public function update(Request $request, string $id)
     {
         $data = [
-            'verifikasi' => $request->input('verifikasi'),
-            'id_dosen' => $request->input('id_dosen')
-        ];
+                'verifikasi' => $request->input('verifikasi'),
+                'id_dosen' => $request->input('id_dosen')
+            ];
 
         $datas = Pembimbing::findOrFail($id);
         $datas->update($data);
-        return back()->with('message_delete','Data Hari Sudah dihapus');
+        return back()->with('message_delete', 'Data Hari Sudah dihapus');
     }
 
     /**

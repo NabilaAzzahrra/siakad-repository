@@ -265,16 +265,17 @@
                                 $jumlahSksNotNull = 0;
                                 $jumlahSksNull = 0;
                                 $jumlahMutu = 0;
+                                $jumlahMutuAp = 0;
                                 $indexPrestasi = 0;
                             @endphp
                             @foreach ($jadwal as $item)
                                 @php
-                                // Ambil nilai berdasarkan nim dan id_materi_ajar
-                                $nilai = DB::table('vw_data_prestasi')
-                                    ->where('nim', $student->nim)
-                                    ->where('id_materi_ajar', $item->id_materi_ajar)
-                                    ->first();
-                                    if($nilai){
+                                    // Ambil nilai berdasarkan nim dan id_materi_ajar
+                                    $nilai = DB::table('vw_data_prestasi')
+                                        ->where('nim', $student->nim)
+                                        ->where('id_materi_ajar', $item->id_materi_ajar)
+                                        ->first();
+                                    if ($nilai) {
                                         $perhitunganPresensi = $perhitungan_1->presensi;
                                         $persenPresensi = $perhitunganPresensi / 100;
                                         $nilaiPresensi =
@@ -304,116 +305,206 @@
 
                                         $jumlahAm = $amPresensi + $amTugas + $amFormatif + $amUts + $amUas;
 
-                                            if ($jumlahAm < 50) {
-                                                $huruf = 'E';
-                                            } elseif ($jumlahAm < 55) {
-                                                $huruf = 'D';
-                                            } elseif ($jumlahAm < 60) {
-                                                $huruf = 'C-';
-                                            } elseif ($jumlahAm < 65) {
-                                                $huruf = 'C';
-                                            } elseif ($jumlahAm < 70) {
-                                                $huruf = 'C+';
-                                            } elseif ($jumlahAm < 75) {
-                                                $huruf = 'B-';
-                                            } elseif ($jumlahAm < 80) {
-                                                $huruf = 'B';
-                                            } elseif ($jumlahAm < 85) {
-                                                $huruf = 'B+';
-                                            } elseif ($jumlahAm < 90) {
-                                                $huruf = 'A-';
-                                            } else {
-                                                $huruf = 'A';
-                                            }
-
-                                            if ($huruf == 'E') {
-                                                $grade = '0.0';
-                                            } elseif ($huruf == 'D') {
-                                                $grade = '1.0';
-                                            } elseif ($huruf == 'C-') {
-                                                $grade = '1.6';
-                                            } elseif ($huruf == 'C') {
-                                                $grade = '2.0';
-                                            } elseif ($huruf == 'C+') {
-                                                $grade = '2.3';
-                                            } elseif ($huruf == 'B-') {
-                                                $grade = '2.6';
-                                            } elseif ($huruf == 'B') {
-                                                $grade = '3.0';
-                                            } elseif ($huruf == 'B+') {
-                                                $grade = '3.3';
-                                            } elseif ($huruf == 'A-') {
-                                                $grade = '3.6';
-                                            } elseif ($huruf == 'A') {
-                                                $grade = '4.0';
-                                            }
-                                            $sks = $nilai->sks;
-                                            $mutu = $grade * $sks;
-                                            $jumlahSksNotNull += $sks;
-                                            $jumlahMutu += $mutu;
-
-
-                                            if ($indexPrestasi < 2) {
-                                                $hasilIndexPrestasi = 'KURANG';
-                                            } elseif ($indexPrestasi < 2.6) {
-                                                $hasilIndexPrestasi = 'CUKUP';
-                                            } elseif ($indexPrestasi < 3) {
-                                                $hasilIndexPrestasi = 'BAIK';
-                                            } elseif ($indexPrestasi < 3.6) {
-                                                $hasilIndexPrestasi = 'MEMUASKAN';
-                                            } elseif ($indexPrestasi >= 3.6) {
-                                                $hasilIndexPrestasi = 'SANGAT MEMUASKAN';
-                                            } else{
-                                                $hasilIndexPrestasi = '-';
-                                            }
-                                        }else{
-                                            $nilaiPresensi = 0;
-                                            $jumlahSksNull += $item->sks;
+                                        if ($jumlahAm < 50) {
+                                            $huruf = 'E';
+                                        } elseif ($jumlahAm < 55) {
+                                            $huruf = 'D';
+                                        } elseif ($jumlahAm < 60) {
+                                            $huruf = 'C-';
+                                        } elseif ($jumlahAm < 65) {
+                                            $huruf = 'C';
+                                        } elseif ($jumlahAm < 70) {
+                                            $huruf = 'C+';
+                                        } elseif ($jumlahAm < 75) {
+                                            $huruf = 'B-';
+                                        } elseif ($jumlahAm < 80) {
+                                            $huruf = 'B';
+                                        } elseif ($jumlahAm < 85) {
+                                            $huruf = 'B+';
+                                        } elseif ($jumlahAm < 90) {
+                                            $huruf = 'A-';
+                                        } else {
+                                            $huruf = 'A';
                                         }
 
-                                        $jumlahSks =  $jumlahSksNotNull + $jumlahSksNull;
-                                        $indexPrestasi= $jumlahMutu/$jumlahSks;
+                                        if ($huruf == 'E') {
+                                            $grade = '0.0';
+                                        } elseif ($huruf == 'D') {
+                                            $grade = '1.0';
+                                        } elseif ($huruf == 'C-') {
+                                            $grade = '1.6';
+                                        } elseif ($huruf == 'C') {
+                                            $grade = '2.0';
+                                        } elseif ($huruf == 'C+') {
+                                            $grade = '2.3';
+                                        } elseif ($huruf == 'B-') {
+                                            $grade = '2.6';
+                                        } elseif ($huruf == 'B') {
+                                            $grade = '3.0';
+                                        } elseif ($huruf == 'B+') {
+                                            $grade = '3.3';
+                                        } elseif ($huruf == 'A-') {
+                                            $grade = '3.6';
+                                        } elseif ($huruf == 'A') {
+                                            $grade = '4.0';
+                                        }
+                                        $sks = $nilai->sks;
+                                        $mutu = $grade * $sks;
+                                        $jumlahSksNotNull += $sks;
+                                        $jumlahMutu += $mutu;
+
+                                        if ($indexPrestasi < 2) {
+                                            $hasilIndexPrestasi = 'KURANG';
+                                        } elseif ($indexPrestasi < 2.6) {
+                                            $hasilIndexPrestasi = 'CUKUP';
+                                        } elseif ($indexPrestasi < 3) {
+                                            $hasilIndexPrestasi = 'BAIK';
+                                        } elseif ($indexPrestasi < 3.6) {
+                                            $hasilIndexPrestasi = 'MEMUASKAN';
+                                        } elseif ($indexPrestasi >= 3.6) {
+                                            $hasilIndexPrestasi = 'SANGAT MEMUASKAN';
+                                        } else {
+                                            $hasilIndexPrestasi = '-';
+                                        }
+                                    } else {
+                                        $nilaiPresensi = 0;
+                                        $jumlahSksNull += $item->sks;
+                                    }
+
+                                    $jumlahSks = $jumlahSksNotNull + $jumlahSksNull;
+                                    $indexPrestasi = $jumlahMutu / $jumlahSks;
+
+                                    // NILAI APLIKASI PROJECT
+                                    $nilaiAplikasi = $nilaiAplikasiProject->where('nim', $student->nim)->first();
+                                    if (!$nilaiAplikasi) {
+                                        $apPresensi = 0;
+                                        $apTugas = 0;
+                                        $apFormatif = 0;
+                                        $apUts = 0;
+                                        $apUas = 0;
+                                        $jumlahNilaiAp = 0;
+                                    } else {
+                                        $apPresensi = $nilaiAplikasi->presensi;
+                                        $apTugas = $nilaiAplikasi->tugas;
+                                        $apFormatif = $nilaiAplikasi->formatif;
+                                        $apUts = $nilaiAplikasi->uts;
+                                        $apUas = $nilaiAplikasi->uas;
+                                        $jumlahNilaiAp = ($apPresensi + $apTugas + $apFormatif + $apUts + $apUas) / 5;
+
+                                        if ($jumlahNilaiAp < 50) {
+                                            $hurufAp = 'E';
+                                        } elseif ($jumlahNilaiAp < 55) {
+                                            $hurufAp = 'D';
+                                        } elseif ($jumlahNilaiAp < 60) {
+                                            $hurufAp = 'C-';
+                                        } elseif ($jumlahNilaiAp < 65) {
+                                            $hurufAp = 'C';
+                                        } elseif ($jumlahNilaiAp < 70) {
+                                            $hurufAp = 'C+';
+                                        } elseif ($jumlahNilaiAp < 75) {
+                                            $hurufAp = 'B-';
+                                        } elseif ($jumlahNilaiAp < 80) {
+                                            $hurufAp = 'B';
+                                        } elseif ($jumlahNilaiAp < 85) {
+                                            $hurufAp = 'B+';
+                                        } elseif ($jumlahNilaiAp < 90) {
+                                            $hurufAp = 'A-';
+                                        } else {
+                                            $hurufAp = 'A';
+                                        }
+
+                                        if ($hurufAp == 'E') {
+                                            $gradeAp = '0.0';
+                                        } elseif ($hurufAp == 'D') {
+                                            $gradeAp = '1.0';
+                                        } elseif ($hurufAp == 'C-') {
+                                            $gradeAp = '1.6';
+                                        } elseif ($hurufAp == 'C') {
+                                            $gradeAp = '2.0';
+                                        } elseif ($hurufAp == 'C+') {
+                                            $gradeAp = '2.3';
+                                        } elseif ($hurufAp == 'B-') {
+                                            $gradeAp = '2.6';
+                                        } elseif ($hurufAp == 'B') {
+                                            $gradeAp = '3.0';
+                                        } elseif ($hurufAp == 'B+') {
+                                            $gradeAp = '3.3';
+                                        } elseif ($hurufAp == 'A-') {
+                                            $gradeAp = '3.6';
+                                        } elseif ($hurufAp == 'A') {
+                                            $gradeAp = '4.0';
+                                        }
+
+                                        $mutuAp = $gradeAp * $item->sks;
+                                        $jumlahMutuAp += $mutuAp;
+                                        $indexPrestasiAp = $jumlahMutuAp / $jumlahSks;
+
+                                        if ($indexPrestasiAp < 2) {
+                                            $hasilIndexPrestasiAp = 'KURANG';
+                                        } elseif ($indexPrestasiAp < 2.6) {
+                                            $hasilIndexPrestasiAp = 'CUKUP';
+                                        } elseif ($indexPrestasiAp < 3) {
+                                            $hasilIndexPrestasiAp = 'BAIK';
+                                        } elseif ($indexPrestasiAp < 3.6) {
+                                            $hasilIndexPrestasiAp = 'MEMUASKAN';
+                                        } elseif ($indexPrestasiAp >= 3.6) {
+                                            $hasilIndexPrestasiAp = 'SANGAT MEMUASKAN';
+                                        } else {
+                                            $hasilIndexPrestasiAp = '-';
+                                        }
+                                    }
                                 @endphp
-                                @if($nilai)
-                                <tr>
-                                    <td class="border border-1 border-black">{{ $no++ }}</td>
-                                    <td class="border border-1 border-black text-left pl-2">
-                                        {{ $item->materi_ajar }}</td>
-                                    <td class="border border-1 border-black text-left pl-2">{{ $huruf }}</td>                    
-                                    <td class="border border-1 border-black">{{ $grade }}</td>
-                                    <td class="border border-1 border-black">
-                                        {{ $item->sks }}</td>
-                                    <td class="border border-1 border-black">{{ $mutu }}</td>
-                                </tr>
-                                    @else
+                                @if ($nilai)
                                     <tr>
-                                    <td class="border border-1 border-black">{{ $no++ }}</td>
-                                    <td class="border border-1 border-black text-left pl-2">
-                                        {{ $item->materi_ajar }}</td>
-                                    <td class="border border-1 border-black text-left pl-2">E</td>                    
-                                    <td class="border border-1 border-black">0</td>
-                                    <td class="border border-1 border-black">
-                                        {{ $item->sks }}</td>
-                                    <td class="border border-1 border-black">0</td>
+                                        <td class="border border-1 border-black">{{ $no++ }}</td>
+                                        <td class="border border-1 border-black text-left pl-2">
+                                            {{ $item->materi_ajar }}</td>
+                                        <td class="border border-1 border-black text-left pl-2">
+                                            {{ $nilaiAplikasi ? $hurufAp : $huruf }}</td>
+                                        <td class="border border-1 border-black">
+                                            {{ $nilaiAplikasi ? $gradeAp : $grade }}
+                                        </td>
+                                        <td class="border border-1 border-black">
+                                            {{ $item->sks }}</td>
+                                        <td class="border border-1 border-black">{{ $nilaiAplikasi ? $mutuAp : $mutu }}
+                                        </td>
                                     </tr>
-                                    @endif
-                               
+                                @else
+                                    <tr>
+                                        <td class="border border-1 border-black">{{ $no++ }}</td>
+                                        <td class="border border-1 border-black text-left pl-2">
+                                            {{ $item->materi_ajar }}</td>
+                                        <td class="border border-1 border-black text-center pl-2">
+                                            {{ $nilaiAplikasi ? $hurufAp : '0' }}</td>
+                                        <td class="border border-1 border-black">{{ $nilaiAplikasi ? $gradeAp : '0' }}
+                                        </td>
+                                        <td class="border border-1 border-black">
+                                            {{ $item->sks }}</td>
+                                        <td class="border border-1 border-black">{{ $nilaiAplikasi ? $mutuAp : '0' }}
+                                        </td>
+                                    </tr>
+                                @endif
                             @endforeach
                             <tr>
                                 <td colspan="4" class="border border-1 border-black">JUMLAH</td>
                                 <td class="border border-1 border-black">{{ $jumlahSks }}</td>
-                                <td class="border border-1 border-black">{{ $jumlahMutu }}</td>
+                                <td class="border border-1 border-black">
+                                    {{ $item->id_materi_ajar == 10 ? $jumlahMutuAp : $jumlahMutu }}</td>
                             </tr>
                             <tr>
                                 <td colspan="4" class="border border-1 border-black">INDEX PRESTASI</td>
-                                <td class="border border-1 border-black">{{ number_format($indexPrestasi, 2) }}</td>
-                                <td class="border border-1 border-black">{{ $hasilIndexPrestasi ?? '-' }}</td>
+                                <td class="border border-1 border-black">
+                                    {{ $nilaiAplikasi ? number_format($indexPrestasiAp, 2) : number_format($indexPrestasi, 2) }}
+                                </td>
+                                <td class="border border-1 border-black text-xs text-wrap w-24">{{ $nilaiAplikasi ? $hasilIndexPrestasiAp ?? '-' : $hasilIndexPrestasi ?? '-' }}</td>
                             </tr>
                         </tbody>
                     </table>
                     <div class="italic text-left text-xs ml-10 mt-4 font-normal">
                         <div>Catatan:</div>
-                        <div>Kartu Hasil Studi ini hanya sah bila di bubuhi stempel lembaga dan tanda tangan Kepala Bagian Akademik, Jika ada penghapusan / coretan pada Kartu Hasil Studi ini dinyatakan tidak sah.</div>
+                        <div>Kartu Hasil Studi ini hanya sah bila di bubuhi stempel lembaga dan tanda tangan Kepala
+                            Bagian Akademik, Jika ada penghapusan / coretan pada Kartu Hasil Studi ini dinyatakan tidak
+                            sah.</div>
                         <div class="font-bold">
                             <div class="flex">
                                 <div class="mr-1">HM:</div>

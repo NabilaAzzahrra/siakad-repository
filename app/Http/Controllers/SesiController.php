@@ -41,7 +41,7 @@ class SesiController extends Controller
 
         return redirect()
             ->route('sesi.index')
-            ->with('message', 'Data Sesi Sudah ditambahkan');
+            ->with('message_insert', 'Data Sesi Sudah ditambahkan');
     }
 
     /**
@@ -74,7 +74,7 @@ class SesiController extends Controller
         $datas->update($data);
         return redirect()
             ->route('sesi.index')
-            ->with('message', 'Data Sesi Sudah diupdate');
+            ->with('message_update', 'Data Sesi Sudah diupdate');
     }
 
     /**

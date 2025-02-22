@@ -191,6 +191,8 @@ class KHSController extends Controller
             $nilaiPerMahasiswa[$itemNilai->nim][$itemNilai->id_jadwal] = $itemNilai;
         }
 
+        $nilaiAplikasiProject = Nilai::whereIn('nim', $user_ids)->get();
+
         return view('page.khs.print')->with([
             'stu_data' => $result,
             'kelas' => Kelas::all(),
@@ -198,6 +200,7 @@ class KHSController extends Controller
             'perhitungan_1' => $perhitungan_1,
             'nilaiPerMahasiswa' => $nilaiPerMahasiswa,
             'userJurusanPairs' => $userJurusanPairs,
+            'nilaiAplikasiProject' => $nilaiAplikasiProject
         ]);
     }
 

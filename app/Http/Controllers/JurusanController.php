@@ -41,7 +41,7 @@ class JurusanController extends Controller
 
         return redirect()
             ->route('jurusan.index')
-            ->with('message', 'Data Jurusan Sudah ditambahkan');
+            ->with('message_insert', 'Data Jurusan Sudah ditambahkan');
     }
 
     /**
@@ -74,7 +74,7 @@ class JurusanController extends Controller
         $datas->update($data);
         return redirect()
             ->route('jurusan.index')
-            ->with('message', 'Data Jurusan Sudah diupdate');
+            ->with('message_update', 'Data Jurusan Sudah diupdate');
     }
 
     /**

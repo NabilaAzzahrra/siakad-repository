@@ -40,7 +40,7 @@ class RuangController extends Controller
 
         return redirect()
             ->route('ruang.index')
-            ->with('message', 'Data Ruang Sudah ditambahkan');
+            ->with('message_insert', 'Data Ruang Sudah ditambahkan');
     }
 
     /**
@@ -72,7 +72,7 @@ class RuangController extends Controller
         $datas->update($data);
         return redirect()
             ->route('ruang.index')
-            ->with('message', 'Data Ruang Sudah diupdate');
+            ->with('message_update', 'Data Ruang Sudah diupdate');
     }
 
     /**
