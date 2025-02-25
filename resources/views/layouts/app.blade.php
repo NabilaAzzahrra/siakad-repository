@@ -30,6 +30,8 @@
         href='https://cdn-uicons.flaticon.com/2.5.1/uicons-solid-rounded/css/uicons-solid-rounded.css'>
     <link rel='stylesheet'
         href='https://cdn-uicons.flaticon.com/2.5.1/uicons-solid-straight/css/uicons-solid-straight.css'>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
 
     {{-- Select2 --}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -40,6 +42,9 @@
 
     {{-- TEXT EDITOR --}}
     <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+
+    {{-- AOS --}}
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -135,74 +140,17 @@
             font-family: 'Poppins', sans-serif;
             background: url('public/img/landing.jpg')
         }
-
-        .bg-custom {
-            /* position: relative; */
-            z-index: 1;
-            /* color: white; */
-            /* Just to make content visible on the transparent background */
-        }
-
-        .bg-custom::before {
-            content: '';
-            background-image: url('{{ url('img/landing.jpg') }}');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.25;
-            /* Adjust the transparency here */
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-
-        /* Preloader Styles */
-        #preloader {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            background-color: #ffffff;
-            /* Background transparan 50% */
-        }
-
-
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(0, 0, 0, 0.1);
-            border-radius: 50%;
-            border-left-color: #000;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
     </style>
 
 </head>
 
-<body class="font-sans antialiased bg-[url('/public/img/landing.jpg')] bg-contain ">
+<body class="font-sans antialiased bg-[url('/public/img/building.jpg')] bg-cover bg-gray-500 bg-blend-multiply">
     <!-- Preloader -->
-    <div id="preloader" class="">
+    {{-- <div id="preloader" class="">
         <div><dotlottie-player src="{{ url('json/preloader.json') }}" background="transparent" speed="1"
                 class="lg:w-[600px] lg:h-[500px] hidden lg:block" loop autoplay></dotlottie-player></div>
-    </div>
-    <div class="min-h-screen dark:bg-gray-900 bg-white bg-opacity-65">
+    </div> --}}
+    <div class="min-h-screen dark:bg-gray-900">
         @include('layouts.navigation')
 
         <!-- Page Heading -->
@@ -248,8 +196,13 @@
     $(".js-example-placeholder-single").select2({
         placeholder: "Pilih...",
         allowClear: true,
-        width: '100%'
+        // width: '100%'
+        width: 'resolve'
     });
+</script>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+    AOS.init();
 </script>
 @stack('scripts')
 

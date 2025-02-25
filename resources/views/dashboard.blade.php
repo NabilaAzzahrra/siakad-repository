@@ -5,643 +5,377 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
+    <div class="">
+        <div class="max-w-8xl mx-auto text-white">
 
-            <div class="flex flex-col lg:flex-row lg:items-start items-center lg:justify-between justify-center">
-                <div class="lg:w-1/2 w-full">
-                    <div class="mx-4 text-wrap bg-white shadow-xl p-6 rounded-xl items-center">
-                        <div class="font-bold text-red-500">Tahun Akademik
-                            {{ $konfigurasi->tahun_akademik->tahunakademik }}
+            <div class="flex h-[542px]">
+                <div class="w-[800px] p-12">
+                    <div class="bg-[#005F9D] bg-opacity-65 pt-6 pb-4 pr-6 pl-4 w-[300px] rounded-3xl" data-aos="fade-down" data-aos-delay="70" data-aos-duration="1000">
+                        <div class="flex gap-5 items-center justify-between">
+                            <div><img src="{{ url('img/major.png') }}" alt="Icon 1" class=""></div>
+                            <div>
+                                <div class="font-extrabold text-right text-md">PROGRAM STUDI</div>
+                                <div class="font-extrabold text-right text-[40px] mt-2">{{ $totalProgramStudi }}</div>
+                            </div>
                         </div>
-                        <div class="font-extrabold text-2xl">Sistem Informasi Akademik (SIAKAD)</div>
-                        <div class="text-md text-wrap text-justify">Sistem informasi akademik merupakan sebuah platform
-                            terintegrasi yang dirancang untuk memudahkan pengelolaan berbagai aspek dalam kegiatan
-                            akademik, khususnya di lingkungan perguruan tinggi. Sistem ini berfungsi sebagai sarana
-                            untuk mengelola data mahasiswa, data perkuliahan, jadwal, nilai, hingga informasi
-                            administrasi akademik lainnya.</div>
-
+                    </div>
+                    <div class="bg-[#F2C94C] bg-opacity-65 pt-6 pb-4 pr-6 pl-4 w-[300px] rounded-3xl mt-4" data-aos="fade-down" data-aos-delay="60" data-aos-duration="1000">
+                        <div class="flex gap-5 items-center justify-between">
+                            <div><img src="{{ url('img/graduated.png') }}" alt="Icon 1" class="w-20"></div>
+                            <div>
+                                <div class="font-extrabold text-right text-md">PESERTA DIDIK</div>
+                                <div class="font-extrabold text-right text-[40px] mt-2">{{ $totalPesertaDidik }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-[#F15B67] bg-opacity-65 pt-6 pb-4 pr-6 pl-4 w-[300px] rounded-3xl mt-5" data-aos="fade-down" data-aos-delay="50" data-aos-duration="1000">
+                        <div class="flex gap-5 items-center justify-between">
+                            <div><img src="{{ url('img/teacher.png') }}" alt="Icon 1" class="w-24"></div>
+                            <div>
+                                <div class="font-extrabold text-right text-md">PENGAJAR</div>
+                                <div class="font-extrabold text-right text-[40px] mt-2">{{ $totalPengajar }}</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="grid lg:grid-cols-3 gap-5 mx-4 mt-4 lg:mt-0">
-                    <div class="bg-[#005F9D] p-4 w-64 rounded-xl shadow-xl">
-                        <div class="flex gap-2 font-bold items-center justify-between">
-                            <div class="mt-3"><i class="fi fi-ss-building text-white" style="font-size: 40px;"></i>
-                            </div>
-                            <div class="text-right text text-white">
-                                <div>PROGRAM STUDI</div>
-                                <div><span class="bg-white px-2 rounded-xl text-black">{{ $totalProgramStudi }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-amber-300 p-4 w-64 rounded-xl shadow-xl">
-                        <div class="flex gap-2 font-bold items-center justify-between">
-                            <div class="mt-3"><i class="ffi fi-sr-student-alt text-white"
-                                    style="font-size: 40px;"></i>
-                            </div>
-                            <div class="text-right">
-                                <div>PESERTA DIDIK</div>
-                                <div><span class="bg-black px-2 rounded-xl text-white">{{ $totalPesertaDidik }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-[#F15B67] p-4 w-64 rounded-xl shadow-xl">
-                        <div class="flex gap-2 font-bold items-center justify-between">
-                            <div class="mt-3"><i class="fi fi-sr-chalkboard-user text-white"
-                                    style="font-size: 40px;"></i>
-                            </div>
-                            <div class="text-right text-white">
-                                <div>PENGAJAR</div>
-                                <div><span class="bg-white px-2 rounded-xl text-black">{{ $totalPengajar }}</span></div>
-                            </div>
-                        </div>
+                <div class="w-full p-12 mt-36 text-right">
+                    <div class="text-wrap pr-28 text-3xl font-extrabold" data-aos="fade-left" data-aos-delay="50" data-aos-duration="1000">Sistem Informasi Akademik (SIAKAD)</div>
+                    <div class="text-wrap px-28 text-lg" data-aos="fade-left" data-aos-delay="55" data-aos-duration="1000">Sistem informasi akademik merupakan sebuah platform
+                        terintegrasi yang dirancang untuk memudahkan pengelolaan berbagai aspek dalam kegiatan akademik,
+                        khususnya di lingkungan perguruan tinggi. Sistem ini berfungsi sebagai sarana untuk mengelola
+                        data mahasiswa, data perkuliahan, jadwal, nilai, hingga informasi administrasi akademik lainnya.
                     </div>
                 </div>
             </div>
-            <div class="flex flex-col gap-5 items-start md:flex-row justify-center p-3">
-                {{-- <div class="w-full p-3"> --}}
-                {{-- @can('role-O')
-                    <div class="bg-white w-1/2 dark:bg-gray-800 overflow-hidden shadow-xl rounded-lg sm:rounded-lg p-6">
-                        <div
-                            class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                            PRESENSI <span class="uppercase">{{ str_replace('Orang Tua', '', Auth::user()->name) }}</span>
-                            HARI INI
-                        </div>
-                        <div class="mt-3">
-                            @if (!$presensiRealtime->isEmpty())
-                            @foreach ($presensiRealtime as $pr)
-                            <div
-                                class="bg-red-100 p-2 px-6 rounded-xl flex justify-between border border-2 border-red-300">
-                                <div>
-                                    <div>{{ $pr->presensi->jadwal->sesi->pukul->pukul }} WIB</div>
-                                    <div class="font-bold text-lg">
-                                        {{ $pr->presensi->jadwal->detail_kurikulum->materi_ajar->materi_ajar }}
-                                    </div>
-                                    <div class="">{{ $pr->presensi->jadwal->dosen->nama_dosen }}</div>
+            <div class="bg-[#005F9D] py-12 pb-12 md:block hidden">
+                <div class="flex items-center justify-center">
+                    <div class="relative bg-white w-full mx-56 py-2 m-12 rounded-full h-12">
+                        <div class="absolute inset-0 flex justify-between items-center -top-5">
+                            <!-- Lingkaran 1 -->
+                            <button
+                                class="bg-white w-32 h-32 ml-52 rounded-full flex items-center justify-center shadow-md"
+                                onclick="ketidakhadiran()">
+                                <div
+                                    class="w-24 h-24 border-2 border-black rounded-full flex items-center justify-center shadow-md" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
+                                    <img src="{{ url('img/calendar.png') }}" alt="Icon 1" class="w-12 h-12" >
                                 </div>
-                                <div class="text-right">
-                                    <div>{{ $pr->presensi->jadwal->ruang->ruang }}</div>
-                                    <div class="font-bold text-lg">
-                                        {{ str_replace('Orang Tua', '', Auth::user()->name) }}
-                                    </div>
-                                    <div><span
-                                            class="bg-emerald-300 p-1 px-6 rounded-xl font-extrabold">{{ $pr->keterangan }}</span>
-                                    </div>
+                            </button>
+                            <!-- Lingkaran 2 -->
+                            <button class="bg-white w-32 h-32 rounded-full flex items-center justify-center shadow-md"
+                                onclick="informasi()">
+                                <div
+                                    class="w-24 h-24 border-2 border-black rounded-full flex items-center justify-center shadow-md" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
+                                    <img src="{{ url('img/info.png') }}" alt="Icon 2" class="w-12 h-12">
                                 </div>
-                            </div>
-                            @endforeach
-                            @else
-                            @foreach ($presensiRealtimeNoData as $pr)
-                            <div
-                                class="bg-red-100 p-2 px-6 rounded-xl flex justify-between border border-2 border-red-300">
-                                <div>
-                                    <div>{{ $pr->sesi->pukul->pukul }} WIB</div>
-                                    <div class="font-bold text-lg">
-                                        {{ $pr->detail_kurikulum->materi_ajar->materi_ajar }}
-                                    </div>
-                                    <div class="">{{ $pr->dosen->nama_dosen }}</div>
+                            </button>
+                            <!-- Lingkaran 3 -->
+                            <button class="bg-white w-32 h-32 rounded-full flex items-center justify-center shadow-md"
+                                onclick="ulangtahun()">
+                                <div
+                                    class="w-24 h-24 border-2 border-black rounded-full flex items-center justify-center shadow-md" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
+                                    <img src="{{ url('img/birth.png') }}" alt="Icon 3" class="w-12 h-12">
                                 </div>
-                                <div class="text-right">
-                                    <div>{{ $pr->ruang->ruang }}</div>
-                                    <div class="font-bold text-lg">
-                                        {{ str_replace('Orang Tua', '', Auth::user()->name) }}
-                                    </div>
-                                    <div><span
-                                            class="bg-emerald-300 p-1 px-6 rounded-xl font-extrabold">{{ $pr->keterangan }}</span>
-                                    </div>
+                            </button>
+                            <!-- Lingkaran 4 -->
+                            <button
+                                class="bg-white w-32 h-32 mr-52 rounded-full flex items-center justify-center shadow-md" onclick="jadwal()">
+                                <div
+                                    class="w-24 h-24 border-2 border-black rounded-full flex items-center justify-center shadow-md" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
+                                    <img src="{{ url('img/timetable.png') }}" alt="Icon 4" class="w-12 h-12">
                                 </div>
-                            </div>
-                            @endforeach
-                            @endif
+                            </button>
                         </div>
                     </div>
-                @endcan --}}
+                </div>
+                <div class="flex mx-[380px]">
+                    <div class="font-bold">Ketidakhadiran Mahasiswa</div>
+                    <div class="ml-[160px] font-bold">Informasi</div>
+                    <div class="ml-[200px] font-bold">Ulang Tahun Dosen</div>
+                    <div class="ml-[168px] font-bold">Jadwal Hari ini</div>
+                </div>
+            </div>
+            <div class="md:hidden block">
+                hsvchvs
+            </div>
+        </div>
+    </div>
 
-                @can('role-A')
-                    <div class="bg-white lg:w-1/2 w-full dark:bg-gray-800 overflow-hidden shadow-xl rounded-lg sm:rounded-lg p-6">
-                        <div
-                            class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left text-wrap bg-amber-300 rounded-xl font-bold">
-                            PRESENSI <span class="uppercase">MAHASISWA TIDAK HADIR</span>
-                            HARI INI
+    {{-- KETIDAKHADIRAN MAHASISWA --}}
+    <div id="modal-info-ketidakhadiran" class="hidden fixed inset-0 flex justify-center items-center z-50">
+        <!-- Backdrop Blur -->
+        <div class="absolute inset-0 bg-black opacity-50 backdrop-blur-sm"></div>
+        <div class="bg-white rounded-lg p-6 lg:w-4/12 w-full shadow-xl z-10">
+            <div class="flex">
+                <div class="w-10">
+                    <img class="rounded-full shadow-lg" src="{{ url('img/exclamation.png') }}" alt="Bonnie image" />
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold mb-4 p-2 rounded-xl">KETIDAKHADIRAN MAHASISWA</h2>
+                </div>
+            </div>
+            <hr class="border mb-5 border-black border-opacity-30">
+            <p id="modal-content-ketidakhadiran">
+            <div class="mt-3">
+                @foreach ($presensiMahasiswa as $pm)
+                    <div class="bg-red-100 p-2 px-6 mb-2 rounded-xl flex justify-between border-2 border-red-300">
+                        <div>
+                            <div class="text-sm">{{ $pm->presensi->jadwal->sesi->pukul->pukul }} WIB</div>
+                            <div class="font-bold lg:text-lg text-sm">
+                                {{ $pm->presensi->jadwal->detail_kurikulum->materi_ajar->materi_ajar }}
+                            </div>
+                            <div class="text-sm">{{ $pm->presensi->jadwal->dosen->nama_dosen }}</div>
                         </div>
-                        <div class="mt-3">
-                            @foreach ($presensiMahasiswa as $pm)
-                            <div
-                                class="bg-red-100 p-2 px-6 mb-2 rounded-xl flex justify-between border border-2 border-red-300">
+                        <div class="text-right">
+                            <div class="text-sm">{{ $pm->presensi->jadwal->ruang->ruang }}</div>
+                            <div class="font-bold lg:text-lg text-sm text-wrap">
+                                {{ $pm->mahasiswa->nama }}
+                            </div>
+                            <div class="text-sm">
+                                @php
+                                    if ($pm->keterangan == 'SAKIT') {
+                                        $bg = 'bg-emerald-300';
+                                    } elseif ($pm->keterangan == 'IZIN') {
+                                        $bg = 'bg-amber-300';
+                                    } elseif ($pm->keterangan == 'ALPA') {
+                                        $bg = 'bg-red-300';
+                                    }
+                                @endphp
+                                <span
+                                    class="{{ $bg }}  px-6 rounded-xl font-extrabold">{{ $pm->keterangan }}</span>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            </p>
+            <hr class="border mt-5 border-black border-opacity-30">
+            <button onclick="closeModalKetidakhadiran()"
+                class="mt-4 bg-red-500 text-white px-4 py-2 rounded">Tutup</button>
+        </div>
+    </div>
+    {{-- INFORMASI --}}
+    <div id="modal-info-informasi" class="hidden fixed inset-0 flex justify-center items-center z-50">
+        <!-- Backdrop Blur -->
+        <div class="absolute inset-0 bg-black opacity-50 backdrop-blur-sm"></div>
+        <div class="bg-white rounded-lg p-6 lg:w-4/12 w-full shadow-xl z-10">
+            <div class="flex">
+                <div class="w-10">
+                    <img class="rounded-full shadow-lg" src="{{ url('img/letter-i.png') }}" alt="Bonnie image" />
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold mb-4 p-2 rounded-xl">INFORMASI</h2>
+                </div>
+            </div>
+            <hr class="border-2 mb-5 border-[#005F9D] border-opacity-30">
+            <p id="modal-content-informasi">
+                @foreach ($informasi as $i)
+                    <div class="flex gap-2">
+                        <div class="h-10 w-10">
+                            <img class="rounded-full shadow-lg" src="{{ url('img/user.png') }}" alt="Bonnie image" />
+                        </div>
+                        <div class="w-full">
+                            <div class="flex gap-3 items-center">
                                 <div>
-                                    <div class="text-sm">{{ $pm->presensi->jadwal->sesi->pukul->pukul }} WIB</div>
-                                    <div class="font-bold lg:text-lg text-sm">
-                                        {{ $pm->presensi->jadwal->detail_kurikulum->materi_ajar->materi_ajar }}
-                                    </div>
-                                    <div class="text-sm">{{ $pm->presensi->jadwal->dosen->nama_dosen }}</div>
+                                    <h3
+                                        class="flex text-sm -ml-3  items-center mb-1 lg:text-lg font-semibold text-gray-900 dark:text-white text-wrap">
+                                        {{ $i->judul }} <span
+                                            class="bg-blue-100 text-blue-800 text-xs lg:text-sm font-medium px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 ms-3">{{ $i->kategori }}</span>
+                                    </h3>
                                 </div>
-                                <div class="text-right">
-                                    <div class="text-sm">{{ $pm->presensi->jadwal->ruang->ruang }}</div>
-                                    <div class="font-bold lg:text-lg text-sm text-wrap">
-                                        {{ $pm->mahasiswa->nama }}
+                                <div>
+                                    <time
+                                        class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500 text-wrap">Released
+                                        on {{ date('F - d - Y', strtotime($i->created_at)) }}</time>
+                                </div>
+                            </div>
+                            <div class="w-full bg-[#005F9D] rounded-b-[50px] rounded-tr-[50px] bg-opacity-30 mt-1">
+                                <div class="text-wrap p-6">
+                                    {!! $i->informasi !!}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </p>
+            <hr class="border-2 mt-5 border-[#005F9D] border-opacity-30">
+            <button onclick="closeModalInformasi()"
+                class="mt-4 bg-red-500 text-white px-4 py-2 rounded">Tutup</button>
+        </div>
+    </div>
+    {{-- ULANG TAHUN DOSEN --}}
+    <div id="modal-info-ulangtahun" class="hidden fixed inset-0 flex justify-center items-center z-50">
+        <!-- Backdrop Blur -->
+        <div class="absolute inset-0 bg-black opacity-50 backdrop-blur-sm"></div>
+
+        <div class="bg-white rounded-lg p-6 lg:w-4/12 w-full shadow-xl z-10">
+            <div class="flex gap-5">
+                <div class="w-10">
+                    <img class="mb-2" src="{{ url('img/balloon.png') }}"
+                                            alt="Balloon" />
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold rounded-xl">ULANG TAHUN DOSEN</h2>
+                </div>
+            </div>
+            <hr class="border mb-5 border-black border-opacity-30">
+            <p id="modal-content-ulangtahun">
+            <div class="grid grid-cols-2 gap-2">
+                @foreach ($dosenUlangtahun as $key => $j)
+                    @php
+                       $button = date('d-m') === date('d-m', strtotime($j->tgl_lahir))
+                                ? '<a href="https://wa.me/?text=' . urlencode('Assalamualaikum Bapak/Ibu, Hari ini ' . $j->nama_dosen . ' sedang berulang tahun, selamat ulang tahun! Semoga Allah SWT senantiasa memberikan kesehatan, kebahagiaan, dan kesuksesan dalam setiap langkah. Terima kasih atas segala ilmu dan bimbingannya yang sangat berarti bagi mahasiswa kami. Semoga tahun ini menjadi tahun penuh berkah dan kebahagiaan.') . '" target="_blank" class="text-blue-500">
+                                    <img class="" src="' . url('img/conversation.png') . '" alt="Bonnie image" />
+                                </a>'
+                                : '';
+                    @endphp
+                    <div class="bg-white shadow-xl p-4 border rounded-xl border-black">
+                        <div class="flex gap-2 items-center">
+                            <div class="w-10">
+                                <img class="rounded-full shadow-lg" src="{{ url('img/user.png') }}"
+                                    alt="Bonnie image" />
+                            </div>
+                            <div>
+                                <div class="text-sm text-wrap">
+                                    {{ $j->nama_dosen }}
+                                </div>
+                                <div class="flex">
+                                    <div class="w-5">
+                                        <img class="rounded-full shadow-lg" src="{{ url('img/balloon.png') }}"
+                                            alt="Balloon" />
                                     </div>
                                     <div class="text-sm">
-                                        @php
-                                        if ($pm->keterangan == 'SAKIT') {
-                                        $bg = 'bg-emerald-300';
-                                        } elseif ($pm->keterangan == 'IZIN') {
-                                        $bg = 'bg-amber-300';
-                                        }else if($pm->keterangan == 'ALPA'){
-                                        $bg = 'bg-red-300';
-                                        }
-                                        @endphp
-                                        <span
-                                            class="{{$bg}}  px-6 rounded-xl font-extrabold">{{ $pm->keterangan }}</span>
+                                        {{ date('d-m-Y', strtotime($j->tgl_lahir)) }}
                                     </div>
                                 </div>
                             </div>
-                            @endforeach
+                            <div class="w-8 ml-6">
+                                {!! $button !!}
+                            </div>
                         </div>
                     </div>
-                @endcan
-
-                <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl rounded-lg sm:rounded-lg p-6">
-                    <div
-                        class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                        INFORMASI TERBARU
-                    </div>
-                    <div class="p-4">
-                        <ol class="relative border-s border-gray-200 dark:border-gray-700 mt-6">
-                            @can('role-A')
-                            @foreach ($informasi as $i)
-                            <li class="mb-10 ms-6">
-                                <span
-                                    class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-                                    <img class="rounded-full shadow-lg" src="{{ url('img/user.png') }}"
-                                        alt="Bonnie image" />
-                                </span>
-                                <h3
-                                    class="flex text-sm  items-center mb-1 lg:text-lg font-semibold text-gray-900 dark:text-white text-wrap">
-                                    {{ $i->judul }} <span
-                                        class="bg-blue-100 text-blue-800 text-xs lg:text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 ms-3">{{ $i->kategori }}</span>
-                                </h3>
-                                <time
-                                    class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500 text-wrap">Released
-                                    on {{ date('F - d - Y', strtotime($i->created_at)) }}</time>
-                                <div class="bg-gray-100 rounded-xl px-4 pt-2 pb-2 text-wrap">
-                                    <div
-                                        class="mb-2 text-xs lg:text-base font-normal text-gray-500 dark:text-gray-400 break-words">
-                                        {!! $i->informasi !!}
-                                    </div>
-                                </div>
-
-                            </li>
-                            @endforeach
-                            @endcan
-                            @can('role-M')
-                            @foreach ($informasi as $i)
-                            <li class="mb-10 ms-6">
-                                <span
-                                    class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-                                    <img class="rounded-full shadow-lg" src="{{ url('img/user.png') }}"
-                                        alt="Bonnie image" />
-                                </span>
-                                <h3
-                                    class="flex text-sm  items-center mb-1 lg:text-lg font-semibold text-gray-900 dark:text-white text-wrap">
-                                    {{ $i->judul }} <span
-                                        class="bg-blue-100 text-blue-800 text-xs lg:text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 ms-3">{{ $i->kategori }}</span>
-                                </h3>
-                                <time
-                                    class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500 text-wrap">Released
-                                    on {{ date('F - d - Y', strtotime($i->created_at)) }}</time>
-                                <div class="bg-gray-100 rounded-xl px-4 pt-2 pb-2 text-wrap">
-                                    <div
-                                        class="mb-2 text-xs lg:text-base font-normal text-gray-500 dark:text-gray-400 break-words">
-                                        {!! $i->informasi !!}
-                                    </div>
-                                </div>
-
-                            </li>
-                            @endforeach
-                            @endcan
-                            @can('role-D')
-                            @foreach ($informasi as $i)
-                            <li class="mb-10 ms-6">
-                                <span
-                                    class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-                                    <img class="rounded-full shadow-lg" src="{{ url('img/user.png') }}"
-                                        alt="Bonnie image" />
-                                </span>
-                                <h3
-                                    class="flex text-sm  items-center mb-1 lg:text-lg font-semibold text-gray-900 dark:text-white text-wrap">
-                                    {{ $i->judul }} <span
-                                        class="bg-blue-100 text-blue-800 text-xs lg:text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 ms-3">{{ $i->kategori }}</span>
-                                </h3>
-                                <time
-                                    class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500 text-wrap">Released
-                                    on {{ date('F - d - Y', strtotime($i->created_at)) }}</time>
-                                <div class="bg-gray-100 rounded-xl px-4 pt-2 pb-2 text-wrap">
-                                    <div
-                                        class="mb-2 text-xs lg:text-base font-normal text-gray-500 dark:text-gray-400 break-words">
-                                        {!! $i->informasi !!}
-                                    </div>
-                                </div>
-
-                            </li>
-                            @endforeach
-                            @endcan
-                            @can('role-O')
-                            @foreach ($informasi as $i)
-                            <li class="mb-10 ms-6">
-                                <span
-                                    class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-                                    <img class="rounded-full shadow-lg" src="{{ url('img/user.png') }}"
-                                        alt="Bonnie image" />
-                                </span>
-                                <h3
-                                    class="flex text-sm  items-center mb-1 lg:text-lg font-semibold text-gray-900 dark:text-white text-wrap">
-                                    {{ $i->judul }} <span
-                                        class="bg-blue-100 text-blue-800 text-xs lg:text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 ms-3">{{ $i->kategori }}</span>
-                                </h3>
-                                <time
-                                    class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500 text-wrap">Released
-                                    on {{ date('F - d - Y', strtotime($i->created_at)) }}</time>
-                                <div class="bg-gray-100 rounded-xl px-4 pt-2 pb-2 text-wrap">
-                                    <div
-                                        class="mb-2 text-xs lg:text-base font-normal text-gray-500 dark:text-gray-400 break-words">
-                                        {!! $i->informasi !!}
-                                    </div>
-                                </div>
-
-                            </li>
-                            @endforeach
-                            @endcan
-                        </ol>
-                    </div>
-                    @can('role-A')
-                    <div
-                        class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                        ULANG TAHUN DOSEN
-                    </div>
-                    <div class="relative overflow-x-auto rounded-lg shadow-lg mt-4">
-                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border">
-                            <thead
-                                class="text-md font-bold text-gray-700 uppercase py-[100px] dark:bg-gray-700 dark:text-gray-400">
+                @endforeach
+            </div>
+            </p>
+            <hr class="border mt-5 border-black border-opacity-30">
+            <button onclick="closeModalUlangtahun()"
+                class="mt-4 bg-red-500 text-white px-4 py-2 rounded">Tutup</button>
+        </div>
+    </div>
+    {{-- JADWAL HARI INI --}}
+    <div id="modal-info-jadwal" class="hidden fixed inset-0 flex justify-center items-center z-50">
+        <!-- Backdrop Blur -->
+        <div class="absolute inset-0 bg-black opacity-50 backdrop-blur-sm"></div>
+        <div class="bg-white rounded-lg p-6 lg:w-10/12 w-full shadow-xl z-10">
+            <div class="flex">
+                <div class="w-10">
+                    <img class="rounded-full shadow-lg" src="{{ url('img/timetable.png') }}" alt="Bonnie image" />
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold mb-4 p-2 rounded-xl">JADWAL HARI INI</h2>
+                </div>
+            </div>
+            <hr class="border mb-5 border-black border-opacity-30">
+            <p id="modal-content-jadwal">
+                <div class="flex justify-center">
+                    <div class="" style="width:100%;  overflow-x:auto;">
+                        <table class="table table-bordered" id="jadwal-datatable">
+                            <thead>
                                 <tr>
-                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
-                                        NO
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 text-center">
-                                        DOSEN
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
-                                        <div class="flex items-center">
-                                            TANGGAL LAHIR
-                                        </div>
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
-                                        <div class="flex items-center">
-
-                                        </div>
-                                    </th>
+                                    <th class="w-7">NO.</th>
+                                    <th>MATERI AJAR</th>
+                                    <th>PENGAJAR</th>
+                                    <th>HARI</th>
+                                    <th>SESI</th>
+                                    <th>PUKUL</th>
+                                    <th>SKS</th>
+                                    <th>RUANG</th>
+                                    <th>KELAS</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @php
-                                $no = 1;
+                                    $no = 1;
                                 @endphp
-                                @foreach ($dosenUlangtahun as $key => $j)
-                                @php
-                                $text = (date('d-m') === date('d-m', strtotime($j->tgl_lahir))) ? 'text-red-500 font-extrabold' : '';
-                                $button = (date('d-m') === date('d-m', strtotime($j->tgl_lahir))) ?
-                                '<a href="https://wa.me/?text=Assalamualaikum%20Bapak/Ibu,%20Hari%20ini%20'.urlencode($j->nama_dosen).'%20sedang%20berulang%20tahun,%20selamat%20ulang%20tahun!%20Semoga%20Allah%20SWT%20senantiasa%20memberikan%20kesehatan,%20kebahagiaan,%20dan%20kesuksesan%20dalam%20setiap%20langkah%20.%20Terima%20kasih%20atas%20segala%20ilmu%20dan%20bimbingannya%20yang%20sangat%20berarti%20bagi%20mahasiswa%20kami.%20Semoga%20tahun%20ini%20menjadi%20tahun%20penuh%20berkah%20dan%20kebahagiaan." target="_blank" class="text-blue-500">Send Message</a>' : '';
-
-                                @endphp
-                                <tr class="bg-white border dark:bg-gray-800 dark:border-gray-700 {{ $text }}">
-                                    <td class="px-6 py-4 text-center bg-gray-100">
-                                        {{ $dosenUlangtahun->perPage() * ($dosenUlangtahun->currentPage() - 1) + $key + 1 }}
-                                    </td>
-                                    <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white {{ $text }}">
-                                        <div>
-                                            {{ $j->nama_dosen }}
-                                        </div>
-                                    </td>
-                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white bg-gray-100 {{ $text }}">
-                                        {{ date('d-m-Y', strtotime($j->tgl_lahir)) }}
-                                    </th>
-                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white bg-gray-100">
-                                    {!! $button !!}
-                                    </th>
-                                </tr>
-                                @endforeach
-
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="mt-4">
-                        {{ $dosenUlangtahun->links() }}
-                    </div>
-                    @endcan
-                </div>
-                {{-- </div> --}}
-            </div>
-
-
-            <div class="bg-white mx-4 mt-2 rounded-xl shadow-xl p-4">
-                <span class="font-bold text-lg">JADWAL PEMBELAJARAN HARI INI</span>
-                <hr class=" border-2 border-amber-300 rounded-xl mt-1">
-                @can('role-A')
-                    <div class="w-full flex items-end justify-end mt-4">
-                        <form class="flex items-center max-w-sm justify-end w-full px-4">
-                            <label for="simple-search" class="sr-only">Search</label>
-                            <div class="relative w-full">
-                                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M3 5v10M3 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm12 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0V6a3 3 0 0 0-3-3H9m1.5-2-2 2 2 2" />
-                                    </svg>
-                                </div>
-                                <input type="text" id="simple-search"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="Search ......" required onkeyup="searchData()" />
-                            </div>
-                        </form>
-                    </div>
-                @endcan
-                <div class="p-4 rounded-xl">
-                    <div class="relative overflow-x-auto rounded-lg shadow-lg">
-                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border">
-                            <thead
-                                class="text-md font-bold text-gray-700 uppercase py-[100px] dark:bg-gray-700 dark:text-gray-400">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
-                                        NO
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 text-center">
-                                        MATERI AJAR
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
-                                        <div class="flex items-center">
-                                            PENGAJAR
-                                        </div>
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 text-center">
-                                        <div class="flex items-center">
-                                            HARI
-                                        </div>
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
-                                        <div class="flex items-center">
-                                            SESI
-                                        </div>
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 text-center">
-                                        <div class="flex items-center">
-                                            PUKUL
-                                        </div>
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
-                                        <div class="flex items-center">
-                                            SKS
-                                        </div>
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 text-center">
-                                        <div class="flex items-center">
-                                            RUANG
-                                        </div>
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
-                                        <div class="flex items-center">
-                                            KELAS
-                                        </div>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody id="jadwalTable">
-                                @php
-                                $no = 1;
-                                @endphp
-                                @can('role-A')
                                 @foreach ($jadwal as $key => $j)
-                                <tr class="bg-white border dark:bg-gray-800 dark:border-gray-700">
-                                    <td class="px-6 py-4 text-center bg-gray-100">
-                                        {{ $jadwal->perPage() * ($jadwal->currentPage() - 1) + $key + 1 }}
-                                    </td>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <div>
-                                            {{ $j->detail_kurikulum->materi_ajar->materi_ajar }}
-                                        </div>
-                                    </td>
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white bg-gray-100">
-                                        {{ $j->dosen->nama_dosen }}
-                                    </th>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <div>
-                                            {{ $j->hari->hari }}
-                                        </div>
-                                    </td>
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white bg-gray-100">
-                                        {{ $j->sesi->sesi }}
-                                    </th>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <div>
-                                            {{ $j->sesi->pukul->pukul }}
-                                        </div>
-                                    </td>
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white bg-gray-100">
-                                        {{ $j->detail_kurikulum->materi_ajar->sks }}
-                                    </th>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <div>
-                                            {{ $j->ruang->ruang }}
-                                        </div>
-                                    </td>
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white bg-gray-100">
-                                        {{ $j->kelas->kelas }}
-                                    </th>
-                                </tr>
+                                    <tr>
+                                        <td>{{$no++}}</td>
+                                        <td>{{ $j->detail_kurikulum->materi_ajar->materi_ajar }}</td>
+                                        <td>{{ $j->dosen->nama_dosen }}</td>
+                                        <td>{{ $j->hari->hari }}</td>
+                                        <td>{{ $j->sesi->sesi }}</td>
+                                        <td>{{ $j->sesi->pukul->pukul }}</td>
+                                        <td>{{ $j->detail_kurikulum->materi_ajar->sks }}</td>
+                                        <td>{{ $j->ruang->ruang }}</td>
+                                        <td>{{ $j->kelas->kelas }}</td>
+                                    </tr>
                                 @endforeach
-                                @endcan
-
-                                @can('role-M')
-                                @foreach ($jadwal_mhs as $key => $j)
-                                <tr class="bg-white border dark:bg-gray-800 dark:border-gray-700">
-                                    <td class="px-6 py-4 text-center bg-gray-100">
-                                        {{ $jadwal_mhs->perPage() * ($jadwal_mhs->currentPage() - 1) + $key + 1 }}
-                                    </td>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <div>
-                                            {{ $j->detail_kurikulum->materi_ajar->materi_ajar }}
-                                        </div>
-                                    </td>
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white bg-gray-100">
-                                        {{ $j->dosen->nama_dosen }}
-                                    </th>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <div>
-                                            {{ $j->hari->hari }}
-                                        </div>
-                                    </td>
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white bg-gray-100">
-                                        {{ $j->sesi->sesi }}
-                                    </th>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <div>
-                                            {{ $j->sesi->pukul->pukul }}
-                                        </div>
-                                    </td>
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white bg-gray-100">
-                                        {{ $j->detail_kurikulum->materi_ajar->sks }}
-                                    </th>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <div>
-                                            {{ $j->ruang->ruang }}
-                                        </div>
-                                    </td>
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white bg-gray-100">
-                                        {{ $j->kelas->kelas }}
-                                    </th>
-                                </tr>
-                                @endforeach
-                                @endcan
-
-                                @can('role-D')
-                                @foreach ($jadwal_mhs as $key => $j)
-                                <tr class="bg-white border dark:bg-gray-800 dark:border-gray-700">
-                                    <td class="px-6 py-4 text-center bg-gray-100">
-                                        {{ $jadwal_mhs->perPage() * ($jadwal_mhs->currentPage() - 1) + $key + 1 }}
-                                    </td>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <div>
-                                            {{ $j->detail_kurikulum->materi_ajar->materi_ajar }}
-                                        </div>
-                                    </td>
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white bg-gray-100">
-                                        {{ $j->dosen->nama_dosen }}
-                                    </th>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <div>
-                                            {{ $j->hari->hari }}
-                                        </div>
-                                    </td>
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white bg-gray-100">
-                                        {{ $j->sesi->sesi }}
-                                    </th>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <div>
-                                            {{ $j->sesi->pukul->pukul }}
-                                        </div>
-                                    </td>
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white bg-gray-100">
-                                        {{ $j->detail_kurikulum->materi_ajar->sks }}
-                                    </th>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <div>
-                                            {{ $j->ruang->ruang }}
-                                        </div>
-                                    </td>
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white bg-gray-100">
-                                        {{ $j->kelas->kelas }}
-                                    </th>
-                                </tr>
-                                @endforeach
-                                @endcan
-
-                                @can('role-O')
-                                @foreach ($jadwal_mhs as $key => $j)
-                                <tr class="bg-white border dark:bg-gray-800 dark:border-gray-700">
-                                    <td class="px-6 py-4 text-center bg-gray-100">
-                                        {{ $jadwal_mhs->perPage() * ($jadwal_mhs->currentPage() - 1) + $key + 1 }}
-                                    </td>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <div>
-                                            {{ $j->detail_kurikulum->materi_ajar->materi_ajar }}
-                                        </div>
-                                    </td>
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white bg-gray-100">
-                                        {{ $j->dosen->nama_dosen }}
-                                    </th>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <div>
-                                            {{ $j->hari->hari }}
-                                        </div>
-                                    </td>
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white bg-gray-100">
-                                        {{ $j->sesi->sesi }}
-                                    </th>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <div>
-                                            {{ $j->sesi->pukul->pukul }}
-                                        </div>
-                                    </td>
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white bg-gray-100">
-                                        {{ $j->detail_kurikulum->materi_ajar->sks }}
-                                    </th>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <div>
-                                            {{ $j->ruang->ruang }}
-                                        </div>
-                                    </td>
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white bg-gray-100">
-                                        {{ $j->kelas->kelas }}
-                                    </th>
-                                </tr>
-                                @endforeach
-                                @endcan
                             </tbody>
                         </table>
                     </div>
                 </div>
-            </div>
-
+            </p>
+            <hr class="border mt-5 border-black border-opacity-30">
+            <button onclick="closeModalJadwal()"
+                class="mt-4 bg-red-500 text-white px-4 py-2 rounded">Tutup</button>
         </div>
     </div>
 
     <script>
-        function searchData() {
-            let search = document.getElementById('simple-search').value;
+        $(document).ready(function() {
+            $('#jadwal-datatable').DataTable(); // Inisialisasi sederhana
+        });
+    </script>
 
-            fetch("{{ route('dashboard') }}?search=" + search, {
-                    headers: {
-                        "X-Requested-With": "XMLHttpRequest"
-                    }
-                })
-                .then(response => response.text())
-                .then(html => {
-                    document.getElementById('jadwalTable').innerHTML = html;
-                })
-                .catch(error => console.error('Error:', error));
+    {{-- SCRIPT KETIDAKHADIRAN MAHASISWA --}}
+    <script>
+        function ketidakhadiran() {
+            const modalContent = document.getElementById("modal-content-ketidakhadiran");
+            const modal = document.getElementById("modal-info-ketidakhadiran");
+            modal.classList.remove("hidden");
+        }
+
+        function closeModalKetidakhadiran() {
+            const modal = document.getElementById("modal-info-ketidakhadiran");
+            modal.classList.add("hidden");
+        }
+    </script>
+    {{-- SCRIPT KETIDAKHADIRAN MAHASISWA --}}
+    <script>
+        function informasi() {
+            const modalContent = document.getElementById("modal-content-informasi");
+            const modal = document.getElementById("modal-info-informasi");
+            modal.classList.remove("hidden");
+        }
+
+        function closeModalInformasi() {
+            const modal = document.getElementById("modal-info-informasi");
+            modal.classList.add("hidden");
+        }
+    </script>
+    {{-- SCRIPT ULANG TAHUN DOSEN --}}
+    <script>
+        function ulangtahun() {
+            const modalContent = document.getElementById("modal-content-ulangtahun");
+            const modal = document.getElementById("modal-info-ulangtahun");
+            modal.classList.remove("hidden");
+        }
+
+        function closeModalUlangtahun() {
+            const modal = document.getElementById("modal-info-ulangtahun");
+            modal.classList.add("hidden");
+        }
+    </script>
+    {{-- SCRIPT JADWAL HARI INI --}}
+    <script>
+        function jadwal() {
+            const modalContent = document.getElementById("modal-content-jadwal");
+            const modal = document.getElementById("modal-info-jadwal");
+            modal.classList.remove("hidden");
+        }
+
+        function closeModalJadwal() {
+            const modal = document.getElementById("modal-info-jadwal");
+            modal.classList.add("hidden");
         }
     </script>
 </x-app-layout>

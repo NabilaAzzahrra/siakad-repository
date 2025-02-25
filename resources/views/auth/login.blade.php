@@ -7,7 +7,7 @@
 
         <!-- Email Address -->
         <div>
-            <x-input-label for="email" :value="__('Username')" />
+            <label class="font-bold">Username</label>
             <x-text-input id="email" class="block mt-1 w-full" type="text" name="email" :value="old('email')" required
                 autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
@@ -15,7 +15,7 @@
 
         <!-- Password -->
         <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+            <label class="font-bold">Password</label>
             <div class="relative">
                 <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required
                     autocomplete="current-password" />
@@ -33,10 +33,10 @@
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button class="ms-3 bg-[#F2C94C] hover:bg-[#c7a336]">
-                {{ __('Log in') }}
-            </x-primary-button>
+        <div class="flex items-center justify-center mt-4">
+            <button type="submit" class="ms-3 bg-white py-2 px-6 rounded-xl hover:bg-gray-400 font-bold hover:text-white">
+                {{ __('LOG IN') }}
+            </button>
         </div>
     </form>
 </x-guest-layout>

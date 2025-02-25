@@ -21,7 +21,7 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background: url('public/img/landing.jpg')
+            background: url('public/img/building.jpg')
         }
 
         .bg-custom {
@@ -36,7 +36,6 @@
             background-image: url('{{ url('img/landing.jpg') }}');
             background-size: cover;
             background-position: center;
-            opacity: 0.25;
             /* Adjust the transparency here */
             position: absolute;
             top: 0;
@@ -48,20 +47,27 @@
     </style>
 </head>
 
-<body class="font-sans text-gray-900 antialiased bg-[url('/public/img/landing.jpg')] bg-contain">
+<body
+    class="font-sans text-gray-900 antialiased bg-[url('/public/img/building.jpg')] bg-no-repeat bg-cover bg-gray-500 bg-blend-multiply">
     <div
-        class="h-screen flex flex-col sm:justify-center items-center lg:pt-6 dark:bg-gray-900 px-6 lg:px-0 pt-[180px] bg-white bg-opacity-65">
-        <div class="flex mb-2 gap-10" data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1000">
+        class="h-screen flex flex-col sm:justify-center items-center lg:pt-6 dark:bg-gray-900 px-6 lg:px-0 pt-[180px] ">
+        <div class="flex mb-2 gap-10" data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1000"
+            data-aos-delay="800">
             <div>
-                <img src="{{ url('img/logo-lp3i.png') }}" alt="" srcset="" class="lg:w-[200px] w-[130px]">
+                <img src="{{ url('img/logo-lp3i-white.png') }}" alt="" srcset=""
+                    class="lg:w-[200px] w-[130px]">
             </div>
             <div>
-                <img src="{{ url('img/gmu.png') }}" alt="" srcset="" class="lg:w-[150px] w-[100px]">
+                <img src="{{ url('img/gmu-white.png') }}" alt="" srcset="" class="lg:w-[150px] w-[100px]">
             </div>
         </div>
-
-        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg"
+        <div class="text-white font-extrabold lg:ml-0 lg:text-2xl text-xl box-title text-center"
             data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1000" data-aos-delay="600">
+            Sistem Informasi Akademik (SIAKAD)
+        </div>
+
+        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white/70 dark:bg-gray-800/70 shadow-md overflow-hidden rounded-2xl"
+            data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1000">
             {{ $slot }}
         </div>
     </div>

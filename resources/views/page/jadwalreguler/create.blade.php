@@ -224,28 +224,28 @@
         }
     };
 
-    const getdetailkurikulum = async () => {
-        var selectedOption = document.querySelector('[name="kurikulum"] option:checked');
-        var kurikulumId = selectedOption.value;
+        const getdetailkurikulum = async () => {
+            var selectedOption = document.querySelector('[name="kurikulum"] option:checked');
+            var kurikulumId = selectedOption.value;
 
-        if (kurikulumId) {
-            await axios.get(`/api/kurikulum_matkul/${kurikulumId}`)
-                .then((response) => {
-                    console.log(response.data.kurikulum.semester.semester);
-                    const data = response.data;
-                    if (data && data.kurikulum.semester) {
-                        document.getElementById('semester').value = response.data.kurikulum.semester.semester;
-                        document.getElementById('sks').value = response.data.kurikulum.sks;
-                    }
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        } else {
-            document.getElementById('semester').value = '';
-            document.getElementById('sks').value = '';
-        }
-    };
+            if (kurikulumId) {
+                await axios.get(`/api/kurikulum_matkul/${kurikulumId}`)
+                    .then((response) => {
+                        console.log(response.data.kurikulum.semester.semester);
+                        const data = response.data;
+                        if (data && data.kurikulum.semester) {
+                            document.getElementById('semester').value = response.data.kurikulum.semester.semester;
+                            document.getElementById('sks').value = response.data.kurikulum.sks;
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            } else {
+                document.getElementById('semester').value = '';
+                document.getElementById('sks').value = '';
+            }
+        };
 
     const getkelas = async () => {
         var selectedOption = document.querySelector('[name="kelas"] option:checked');
