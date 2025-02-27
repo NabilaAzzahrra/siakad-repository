@@ -10,13 +10,18 @@
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row  justify-center">
                 <div class="w-full md:w-3/12 p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm rounded-3xl">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div
-                                class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                                FORM INPUT KELAS
+                            <div class="flex">
+                                <div class="w-10">
+                                    <img src="{{ url('img/add.png') }}" alt="Icon 1" class="">
+                                </div>
+                                <div class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                                    FORM INPUT KELAS
+                                </div>
                             </div>
-                            <form action="{{ route('kelas.store') }}" method="post">
+                            <hr class="border mt-2 border-black border-opacity-30">
+                            <form action="{{ route('kelas.store') }}" method="post" id="kelasForm">
                                 @csrf
                                 <div class="p-4 rounded-xl">
                                     <div class="mb-5">
@@ -24,36 +29,46 @@
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">kelas</label>
                                         <input type="text" id="kelas" name="kelas"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="Masukan Nama kelas disini ..." required />
+                                            placeholder="Masukan Nama kelas disini ..." />
+                                        <p id="error-kelas" class="mt-2 text-sm text-red-500 hidden">Kelas
+                                            wajib diisi.
+                                        </p>
                                     </div>
                                     <div class="mb-5">
                                         <label for="jurusan"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Program
                                             Studi
                                             <span class="text-red-500">*</span></label>
-                                        <select class="js-example-placeholder-single js-states form-control w-full m-6"
+                                        <select class="js-example-placeholder-single js-states form-control w-full m-6" id="jurusan"
                                             name="id_jurusan" data-placeholder="Program Studi">
                                             <option value="">Pilih...</option>
                                             @foreach ($jurusan as $p)
                                                 <option value="{{ $p->id }}">{{ $p->jurusan }}</option>
                                             @endforeach
                                         </select>
+                                        <p id="error-jurusan" class="mt-2 text-sm text-red-500 hidden">Program studi
+                                            wajib diisi.
+                                        </p>
                                     </div>
                                     <div class="mb-5">
                                         <label for="jurusan"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pembimbing
                                             Akademik
                                             <span class="text-red-500">*</span></label>
-                                        <select class="js-example-placeholder-single js-states form-control w-full m-6"
+                                        <select class="js-example-placeholder-single js-states form-control w-full m-6" id="pembimbing"
                                             name="id_dosen" data-placeholder="Pilih Pembimbing Akademik">
                                             <option value="">Pilih...</option>
                                             @foreach ($dosen as $d)
                                                 <option value="{{ $d->id }}">{{ $d->nama_dosen }}</option>
                                             @endforeach
                                         </select>
+                                        <p id="error-pembimbing" class="mt-2 text-sm text-red-500 hidden">Pembimbing
+                                            Akademik
+                                            wajib diisi.
+                                        </p>
                                     </div>
                                     <button type="submit"
-                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i
+                                        class="border-2 border-dashed border-blue-700 text-blue-700 hover:bg-blue-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-12 pt-2 pb-1 text-left dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i
                                             class="fi fi-rr-disk "></i></button>
                                 </div>
                             </form>
@@ -63,10 +78,15 @@
                 <div class="w-full md:w-9/12 p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div
-                                class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                                DATA KELAS
+                            <div class="flex">
+                                <div class="w-10">
+                                    <img src="{{ url('img/database.png') }}" alt="Icon 1" class="">
+                                </div>
+                                <div class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                                    DATA KELAS
+                                </div>
                             </div>
+                            <hr class="border mt-2 border-black border-opacity-30 mb-6">
                             <div class="flex justify-center">
                                 <div class="p-12" style="width:100%;overflow-x:auto;">
                                     <table class="table table-bordered" id="kelas-datatable">
@@ -91,7 +111,7 @@
     <div class="fixed inset-0 flex items-center justify-center z-50 hidden" id="sourceModal">
         <div class="fixed inset-0 bg-black opacity-50"></div>
         <div class="fixed inset-0 flex items-center justify-center">
-            <div class="w-full md:w-1/2 relative bg-white rounded-lg shadow mx-5">
+            <div class="w-full md:w-1/4 relative bg-white rounded-lg shadow mx-5">
                 <div class="flex items-start justify-between p-4 border-b rounded-t">
                     <h3 class="text-xl font-semibold text-gray-900" id="title_source">
                         Tambah Sumber Database
@@ -115,7 +135,7 @@
                             <label for="id_jurusan"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Program Studi
                                 <span class="text-red-500">*</span></label>
-                            <select class="js-example-placeholder-single js-states form-control w-[930px] m-6"
+                            <select class="js-example-placeholder-single js-states form-control w-[450px] m-6"
                                 id="id_jurusan" name="id_jurusann" data-placeholder="Program Studi">
                                 <option value="">Pilih...</option>
                                 @foreach ($jurusan as $p)
@@ -125,9 +145,10 @@
                         </div>
                         <div class="mb-5">
                             <label for="id_dosen"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pembimbing Akademik
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pembimbing
+                                Akademik
                                 <span class="text-red-500">*</span></label>
-                            <select class="js-example-placeholder-single js-states form-control w-[930px] m-6"
+                            <select class="js-example-placeholder-single js-states form-control w-[450px] m-6"
                                 id="id_dosen" name="id_dosenn" data-placeholder="Pilih Pembimbing Akademik">
                                 <option value="">Pilih...</option>
                                 @foreach ($dosen as $d)
@@ -147,6 +168,49 @@
         </div>
     </div>
     <script>
+        const form = document.getElementById('kelasForm');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Mencegah form dikirim
+
+            let isValid = true;
+
+            // Validasi Mata Kuliah
+            const kelas = document.getElementById('kelas');
+            const errorKelas = document.getElementById('error-kelas');
+            if (kelas.value === '') {
+                errorKelas.classList.remove('hidden');
+                isValid = false;
+            } else {
+                errorKelas.classList.add('hidden');
+            }
+
+            // Validasi Mata Kuliah
+            const jurusan = document.getElementById('jurusan');
+            const errorJurusan = document.getElementById('error-jurusan');
+            if (jurusan.value === '') {
+                errorJurusan.classList.remove('hidden');
+                isValid = false;
+            } else {
+                errorJurusan.classList.add('hidden');
+            }
+
+            // Validasi Mata Kuliah
+            const pembimbing = document.getElementById('pembimbing');
+            const errorPembimbing = document.getElementById('error-pembimbing');
+            if (pembimbing.value === '') {
+                errorPembimbing.classList.remove('hidden');
+                isValid = false;
+            } else {
+                errorPembimbing.classList.add('hidden');
+            }
+
+            // Jika validasi lolos, kirim form
+            if (isValid) {
+                form.submit();
+            }
+        });
+
         $(document).ready(function() {
             console.log('RUN!');
             $('#kelas-datatable').DataTable({
@@ -189,11 +253,11 @@
                             `<button type="button" data-id="${data.id}"
                                                         data-modal-target="sourceModal" data-kelas="${data.kelas}" data-id_jurusan="${data.id_jurusan}"  data-id_dosen="${data.id_dosen}"
                                                         onclick="editSourceModal(this)"
-                                                        class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-xl h-10 w-10 text-xs text-white">
+                                                        class="border-2 border-dashed border-amber-500 text-amber-500 hover:bg-amber-100 px-3 py-1 rounded-xl h-10 w-10 text-xs">
                                                        <i class="fas fa-edit"></i>
                                                     </button>`;
                         let deleteUrl =
-                            `<button onclick="return kelasDelete('${data.id}','${data.kelas}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-xl h-10 w-10 text-xs text-white"><i class="fas fa-trash"></i></button>`;
+                            `<button onclick="return kelasDelete('${data.id}','${data.kelas}')" class="border-2 border-dashed border-red-500 text-red-500 hover:bg-red-100 px-3 py-1 rounded-xl h-10 w-10 text-xs"><i class="fas fa-trash"></i></button>`;
                         return `<div style="text-align:center">${editUrl} ${deleteUrl}</div>`;
                     }
                 }, ],

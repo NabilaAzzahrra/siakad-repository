@@ -10,13 +10,18 @@
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-3/12 p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm rounded-3xl">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div
-                                class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                                FORM INPUT PROGRAM STUDI
+                            <div class="flex">
+                                <div class="w-10">
+                                    <img src="{{ url('img/add.png') }}" alt="Icon 1" class="">
+                                </div>
+                                <div class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                                    FORM INPUT JURUSAN
+                                </div>
                             </div>
-                            <form action="{{ route('jurusan.store') }}" method="post">
+                            <hr class="border mt-2 border-black border-opacity-30">
+                            <form action="{{ route('jurusan.store') }}" method="post" id="jurusanForm">
                                 @csrf
                                 <div class="p-4 rounded-xl">
                                     <div class="mb-5">
@@ -25,22 +30,27 @@
                                             Studi</label>
                                         <input type="text" id="jurusan" name="jurusan"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="Masukan Nama Program Studi disini ..." required />
+                                            placeholder="Masukan Nama Program Studi disini ..." />
+                                        <p id="error-jurusan" class="mt-2 text-sm text-red-500 hidden">Program studi
+                                            wajib diisi.
+                                        </p>
                                     </div>
                                     <div class="mb-5">
-                                        <label for="pukul"
+                                        <label for="fakultas"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fakultas
                                             <span class="text-red-500">*</span></label>
-                                        <select class="js-example-placeholder-single js-states form-control w-full m-6"
+                                        <select class="js-example-placeholder-single js-states form-control w-full m-6" id="fakultas"
                                             name="fakultas" data-placeholder="Pilih Fakultas">
                                             <option value="">Pilih...</option>
                                             @foreach ($fakultas as $p)
                                                 <option value="{{ $p->id }}">{{ $p->fakultas }}</option>
                                             @endforeach
                                         </select>
+                                        <p id="error-fakultas" class="mt-2 text-sm text-red-500 hidden">Fakultas wajib
+                                            diisi.</p>
                                     </div>
                                     <button type="submit"
-                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i
+                                        class="border-2 border-dashed border-blue-700 text-blue-700 hover:bg-blue-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-12 pt-2 pb-1 text-left dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i
                                             class="fi fi-rr-disk "></i></button>
                                 </div>
                             </form>
@@ -48,12 +58,17 @@
                     </div>
                 </div>
                 <div class="w-full md:w-9/12 p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm rounded-3xl">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div
-                                class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                                DATA PROGRAM STUDI
+                            <div class="flex">
+                                <div class="w-10">
+                                    <img src="{{ url('img/database.png') }}" alt="Icon 1" class="">
+                                </div>
+                                <div class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                                    DATA JURUSAN
+                                </div>
                             </div>
+                            <hr class="border mt-2 border-black border-opacity-30 mb-6">
                             <div class="flex justify-center">
                                 <div class="p-12" style="width:100%;overflow-x:auto;">
                                     <table class="table table-bordered" id="jurusan-datatable">
@@ -77,7 +92,7 @@
     <div class="fixed inset-0 flex items-center justify-center z-50 hidden" id="sourceModal">
         <div class="fixed inset-0 bg-black opacity-50"></div>
         <div class="fixed inset-0 flex items-center justify-center">
-            <div class="w-full md:w-1/2 relative bg-white rounded-lg shadow mx-5">
+            <div class="w-full md:w-1/4 relative bg-white rounded-lg shadow mx-5">
                 <div class="flex items-start justify-between p-4 border-b rounded-t">
                     <h3 class="text-xl font-semibold text-gray-900" id="title_source">
                         Tambah Sumber Database
@@ -103,7 +118,7 @@
                             <label for="pukul"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fakultas
                                 <span class="text-red-500">*</span></label>
-                            <select class="js-example-placeholder-single js-states form-control w-full m-6"
+                            <select class="js-example-placeholder-single js-states form-control w-[450px] m-6"
                                 name="fakultass" data-placeholder="Pilih Fakultas">
                                 <option value="">Pilih...</option>
                                 @foreach ($fakultas as $p)
@@ -123,6 +138,39 @@
         </div>
     </div>
     <script>
+        const form = document.getElementById('jurusanForm');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Mencegah form dikirim
+
+            let isValid = true;
+
+            // Validasi Mata Kuliah
+            const jurusan = document.getElementById('jurusan');
+            const errorJurusan = document.getElementById('error-jurusan');
+            if (jurusan.value === '') {
+                errorJurusan.classList.remove('hidden');
+                isValid = false;
+            } else {
+                errorJurusan.classList.add('hidden');
+            }
+
+            // Validasi Mata Kuliah
+            const fakultas = document.getElementById('fakultas');
+            const errorFakultas = document.getElementById('error-fakultas');
+            if (fakultas.value === '') {
+                errorFakultas.classList.remove('hidden');
+                isValid = false;
+            } else {
+                errorFakultas.classList.add('hidden');
+            }
+
+            // Jika validasi lolos, kirim form
+            if (isValid) {
+                form.submit();
+            }
+        });
+
         $(document).ready(function() {
             console.log('RUN!');
             $('#jurusan-datatable').DataTable({
@@ -160,11 +208,11 @@
                             `<button type="button" data-id="${data.id}"
                                                         data-modal-target="sourceModal" data-jurusan="${data.jurusan}" data-id_fakultas="${data.id_fakultas}"
                                                         onclick="editSourceModal(this)"
-                                                        class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-xl h-10 w-10 text-xs text-white">
+                                                        class="border-2 border-dashed border-amber-500 text-amber-500 hover:bg-amber-100 px-3 py-1 rounded-xl h-10 w-10 text-xs">
                                                        <i class="fas fa-edit"></i>
                                                     </button>`;
                         let deleteUrl =
-                            `<button onclick="return jurusanDelete('${data.id}','${data.jurusan}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-xl h-10 w-10 text-xs text-white"><i class="fas fa-trash"></i></button>`;
+                            `<button onclick="return jurusanDelete('${data.id}','${data.jurusan}')" class="border-2 border-dashed border-red-500 text-red-500 hover:bg-red-100 px-3 py-1 rounded-xl h-10 w-10 text-xs"><i class="fas fa-trash"></i></button>`;
                         return `<div style="text-align:center">${editUrl} ${deleteUrl}</div>`;
                     }
                 }, ],
@@ -210,7 +258,7 @@
         const jurusanDelete = async (id, jurusan) => {
             Swal.fire({
                 title: `Apakah Anda yakin?`,
-                text: `Data jurusan ${jurusan} akan dihapus secara permanen!`,
+                text: `Data akan dihapus secara permanen!`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',

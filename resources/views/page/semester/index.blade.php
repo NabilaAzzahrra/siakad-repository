@@ -10,36 +10,47 @@
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-3/12 p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm rounded-3xl">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div
-                                class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                                FORM INPUT SEMESTER
+                            <div class="flex">
+                                <div class="w-10">
+                                    <img src="{{ url('img/add.png') }}" alt="Icon 1" class="">
+                                </div>
+                                <div class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                                    FORM INPUT SEMESTER
+                                </div>
                             </div>
-                            <form action="{{ route('semester.store') }}" method="post">
+                            <hr class="border mt-2 border-black border-opacity-30">
+                            <form action="{{ route('semester.store') }}" method="post" id="semesterForm">
                                 @csrf
                                 <div class="p-4 rounded-xl">
                                     <div class="mb-5">
                                         <label for="semester"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">semester</label>
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Semester</label>
                                         <input type="number" id="semester" name="semester"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="Masukan Nama semester disini ..." required />
+                                            placeholder="Masukan Nama semester disini ..." />
+                                        <p id="error-semester" class="mt-2 text-sm text-red-500 hidden">Semester
+                                            wajib diisi.
+                                        </p>
                                     </div>
                                     <div class="mb-5">
                                         <label for="keterangan"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">keterangan
                                             <span class="text-red-500">*</span></label>
-                                        <select class="js-example-placeholder-single js-states form-control w-full m-6"
+                                        <select class="js-example-placeholder-single js-states form-control w-full m-6" id="keterangan"
                                             name="id_keterangan" data-placeholder="Pilih keterangan">
                                             <option value="">Pilih...</option>
                                             @foreach ($keterangan as $p)
                                                 <option value="{{ $p->id }}">{{ $p->keterangan }}</option>
                                             @endforeach
                                         </select>
+                                        <p id="error-keterangan" class="mt-2 text-sm text-red-500 hidden">Keterangan
+                                            wajib diisi.
+                                        </p>
                                     </div>
                                     <button type="submit"
-                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i
+                                        class="border-2 border-dashed border-blue-700 text-blue-700 hover:bg-blue-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-12 pt-2 pb-1 text-left dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i
                                             class="fi fi-rr-disk "></i></button>
                                 </div>
                             </form>
@@ -47,12 +58,17 @@
                     </div>
                 </div>
                 <div class="w-full md:w-9/12 p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm rounded-3xl">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div
-                                class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                                DATA SEMESTER
+                            <div class="flex">
+                                <div class="w-10">
+                                    <img src="{{ url('img/database.png') }}" alt="Icon 1" class="">
+                                </div>
+                                <div class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                                    DATA SEMESTER
+                                </div>
                             </div>
+                            <hr class="border mt-2 border-black border-opacity-30 mb-6">
                             <div class="flex justify-center">
                                 <div class="p-12" style="width:100%;  overflow-x:auto;">
                                     <table class="table table-bordered" id="semester-datatable">
@@ -76,7 +92,7 @@
     <div class="fixed inset-0 flex items-center justify-center z-50 hidden" id="sourceModal">
         <div class="fixed inset-0 bg-black opacity-50"></div>
         <div class="fixed inset-0 flex items-center justify-center">
-            <div class="w-full md:w-1/2 relative bg-white rounded-lg shadow mx-5">
+            <div class="w-full md:w-1/4 relative bg-white rounded-lg shadow mx-5">
                 <div class="flex items-start justify-between p-4 border-b rounded-t">
                     <h3 class="text-xl font-semibold text-gray-900" id="title_source">
                         Tambah Sumber Database
@@ -101,7 +117,7 @@
                             <label for="id_keterangan"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">keterangan
                                 <span class="text-red-500">*</span></label>
-                            <select class="js-example-placeholder-single js-states form-control w-[930px] m-6"
+                            <select class="js-example-placeholder-single js-states form-control w-[450px] m-6"
                                 id="id_keterangan" name="id_keteranganl" data-placeholder="Pilih keterangan">
                                 <option value="">Pilih...</option>
                                 @foreach ($keterangan as $p)
@@ -121,6 +137,39 @@
         </div>
     </div>
     <script>
+        const form = document.getElementById('semesterForm');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Mencegah form dikirim
+
+            let isValid = true;
+
+            // Validasi Mata Kuliah
+            const semester = document.getElementById('semester');
+            const errorSemester = document.getElementById('error-semester');
+            if (semester.value === '') {
+                errorSemester.classList.remove('hidden');
+                isValid = false;
+            } else {
+                errorSemester.classList.add('hidden');
+            }
+
+            // Validasi Mata Kuliah
+            const keterangan = document.getElementById('keterangan');
+            const errorKeterangan = document.getElementById('error-keterangan');
+            if (keterangan.value === '') {
+                errorKeterangan.classList.remove('hidden');
+                isValid = false;
+            } else {
+                errorKeterangan.classList.add('hidden');
+            }
+
+            // Jika validasi lolos, kirim form
+            if (isValid) {
+                form.submit();
+            }
+        });
+
         $(document).ready(function() {
             console.log('RUN!');
             $('#semester-datatable').DataTable({
@@ -158,11 +207,11 @@
                             `<button type="button" data-id="${data.id}"
                                                         data-modal-target="sourceModal" data-semester="${data.semester}" data-id_keterangan="${data.id_keterangan}"
                                                         onclick="editSourceModal(this)"
-                                                        class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-xl h-10 w-10 text-xs text-white">
+                                                        class="border-2 border-dashed border-amber-500 text-amber-500 hover:bg-amber-100 px-3 py-1 rounded-xl h-10 w-10 text-xs">
                                                        <i class="fas fa-edit"></i>
                                                     </button>`;
                         let deleteUrl =
-                            `<button onclick="return semesterDelete('${data.id}','${data.semester}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-xl h-10 w-10 text-xs text-white"><i class="fas fa-trash"></i></button>`;
+                            `<button onclick="return semesterDelete('${data.id}','${data.semester}')" class="border-2 border-dashed border-red-500 text-red-500 hover:bg-red-100 px-3 py-1 rounded-xl h-10 w-10 text-xs"><i class="fas fa-trash"></i></button>`;
                         return `<div style="text-align:center">${editUrl} ${deleteUrl}</div>`;
                     }
                 }, ],
@@ -284,6 +333,6 @@
                 });
             </script>
         @endif
-        
+
     @endpush
 </x-app-layout>

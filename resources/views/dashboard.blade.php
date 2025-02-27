@@ -7,7 +7,6 @@
 
     <div class="">
         <div class="max-w-8xl mx-auto text-white">
-
             <div class="flex h-[542px]">
                 <div class="w-[800px] p-12">
                     <div class="bg-[#005F9D] bg-opacity-65 pt-6 pb-4 pr-6 pl-4 w-[300px] rounded-3xl" data-aos="fade-down" data-aos-delay="70" data-aos-duration="1000">
@@ -94,6 +93,7 @@
                     <div class="ml-[168px] font-bold">Jadwal Hari ini</div>
                 </div>
             </div>
+            {{-- RESPONSIVE --}}
             <div class="md:hidden block">
                 hsvchvs
             </div>

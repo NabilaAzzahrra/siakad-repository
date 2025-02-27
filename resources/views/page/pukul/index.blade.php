@@ -10,24 +10,32 @@
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-3/12 p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm rounded-3xl">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div
-                                class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                                FORM INPUT PUKUL
+                            <div class="flex">
+                                <div class="w-10">
+                                    <img src="{{ url('img/add.png') }}" alt="Icon 1" class="">
+                                </div>
+                                <div class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                                    FORM INPUT PUKUL
+                                </div>
                             </div>
-                            <form action="{{ route('pukul.store') }}" method="post">
+                            <hr class="border mt-2 border-black border-opacity-30">
+                            <form action="{{ route('pukul.store') }}" method="post" id="pukulForm">
                                 @csrf
                                 <div class="p-4 rounded-xl">
                                     <div class="mb-5">
                                         <label for="pukul"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pukul</label>
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pukul
+                                            <span class="text-red-500">*</span></label>
                                         <input type="text" id="pukul" name="pukul"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="Masukan Pukul disini ..." required />
+                                            placeholder="Masukan Pukul disini ..." />
+                                        <p id="error-pukul" class="mt-2 text-sm text-red-500 hidden">Pukul wajib diisi.
+                                        </p>
                                     </div>
                                     <button type="submit"
-                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i
+                                        class="border-2 border-dashed border-blue-700 text-blue-700 hover:bg-blue-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-12 pt-2 pb-1 text-left dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i
                                             class="fi fi-rr-disk "></i></button>
                                 </div>
                             </form>
@@ -35,12 +43,17 @@
                     </div>
                 </div>
                 <div class="w-full md:w-9/12 p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm rounded-3xl">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div
-                                class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                                DATA PUKUL
+                            <div class="flex">
+                                <div class="w-10">
+                                    <img src="{{ url('img/database.png') }}" alt="Icon 1" class="">
+                                </div>
+                                <div class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                                    DATA PUKUL
+                                </div>
                             </div>
+                            <hr class="border mt-2 border-black border-opacity-30 mb-2">
                             <div class="flex justify-center">
                                 <div class="p-12" style="width:100%;overflow-x:auto;">
                                     <table class="table table-bordered" id="pukul-datatable">
@@ -63,7 +76,7 @@
     <div class="fixed inset-0 flex items-center justify-center z-50 hidden" id="sourceModal">
         <div class="fixed inset-0 bg-black opacity-50"></div>
         <div class="fixed inset-0 flex items-center justify-center">
-            <div class="w-full md:w-1/2 relative bg-white rounded-lg shadow mx-5">
+            <div class="w-full md:w-1/4 relative bg-white rounded-lg shadow mx-5">
                 <div class="flex items-start justify-between p-4 border-b rounded-t">
                     <h3 class="text-xl font-semibold text-gray-900" id="title_source">
                         Tambah Sumber Database
@@ -79,10 +92,12 @@
                     <div class="flex flex-col  p-4 space-y-6">
 
                         <div>
-                            <label for="text" class="block mb-2 text-sm font-medium text-gray-900">pukul</label>
+                            <label for="text" class="block mb-2 text-sm font-medium text-gray-900">Pukul <span
+                                    class="text-red-500">*</span></label>
                             <input type="text" id="pukuls" name="pukul"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 id="" placeholder="Masukan pukul disini...">
+                            <p id="error-pukul" class="mt-2 text-sm text-red-500 hidden">Pukul wajib diisi.</p>
                         </div>
                     </div>
                     <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
@@ -96,6 +111,29 @@
         </div>
     </div>
     <script>
+        const form = document.getElementById('pukulForm');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Mencegah form dikirim
+
+            let isValid = true;
+
+            // Validasi Mata Kuliah
+            const pukul = document.getElementById('pukul');
+            const errorPukul = document.getElementById('error-pukul');
+            if (pukul.value === '') {
+                errorPukul.classList.remove('hidden');
+                isValid = false;
+            } else {
+                errorPukul.classList.add('hidden');
+            }
+
+            // Jika validasi lolos, kirim form
+            if (isValid) {
+                form.submit();
+            }
+        });
+
         $(document).ready(function() {
             console.log('RUN!');
             $('#pukul-datatable').DataTable({
@@ -127,11 +165,11 @@
                             `<button type="button" data-id="${data.id}"
                                                         data-modal-target="sourceModal" data-pukul="${data.pukul}"
                                                         onclick="editSourceModal(this)"
-                                                        class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-xl h-10 w-10 text-xs text-white">
+                                                        class="border-2 border-dashed border-amber-500 text-amber-500 hover:bg-amber-100 px-3 py-1 rounded-xl h-10 w-10 text-xs">
                                                        <i class="fas fa-edit"></i>
                                                     </button>`;
                         let deleteUrl =
-                            `<button onclick="return pukulDelete('${data.id}','${data.pukul}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-xl h-10 w-10 text-xs text-white"><i class="fas fa-trash"></i></button>`;
+                            `<button onclick="return pukulDelete('${data.id}','${data.pukul}')" class="border-2 border-dashed border-red-500 text-red-500 hover:bg-red-100 px-3 py-1 rounded-xl h-10 w-10 text-xs"><i class="fas fa-trash"></i></button>`;
                         return `<div style="text-align:center">${editUrl} ${deleteUrl}</div>`;
                     }
                 }, ],
@@ -173,7 +211,7 @@
         const pukulDelete = async (id, pukul) => {
             Swal.fire({
                 title: `Apakah Anda yakin?`,
-                text: `Data pukul ${pukul} akan dihapus secara permanen!`,
+                text: `Data akan dihapus secara permanen!`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',

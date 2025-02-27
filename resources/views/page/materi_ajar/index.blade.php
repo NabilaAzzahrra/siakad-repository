@@ -10,14 +10,19 @@
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-3/12 p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm rounded-3xl">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div
-                                class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                                FORM INPUT MATERI AJAR
+                            <div class="flex">
+                                <div class="w-10">
+                                    <img src="{{ url('img/add.png') }}" alt="Icon 1" class="">
+                                </div>
+                                <div class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                                    FORM INPUT MATERI AJAR
+                                </div>
                             </div>
-                            <form action="{{ route('materi_ajar.store') }}" method="post"
-                                enctype="multipart/form-data">
+                            <hr class="border mt-2 border-black border-opacity-30">
+                            <form action="{{ route('materi_ajar.store') }}" method="post" enctype="multipart/form-data"
+                                id="materiAjarForm">
                                 @csrf
                                 <div class="p-4 rounded-xl">
                                     <div class="mb-5">
@@ -26,26 +31,35 @@
                                             Ajar</label>
                                         <input type="text" id="materi_ajar" name="materi_ajar"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="Masukan Nama materi_ajar disini ..." required />
+                                            placeholder="Masukan Nama materi_ajar disini ..." />
+                                        <p id="error-materi_ajar" class="mt-2 text-sm text-red-500 hidden">Materi Ajar
+                                            wajib diisi.
+                                        </p>
                                     </div>
                                     <div class="mb-5">
                                         <label for="sks"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">SKS</label>
                                         <input type="text" id="sks" name="sks"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="Masukan Nama sks disini ..." required />
+                                            placeholder="Masukan Nama sks disini ..." />
+                                        <p id="error-sks" class="mt-2 text-sm text-red-500 hidden">SKS
+                                            wajib diisi.
+                                        </p>
                                     </div>
                                     <div class="mb-5">
                                         <label for="semester"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">semester
                                             <span class="text-red-500">*</span></label>
                                         <select class="js-example-placeholder-single js-states form-control w-full m-6"
-                                            name="id_semester" data-placeholder="Pilih semester">
+                                            id="semester" name="id_semester" data-placeholder="Pilih semester">
                                             <option value="">Pilih...</option>
                                             @foreach ($semester as $p)
                                                 <option value="{{ $p->id }}">{{ $p->semester }}</option>
                                             @endforeach
                                         </select>
+                                        <p id="error-semester" class="mt-2 text-sm text-red-500 hidden">Semester
+                                            wajib diisi.
+                                        </p>
                                     </div>
                                     <div class="mb-5">
                                         <label for="id_jurusan"
@@ -53,22 +67,29 @@
                                             Studi
                                             <span class="text-red-500">*</span></label>
                                         <select class="js-example-placeholder-single js-states form-control w-full m-6"
-                                            name="id_jurusan" data-placeholder="Pilih Program Studi">
+                                            id="jurusan" name="id_jurusan" data-placeholder="Pilih Program Studi">
                                             <option value="">Pilih...</option>
                                             @foreach ($jurusan as $j)
                                                 <option value="{{ $j->id }}">{{ $j->jurusan }}</option>
                                             @endforeach
                                         </select>
+                                        <p id="error-jurusan" class="mt-2 text-sm text-red-500 hidden">Program
+                                            Studi
+                                            wajib diisi.
+                                        </p>
                                     </div>
                                     <div class="mb-5">
                                         <label for="ebook"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">E-Book</label>
                                         <input type="file" id="ebook" name="ebook"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="Masukan E-Book disini ..." required />
+                                            placeholder="Masukan E-Book disini ..." />
+                                        <p id="error-ebook" class="mt-2 text-sm text-red-500 hidden">Ebook
+                                            wajib diisi.
+                                        </p>
                                     </div>
                                     <button type="submit"
-                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i
+                                        class="border-2 border-dashed border-blue-700 text-blue-700 hover:bg-blue-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-12 pt-2 pb-1 text-left dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i
                                             class="fi fi-rr-disk "></i></button>
                                 </div>
                             </form>
@@ -76,12 +97,17 @@
                     </div>
                 </div>
                 <div class="w-full md:w-9/12 p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm rounded-3xl">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div
-                                class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                                DATA MATERI AJAR
+                            <div class="flex">
+                                <div class="w-10">
+                                    <img src="{{ url('img/database.png') }}" alt="Icon 1" class="">
+                                </div>
+                                <div class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                                    DATA MATERI AJAR
+                                </div>
                             </div>
+                            <hr class="border mt-2 border-black border-opacity-30 mb-6">
                             <div class="flex justify-center">
                                 <div class="p-12" style="width:100%;  overflow-x:auto;">
                                     <table class="table table-bordered" id="materi_ajar-datatable">
@@ -184,6 +210,69 @@
         </div>
     </div>
     <script>
+        const form = document.getElementById('materiAjarForm');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Mencegah form dikirim
+
+            let isValid = true;
+
+            // Validasi Mata Kuliah
+            const materi_ajar = document.getElementById('materi_ajar');
+            const errorMateriAjar = document.getElementById('error-materi_ajar');
+            if (materi_ajar.value === '') {
+                errorMateriAjar.classList.remove('hidden');
+                isValid = false;
+            } else {
+                errorMateriAjar.classList.add('hidden');
+            }
+
+            // Validasi Mata Kuliah
+            const sks = document.getElementById('sks');
+            const errorSks = document.getElementById('error-sks');
+            if (sks.value === '') {
+                errorSks.classList.remove('hidden');
+                isValid = false;
+            } else {
+                errorSks.classList.add('hidden');
+            }
+
+            // Validasi Mata Kuliah
+            const semester = document.getElementById('semester');
+            const errorSemester = document.getElementById('error-semester');
+            if (semester.value === '') {
+                errorSemester.classList.remove('hidden');
+                isValid = false;
+            } else {
+                errorSemester.classList.add('hidden');
+            }
+
+            // Validasi Mata Kuliah
+            const jurusan = document.getElementById('jurusan');
+            const errorJurusan = document.getElementById('error-jurusan');
+            if (jurusan.value === '') {
+                errorJurusan.classList.remove('hidden');
+                isValid = false;
+            } else {
+                errorJurusan.classList.add('hidden');
+            }
+
+            // Validasi Mata Kuliah
+            const ebook = document.getElementById('ebook');
+            const errorEbook = document.getElementById('error-ebook');
+            if (ebook.value === '') {
+                errorEbook.classList.remove('hidden');
+                isValid = false;
+            } else {
+                errorEbook.classList.add('hidden');
+            }
+
+            // Jika validasi lolos, kirim form
+            if (isValid) {
+                form.submit();
+            }
+        });
+
         $(document).ready(function() {
             console.log('RUN!');
             $('#materi_ajar-datatable').DataTable({
@@ -227,7 +316,7 @@
                             ':id',
                             data
                         );
-                        return `<a href=${UrlEbook} class="bg-emerald-500 hover:bg-emerald-600 px-3 py-1 rounded-xl text-xs text-white w-10 h-10 flex items-center justify-center"><i class="fas fa-book"></i></a>`;
+                        return `<a href=${UrlEbook} class="border-2 border-dashed border-emerald-500 hover:bg-emerald-100 px-3 py-1 rounded-xl text-xs text-emerald-500 w-10 h-10 flex items-center justify-center"><i class="fas fa-book"></i></a>`;
                     }
                 }, {
                     data: {
@@ -240,11 +329,11 @@
                             `<button type="button" data-id="${data.id}"
                                                         data-modal-target="sourceModal" data-ebooks_lama="${data.ebook}" data-materi_ajar="${data.materi_ajar}"  data-sks="${data.sks}" data-id_semester="${data.id_semester}" data-id_jurusan="${data.id_jurusan}"
                                                         onclick="editSourceModal(this)"
-                                                        class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-xl h-10 w-10 text-xs text-white">
+                                                        class="border-2 border-dashed border-amber-500 text-amber-500 hover:bg-amber-100 px-3 py-1 rounded-xl h-10 w-10 text-xs">
                                                        <i class="fas fa-edit"></i>
                                                     </button>`;
                         let deleteUrl =
-                            `<button onclick="return materi_ajarDelete('${data.id}','${data.materi_ajar}','${data.ebook}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-xl h-10 w-10 text-xs text-white"><i class="fas fa-trash"></i></button>`;
+                            `<button onclick="return materi_ajarDelete('${data.id}','${data.materi_ajar}','${data.ebook}')" class="border-2 border-dashed border-red-500 text-red-500 hover:bg-red-100 px-3 py-1 rounded-xl h-10 w-10 text-xs"><i class="fas fa-trash"></i></button>`;
                         return `<div style="text-align:center">${editUrl} ${deleteUrl}</div>`;
                     }
                 }, ],
