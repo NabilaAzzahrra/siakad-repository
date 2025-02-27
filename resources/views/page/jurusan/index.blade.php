@@ -27,7 +27,7 @@
                                     <div class="mb-5">
                                         <label for="jurusan"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Program
-                                            Studi</label>
+                                            Studi <span class="text-red-500">*</span></label>
                                         <input type="text" id="jurusan" name="jurusan"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             placeholder="Masukan Nama Program Studi disini ..." />
@@ -109,7 +109,7 @@
 
                         <div>
                             <label for="text" class="block mb-2 text-sm font-medium text-gray-900">Program
-                                Studi</label>
+                                Studi <span class="text-red-500">*</span></label>
                             <input type="text" id="jurusans" name="jurusan"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 id="" placeholder="Masukan Program Studi disini...">
@@ -228,7 +228,7 @@
             let url = "{{ route('jurusan.update', ':id') }}".replace(':id', id);
             console.log(url);
             let status = document.getElementById(modalTarget);
-            document.getElementById('title_source').innerText = `UPDATE PROGRAM STUDI ${jurusan}`;
+            document.getElementById('title_source').innerText = `UPDATE ${jurusan}`;
             document.getElementById('jurusans').value = jurusan;
             document.querySelector('[name="fakultass"]').value = id_fakultas;
             let event = new Event('change');

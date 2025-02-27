@@ -26,7 +26,7 @@
                                 <div class="p-4 rounded-xl">
                                     <div class="mb-5">
                                         <label for="semester"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Semester</label>
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Semester <span class="text-red-500">*</span></label>
                                         <input type="number" id="semester" name="semester"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             placeholder="Masukan Nama semester disini ..." />
@@ -108,14 +108,14 @@
                     <div class="flex flex-col  p-4 space-y-6">
 
                         <div class="">
-                            <label for="text" class="block mb-2 text-sm font-medium text-gray-900">semester</label>
+                            <label for="text" class="block mb-2 text-sm font-medium text-gray-900">Semester <span class="text-red-500">*</span></label>
                             <input type="number" id="semesters" name="semester"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 id="" placeholder="Masukan semester disini...">
                         </div>
                         <div class="mb-5">
                             <label for="id_keterangan"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">keterangan
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Keterangan
                                 <span class="text-red-500">*</span></label>
                             <select class="js-example-placeholder-single js-states form-control w-[450px] m-6"
                                 id="id_keterangan" name="id_keteranganl" data-placeholder="Pilih keterangan">

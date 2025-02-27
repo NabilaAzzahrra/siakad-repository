@@ -28,7 +28,7 @@
                                     <div class="mb-5">
                                         <label for="materi_ajar"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Materi
-                                            Ajar</label>
+                                            Ajar <span class="text-red-500">*</span></label>
                                         <input type="text" id="materi_ajar" name="materi_ajar"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             placeholder="Masukan Nama materi_ajar disini ..." />
@@ -38,7 +38,7 @@
                                     </div>
                                     <div class="mb-5">
                                         <label for="sks"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">SKS</label>
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">SKS <span class="text-red-500">*</span></label>
                                         <input type="text" id="sks" name="sks"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             placeholder="Masukan Nama sks disini ..." />
@@ -48,7 +48,7 @@
                                     </div>
                                     <div class="mb-5">
                                         <label for="semester"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">semester
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Semester
                                             <span class="text-red-500">*</span></label>
                                         <select class="js-example-placeholder-single js-states form-control w-full m-6"
                                             id="semester" name="id_semester" data-placeholder="Pilih semester">
@@ -80,7 +80,7 @@
                                     </div>
                                     <div class="mb-5">
                                         <label for="ebook"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">E-Book</label>
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">E-Book <span class="text-red-500">*</span></label>
                                         <input type="file" id="ebook" name="ebook"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             placeholder="Masukan E-Book disini ..." />
@@ -134,7 +134,7 @@
     <div class="fixed inset-0 flex items-center justify-center z-50 hidden" id="sourceModal">
         <div class="fixed inset-0 bg-black opacity-50"></div>
         <div class="fixed inset-0 flex items-center justify-center">
-            <div class="w-full md:w-1/2 relative bg-white rounded-lg shadow mx-5">
+            <div class="w-full md:w-1/4 relative bg-white rounded-lg shadow mx-5">
                 <div class="flex items-start justify-between p-4 border-b rounded-t">
                     <h3 class="text-xl font-semibold text-gray-900" id="title_source">
                         Tambah Sumber Database
@@ -151,22 +151,22 @@
 
                         <div class="">
                             <label for="text" class="block mb-2 text-sm font-medium text-gray-900">Materi
-                                Ajar</label>
+                                Ajar <span class="text-red-500">*</span></label>
                             <input type="text" id="materi_ajars" name="materi_ajar"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 id="" placeholder="Masukan materi_ajar disini...">
                         </div>
                         <div class="mb-5">
-                            <label for="text" class="block mb-2 text-sm font-medium text-gray-900">sks</label>
+                            <label for="text" class="block mb-2 text-sm font-medium text-gray-900">Sks <span class="text-red-500">*</span></label>
                             <input type="text" id="skss" name="sks"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 id="" placeholder="Masukan materi_ajar disini...">
                         </div>
                         <div class="mb-5">
                             <label for="id_semester"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">semester
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Semester
                                 <span class="text-red-500">*</span></label>
-                            <select class="js-example-placeholder-single js-states form-control w-[930px] m-6"
+                            <select class="js-example-placeholder-single js-states form-control w-[450px] m-6"
                                 id="id_semester" name="id_semesterl" data-placeholder="Pilih semester">
                                 <option value="">Pilih...</option>
                                 @foreach ($semester as $p)
@@ -178,7 +178,7 @@
                             <label for="id_jurusan"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Program Studi
                                 <span class="text-red-500">*</span></label>
-                            <select class="js-example-placeholder-single js-states form-control w-[930px] m-6"
+                            <select class="js-example-placeholder-single js-states form-control w-[450px] m-6"
                                 id="id_jurusan" name="id_jurusanl" data-placeholder="Pilih Program Studi">
                                 <option value="">Pilih...</option>
                                 @foreach ($jurusan as $j)
@@ -187,7 +187,7 @@
                             </select>
                         </div>
                         <div class="mb-5">
-                            <label for="text" class="block mb-2 text-sm font-medium text-gray-900">Ebook</label>
+                            <label for="text" class="block mb-2 text-sm font-medium text-gray-900">E-book</label>
                             <input type="text" id="ebooks_lama" name="ebooks_lama"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 id="" placeholder="Masukan Ebook lama disini..." readonly>
@@ -352,7 +352,7 @@
             let url = "{{ route('materi_ajar.update', ':id') }}".replace(':id', id);
             console.log(url);
             let status = document.getElementById(modalTarget);
-            document.getElementById('title_source').innerText = `Update materi_ajar ${materi_ajar}`;
+            document.getElementById('title_source').innerText = `Update ${materi_ajar}`;
             document.getElementById('materi_ajars').value = materi_ajar;
             document.getElementById('skss').value = sks;
             document.getElementById('ebooks_lama').value = ebook;
