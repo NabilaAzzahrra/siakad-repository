@@ -1,16 +1,16 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            <div class="flex items-center">Master<i class="fi fi-rr-caret-right mt-1"></i> Jadwal<i
-                    class="fi fi-rr-caret-right mt-1"></i> <span class="text-red-500">Fakultas</span></div>
-        </h2>
+        <p class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <div class="flex items-center font-bold">Master<i class="fi fi-rr-caret-right mt-1"></i> Jadwal<i
+                    class="fi fi-rr-caret-right mt-1"></i> <span class="text-amber-100">Fakultas</span></div>
+        </p>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-3/12 p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-3xl">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                             <div class="flex">
                                 <div class="w-10">
@@ -30,7 +30,7 @@
                                             <span class="text-red-500">*</span></label>
                                         <input type="text" id="fakultas" name="fakultas"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="Masukan Nama fakultas disini ..." />
+                                            placeholder="Masukan Nama fakultas disini ..." oninput="this.value = this.value.toUpperCase();"/>
                                         <p id="error-fakultas" class="mt-2 text-sm text-red-500 hidden">Fakultas wajib
                                             diisi.
                                         </p>
@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div class="w-full md:w-9/12 p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-3xl">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                             <div class="flex">
                                 <div class="w-10">
@@ -95,7 +95,7 @@
                             <label for="text" class="block mb-2 text-sm font-medium text-gray-900">Fakultas <span class="text-red-500">*</span></label>
                             <input type="text" id="fakultass" name="fakultas"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                id="" placeholder="Masukan fakultas disini...">
+                                id="" placeholder="Masukan fakultas disini..." oninput="this.value = this.value.toUpperCase();">
                         </div>
                     </div>
                     <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
@@ -156,7 +156,7 @@
                 columns: [{
                     data: 'no',
                     render: (data, type, row, meta) => {
-                        return `<div style="text-align:center">${meta.row + 1}.</div>`;;
+                        return `<div style="text-align:left">${meta.row + 1}.</div>`;;
                     }
                 }, {
                     data: 'fakultas',

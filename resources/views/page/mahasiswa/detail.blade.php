@@ -1,9 +1,9 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
-            <div class="flex items-center">Mahsiswa<i class="fi fi-rr-caret-right mt-1"></i> <span
-                    class="text-red-500">Detail Mahaiswa</span></div>
-        </h2>
+        <p class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
+            <div class="flex items-center font-bold">Mahsiswa<i class="fi fi-rr-caret-right mt-1"></i> <span
+                    class="text-amber-100">Detail Mahaiswa</span></div>
+        </p>
     </x-slot>
 
     <div class="py-12">

@@ -1,20 +1,28 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            <div class="flex items-center">Master<i class="fi fi-rr-caret-right mt-1"></i> <span class="text-red-500">Dosen</span></div>
-        </h2>
+        <p class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <div class="flex items-center font-bold">Master<i class="fi fi-rr-caret-right mt-1"></i> <span
+                class="text-amber-100">Dosen</span></div>
+        </p>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-3/12 p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg sm:rounded-lg">
+                    <div
+                        class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                                FORM INPUT DOSEN
+                            <div class="flex">
+                                <div class="w-10">
+                                    <img src="{{ url('img/add.png') }}" alt="Icon 1" class="">
+                                </div>
+                                <div class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                                    FORM INPUT DOSEN
+                                </div>
                             </div>
-                            <form action="{{ route('dosen.store') }}" method="post">
+                            <hr class="border mt-2 border-black border-opacity-30">
+                            <form action="{{ route('dosen.store') }}" method="post" id="dosenForm">
                                 @csrf
                                 <div class="p-4 rounded-xl">
                                     <div class="mb-5">
@@ -23,7 +31,10 @@
                                             Dosen</label>
                                         <input type="text" id="nama_dosen" name="nama_dosen"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="Masukan Nama Dosen disini ..." required />
+                                            placeholder="Masukan Nama Dosen disini ..."
+                                            oninput="this.value = this.value.toUpperCase();" />
+                                        <p id="error-nama_dosen" class="mt-2 text-sm text-red-500 hidden">Nama dosen
+                                            wajib diisi.</p>
                                     </div>
                                     <div class="mb-5">
                                         <label for="email_dosen"
@@ -31,7 +42,10 @@
                                             Dosen</label>
                                         <input type="email" id="email_dosen" name="email_dosen"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="Masukan Email Dosen disini ..." required />
+                                            placeholder="Masukan Email Dosen disini ..." />
+                                        <p id="error-email_dosen" class="mt-2 text-sm text-red-500 hidden">Email wajib
+                                            diisi.
+                                        </p>
                                     </div>
                                     <div class="mb-5">
                                         <label for="no_hp_dosen"
@@ -39,7 +53,9 @@
                                             Dosen</label>
                                         <input type="number" id="no_hp_dosen" name="no_hp_dosen"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="Masukan No HP Dosen disini ..." required />
+                                            placeholder="Masukan No HP Dosen disini ..." />
+                                        <p id="error-no_hp_dosen" class="mt-2 text-sm text-red-500 hidden">No Hp wajib
+                                            diisi.</p>
                                     </div>
                                     <div class="mb-5">
                                         <label for="password"
@@ -47,30 +63,43 @@
                                             Dosen</label>
                                         <input type="password" id="password" name="password"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="Masukan Password Dosen disini ..." required />
+                                            placeholder="Masukan Password Dosen disini ..." />
+                                        <p id="error-password" class="mt-2 text-sm text-red-500 hidden">Password wajib
+                                            diisi.</p>
                                     </div>
                                     <div class="mb-5">
                                         <label for="tgl_lahir"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal Lahir</label>
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal
+                                            Lahir</label>
                                         <input type="date" id="tgl_lahir" name="tgl_lahir"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="Masukan Password Dosen disini ..." required />
+                                            placeholder="Masukan Password Dosen disini ..." />
+                                        <p id="error-tgl_lahir" class="mt-2 text-sm text-red-500 hidden">Tanggal lahir
+                                            wajib diisi.</p>
                                     </div>
                                     <button type="submit"
-                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i class="fi fi-rr-disk "></i></button>
+                                        class="text-blue-700 border-2 border-dashed border-blue-700 hover:bg-blue-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i
+                                            class="fi fi-rr-disk "></i></button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
                 <div class="w-full md:w-9/12 p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg sm:rounded-lg">
+                    <div
+                        class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                                DATA DOSEN
+                            <div class="flex">
+                                <div class="w-10">
+                                    <img src="{{ url('img/database.png') }}" alt="Icon 1" class="">
+                                </div>
+                                <div class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                                    DATA DOSEN
+                                </div>
                             </div>
+                            <hr class="border mt-2 border-black border-opacity-30 mb-6">
                             <div class="flex justify-center">
-                                <div class="p-12" style="width:100%;overflow-x:auto;">
+                                <div class="p-6" style="width:100%;overflow-x:auto;">
                                     <table class="table table-bordered" id="dosen-datatable">
                                         <thead>
                                             <tr>
@@ -96,7 +125,7 @@
     <div class="fixed inset-0 flex items-center justify-center z-50 hidden" id="sourceModal">
         <div class="fixed inset-0 bg-black opacity-50"></div>
         <div class="fixed inset-0 flex items-center justify-center">
-            <div class="w-full md:w-1/2 relative bg-white rounded-lg shadow mx-5">
+            <div class="w-full md:w-1/4 relative bg-white rounded-lg shadow mx-5">
                 <div class="flex items-start justify-between p-4 border-b rounded-t">
                     <h3 class="text-xl font-semibold text-gray-900 text-wrap" id="title_source">
                         Tambah Sumber Database
@@ -147,7 +176,8 @@
                                 id="" placeholder="Masukan Password Dosen disini...">
                         </div>
                         <div>
-                            <label for="text" class="block mb-2 text-sm font-medium text-gray-900">Tanggal Lahir</label>
+                            <label for="text" class="block mb-2 text-sm font-medium text-gray-900">Tanggal
+                                Lahir</label>
                             <input type="date" id="tgl_lahirs" name="tgl_lahir"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 id="" placeholder="Masukan Password Dosen disini...">
@@ -164,6 +194,109 @@
         </div>
     </div>
     <script>
+        const form = document.getElementById('dosenForm');
+
+        const noHpInput = document.getElementById('no_hp_dosen');
+        const errorNoHp = document.createElement('p');
+        errorNoHp.id = 'error-no_hp_dosen';
+        errorNoHp.className = 'mt-2 text-sm text-red-500 hidden';
+        errorNoHp.innerText = 'No HP wajib diisi dan harus minimal 13 karakter.';
+        noHpInput.parentNode.appendChild(errorNoHp);
+
+        noHpInput.addEventListener('focus', () => {
+            if (!noHpInput.value.startsWith('62')) {
+                noHpInput.value = '62';
+            }
+        });
+
+        noHpInput.addEventListener('input', () => {
+            let value = noHpInput.value;
+
+            // Pastikan selalu dimulai dengan "62"
+            if (!value.startsWith('62')) {
+                value = '62';
+            }
+
+            // Pastikan karakter setelah "62" adalah "8"
+            if (value.length > 2 && value.charAt(2) !== '8') {
+                value = value.slice(0, 2) + '8' + value.slice(3);
+            }
+
+            // Batasi hingga maksimal 14 karakter
+            if (value.length > 14) {
+                value = value.slice(0, 14);
+            }
+
+            noHpInput.value = value;
+
+            // Tampilkan pesan error jika kurang dari 13 karakter
+            if (value.length < 13) {
+                errorNoHp.classList.remove('hidden');
+            } else {
+                errorNoHp.classList.add('hidden');
+            }
+        });
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Mencegah form dikirim
+
+            let isValid = true;
+
+            // Validasi Mata Kuliah
+            const nama_dosen = document.getElementById('nama_dosen');
+            const errorDosen = document.getElementById('error-nama_dosen');
+            if (nama_dosen.value === '') {
+                errorDosen.classList.remove('hidden');
+                isValid = false;
+            } else {
+                errorDosen.classList.add('hidden');
+            }
+
+            // Validasi Mata Kuliah
+            const email_dosen = document.getElementById('email_dosen');
+            const errorEmail = document.getElementById('error-email_dosen');
+            if (email_dosen.value === '') {
+                errorEmail.classList.remove('hidden');
+                isValid = false;
+            } else {
+                errorEmail.classList.add('hidden');
+            }
+
+            // Validasi No HP
+            const noHpValue = noHpInput.value.trim();
+            if (noHpValue === '' || noHpValue.length < 13) {
+                errorNoHp.classList.remove('hidden');
+                isValid = false;
+            } else {
+                errorNoHp.classList.add('hidden');
+            }
+
+            // Validasi Mata Kuliah
+            const password = document.getElementById('password');
+            const errorPassword = document.getElementById('error-password');
+            if (password.value === '') {
+                errorPassword.classList.remove('hidden');
+                isValid = false;
+            } else {
+                errorPassword.classList.add('hidden');
+            }
+
+            // Validasi Mata Kuliah
+            const tgl_lahir = document.getElementById('tgl_lahir');
+            const errorTglLahir = document.getElementById('error-tgl_lahir');
+            if (tgl_lahir.value === '') {
+                errorTglLahir.classList.remove('hidden');
+                isValid = false;
+            } else {
+                errorTglLahir.classList.add('hidden');
+            }
+
+            // Jika validasi lolos, kirim form
+            if (isValid) {
+                form.submit();
+            }
+        });
+
         $(document).ready(function() {
             console.log('RUN!');
             $('#dosen-datatable').DataTable({
@@ -188,12 +321,12 @@
                 }, {
                     data: 'nama_dosen',
                     render: (data, type, row) => {
-                        return data;
+                        return `<div class="text-wrap">${data}</div>`;
                     }
                 }, {
                     data: 'email',
                     render: (data, type, row) => {
-                        return data;
+                        return `<div class="text-wrap">${data}</div>`;
                     }
                 }, {
                     data: 'no_hp',
@@ -220,11 +353,11 @@
                             `<button type="button" data-id="${data.id}"
                                                         data-modal-target="sourceModal" data-nama_dosen="${data.nama_dosen}" data-email="${data.email}" data-kode_dosen="${data.kode_dosen}" data-no_hp="${data.no_hp}" data-password="${data.password}" data-tgl_lahir="${data.tgl_lahir}"
                                                         onclick="editSourceModal(this)"
-                                                        class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-xl h-10 w-10 text-xs text-white">
+                                                        class="border-2 border-dashed border-amber-500 text-amber-500 hover:bg-amber-100 px-3 py-1 rounded-xl h-10 w-10 text-xs">
                                                        <i class="fas fa-edit"></i>
                                                     </button>`;
                         let deleteUrl =
-                            `<button onclick="return dosenDelete('${data.id}','${data.nama_dosen}','${data.kode_dosen}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-xl h-10 w-10 text-xs text-white"><i class="fas fa-trash"></i></button>`;
+                            `<button onclick="return dosenDelete('${data.id}','${data.nama_dosen}','${data.kode_dosen}')" class="border-2 border-dashed border-red-500 text-red-500 hover:bg-red-100 px-3 py-1 rounded-xl h-10 w-10 text-xs"><i class="fas fa-trash"></i></button>`;
                         return `<div style="text-align:center">${editUrl} ${deleteUrl}</div>`;
                     }
                 }, ],
@@ -244,7 +377,7 @@
             let url = "{{ route('dosen.update', ':id') }}".replace(':id', id);
             console.log(url);
             let status = document.getElementById(modalTarget);
-            document.getElementById('title_source').innerText = `Update Dosen ${nama_dosen}`;
+            document.getElementById('title_source').innerText = `${nama_dosen}`;
             document.getElementById('nama_dosens').value = nama_dosen;
             document.getElementById('emails').value = email;
             document.getElementById('email_lama').value = kode_dosen;
@@ -274,20 +407,46 @@
         }
 
         const dosenDelete = async (id, nama_dosen, kode_dosen) => {
-            let tanya = confirm(`Apakah anda yakin untuk menghapus dosen ${nama_dosen} dengan Kode Dosen ${kode_dosen} ?`);
-            if (tanya) {
-                try {
+            Swal.fire({
+                title: `Apakah Anda yakin?`,
+                text: `Data akan dihapus secara permanen!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
                     await axios.post(`/dosen/${id}`, {
-                        '_method': 'DELETE',
-                        '_token': $('meta[name="csrf-token"]').attr('content')
-                    });
-                    location.reload();
-                } catch (error) {
-                    alert('Error deleting record');
-                    console.log(error);
+                            '_method': 'DELETE',
+                            '_token': $('meta[name="csrf-token"]').attr('content')
+                        })
+                        .then(function(response) {
+                            Swal.fire({
+                                title: 'Terhapus!',
+                                text: `Data berhasil dihapus.`,
+                                icon: 'success',
+                                confirmButtonText: 'OK',
+                                allowOutsideClick: false
+                            }).then(() => {
+                                // Refresh halaman setelah menekan tombol OK
+                                location.reload();
+                            });
+                        })
+                        .catch(function(error) {
+                            // Alert jika terjadi kesalahan
+                            Swal.fire({
+                                title: 'Gagal!',
+                                text: 'Terjadi kesalahan saat menghapus data.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                            console.log(error);
+                        });
                 }
-            }
-        }
+            });
+        };
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -319,4 +478,43 @@
             });
         });
     </script>
+    @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+
+        @if (session('message_insert'))
+            <script>
+                Swal.fire({
+                    title: 'Berhasil!',
+                    text: "{{ session('message_insert') }}",
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        const swalBtn = Swal.getConfirmButton();
+                        swalBtn.disabled = false;
+                        swalBtn.textContent = "OK";
+                    }
+                });
+            </script>
+        @endif
+
+        @if (session('message_update'))
+            <script>
+                Swal.fire({
+                    title: 'Update Berhasil!',
+                    text: "{{ session('message_update') }}",
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        const swalBtn = Swal.getConfirmButton();
+                        swalBtn.disabled = false;
+                        swalBtn.textContent = "OK";
+                    }
+                });
+            </script>
+        @endif
+
+    @endpush
 </x-app-layout>

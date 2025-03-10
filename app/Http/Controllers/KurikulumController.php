@@ -39,7 +39,7 @@ class KurikulumController extends Controller
 
         return redirect()
             ->route('kurikulum.index')
-            ->with('message', 'Data Kurikulum Sudah ditambahkan');
+            ->with('message_insert', 'Data Kurikulum Sudah ditambahkan');
     }
 
     /**
@@ -77,7 +77,7 @@ class KurikulumController extends Controller
         $datas->update($data);
         return redirect()
             ->route('kurikulum.index')
-            ->with('message', 'Data Kurikulum Sudah diupdate');
+            ->with('message_update', 'Data Kurikulum Sudah diupdate');
     }
 
     /**
@@ -106,9 +106,9 @@ class KurikulumController extends Controller
 
             Detailkurikulum::insert($data);
 
-            return back()->with('message_delete', 'Data Materi Ajar Kurikulum Sudah ditambahkan');
+            return back()->with('message_detail', 'Data berhasil ditambahkan');
         } else {
-            return back()->with('message_delete', 'Data Materi Ajar Kurikulum Gagal ditambahkan');
+            return back()->with('message_detail', 'Data gagal ditambahkan');
 
         }
     }

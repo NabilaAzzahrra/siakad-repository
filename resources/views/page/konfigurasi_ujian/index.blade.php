@@ -1,9 +1,9 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
-            <div class="flex items-center">Master<i class="fi fi-rr-caret-right mt-1"></i> <span
-                    class="text-red-500">Konfigurasi Ujian</span></div>
-        </h2>
+        <p class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
+            <div class="flex items-center font-bold">Master<i class="fi fi-rr-caret-right mt-1"></i> <span
+                    class="text-amber-100">Konfigurasi Ujian</span></div>
+        </p>
     </x-slot>
 
     <div class="py-12">
@@ -11,73 +11,78 @@
             <div class="flex flex-col md:flex-row justify-center">
 
                 @php
-                $hide = empty($konfigurasiUjian) ? '' : 'hidden';
+                    $hide = empty($konfigurasiUjian) ? '' : 'hidden';
                 @endphp
                 @if ($hide)
-                <div class="w-full md:w-5/12 p-3 {{ $hide }}">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
-                        <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div
-                                class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                                FORM INPUT Konfigurasi
-                            </div>
-                            <form action="{{ route('konfigurasi_ujian.store') }}" method="post">
-                                @csrf
-                                <div class="p-4 rounded-xl">
-                                    <input type="hidden" name="id_tahun_akademik" id="id_tahun_akademik"
-                                        value="{{ $konfigurasi->id_tahun_akademik }}">
-                                    <input type="hidden" name="id_keterangan" id="id_keterangan"
-                                        value="{{ $konfigurasi->id_keterangan }}">
-                                    <div class="flex gap-5">
-                                        <div class="mb-5 w-full">
-                                            <label for="jenis_ujian"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis
-                                                Ujian
-                                                <span class="text-red-500">*</span></label>
-                                            <select
-                                                class="js-example-placeholder-single js-states form-control w-full m-6"
-                                                name="jenis_ujian" data-placeholder="Pilih Jenis Ujian">
-                                                <option value="">Pilih...</option>
-                                                <option value="UTS">UTS</option>
-                                                <option value="UAS">UAS</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-5 w-full">
-                                            <label for="tgl_mulai"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal
-                                                Mulai
-                                                <span class="text-red-500">*</span></label>
-                                            <input type="date" id="tgl_mulai" name="tgl_mulai"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600">
-                                        </div>
-                                        <div class="mb-5 w-full">
-                                            <label for="tgl_susulan"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal
-                                                Susulan
-                                                <span class="text-red-500">*</span></label>
-                                            <input type="date" id="tgl_susulan" name="tgl_susulan"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600">
-                                        </div>
-                                    </div>
-                                    <button type="submit"
-                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i
-                                            class="fi fi-rr-disk "></i></button>
+                    <div class="w-full md:w-5/12 p-3 {{ $hide }}">
+                        <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl">
+                            <div class="p-6 text-gray-900 dark:text-gray-100">
+                                <div
+                                    class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
+                                    FORM INPUT Konfigurasi
                                 </div>
-                            </form>
+                                <form action="{{ route('konfigurasi_ujian.store') }}" method="post">
+                                    @csrf
+                                    <div class="p-4 rounded-xl">
+                                        <input type="hidden" name="id_tahun_akademik" id="id_tahun_akademik"
+                                            value="{{ $konfigurasi->id_tahun_akademik }}">
+                                        <input type="hidden" name="id_keterangan" id="id_keterangan"
+                                            value="{{ $konfigurasi->id_keterangan }}">
+                                        <div class="flex gap-5">
+                                            <div class="mb-5 w-full">
+                                                <label for="jenis_ujian"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis
+                                                    Ujian
+                                                    <span class="text-red-500">*</span></label>
+                                                <select
+                                                    class="js-example-placeholder-single js-states form-control w-full m-6"
+                                                    name="jenis_ujian" data-placeholder="Pilih Jenis Ujian">
+                                                    <option value="">Pilih...</option>
+                                                    <option value="UTS">UTS</option>
+                                                    <option value="UAS">UAS</option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-5 w-full">
+                                                <label for="tgl_mulai"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal
+                                                    Mulai
+                                                    <span class="text-red-500">*</span></label>
+                                                <input type="date" id="tgl_mulai" name="tgl_mulai"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600">
+                                            </div>
+                                            <div class="mb-5 w-full">
+                                                <label for="tgl_susulan"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal
+                                                    Susulan
+                                                    <span class="text-red-500">*</span></label>
+                                                <input type="date" id="tgl_susulan" name="tgl_susulan"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600">
+                                            </div>
+                                        </div>
+                                        <button type="submit"
+                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i
+                                                class="fi fi-rr-disk "></i></button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
                 @endif
 
                 <div class="w-full md:w-7/12 p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div
-                                class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                                DATA KONFIGURASI
+                            <div class="flex">
+                                <div class="w-10">
+                                    <img src="{{ url('img/database.png') }}" alt="Icon 1" class="">
+                                </div>
+                                <div class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                                    DATA KONFIGURASI
+                                </div>
                             </div>
+                            <hr class="border mt-2 border-black border-opacity-30 mb-6">
                             <div class="flex justify-center">
-                                <div class="p-12" style="width:100%;overflow-x:auto;">
+                                <div class="p-4" style="width:100%;overflow-x:auto;">
                                     <table class="table table-bordered" id="konfigurasi-datatable">
                                         <thead>
                                             <tr>
@@ -242,7 +247,7 @@
                             `<button type="button" data-id="${data.id}"
                                                         data-modal-target="sourceModal" data-id_tahun_akademiks="${data.id_tahun_akademik}" " data-id_keterangans="${data.id_keterangan}" data-jenis_ujians="${data.jenis_ujian}" data-tgl_mulais="${data.tgl_mulai}" data-tgl_susulans="${data.tgl_susulan}"
                                                         onclick="editSourceModal(this)"
-                                                        class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-xl h-10 w-10 text-xs text-white">
+                                                        class="border-2 border-dashed border-amber-500 text-amber-500 hover:bg-amber-100 px-3 py-1 rounded-xl h-10 w-10 text-xs">
                                                        <i class="fas fa-edit"></i>
                                                     </button>`;
                         return `<div style="text-align:center">${editUrl}</div>`;
@@ -296,4 +301,26 @@
             status.classList.toggle('hidden');
         }
     </script>
+    @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+
+        @if (session('message_update'))
+            <script>
+                Swal.fire({
+                    title: 'Update Berhasil!',
+                    text: "{{ session('message_update') }}",
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        const swalBtn = Swal.getConfirmButton();
+                        swalBtn.disabled = false;
+                        swalBtn.textContent = "OK";
+                    }
+                });
+            </script>
+        @endif
+
+    @endpush
 </x-app-layout>

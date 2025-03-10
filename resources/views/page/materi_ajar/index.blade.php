@@ -1,16 +1,16 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            <div class="flex items-center">Master<i class="fi fi-rr-caret-right mt-1"></i> Jadwal<i
-                    class="fi fi-rr-caret-right mt-1"></i> <span class="text-red-500">Materi Ajar</span></div>
-        </h2>
+        <p class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <div class="flex items-center font-bold">Master<i class="fi fi-rr-caret-right mt-1"></i> Jadwal<i
+                    class="fi fi-rr-caret-right mt-1"></i> <span class="text-amber-100">Materi Ajar</span></div>
+        </p>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-3/12 p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm rounded-3xl">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                             <div class="flex">
                                 <div class="w-10">
@@ -31,7 +31,7 @@
                                             Ajar <span class="text-red-500">*</span></label>
                                         <input type="text" id="materi_ajar" name="materi_ajar"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="Masukan Nama materi_ajar disini ..." />
+                                            placeholder="Masukan Nama materi_ajar disini ..." oninput="this.value = this.value.toUpperCase();"/>
                                         <p id="error-materi_ajar" class="mt-2 text-sm text-red-500 hidden">Materi Ajar
                                             wajib diisi.
                                         </p>
@@ -41,7 +41,7 @@
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">SKS <span class="text-red-500">*</span></label>
                                         <input type="text" id="sks" name="sks"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="Masukan Nama sks disini ..." />
+                                            placeholder="Masukan Nama sks disini ..." oninput="this.value = this.value.toUpperCase();"/>
                                         <p id="error-sks" class="mt-2 text-sm text-red-500 hidden">SKS
                                             wajib diisi.
                                         </p>
@@ -97,7 +97,7 @@
                     </div>
                 </div>
                 <div class="w-full md:w-9/12 p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm rounded-3xl">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                             <div class="flex">
                                 <div class="w-10">
@@ -154,13 +154,13 @@
                                 Ajar <span class="text-red-500">*</span></label>
                             <input type="text" id="materi_ajars" name="materi_ajar"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                id="" placeholder="Masukan materi_ajar disini...">
+                                id="" placeholder="Masukan materi_ajar disini..." oninput="this.value = this.value.toUpperCase();">
                         </div>
                         <div class="mb-5">
                             <label for="text" class="block mb-2 text-sm font-medium text-gray-900">Sks <span class="text-red-500">*</span></label>
                             <input type="text" id="skss" name="sks"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                id="" placeholder="Masukan materi_ajar disini...">
+                                id="" placeholder="Masukan materi_ajar disini..." oninput="this.value = this.value.toUpperCase();">
                         </div>
                         <div class="mb-5">
                             <label for="id_semester"
@@ -297,17 +297,17 @@
                 }, {
                     data: 'sks',
                     render: (data, type, row) => {
-                        return data;
+                        return `<div style="text-align:center">${data}</div>`
                     }
                 }, {
                     data: 'semester',
                     render: (data, type, row) => {
-                        return data.semester;
+                        return `<div style="text-align:center">${data.semester}</div>`
                     }
                 }, {
                     data: 'jurusan',
                     render: (data, type, row) => {
-                        return data.jurusan;
+                        return `<div style="text-align:center">${data.jurusan}</div>`
                     }
                 }, {
                     data: 'id',
@@ -316,7 +316,7 @@
                             ':id',
                             data
                         );
-                        return `<a href=${UrlEbook} class="border-2 border-dashed border-emerald-500 hover:bg-emerald-100 px-3 py-1 rounded-xl text-xs text-emerald-500 w-10 h-10 flex items-center justify-center"><i class="fas fa-book"></i></a>`;
+                        return `<div class="text-center ml-5"><a href=${UrlEbook} class="border-2 border-dashed border-emerald-500 hover:bg-emerald-100 px-3 py-1 rounded-xl text-xs text-emerald-500 w-10 h-10 flex items-center justify-center"><i class="fas fa-book"></i></a></div>`
                     }
                 }, {
                     data: {

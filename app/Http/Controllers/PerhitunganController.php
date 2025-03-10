@@ -41,7 +41,7 @@ class PerhitunganController extends Controller
 
         return redirect()
             ->route('perhitungan.index')
-            ->with('message', 'Data Perhitungan Sudah ditambahkan');
+            ->with('message_insert', 'Data Perhitungan Sudah ditambahkan');
     }
 
     /**
@@ -78,7 +78,7 @@ class PerhitunganController extends Controller
         $datas->update($data);
         return redirect()
             ->route('perhitungan.index')
-            ->with('message', 'Data Perhitungan Sudah diupdate');
+            ->with('message_update', 'Data Perhitungan Sudah diupdate');
     }
 
     /**

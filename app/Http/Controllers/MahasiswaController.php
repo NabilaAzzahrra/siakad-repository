@@ -18,7 +18,7 @@ class MahasiswaController extends Controller
      */
     public function index(Request $request)
     {
-        $mahasiswa = DB::table('mahasiswa')->where('id_kelas', null)->paginate(10);
+        /*$mahasiswa = DB::table('mahasiswa')->where('id_kelas', null)->paginate(10);
 
         $search = $request->input('search');
 
@@ -46,7 +46,23 @@ class MahasiswaController extends Controller
         return view('page.mahasiswa.index')->with([
             'mahasiswa' => $mahasiswa,
             'mahasiswa_lengkap' => $mahasiswa_lengkap,
-        ]);
+        ]);*/
+
+        $page = request()->input('page', 1);
+        $entries = request()->input('entries', 10);
+        $search = request()->input('search');
+
+        $query = Mahasiswa::query();
+
+        if ($search) {
+            $query->where('nama', 'like', '%' . $search . '%')
+                ->orWhere('nama', 'like', '%' . $search . '%');
+        }
+
+        $mahasiswa = $query->paginate($entries);
+
+        return view('page.mahasiswa.index', compact('mahasiswa'))
+            ->with('i', ($page - 1) * $entries);
     }
 
     /**
@@ -651,6 +667,6 @@ class MahasiswaController extends Controller
 
         return redirect()
             ->route('mahasiswa.index')
-            ->with('message', 'Data Mahasiswa Sudah diupdate');
+            ->with('message_update', 'Data Mahasiswa Sudah diupdate');
     }
 }

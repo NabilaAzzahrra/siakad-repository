@@ -1,13 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
+        <h2 class="font-semibold lg:text-xl text-white dark:text-gray-200 leading-tight text-md">
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
 
     <div class="">
         <div class="max-w-8xl mx-auto text-white">
-            <div class="flex h-[542px]">
+            <div class="flex h-[542px] bg-[url('/public/img/building.jpg')] bg-cover bg-gray-500 bg-blend-multiply">
                 <div class="w-[800px] p-12">
                     <div class="bg-[#005F9D] bg-opacity-65 pt-6 pb-4 pr-6 pl-4 w-[300px] rounded-3xl" data-aos="fade-down" data-aos-delay="70" data-aos-duration="1000">
                         <div class="flex gap-5 items-center justify-between">
@@ -300,7 +300,7 @@
                                     <tr>
                                         <td>{{$no++}}</td>
                                         <td>{{ $j->detail_kurikulum->materi_ajar->materi_ajar }}</td>
-                                        <td>{{ $j->dosen->nama_dosen }}</td>
+                                        <td>{{ $j->dosen ? $j->dosen->nama_dosen : '' }}</td>
                                         <td>{{ $j->hari->hari }}</td>
                                         <td>{{ $j->sesi->sesi }}</td>
                                         <td>{{ $j->sesi->pukul->pukul }}</td>

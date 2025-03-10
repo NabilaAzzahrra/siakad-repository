@@ -1,9 +1,9 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            <div class="flex items-center">Master<i class="fi fi-rr-caret-right mt-1"></i> Jadwal<i
-                    class="fi fi-rr-caret-right mt-1"></i> <span class="text-red-500">Hari</span></div>
-        </h2>
+        <p class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <div class="flex items-center font-bold">Master<i class="fi fi-rr-caret-right mt-1"></i> Jadwal<i
+                    class="fi fi-rr-caret-right mt-1"></i> <span class="text-amber-100">Hari</span></div>
+        </p>
     </x-slot>
 
     <div class="py-12">
@@ -11,7 +11,7 @@
             <div class="flex flex-col md:flex-row justify-center">
                 {{-- FORM INPUT --}}
                 <div class="w-full md:w-3/12 p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-3xl">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                             <div class="flex">
                                 <div class="w-10">
@@ -44,7 +44,7 @@
                 </div>
                 {{-- DATATABLE --}}
                 <div class="w-full md:w-9/12 p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-3xl">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                             <div class="flex">
                                 <div class="w-10">
@@ -146,7 +146,7 @@
                 columns: [{
                     data: 'no',
                     render: (data, type, row, meta) => {
-                        return `<div style="text-align:center">${meta.row + 1}.</div>`;;
+                        return `<div style="text-align:left">${meta.row + 1}.</div>`;;
                     }
                 }, {
                     data: 'hari',

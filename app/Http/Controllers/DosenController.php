@@ -67,7 +67,7 @@ class DosenController extends Controller
 
         return redirect()
             ->route('dosen.index')
-            ->with('message', 'Data Dosen Sudah ditambahkan');
+            ->with('message_insert', 'Data Sudah ditambahkan');
     }
 
     /**
@@ -114,7 +114,7 @@ class DosenController extends Controller
         $data_user->update($datas_user);
         return redirect()
             ->route('dosen.index')
-            ->with('message', 'Data Dosen Sudah diupdate');
+            ->with('message_update', 'Data Dosen Sudah diupdate');
     }
 
     /**

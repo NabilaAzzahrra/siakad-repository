@@ -1,22 +1,28 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
-            <div class="flex items-center">Master<i class="fi fi-rr-caret-right mt-1"></i> <span
-                    class="text-red-500">Perhitungan</span></div>
-        </h2>
+        <p class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
+        <div class="flex items-center font-bold">Master<i class="fi fi-rr-caret-right mt-1"></i> <span
+                class="text-amber-100 font-bold">Perhitungan</span></div>
+        </p>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-5/12 p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
+                    <div
+                        class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div
-                                class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                                FORM INPUT PERHITUNGAN
+                            <div class="flex">
+                                <div class="w-10">
+                                    <img src="{{ url('img/add.png') }}" alt="Icon 1" class="">
+                                </div>
+                                <div class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                                    FORM INPUT PERHITUNGAN
+                                </div>
                             </div>
-                            <form action="{{ route('perhitungan.store') }}" method="post">
+                            <hr class="border mt-2 border-black border-opacity-30">
+                            <form action="{{ route('perhitungan.store') }}" method="post" id="perhitunganForm">
                                 @csrf
                                 <div class="p-4 rounded-xl">
                                     <div class="flex flex-col lg:flex-row gap-5">
@@ -25,14 +31,19 @@
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">perhitungan</label>
                                             <input type="text" id="perhitungan" name="nama_perhitungan"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Masukan perhitungan disini ..." required />
+                                                placeholder="Masukan perhitungan disini ..."
+                                                oninput="this.value = this.value.toUpperCase();" />
+                                            <p id="error-perhitungan" class="mt-2 text-sm text-red-500 hidden">
+                                                Perhitungan wajib diisi.</p>
                                         </div>
                                         <div class="lg:mb-5 mb-4 w-full">
                                             <label for="presensi"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Presensi</label>
                                             <input type="number" id="presensi" name="presensi"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Masukan Perhitungan Presensi disini ..." required />
+                                                placeholder="Masukan Perhitungan Presensi disini ..." />
+                                            <p id="error-presensi" class="mt-2 text-sm text-red-500 hidden">Presensi
+                                                wajib diisi.</p>
                                         </div>
                                     </div>
                                     <div class="flex flex-col lg:flex-row gap-5">
@@ -41,14 +52,18 @@
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tugas</label>
                                             <input type="number" id="tugas" name="tugas"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Masukan Perhitungan Tugas disini ..." required />
+                                                placeholder="Masukan Perhitungan Tugas disini ..." />
+                                            <p id="error-tugas" class="mt-2 text-sm text-red-500 hidden">Tugas wajib
+                                                diisi.</p>
                                         </div>
                                         <div class="lg:mb-5 mb-4 w-full">
                                             <label for="formatif"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Formatif</label>
                                             <input type="number" id="formatif" name="formatif"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Masukan perhitungan Formatif disini ..." required />
+                                                placeholder="Masukan perhitungan Formatif disini ..." />
+                                            <p id="error-formatif" class="mt-2 text-sm text-red-500 hidden">Formatif
+                                                wajib diisi.</p>
                                         </div>
                                     </div>
                                     <div class="flex flex-col lg:flex-row gap-5">
@@ -57,18 +72,22 @@
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">UTS</label>
                                             <input type="number" id="uts" name="uts"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Masukan perhitungan UTS disini ..." required />
+                                                placeholder="Masukan perhitungan UTS disini ..." />
+                                            <p id="error-uts" class="mt-2 text-sm text-red-500 hidden">UTS wajib diisi.
+                                            </p>
                                         </div>
                                         <div class="lg:mb-5 mb-4 w-full">
                                             <label for="uas"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">UAS</label>
                                             <input type="number" id="uas" name="uas"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Masukan perhitungan UAS disini ..." required />
+                                                placeholder="Masukan perhitungan UAS disini ..." />
+                                            <p id="error-uas" class="mt-2 text-sm text-red-500 hidden">UAS wajib diisi.
+                                            </p>
                                         </div>
                                     </div>
                                     <button type="submit"
-                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i
+                                        class="text-blue-700 border-2 border-dashed border-blue-700 hover:bg-blue-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i
                                             class="fi fi-rr-disk "></i></button>
                                 </div>
                             </form>
@@ -76,14 +95,20 @@
                     </div>
                 </div>
                 <div class="w-full md:w-7/12 p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
+                    <div
+                        class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div
-                                class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                                DATA PERHITUNGAN
+                            <div class="flex">
+                                <div class="w-10">
+                                    <img src="{{ url('img/database.png') }}" alt="Icon 1" class="">
+                                </div>
+                                <div class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                                    DATA PERHITUNGAN
+                                </div>
                             </div>
+                            <hr class="border mt-2 border-black border-opacity-30 mb-6">
                             <div class="w-full flex justify-center">
-                                <div class="w-full p-12" style="width:100%;overflow-x:auto;">
+                                <div class="w-full p-4" style="width:100%;overflow-x:auto;">
                                     <table class="w-full table table-bordered" id="perhitungan-datatable">
                                         <thead>
                                             <tr>
@@ -109,7 +134,7 @@
     <div class="fixed inset-0 flex items-center justify-center z-50 hidden" id="sourceModal">
         <div class="fixed inset-0 bg-black opacity-50"></div>
         <div class="fixed inset-0 flex items-center justify-center">
-            <div class="w-full md:w-1/2 relative bg-white rounded-lg shadow mx-5">
+            <div class="w-full md:w-1/4 relative bg-white rounded-lg shadow mx-5">
                 <div class="flex items-start justify-between p-4 border-b rounded-t">
                     <h3 class="text-xl font-semibold text-gray-900 text-wrap" id="title_source">
                         Tambah Sumber Database
@@ -174,6 +199,79 @@
         </div>
     </div>
     <script>
+        const form = document.getElementById('perhitunganForm');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Mencegah form dikirim
+
+            let isValid = true;
+
+            // Validasi Mata Kuliah
+            const perhitungan = document.getElementById('perhitungan');
+            const errorPerhitungan = document.getElementById('error-perhitungan');
+            if (perhitungan.value === '') {
+                errorPerhitungan.classList.remove('hidden');
+                isValid = false;
+            } else {
+                errorPerhitungan.classList.add('hidden');
+            }
+
+            // Validasi Mata Kuliah
+            const presensi = document.getElementById('presensi');
+            const errorPresensi = document.getElementById('error-presensi');
+            if (presensi.value === '') {
+                errorPresensi.classList.remove('hidden');
+                isValid = false;
+            } else {
+                errorPerhitungan.classList.add('hidden');
+            }
+
+            // Validasi Mata Kuliah
+            const tugas = document.getElementById('tugas');
+            const errorTugas = document.getElementById('error-tugas');
+            if (tugas.value === '') {
+                errorTugas.classList.remove('hidden');
+                isValid = false;
+            } else {
+                errorTugas.classList.add('hidden');
+            }
+
+            // Validasi Mata Kuliah
+            const formatif = document.getElementById('formatif');
+            const errorFormatif = document.getElementById('error-formatif');
+            if (formatif.value === '') {
+                errorFormatif.classList.remove('hidden');
+                isValid = false;
+            } else {
+                errorFormatif.classList.add('hidden');
+            }
+
+            // Validasi Mata Kuliah
+            const uts = document.getElementById('uts');
+            const errorUts = document.getElementById('error-uts');
+            if (uts.value === '') {
+                errorUts.classList.remove('hidden');
+                isValid = false;
+            } else {
+                errorUts.classList.add('hidden');
+            }
+
+            // Validasi Mata Kuliah
+            const uas = document.getElementById('uas');
+            const errorUas = document.getElementById('error-uas');
+            if (uas.value === '') {
+                errorUas.classList.remove('hidden');
+                isValid = false;
+            } else {
+                errorUas.classList.add('hidden');
+            }
+
+            // Jika validasi lolos, kirim form
+            if (isValid) {
+                form.submit();
+            }
+        });
+
         $(document).ready(function() {
             console.log('RUN!');
             $('#perhitungan-datatable').DataTable({
@@ -198,27 +296,27 @@
                 }, {
                     data: 'presensi',
                     render: (data, type, row) => {
-                        return data;
+                        return `<div class="text-center">${data}</div>`;
                     }
                 }, {
                     data: 'formatif',
                     render: (data, type, row) => {
-                        return data;
+                        return `<div class="text-center">${data}</div>`;
                     }
                 }, {
                     data: 'tugas',
                     render: (data, type, row) => {
-                        return data;
+                        return `<div class="text-center">${data}</div>`;
                     }
                 }, {
                     data: 'uts',
                     render: (data, type, row) => {
-                        return data;
+                        return `<div class="text-center">${data}</div>`;
                     }
                 }, {
                     data: 'uas',
                     render: (data, type, row) => {
-                        return data;
+                        return `<div class="text-center">${data}</div>`;
                     }
                 }, {
                     data: {
@@ -230,11 +328,11 @@
                             `<button type="button" data-id="${data.id}"
                                                         data-modal-target="sourceModal" data-nama_perhitungan="${data.nama_perhitungan}" data-presensi="${data.presensi}" data-formatif="${data.formatif}" data-tugas="${data.tugas}" data-uts="${data.uts}" data-uas="${data.uas}"
                                                         onclick="editSourceModal(this)"
-                                                        class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-xl text-xs text-white h-10 w-10">
+                                                        class="border-2 border-dashed border-amber-500 text-amber-500 hover:bg-amber-100 px-3 py-1 rounded-xl h-10 w-10 text-xs">
                                                        <i class="fas fa-edit"></i>
                                                     </button>`;
                         let deleteUrl =
-                            `<button onclick="return perhitunganDelete('${data.id}','${data.nama_perhitungan}')" class="bg-red-500 hover:bg-red-600 px-3 py-1 h-10 w-10 rounded-xl text-xs text-white"><i class="fas fa-trash"></i></button>`;
+                            `<button onclick="return perhitunganDelete('${data.id}','${data.nama_perhitungan}')" class="border-2 border-dashed border-red-500 text-red-500 hover:bg-red-100 px-3 py-1 rounded-xl h-10 w-10 text-xs"><i class="fas fa-trash"></i></button>`;
                         return `<div style="text-align:center">${editUrl} ${deleteUrl}</div>`;
                     }
                 }, ],
@@ -254,7 +352,7 @@
             let url = "{{ route('perhitungan.update', ':id') }}".replace(':id', id);
             console.log(url);
             let status = document.getElementById(modalTarget);
-            document.getElementById('title_source').innerText = `UPDATE ${nama_perhitungan}`;
+            document.getElementById('title_source').innerText = `${nama_perhitungan}`;
             document.getElementById('nama_perhitungans').value = nama_perhitungan;
             document.getElementById('presensis').value = presensi;
             document.getElementById('formatifs').value = formatif;
@@ -284,22 +382,84 @@
         }
 
         const perhitunganDelete = async (id, perhitungan) => {
-            let tanya = confirm(`Apakah anda yakin untuk menghapus perhitungan ${perhitungan} ?`);
-            if (tanya) {
-                await axios.post(`/perhitungan/${id}`, {
-                        '_method': 'DELETE',
-                        '_token': $('meta[name="csrf-token"]').attr('content')
-                    })
-                    .then(function(response) {
-                        // Handle success
-                        location.reload();
-                    })
-                    .catch(function(error) {
-                        // Handle error
-                        alert('Error deleting record');
-                        console.log(error);
-                    });
-            }
-        }
+            Swal.fire({
+                title: `Apakah Anda yakin?`,
+                text: `Data akan dihapus secara permanen!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await axios.post(`/perhitungan/${id}`, {
+                            '_method': 'DELETE',
+                            '_token': $('meta[name="csrf-token"]').attr('content')
+                        })
+                        .then(function(response) {
+                            Swal.fire({
+                                title: 'Terhapus!',
+                                text: `Data berhasil dihapus.`,
+                                icon: 'success',
+                                confirmButtonText: 'OK',
+                                allowOutsideClick: false
+                            }).then(() => {
+                                // Refresh halaman setelah menekan tombol OK
+                                location.reload();
+                            });
+                        })
+                        .catch(function(error) {
+                            // Alert jika terjadi kesalahan
+                            Swal.fire({
+                                title: 'Gagal!',
+                                text: 'Terjadi kesalahan saat menghapus data.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                            console.log(error);
+                        });
+                }
+            });
+        };
     </script>
+    @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+
+        @if (session('message_insert'))
+            <script>
+                Swal.fire({
+                    title: 'Berhasil!',
+                    text: "{{ session('message_insert') }}",
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        const swalBtn = Swal.getConfirmButton();
+                        swalBtn.disabled = false;
+                        swalBtn.textContent = "OK";
+                    }
+                });
+            </script>
+        @endif
+
+        @if (session('message_update'))
+            <script>
+                Swal.fire({
+                    title: 'Update Berhasil!',
+                    text: "{{ session('message_update') }}",
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        const swalBtn = Swal.getConfirmButton();
+                        swalBtn.disabled = false;
+                        swalBtn.textContent = "OK";
+                    }
+                });
+            </script>
+        @endif
+
+    @endpush
 </x-app-layout>

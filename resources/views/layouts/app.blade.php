@@ -144,7 +144,8 @@
 
 </head>
 
-<body class="font-sans antialiased bg-[url('/public/img/building.jpg')] bg-cover bg-gray-500 bg-blend-multiply">
+{{-- <body class="font-sans antialiased bg-[url('/public/img/building.jpg')] bg-cover bg-gray-500 bg-blend-multiply"> --}}
+<body class="font-sans antialiased bg-white bg-cover bg-blend-multiply">
     <!-- Preloader -->
     {{-- <div id="preloader" class="">
         <div><dotlottie-player src="{{ url('json/preloader.json') }}" background="transparent" speed="1"
@@ -155,7 +156,7 @@
 
         <!-- Page Heading -->
         @isset($header)
-            <header class="bg-white dark:bg-gray-800 shadow">
+            <header class="bg-[#005F9D] text-white dark:bg-gray-800 shadow">
                 <div class="max-w-8sm mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     {{ $header }}
                 </div>

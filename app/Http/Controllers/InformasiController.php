@@ -12,10 +12,21 @@ class InformasiController extends Controller
      */
     public function index()
     {
-        $informasi = Informasi::paginate(5);
-        return view('page.informasi.index')->with([
-            'informasi' => $informasi
-        ]);
+        $page = request()->input('page', 1);
+        $entries = request()->input('entries', 10);
+        $search = request()->input('search');
+
+        $query = Informasi::query();
+
+        if ($search) {
+            $query->where('title', 'like', '%' . $search . '%')
+                ->orWhere('informasi', 'like', '%' . $search . '%');
+        }
+
+        $informasi = $query->paginate($entries);
+
+        return view('page.informasi.index', compact('informasi'))
+            ->with('i', ($page - 1) * $entries);
     }
 
     /**
@@ -43,7 +54,7 @@ class InformasiController extends Controller
 
         return redirect()
             ->route('informasi.index')
-            ->with('message', 'Data Informasi Sudah ditambahkan');
+            ->with('message_insert', 'Data Informasi Sudah ditambahkan');
     }
 
     /**
@@ -77,7 +88,7 @@ class InformasiController extends Controller
         $datas->update($data);
         return redirect()
             ->route('informasi.index')
-            ->with('message', 'Data Informasi Sudah diupdate');
+            ->with('message_update', 'Data Informasi Sudah diupdate');
     }
 
     /**
@@ -87,6 +98,6 @@ class InformasiController extends Controller
     {
         $data = Informasi::findOrFail($id);
         $data->delete();
-        return back()->with('message_delete','Data Informasi Sudah dihapus');
+        return back()->with('message_delete', 'Data Informasi Sudah dihapus');
     }
 }

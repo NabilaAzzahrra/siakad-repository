@@ -80,7 +80,7 @@ class KonfigurasiUjianController extends Controller
         $datas->update($data);
         return redirect()
             ->route('konfigurasi_ujian.index')
-            ->with('message', 'Data Konfigurasi Sudah diupdate');
+            ->with('message_update', 'Data Konfigurasi Sudah diupdate');
     }
 
     /**

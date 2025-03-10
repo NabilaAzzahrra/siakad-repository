@@ -1,8 +1,9 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
-            <div class="flex items-center">Master<i class="fi fi-rr-caret-right mt-1"></i> <span class="text-red-500">Konfigurasi</span></div>
-        </h2>
+        <p class="font-bold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
+        <div class="flex items-center font-bold">Master<i class="fi fi-rr-caret-right mt-1"></i> <span
+                class="text-amber-100">Konfigurasi</span></div>
+        </p>
     </x-slot>
 
     <div class="py-12">
@@ -10,96 +11,115 @@
             <div class="flex flex-col md:flex-row justify-center">
 
                 @php
-                $hide = empty($konfigurasi) ? '' : 'hidden';
+                    $hide = empty($konfigurasi) ? '' : 'hidden';
                 @endphp
 
                 @if ($hide)
-                <div class="w-full md:w-5/12 p-3 {{ $hide }}">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
-                        <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                                FORM INPUT KONFIGURASI
-                            </div>
-                            <form action="{{ route('konfigurasi.store') }}" method="post" id="konfigurasiForm">
-                                @csrf
-                                <div class="p-4 rounded-xl">
-                                    <div class="flex flex-col lg:flex-row gap-5">
-                                        <div class="lg:mb-5 mb-0 w-full">
-                                            <label for="tahun_akademik"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tahun Akademik
-                                                <span class="text-red-500">*</span></label>
-                                            <select class="js-example-placeholder-single js-states form-control w-full m-6"
-                                                name="tahun_akademik" data-placeholder="Pilih Tahun Akademik">
-                                                <option value="">Pilih...</option>
-                                                @foreach ($tahun_akademik as $ta)
-                                                <option value="{{ $ta->id }}">{{ $ta->tahunakademik }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="lg:mb-5 mb-4 w-full">
-                                            <label for="keterangan"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Keterangan
-                                                <span class="text-red-500">*</span></label>
-                                            <select class="js-example-placeholder-single js-states form-control w-full m-6"
-                                                name="keterangan" data-placeholder="Pilih Keterangan">
-                                                <option value="">Pilih...</option>
-                                                @foreach ($keterangan as $k)
-                                                <option value="{{ $k->id }}">{{ $k->keterangan }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col lg:flex-row gap-5">
-                                        <div class="lg:mb-5 mb-0 w-full">
-                                            <label for="kurikulum"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kurikulum
-                                                <span class="text-red-500">*</span></label>
-                                            <select class="js-example-placeholder-single js-states form-control w-full m-6"
-                                                name="kurikulum" data-placeholder="Pilih Kurikulum">
-                                                <option value="">Pilih...</option>
-                                                @foreach ($kurikulum as $k)
-                                                <option value="{{ $k->id }}">{{ $k->kurikulum }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="lg:mb-5 mb-4 w-full">
-                                            <label for="perhitungan"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Perhitungan
-                                                <span class="text-red-500">*</span></label>
-                                            <select class="js-example-placeholder-single js-states form-control w-full m-6"
-                                                name="perhitungan" data-placeholder="Pilih Perhitungan">
-                                                <option value="">Pilih...</option>
-                                                @foreach ($perhitungan as $k)
-                                                <option value="{{ $k->id }}">{{ $k->nama_perhitungan }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="mb-5">
-                                        <label for="text" class="block mb-2 text-sm font-medium text-gray-900">Jumlah Pertemuan</label>
-                                        <input type="number" id="jml_pertemuan" name="jml_pertemuan"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600"
-                                            placeholder="Masukan Jumlah Pertemuan disini...">
-                                    </div>
-                                    <button type="submit"
-                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                        <i class="fi fi-rr-disk "></i>
-                                    </button>
+                    <div class="w-full md:w-5/12 p-3 {{ $hide }}">
+                        <div
+                            class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl">
+                            <div class="p-6 text-gray-900 dark:text-gray-100">
+                                <div
+                                    class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
+                                    FORM INPUT KONFIGURASI
                                 </div>
-                            </form>
+                                <form action="{{ route('konfigurasi.store') }}" method="post" id="konfigurasiForm">
+                                    @csrf
+                                    <div class="p-4 rounded-xl">
+                                        <div class="flex flex-col lg:flex-row gap-5">
+                                            <div class="lg:mb-5 mb-0 w-full">
+                                                <label for="tahun_akademik"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tahun
+                                                    Akademik
+                                                    <span class="text-red-500">*</span></label>
+                                                <select
+                                                    class="js-example-placeholder-single js-states form-control w-full m-6"
+                                                    name="tahun_akademik" data-placeholder="Pilih Tahun Akademik">
+                                                    <option value="">Pilih...</option>
+                                                    @foreach ($tahun_akademik as $ta)
+                                                        <option value="{{ $ta->id }}">{{ $ta->tahunakademik }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="lg:mb-5 mb-4 w-full">
+                                                <label for="keterangan"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Keterangan
+                                                    <span class="text-red-500">*</span></label>
+                                                <select
+                                                    class="js-example-placeholder-single js-states form-control w-full m-6"
+                                                    name="keterangan" data-placeholder="Pilih Keterangan">
+                                                    <option value="">Pilih...</option>
+                                                    @foreach ($keterangan as $k)
+                                                        <option value="{{ $k->id }}">{{ $k->keterangan }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-col lg:flex-row gap-5">
+                                            <div class="lg:mb-5 mb-0 w-full">
+                                                <label for="kurikulum"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kurikulum
+                                                    <span class="text-red-500">*</span></label>
+                                                <select
+                                                    class="js-example-placeholder-single js-states form-control w-full m-6"
+                                                    name="kurikulum" data-placeholder="Pilih Kurikulum">
+                                                    <option value="">Pilih...</option>
+                                                    @foreach ($kurikulum as $k)
+                                                        <option value="{{ $k->id }}">{{ $k->kurikulum }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="lg:mb-5 mb-4 w-full">
+                                                <label for="perhitungan"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Perhitungan
+                                                    <span class="text-red-500">*</span></label>
+                                                <select
+                                                    class="js-example-placeholder-single js-states form-control w-full m-6"
+                                                    name="perhitungan" data-placeholder="Pilih Perhitungan">
+                                                    <option value="">Pilih...</option>
+                                                    @foreach ($perhitungan as $k)
+                                                        <option value="{{ $k->id }}">{{ $k->nama_perhitungan }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="mb-5">
+                                            <label for="text"
+                                                class="block mb-2 text-sm font-medium text-gray-900">Jumlah
+                                                Pertemuan</label>
+                                            <input type="number" id="jml_pertemuan" name="jml_pertemuan"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600"
+                                                placeholder="Masukan Jumlah Pertemuan disini...">
+                                        </div>
+                                        <button type="submit"
+                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                            <i class="fi fi-rr-disk "></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
                 @endif
 
                 <div class="w-full md:w-7/12 p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
+                    <div
+                        class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                                DATA KONFIGURASI
+                            <div class="flex">
+                                <div class="w-10">
+                                    <img src="{{ url('img/database.png') }}" alt="Icon 1" class="">
+                                </div>
+                                <div class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                                    DATA KONFIGURASI
+                                </div>
                             </div>
+                            <hr class="border mt-2 border-black border-opacity-30 mb-6">
                             <div class="flex justify-center">
-                                <div class="p-12" style="width:100%;overflow-x:auto;">
+                                <div class="p-4" style="width:100%;overflow-x:auto;">
                                     <table class="table table-bordered" id="konfigurasi-datatable">
                                         <thead>
                                             <tr>
@@ -144,10 +164,11 @@
                                 class="block text-sm font-medium text-gray-900 dark:text-white">Tahun Akademik
                                 <span class="text-red-500">*</span></label>
                             <select class="js-example-placeholder-single js-states form-control w-full"
-                                id="id_tahun_akademiks" name="id_tahun_akademiks" data-placeholder="Pilih Tahun Akademik">
+                                id="id_tahun_akademiks" name="id_tahun_akademiks"
+                                data-placeholder="Pilih Tahun Akademik">
                                 <option value="">Pilih...</option>
                                 @foreach ($tahun_akademik as $p)
-                                <option value="{{ $p->id }}">{{ $p->tahunakademik }}</option>
+                                    <option value="{{ $p->id }}">{{ $p->tahunakademik }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -159,7 +180,7 @@
                                 id="id_keterangans" name="id_keterangans" data-placeholder="Pilih Keterangan">
                                 <option value="">Pilih...</option>
                                 @foreach ($keterangan as $p)
-                                <option value="{{ $p->id }}">{{ $p->keterangan }}</option>
+                                    <option value="{{ $p->id }}">{{ $p->keterangan }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -173,7 +194,7 @@
                                 id="id_kurikulums" name="id_kurikulums" data-placeholder="Pilih Kurikulum">
                                 <option value="">Pilih...</option>
                                 @foreach ($kurikulum as $p)
-                                <option value="{{ $p->id }}">{{ $p->kurikulum }}</option>
+                                    <option value="{{ $p->id }}">{{ $p->kurikulum }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -185,14 +206,16 @@
                                 id="id_perhitungans" name="id_perhitungans" data-placeholder="Pilih Perhitungan">
                                 <option value="">Pilih...</option>
                                 @foreach ($perhitungan as $p)
-                                <option value="{{ $p->id }}">{{ $p->nama_perhitungan }}</option>
+                                    <option value="{{ $p->id }}">{{ $p->nama_perhitungan }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="fex gap-5">
                         <div class="flex flex-col  p-4 w-full">
-                            <label for="text" class="block text-sm font-medium text-gray-900 dark:text-white">Jumlah Pertemuan</label>
+                            <label for="text"
+                                class="block text-sm font-medium text-gray-900 dark:text-white">Jumlah
+                                Pertemuan</label>
                             <input type="number" id="jml_pertemuans" name="jml_pertemuan"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600"
                                 id="" placeholder="Masukan Jumlah Pertemuan disini...">
@@ -248,7 +271,7 @@
                 }, {
                     data: 'jml_pertemuan',
                     render: (data, type, row) => {
-                        return data;
+                        return `<div class="text-center">${data}</div>`;
                     }
                 }, {
                     data: {
@@ -260,7 +283,7 @@
                             `<button type="button" data-id="${data.id}" data-jml_pertemuans="${data.jml_pertemuan}"
                                                         data-modal-target="sourceModal" data-id_tahun_akademiks="${data.id_tahun_akademik}" data-id_kurikulums="${data.id_kurikulum}" data-id_keterangans="${data.id_keterangan}" data-id_perhitungans="${data.id_perhitungan}"
                                                         onclick="editSourceModal(this)"
-                                                        class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-xl text-xs text-white h-10 w-10">
+                                                        class="border-2 border-dashed border-amber-500 text-amber-500 hover:bg-amber-100 px-3 py-1 rounded-xl h-10 w-10 text-xs">
                                                        <i class="fas fa-edit"></i>
                                                     </button>`;
                         return `<div style="text-align:center">${editUrl}</div>`;
@@ -320,4 +343,26 @@
             status.classList.toggle('hidden');
         }
     </script>
+    @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+
+        @if (session('message_update'))
+            <script>
+                Swal.fire({
+                    title: 'Update Berhasil!',
+                    text: "{{ session('message_update') }}",
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        const swalBtn = Swal.getConfirmButton();
+                        swalBtn.disabled = false;
+                        swalBtn.textContent = "OK";
+                    }
+                });
+            </script>
+        @endif
+
+    @endpush
 </x-app-layout>

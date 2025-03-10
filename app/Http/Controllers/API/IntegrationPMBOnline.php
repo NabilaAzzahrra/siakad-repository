@@ -12,9 +12,7 @@ class IntegrationPMBOnline extends Controller
 {
     public function integrate(Request $request)
     {
-
         // return response($request->all());
-
         if ($request->major === "TO25L") {
             $yearNow = date('y');
 
@@ -76,7 +74,68 @@ class IntegrationPMBOnline extends Controller
                 'user' => $datas,
                 // 'user' => $datas
             ]);
-        } else {
+        } else if($request->major === "TI25L"){
+            $yearNow = date('y');
+
+            $lastNIM = Mahasiswa::where('nim', 'like', $yearNow . '%')
+                ->orderBy('nim', 'desc')
+                ->pluck('nim')
+                ->first();
+
+            if ($lastNIM) {
+                $lastNumber = substr($lastNIM, -4);
+
+                $nextNumber = intval($lastNumber) + 1;
+
+                $newNumber = str_pad($nextNumber, 4, "0", STR_PAD_LEFT);
+            } else {
+                $newNumber = '0001';
+            }
+
+            //$new_nim = $yearNow . "0252001" . $newNumber;
+            $new_nim = '25' . "0262001" . $newNumber;
+
+            $data = [
+                'nik' => $request->nik,
+                'nim' => $new_nim,
+                'nama' => $request->name,
+                'tempat_lahir' => $request->place_of_birth,
+                'tgl_lahir' => $request->date_of_birth,
+                'tahun_angkatan' => $request->pmb,
+                'id_kelas' => 10,
+                'tingkat' => 1,
+                'no_hp' => $request->phone,
+                'status' => false,
+                'keaktifan' => "aktif",
+            ];
+
+            // return response()->json($data);
+
+            $datas = [
+                'name' => $request->name,
+                'email' => $new_nim,
+                'password' => $new_nim,
+                'role' => 'M'
+            ];
+
+            $datas_ortu = [
+                'name' => "Orang Tua" . " " . $request->name,
+                'email' => "ortu" . $new_nim,
+                'password' => $request->date_of_birth,
+                'role' => 'O'
+            ];
+
+            // return response()->json($datas_ortu);
+
+            User::create($datas);
+            User::create($datas_ortu);
+            Mahasiswa::create($data);
+            return response()->json([
+                'mahasiswa' => $data,
+                'user' => $datas,
+                // 'user' => $datas
+            ]);
+        }else{
             return response()->json([
             'message'=> 'GA BOLEH YA, NO NO'
             ]);

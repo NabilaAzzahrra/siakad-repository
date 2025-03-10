@@ -91,7 +91,7 @@ class KonfigurasiController extends Controller
         $datas->update($data);
         return redirect()
             ->route('konfigurasi.index')
-            ->with('message', 'Data Konfigurasi Sudah diupdate');
+            ->with('message_update', 'Data Konfigurasi Sudah diupdate');
     }
 
     /**
