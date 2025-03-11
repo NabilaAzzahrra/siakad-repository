@@ -76,12 +76,6 @@
                                         class="font-bold underline">update</span>
                                     🙏
                                 </div>
-                                <div>
-                                    {{-- <button
-                                        class="mb-3 p-2 -mt-8 text-sm lg:mb-2 lg:p-2 hover:bg-sky-400 text-sky-500 border border-sky-500 hover:text-white rounded-xl">
-                                        <i class="fi fi-sr-file-edit"></i> <span>Update</span>
-                                    </button> --}}
-                                </div>
                             </div>
                             <div class="flex justify-center">
                                 <div class="p-0 " style="width:100%;overflow-x:auto;">
@@ -165,13 +159,13 @@
                                                             <td class="px-6 py-4 text-left">
                                                                 {{ $i->nama }}
                                                             </td>
-                                                            <td class="px-6 py-4 text-left bg-gray-100">
+                                                            <td class="px-6 py-4 text-left bg-gray-100 text-center">
                                                                 {{ $i->kelas->kelas }}
                                                             </td>
                                                             <td class="px-6 py-4 text-left">
                                                                 {{ $i->kelas->jurusan->jurusan }}
                                                             </td>
-                                                            <td class="px-6 py-4 text-left bg-gray-100">
+                                                            <td class="px-6 py-4 text-left bg-gray-100 text-center">
                                                                 {{ $i->tingkat }}
                                                             </td>
                                                             <td class="px-6 py-4 text-left">
@@ -211,8 +205,8 @@
                                         </div>
                                         <div class="flex items-end justify-end mt-5">
                                             <button
-                                                class="mb-3 p-2 text-sm lg:mb-2 lg:p-2 hover:bg-sky-400 text-sky-500 border border-sky-500 hover:text-white rounded-xl flex items-end justify-end">
-                                                <i class="fi fi-sr-file-edit"></i> <span>Update</span>
+                                                class="mb-3 p-2 text-sm lg:mb-2 lg:p-2 bg-sky-100 hover:bg-sky-400 text-sky-500 border border-sky-500 hover:text-white rounded-xl flex items-end justify-end">
+                                                <i class="fi fi-sr-file-edit mr-2 ml-4"></i> <span class="pr-4">Update</span>
                                             </button>
                                         </div>
                                         <div class="mt-4">
@@ -534,6 +528,23 @@
                 Swal.fire({
                     title: 'Update Berhasil!',
                     text: "{{ session('message_update') }}",
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        const swalBtn = Swal.getConfirmButton();
+                        swalBtn.disabled = false;
+                        swalBtn.textContent = "OK";
+                    }
+                });
+            </script>
+        @endif
+
+        @if (session('message_edit_det'))
+            <script>
+                Swal.fire({
+                    title: 'Update Berhasil!',
+                    text: "{{ session('message_edit_det') }}",
                     icon: 'success',
                     confirmButtonText: 'OK',
                     allowOutsideClick: false,

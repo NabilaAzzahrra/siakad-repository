@@ -17,6 +17,7 @@ use App\Models\Presensi;
 use App\Models\Pukul;
 use App\Models\Ruang;
 use App\Models\Sesi;
+use App\Models\Tahunakademik;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -28,11 +29,17 @@ class JadwalregulerController extends Controller
      */
     public function index(Request $request)
     {
+        $page = request()->input('page', 1);
+        $entries = request()->input('entries', 10);
+        $search = request()->input('search');
+
         $konfigurasi = Konfigurasi::first();
-        $tahun_akademik = $konfigurasi->id_tahun_akademik;
+        $default_tahun_akademik = $konfigurasi->id_tahun_akademik;
         $keterangan = $konfigurasi->id_keterangan;
 
-        $jadwal_reguler = DB::table('jadwal_reguler')
+        $tahun_akademik = $request->input('id_tahun_akademiks', $default_tahun_akademik);
+
+        $query = Jadwalreguler::query()
             ->join('detail_kurikulum', 'jadwal_reguler.id_detail_kurikulum', '=', 'detail_kurikulum.id_materi_ajar')
             ->join('dosen', 'jadwal_reguler.id_dosen', '=', 'dosen.id')
             ->join('hari', 'jadwal_reguler.id_hari', '=', 'hari.id')
@@ -71,24 +78,19 @@ class JadwalregulerController extends Controller
                 'jurusan.*'
             )
             ->where('jadwal_reguler.id_tahun_akademik', $tahun_akademik)
-            ->where('jadwal_reguler.id_keterangan', $keterangan)
-            ->when($request->input('search'), function ($query) use ($request) {
-                $search = $request->input('search');
-                $query->where(function ($query) use ($search) {
-                    $query->where('materi_ajar.materi_ajar', 'like', '%' . $search . '%')
-                        ->orWhere('dosen.nama_dosen', 'like', '%' . $search . '%')
-                        ->orWhere('ruang.ruang', 'like', '%' . $search . '%')
-                        ->orWhere('kelas.kelas', 'like', '%' . $search . '%');
-                });
-            })
-            ->paginate(10);
+            ->where('jadwal_reguler.id_keterangan', $keterangan);
 
-
-        if ($request->ajax()) {
-            return view('partials.jadwalReguler', compact('jadwal_reguler'))->render();
+        if ($search) {
+            $query->where('materi_ajar', 'like', '%' . $search . '%')
+                ->orWhere('nama_dosen', 'like', '%' . $search . '%');
         }
 
-        return view('page.jadwalreguler.index', compact('jadwal_reguler'));
+        $jadwal_reguler = $query->paginate($entries);
+
+        $tahunAkademik = Tahunakademik::all();
+
+        return view('page.jadwalreguler.index', compact(['jadwal_reguler', 'tahunAkademik']))
+            ->with('i', ($page - 1) * $entries);
     }
 
 
@@ -231,9 +233,9 @@ class JadwalregulerController extends Controller
                 'pukul2.pukul as pukul2', // Pastikan hanya kolom yang dibutuhkan yang disertakan untuk menghindari konflik nama kolom
                 'materi_ajar.*', // Pastikan hanya kolom yang dibutuhkan yang disertakan untuk menghindari konflik nama kolom
                 'semester.*',
-                'ruang.*', 
-                'dosen.*', 
-                'jurusan.*', 
+                'ruang.*',
+                'dosen.*',
+                'jurusan.*',
             )
             ->first();
 

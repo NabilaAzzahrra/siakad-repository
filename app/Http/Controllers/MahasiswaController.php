@@ -276,7 +276,7 @@ class MahasiswaController extends Controller
 
         return redirect()
             ->route('mahasiswa.index')
-            ->with('message', 'Data Mahasiswa Sudah diupdate');
+            ->with('message_edit_det', 'Data Sudah diperbaharui');
     }
 
 

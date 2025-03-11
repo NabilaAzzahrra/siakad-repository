@@ -9,6 +9,7 @@ use App\Http\Controllers\DetailController;
 use App\Http\Controllers\DetailFormatif;
 use App\Http\Controllers\DetailFormatifController;
 use App\Http\Controllers\DosenController;
+use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\FakultasController;
 use App\Http\Controllers\HariController;
 use App\Http\Controllers\InformasiController;
@@ -193,6 +194,8 @@ Route::resource('inputNilaiPembimbing', NilaiPembimbingController::class)->middl
 // Route::patch('/verifikasi/{id}', [MahasiswaBimbinganController::class, 'verifikasi'])->name('mahasiswaBimbingan.verifikasi');
 Route::get('/mahasiswaBimbingan/verifikasi/{id}', [MahasiswaBimbinganController::class, 'verifikasi'])->name('mahasiswaBimbingan.verifikasi');
 Route::get('/pengajuanJudulMahasiswa/verifikasi/{id}', [PengajuanJudulMahasiswaController::class, 'verifikasi'])->name('pengajuanJudulMahasiswa.verifikasi');
+
+Route::resource('error', ErrorController::class);
 
 Route::get('/dashboard', function (Request $request) {
     $konfigurasi = Konfigurasi::first();
@@ -436,7 +439,6 @@ Route::get('/dashboard', function (Request $request) {
 
 
 })->middleware(['auth', 'verified'])->name('dashboard');
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -1,8 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
         <p class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
-            <div class="flex items-center font-bold">Mahsiswa<i class="fi fi-rr-caret-right mt-1"></i> <span
-                    class="text-amber-100">Detail Mahaiswa</span></div>
+        <div class="flex items-center font-bold">Mahsiswa<i class="fi fi-rr-caret-right mt-1"></i> <span
+                class="text-amber-100">Detail Mahaiswa</span></div>
         </p>
     </x-slot>
 
@@ -10,25 +10,23 @@
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-full p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                        <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div
-                                class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                                <div class="flex items-center justify-center">
-                                    <div>DATA MAHASISWA</div>
+                    <div
+                        class="w-full bg-white dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl p-6 mb-6">
+                        <div class="p-4 text-gray-900 dark:text-gray-100">
+                            <div class="flex">
+                                <div class="w-10">
+                                    <img src="{{ url('img/profile.png') }}" alt="Icon 1" class="">
+                                </div>
+                                <div class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                                    UPDATE DATA MAHASISWA
                                 </div>
                             </div>
+                            <hr class="border mt-2 border-black border-opacity-30 mb-4">
                             <div class="flex justify-center">
-                                <div class="p-4 pt-6" style="width:100%;overflow-x:auto;">
+                                <div class="pt-6" style="width:100%;overflow-x:auto;">
                                     <form action="{{ route('mahasiswa.edit_det') }}" method="POST" class="formupdate">
                                         @csrf
                                         @method('PUT')
-                                        <div class="flex justify-end">
-                                            <button type="submit"
-                                                class="mb-2 lg:mb-0 p-2 bg-sky-400 text-white rounded-xl">
-                                                SUBMIT
-                                            </button>
-                                        </div>
                                         <div class="mb-5">
                                             <div class="flex flex-col lg:flex-row gap-5">
                                                 <div class="w-full">
@@ -47,26 +45,40 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div class=" w-full">
+                                                <div class="w-full">
                                                     <label for="jurusan"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Program Studi</label>
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Program
+                                                        Studi</label>
                                                     <input type="text" id="jurusan" name="jurusan"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                         placeholder="Masukan Program Studi disini ..."
                                                         value="{{ old('jurusan') }}" readonly />
                                                 </div>
-                                                <div class=" w-full">
+                                                <div class="w-full">
                                                     <label for="tingkat"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                                         Tingkat
                                                     </label>
-                                                    <select class="js-example-placeholder-single js-states form-control"
+                                                    <select class="js-example-placeholder-single js-states form-control w-full"
                                                         name="tingkat" data-placeholder="Pilih Tingkat">
                                                         <option value="">Pilih...</option>
                                                         <option value="1">1</option>
                                                         <option value="2">2</option>
                                                         <option value="3">3</option>
                                                         <option value="4">4</option>
+                                                    </select>
+                                                </div>
+                                                <div class="w-full">
+                                                    <label for="keaktifan"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                        Keaktifan
+                                                    </label>
+                                                    <select class="js-example-placeholder-single js-states form-control w-full"
+                                                        name="keaktifan" data-placeholder="Pilih Keaktifan">
+                                                        <option value="">Pilih...</option>
+                                                        <option value="aktif">AKTIF</option>
+                                                        <option value="cuti">CUTI</option>
+                                                        <option value="do">DO</option>
                                                     </select>
                                                 </div>
                                                 <!-- <div class=" w-full">
@@ -81,18 +93,11 @@
                                                         <option value="true">Can Access</option>
                                                     </select>
                                                 </div> -->
-                                                <div class=" w-full">
-                                                    <label for="keaktifan"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                                        Keaktifan
-                                                    </label>
-                                                    <select class="js-example-placeholder-single js-states form-control"
-                                                        name="keaktifan" data-placeholder="Pilih Keaktifan">
-                                                        <option value="">Pilih...</option>
-                                                        <option value="aktif">AKTIF</option>
-                                                        <option value="cuti">CUTI</option>
-                                                        <option value="do">DO</option>
-                                                    </select>
+                                                <div>
+                                                    <button type="submit"
+                                                        class="mb-2 lg:mb-0 p-2 mt-7 border border-sky-400 text-sky-500 hover:bg-sky-100 rounded-xl">
+                                                        <i class="fi fi-ss-inbox-in mt-2"></i> Submit
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -113,7 +118,8 @@
                                                         <th scope="col" class="px-6 py-3 text-center">NIM</th>
                                                         <th scope="col" class="px-6 py-3 text-center bg-gray-100">
                                                             NAMA</th>
-                                                        <th scope="col" class="px-6 py-3 text-center">PROGRAM STUDI</th>
+                                                        <th scope="col" class="px-6 py-3 text-center">PROGRAM STUDI
+                                                        </th>
                                                         <th scope="col" class="px-6 py-3 text-center bg-gray-100">
                                                             KELAS</th>
                                                         <th scope="col" class="px-6 py-3 text-center">TINGKAT</th>
@@ -134,9 +140,9 @@
                                                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                                                 {{ $m->nim }}</td>
                                                             <td class="px-6 py-4 bg-gray-100">{{ $m->nama }}</td>
-                                                            <td class="px-6 py-4">{{ $m->kelas }}</td>
-                                                            <td class="px-6 py-4 bg-gray-100">{{ $m->jurusan }}</td>
-                                                            <td class="px-6 py-4">{{ $m->tingkat }}</td>
+                                                            <td class="px-6 py-4 text-center">{{ $m->jurusan }}</td>
+                                                            <td class="px-6 py-4 bg-gray-100 text-center">{{ $m->kelas }}</td>
+                                                            <td class="px-6 py-4 text-center">{{ $m->tingkat }}</td>
                                                             <td class="px-6 py-4 bg-gray-100">{{ $m->no_hp }}</td>
                                                             @php
                                                                 $statusClass =
@@ -159,7 +165,7 @@
                                                             <!-- <td class="px-6 py-4"><span
                                                                     class="{{ $statusClass }} p-2 text-white rounded-full">{{ $statusText }}</span>
                                                             </td> -->
-                                                            <td class="px-6 py-4"><span
+                                                            <td class="px-6 py-4 text-center"><span
                                                                     class="{{ $keaktifanClass }} p-2 text-white rounded-full">{{ $keaktifanText }}</span>
                                                             </td>
                                                         </tr>
