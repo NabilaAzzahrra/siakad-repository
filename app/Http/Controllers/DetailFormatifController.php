@@ -59,29 +59,31 @@ class DetailFormatifController extends Controller
     }
 
 
-    public function downloadZip(Request $request)
+    public function downloadZip($id_formatif)
     {
-        $selectedFiles = explode(',', $request->input('selected_files'));
+        $files = ModelsDetailFormatif::where('id_formatif', $id_formatif)->pluck('jawaban'); // Pastikan 'jawaban' menyimpan path file
 
-        $zipFileName = 'selected_files.zip';
-        $zipPath = public_path($zipFileName);
+        if ($files->isEmpty()) {
+            return back()->with('error', 'Tidak ada file untuk diunduh.');
+        }
+
+        $zipFileName = 'jawaban_formatif_' . $id_formatif . '.zip';
+        $zipPath = public_path($zipFileName); // Simpan ZIP di public
+
         $zip = new ZipArchive;
-
-        if ($zip->open($zipPath, ZipArchive::CREATE) === TRUE) {
-            foreach ($selectedFiles as $file) {
-                $filePath = public_path('formatif/jawaban/' . $file);
+        if ($zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE) === TRUE) {
+            foreach ($files as $file) {
+                $filePath = public_path('formatif/jawaban/' . $file); // Sesuaikan dengan lokasi file
                 if (file_exists($filePath)) {
-                    $zip->addFile($filePath, $file);
+                    $zip->addFile($filePath, basename($file));
                 }
             }
             $zip->close();
+        } else {
+            return back()->with('error', 'Gagal membuat ZIP file.');
         }
 
-        if (file_exists($zipPath)) {
-            return response()->download($zipPath)->deleteFileAfterSend(true);
-        } else {
-            return response()->json(['error' => 'Failed to create zip file.'], 500);
-        }
+        return response()->download($zipPath)->deleteFileAfterSend(true);
     }
 
 
@@ -155,9 +157,9 @@ class DetailFormatifController extends Controller
                 unlink(public_path('formatif/jawaban/' . $formatif->jawaban));
             }
             $formatif->delete();
-            return redirect()->route('jadwal_reguler.index')->with('success', 'Data berhasil dihapus.');
+            return back()->with('message_delete', 'Data Informasi Sudah dihapus');
         } else {
-            return redirect()->route('jadwal_reguler.index')->with('error', 'Data tidak ditemukan.');
+            return back()->with('error', 'Data tidak ditemukan.');
         }
     }
 }

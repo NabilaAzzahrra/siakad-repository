@@ -1,18 +1,26 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight flex text-wrap text-md">
-            <div class="flex items-center">Jadwal Materi Ajar<i class="fi fi-rr-caret-right mt-1"></i> <span class="text-red-500">Edit Jadwal Materi Ajar</span></div>
-        </h2>
+        <p class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
+        <div class="flex items-center font-bold">Jadwal Pembelajaran<i class="fi fi-rr-caret-right mt-1"></i> <span
+                class="text-amber-100">Edit Jadwal Pembelajaran</span></div>
+        </p>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="w-full p-3">
-                <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
-                    <div class="p-6 text-gray-900 dark:text-gray-100">
-                        <div class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                            FORM UPDATE JADWAL REGULER
+                <div
+                    class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl">
+                    <div class="flex px-12 pt-8">
+                        <div class="w-10">
+                            <img src="{{ url('img/update.png') }}" alt="Icon 1" class="">
                         </div>
+                        <div class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                            UPDATE DATA JADWAL PEMBELAJARAN
+                        </div>
+                    </div>
+                    <hr class="border mt-2 border-black border-opacity-30 mx-12">
+                    <div class="p-6 text-gray-900 dark:text-gray-100">
                         <form action="{{ route('jadwal_reguler.update', $jadwal->id) }}" method="post">
                             @csrf
                             @method('PATCH')
@@ -24,15 +32,18 @@
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                                 Hari <span class="text-red-500">*</span>
                                             </label>
-                                            <select class="js-example-placeholder-single js-states form-control w-full m-6"
+                                            <select
+                                                class="js-example-placeholder-single js-states form-control w-full m-6"
                                                 name="hari" data-placeholder="Pilih Hari">
-                                                <option value="{{ $jadwal->id_hari }}">{{ $jadwal->hari->hari }}</option>
-                                                @foreach ($hari as $k)
-                                                @if ($k->id != $jadwal->id_hari)
-                                                <option value="{{ $k->id }}" data-hari="{{ $k->id_hari }}">
-                                                    {{ $k->hari }}
+                                                <option value="{{ $jadwal->id_hari }}">{{ $jadwal->hari->hari }}
                                                 </option>
-                                                @endif
+                                                @foreach ($hari as $k)
+                                                    @if ($k->id != $jadwal->id_hari)
+                                                        <option value="{{ $k->id }}"
+                                                            data-hari="{{ $k->id_hari }}">
+                                                            {{ $k->hari }}
+                                                        </option>
+                                                    @endif
                                                 @endforeach
                                             </select>
                                         </div>
@@ -41,15 +52,18 @@
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                                 Sesi <span class="text-red-500">*</span>
                                             </label>
-                                            <select class="js-example-placeholder-single js-states form-control w-full m-6"
+                                            <select
+                                                class="js-example-placeholder-single js-states form-control w-full m-6"
                                                 name="sesi" data-placeholder="Pilih Sesi" onchange="getsesi()">
-                                                <option value="{{ $jadwal->id_sesi }}">{{ $jadwal->sesi->sesi }}</option>
-                                                @foreach ($sesi as $k)
-                                                @if ($k->id != $jadwal->id_sesi)
-                                                <option value="{{ $k->id }}" data-sesi="{{ $k->id_sesi }}">
-                                                    {{ $k->sesi }}
+                                                <option value="{{ $jadwal->id_sesi }}">{{ $jadwal->sesi->sesi }}
                                                 </option>
-                                                @endif
+                                                @foreach ($sesi as $k)
+                                                    @if ($k->id != $jadwal->id_sesi)
+                                                        <option value="{{ $k->id }}"
+                                                            data-sesi="{{ $k->id_sesi }}">
+                                                            {{ $k->sesi }}
+                                                        </option>
+                                                    @endif
                                                 @endforeach
                                             </select>
                                         </div>
@@ -69,15 +83,18 @@
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                                 Sesi <span class="text-red-500">*</span>
                                             </label>
-                                            <select class="js-example-placeholder-single js-states form-control w-full m-6"
+                                            <select
+                                                class="js-example-placeholder-single js-states form-control w-full m-6"
                                                 name="sesi_dua" data-placeholder="Pilih Sesi" onchange="getsesiDua()">
-                                                <option value="{{ $jadwal->id_sesi2 }}">{{ $jadwal->sesi2->sesi }}</option>
-                                                @foreach ($sesi as $k)
-                                                @if ($k->id != $jadwal->id_sesi2)
-                                                <option value="{{ $k->id }}" data-sesi="{{ $k->id_sesi2 }}">
-                                                    {{ $k->sesi }}
+                                                <option value="{{ $jadwal->id_sesi2 }}">{{ $jadwal->sesi2->sesi }}
                                                 </option>
-                                                @endif
+                                                @foreach ($sesi as $k)
+                                                    @if ($k->id != $jadwal->id_sesi2)
+                                                        <option value="{{ $k->id }}"
+                                                            data-sesi="{{ $k->id_sesi2 }}">
+                                                            {{ $k->sesi }}
+                                                        </option>
+                                                    @endif
                                                 @endforeach
                                             </select>
                                         </div>
@@ -95,14 +112,15 @@
                                             <label for="kurikulum"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Materi
                                                 Ajar <span class="text-red-500">*</span></label>
-                                            <select class="js-example-placeholder-single js-states form-control w-full m-6"
+                                            <select
+                                                class="js-example-placeholder-single js-states form-control w-full m-6"
                                                 name="kurikulum" data-placeholder="Pilih Materi Ajar"
                                                 onchange="getdetailkurikulum()">
                                                 @foreach ($kurikulum as $c)
-                                                <option value="{{ $c->id_materi_ajar }}"
-                                                    {{ $c->id_materi_ajar == $jadwal->id_detail_kurikulum ? 'selected' : '' }}>
-                                                    {{ $c->materi_ajar->materi_ajar }}
-                                                </option>
+                                                    <option value="{{ $c->id_materi_ajar }}"
+                                                        {{ $c->id_materi_ajar == $jadwal->id_detail_kurikulum ? 'selected' : '' }}>
+                                                        {{ $c->materi_ajar->materi_ajar }}
+                                                    </option>
                                                 @endforeach
                                             </select>
 
@@ -139,10 +157,10 @@
                                             name="ruang" data-placeholder="Pilih Ruang">
                                             <option value="">Pilih...</option>
                                             @foreach ($ruang as $k)
-                                            <option value="{{ $k->id }}"
-                                                {{ $k->id == $jadwal->id_ruang ? 'selected' : '' }}>
-                                                {{ $k->ruang }}
-                                            </option>
+                                                <option value="{{ $k->id }}"
+                                                    {{ $k->id == $jadwal->id_ruang ? 'selected' : '' }}>
+                                                    {{ $k->ruang }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -155,10 +173,10 @@
                                             name="dosen" data-placeholder="Pilih Dosen">
                                             <option value="">Pilih...</option>
                                             @foreach ($dosen as $k)
-                                            <option value="{{ $k->id }}"
-                                                {{ $k->id == $jadwal->id_dosen ? 'selected' : '' }}>
-                                                {{ $k->nama_dosen }}
-                                            </option>
+                                                <option value="{{ $k->id }}"
+                                                    {{ $k->id == $jadwal->id_dosen ? 'selected' : '' }}>
+                                                    {{ $k->nama_dosen }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -171,21 +189,22 @@
                                             name="kelas" data-placeholder="Pilih Kelas" onchange="getkelas()">
                                             <option value="">Pilih...</option>
                                             @foreach ($kelas as $k)
-                                            {{-- <option value="{{ $k->id }}">{{ $k->kelas }}</option> --}}
-                                            <option value="{{ $k->id }}"
-                                                {{ $k->id == $jadwal->id_kelas ? 'selected' : '' }}>
-                                                {{ $k->kelas }}
-                                            </option>
+                                                {{-- <option value="{{ $k->id }}">{{ $k->kelas }}</option> --}}
+                                                <option value="{{ $k->id }}"
+                                                    {{ $k->id == $jadwal->id_kelas ? 'selected' : '' }}>
+                                                    {{ $k->kelas }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="mb-5 w-full">
                                         <label for="jurusan"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Program Studi</label>
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Program
+                                            Studi</label>
                                         <input type="text" id="jurusan" name="jurusan"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="Masukan Program Studi disini ..." value="{{ $jadwal->kelas->jurusan->jurusan }}"
-                                            readonly />
+                                            placeholder="Masukan Program Studi disini ..."
+                                            value="{{ $jadwal->kelas->jurusan->jurusan }}" readonly />
                                     </div>
                                 </div>
                                 <div hidden>
@@ -199,7 +218,8 @@
                                         value="{{ $konfigurasi->id_perhitungan }}">
                                 </div>
                                 <button type="submit"
-                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i class="fi fi-rr-disk "></i></button>
+                                    class="text-blue-700 hover:bg-blue-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm border border-dashed border-blue-700 w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i
+                                        class="fi fi-rr-disk mr-2"></i> Simpan</button>
                             </div>
                         </form>
                     </div>

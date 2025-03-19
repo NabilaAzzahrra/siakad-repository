@@ -11,6 +11,7 @@ use App\Http\Controllers\DetailFormatifController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\FakultasController;
+use App\Http\Controllers\FormatifController;
 use App\Http\Controllers\HariController;
 use App\Http\Controllers\InformasiController;
 use App\Http\Controllers\JadwalregulerController;
@@ -127,6 +128,7 @@ Route::resource('transkrip', TranskripController::class)->middleware(['auth']);
 Route::resource('informasi', InformasiController::class)->middleware(['auth']);
 Route::resource('dosenPembimbing', PembimbingProjectController::class)->middleware(['auth']);
 Route::resource('pengajuanJudul', PengajuanJudulController::class)->middleware(['auth']);
+Route::resource('testFormatif', FormatifController::class)->middleware(['auth']);
 Route::get('/get-pengajuan-judul', [PengajuanJudulController::class, 'getPengajuanJudul']);
 Route::patch('/update-pengajuan-judul/{id}', [PengajuanJudulController::class, 'update'])->name('pengajuanJudul.update');
 Route::patch('/update-daftar-sidang/{id}', [DaftarSidangController::class, 'update'])->name('daftarSidang.update');
@@ -145,7 +147,7 @@ Route::get('/show_dosen/{id}', [ReportDosenController::class, 'show_dosen'])->na
 Route::get('/r_mahasiswa', [ReportMahasiswaKeseluruhanController::class, 'r_mahasiswa'])->name('report_keseluruhan.r_mahasiswa');
 Route::post('/importExcel', [MahasiswaController::class, 'importExcel'])->name('mahasiswa.importExcel');
 
-Route::post('/download-zip', [DetailFormatifController::class, 'downloadZip']);
+Route::get('/download-zip/{id_formatif}', [DetailFormatifController::class, 'downloadZip'])->name('detail_formatif.downloadZip');
 Route::post('/kurikulum/detail', [KurikulumController::class, 'detail'])->name('kurikulum.detail')->middleware(['auth']);
 Route::put('/edit_det', [MahasiswaController::class, 'edit_det'])->name('mahasiswa.edit_det');
 Route::put('/edit_detDataBaru', [MahasiswaController::class, 'edit_detDataBaru'])->name('mahasiswa.edit_detDataBaru');

@@ -154,7 +154,7 @@
                                                         </th>
                                                         <th scope="row"
                                                             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white bg-gray-100 ">
-                                                            <button type="button" data-id="{{ $i->id }}"
+                                                            <button type="button" data-id="{{ $i->id }}" title="Edit Data"
                                                                 data-modal-target="sourceModal"
                                                                 data-judul="{{ $i->title }}"
                                                                 data-informasi="{{ $i->informasi }}"
@@ -164,7 +164,7 @@
                                                                 <i class="fas fa-edit"></i>
                                                             </button>
                                                             <button
-                                                                onclick="return informasiDelete('{{ $i->id }}','{{ $i->kategori }}')"
+                                                                onclick="return informasiDelete('{{ $i->id }}','{{ $i->kategori }}')" title="Hapus Data"
                                                                 class="border-2 border-dashed border-red-500 text-red-500 hover:bg-red-100 px-3 py-1 rounded-xl h-10 w-10 text-xs"><i
                                                                     class="fas fa-trash"></i></button>
                                                         </th>

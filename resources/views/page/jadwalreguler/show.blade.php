@@ -1,311 +1,664 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight flex text-wrap text-md">
-            <div class="flex items-center">Jadwal Materi Ajar<i class="fi fi-rr-caret-right mt-1"></i> <span
-                    class="text-red-500">Detail Jadwal Materi Ajar</span></div>
-        </h2>
+        <p class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
+        <div class="flex items-center font-bold">Jadwal Pembelajaran<i class="fi fi-rr-caret-right mt-1"></i> <span
+                class="text-amber-100">Presensi Jadwal Pembelajaran</span></div>
+        </p>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-full p-3">
-
-                    <div class="bg-emerald-100 p-4 w-full lg:w-6/12 border border-emerald-400 rounded-xl border-2">
-                        <div class="text-xl flex items-center gap-3 font-extrabold text-emerald-800"><i
-                                class="fi fi-ss-to-do"></i> Formatif</div>
-                        <div class="text-wrap p-4 text-emerald-800 font-bold">Formatif merupakan standar untuk mengukur
-                            kemamuan atau skil peserta didik selama mengikuti
-                            setengah semester, untuk formatif dapat di inputkan pada fitur berikut ini.</div>
-                        @foreach ($presensi as $pr)
-                        @endforeach
-                        <div class="flex items-center justify-end ">
-                            <a href="{{ route('jadwal_reguler.formatif', $pr->id_jadwal) }}"
-                                class="bg-emerald-300 p-2 font-bold border border-green-400 border-[3px] rounded-3xl text-emerald-800 hover:bg-emerald-500 hover:text-white">Formatif</a>
-                        </div>
-                    </div>
-
-                    <div class="grid lg:grid-cols-4 gap-10 mt-5">
-                        @php
-                            $color = '';
-                            $tgl_presensi = '';
-                            $materi = '';
-                            $isTodayScheduled = true;
-                        @endphp
-                        @foreach ($presensi as $p)
-                            @php
-                                if ($p->pertemuan % 2 == 1) {
-                                    $color = 'bg-[#F15C67]';
-                                    $border = 'border-[#F15C67]';
-                                } else {
-                                    $color = 'bg-[#00AEB6]';
-                                    $border = 'border-[#00AEB6]';
-                                }
-
-                                if ($p->tgl_presensi === null) {
-                                    $tgl_presensi =
-                                        '<i class="fi fi-sr-cross-circle flex items-center text-red-500"></i>';
-                                    $link = route('presensi.show', $p->id_presensi);
-                                } else {
-                                    $tgl_presensi =
-                                        '<i class="fi fi-sr-check-circle flex items-center text-green-500"></i>';
-                                    $link = route('presensi.edit', $p->id_presensi);
-                                }
-
-                                // $hide = '';
-                                if ($jadwal->hari->hari == 'SENIN') {
-                                    $hari = 'Monday';
-                                } elseif ($jadwal->hari->hari == 'SELASA') {
-                                    $hari = 'Tuesday';
-                                } elseif ($jadwal->hari->hari == 'RABU') {
-                                    $hari = 'Wednesday';
-                                } elseif ($jadwal->hari->hari == 'KAMIS') {
-                                    $hari = 'Thursday';
-                                } elseif ($jadwal->hari->hari == 'JUMAT') {
-                                    $hari = 'Friday';
-                                } elseif ($jadwal->hari->hari == 'SABTU') {
-                                    $hari = 'Saturday';
-                                } elseif ($jadwal->hari->hari == 'MINGGU') {
-                                    $hari = 'Sunday';
-                                } else {
-                                    $hari = 'Unknown day';
-                                }
-
-                                $pukul = $jadwal->sesi->pukul->pukul;
-
-                                // Pisahkan string menjadi dua bagian
-                                $pukulArray = explode(' - ', $pukul);
-
-                                // Ambil jam mulai dan jam berakhir
-                                $jamMulai = $pukulArray[0]; // "08.00"
-                                $jamBerakhir = $pukulArray[1]; // "09.40"
-
-                                $waktuSekarang = date('H:i');
-
-                                $hidePresensiButton = 'hidden';
-
-                                if ($p->tgl_presensi !== null) {
-                                    $hidePresensiButton = '';
-                                }
-
-                                // Cek apakah hari ini adalah hari yang dijadwalkan
-                                if ($hari == date('l')) {
-                                    // Cek apakah ini adalah pertemuan pertama yang belum diisi presensinya
-                                    if ($p->pertemuan == 1 && $p->tgl_presensi === null) {
-                                        if ($waktuSekarang >= $jamMulai || $waktuSekarang <= $jamBerakhir) {
-                                            $hidePresensiButton = ''; // Tampilkan tombol
-                                            $isTodayScheduled = false;
-                                            // dd('ini');
-                                        } else {
-                                            $hidePresensiButton = 'hidden';
-                                        }
-                                    } else {
-                                        if ($isTodayScheduled && $p->tgl_presensi === null) {
-                                            if ($waktuSekarang >= $jamMulai || $waktuSekarang <= $jamBerakhir) {
-                                                $hidePresensiButton = '';
-                                                $isTodayScheduled = false;
-                                                // dd('ini');
-                                            } else {
-                                                // dd('ini ya');
-                                                $hidePresensiButton = 'hidden';
-                                            }
-                                        } else {
-                                            $hidePresensiButton = 'hidden';
-                                        }
-                                    }
-                                } else {
-                                    // Jika bukan hari yang dijadwalkan, sembunyikan semua tombol
-                                    $hidePresensiButton = 'hidden';
-                                }
-
-                                if ($p->tgl_presensi === null) {
-                                    $file_materi =
-                                        '<i class="fi fi-sr-cross-circle flex items-center text-red-500"></i>';
-                                    $link_materi = '#';
-                                } else {
-                                    $file_materi =
-                                        '<i class="fi fi-sr-check-circle flex items-center text-green-500"></i>';
-                                    $link_materi = route('presensi.materi_update', $p->id_presensi);
-                                }
-
-                            @endphp
-                            <div
-                                class="{{ $color }} shadow-xl border border-4 {{ $border }} px-2 rounded-3xl h-64 relative">
-                                <div
-                                    class="h-14 w-14 text-[18p] font-extrabold bg-white absolute top-0 left-0 mt-3 ml-5 flex items-center justify-center rounded-full border border-4 {{ $border }}">
-                                    {{ $p->pertemuan }}
+                    <div class="flex gap-5 items-start justify-start">
+                        <div
+                            class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl mb-5 p-5">
+                            <div>
+                                <div class="flex flex-col lg:flex-row items-center justify-between">
+                                    <div class="flex -mb-6">
+                                        <div class="w-10">
+                                            <img src="{{ url('img/file.png') }}" alt="Icon 1" class="">
+                                        </div>
+                                        <div
+                                            class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                                            DATA JADWAL PEMBELAJARAN
+                                        </div>
+                                    </div>
                                 </div>
-                                <div
-                                    class="bg-white border border-4 {{ $border }} mt-10 rounded-3xl h-[198px] flex pt-8 justify-start pl-4">
-                                    <div>
-                                        <div class="font-bold text-left lg:text-[25px] text-[20px]">Pertemuan
-                                            {{ $p->pertemuan }}</div>
-                                        <div class="font-bold text-left text-[12px] text-sky-800">
-                                            @if ($p->tgl_presensi === null)
-                                                <div class="bg-red-100 w-44 text-red-500 rounded-full px-2">Belum
-                                                    Menginputkan Presensi</div>
-                                            @else
-                                                {{ date('d-m-Y', strtotime($p->tgl_presensi)) }}
-                                            @endif
+                                <hr class="border mt-8 border-black border-opacity-30">
+                                <div>
+                                    <div class="flex items-center justify-between px-24 pt-6 pb-2">
+                                        <div class="w-full">
+                                            <table>
+                                                <tr>
+                                                    <th class="text-left">Materi Ajar</th>
+                                                    <td class="pl-2 pr-2">:</td>
+                                                    <td>{{ $jadwal->detail_kurikulum->materi_ajar->materi_ajar }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="text-left">Pengajar</th>
+                                                    <td class="pl-2 pr-2">:</td>
+                                                    <td class="text-wrap">{{ $jadwal->dosen->nama_dosen }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="text-left">Hari</th>
+                                                    <td class="pl-2 pr-2">:</td>
+                                                    <td>{{ $jadwal->hari->hari }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="text-left">Sesi</th>
+                                                    <td class="pl-2 pr-2">:</td>
+                                                    <td>{{ optional($jadwal->sesi2)->sesi ? $jadwal->sesi->sesi . '-' . optional($jadwal->sesi2)->sesi : $jadwal->sesi->sesi }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="text-left">Pukul</th>
+                                                    <td class="pl-2 pr-2">:</td>
+                                                    <td>{!! optional($jadwal->sesi2)->pukul
+                                                        ? $jadwal->sesi->pukul->pukul . ' <span class="font-bold">s/d</span> ' . optional($jadwal->sesi2->pukul)->pukul
+                                                        : $jadwal->sesi->pukul->pukul !!}</td>
+                                                </tr>
+                                            </table>
                                         </div>
-                                        <div class="mt-1">
-                                            <div class="flex">
-                                                <div class="pr-2 font-bold">Materi</div>
-                                                <div class="text-wrap text-sky-700 text-justify px-2">
-                                                    @php
-                                                        $text = "$p->materi";
-                                                        $materi =
-                                                            strlen($text) > 45 ? substr($text, 0, 30) . '...' : $text;
-                                                    @endphp
-                                                    @if ($materi == null)
-                                                        <div class="text-red-500">Belum Terdapat materi</div>
-                                                    @else
-                                                        {{ $materi }}
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="flex lg:gap-2 gap-1 mt-3">
-                                            @can('role-A')
-                                                @if ($p->tgl_presensi === null)
-                                                    <a href="{{ $link }}"
-                                                        class="border border-gray-300 px-2 lg:py-1 py-2 text-xs rounded-full font-extrabold flex items-center justify-center {{ $hidePresensiButton }}">
-                                                        <i
-                                                            class="fi fi-sr-member-list text-sky-700 pr-1 flex items-center"></i>
-                                                        <span class="pr-1 flex items-center lg:text-[15px]">Presensi
-                                                        </span>
-                                                        {!! $tgl_presensi !!}
-                                                    </a>
-                                                @else
-                                                    <a href="{{ route('presensi.edit', $p->id_presensi) }}"
-                                                        class="border border-gray-300 px-2 lg:py-1 py-2 text-xs rounded-full font-extrabold flex items-center justify-center">
-                                                        <i
-                                                            class="fi fi-sr-member-list text-sky-700 pr-1 flex items-center"></i>
-                                                        <span class="pr-1 flex items-center lg:text-[15px]">Presensi
-                                                        </span>
-                                                        {!! $tgl_presensi !!}
-                                                    </a>
-                                                @endif
-                                            @endcan
-                                            @can('role-D')
-                                                <a href="{{ $link }}"
-                                                    class="border border-gray-300 px-2 lg:py-1 py-2 text-xs rounded-full font-extrabold flex items-center justify-center
-                                                 {{ $hidePresensiButton }}">
-                                                    <i class="fi fi-sr-member-list text-sky-700 pr-1 flex items-center"></i>
-                                                    <span class="pr-1 flex items-center lg:text-[15px]">Presensi
-                                                    </span>
-                                                    {!! $tgl_presensi !!}
-                                                </a>
-                                            @endcan
-                                            <a href="{{ $link_materi }}"
-                                                class="border border-gray-300 px-2 lg:py-1 py-2 text-xs rounded-full font-extrabold flex items-center justify-center">
-                                                <i
-                                                    class="fi fi-ss-book-open-cover text-green-500 pr-1 flex items-center"></i>
-                                                <span class="pr-1 flex items-center lg:text-[15px]">File Materi</span>
-                                                {!! $file_materi !!}
-                                            </a>
-                                            <a href="{{ route('tugas.show', $p->id_presensi) }}"
-                                                class="border border-gray-300 px-2 lg:py-1 py-2 text-xs rounded-full font-extrabold flex items-center justify-center ">
-                                                <i class="fi fi-sr-web-test text-amber-500 pr-1 flex items-center"></i>
-                                                <span class="pr-1 flex items-center lg:text-[15px]">Tugas</span>
-                                            </a>
+                                        <div class="w-full ml-12">
+                                            <table>
+                                                <tr>
+                                                    <th class="text-left">Semester</th>
+                                                    <td class="pl-2 pr-2">:</td>
+                                                    <td>{{ $jadwal->detail_kurikulum->materi_ajar->semester->semester }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="text-left">SKS</th>
+                                                    <td class="pl-2 pr-2">:</td>
+                                                    <td>{{ $jadwal->detail_kurikulum->materi_ajar->sks }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="text-left">Ruang</th>
+                                                    <td class="pl-2 pr-2">:</td>
+                                                    <td>{{ $jadwal->ruang->ruang }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="text-left">Kelas</th>
+                                                    <td class="pl-2 pr-2">:</td>
+                                                    <td>{{ $jadwal->kelas->kelas }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="text-left">Program Studi</th>
+                                                    <td class="pl-2 pr-2">:</td>
+                                                    <td>{{ $jadwal->kelas->jurusan->jurusan }}</td>
+                                                </tr>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                        </div>
+                        <div
+                            class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl mb-5 p-5">
+                            <div class="flex flex-col lg:flex-row items-center justify-between">
+                                <div class="flex -mb-6">
+                                    <div class="w-10">
+                                        <img src="{{ url('img/test.png') }}" alt="Icon 1" class="">
+                                    </div>
+                                    <div
+                                        class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                                        FORMATIF
+                                    </div>
+                                </div>
+                                <div class="flex -mb-5">
+                                    <button
+                                        class="flex border border-sky-500 px-4 pt-2 pb-2 rounded-xl text-sky-500 hover:bg-sky-100"
+                                        onclick="return formatif()"><i class="fi fi-sr-add flex mr-2 mt-1"></i> Tambah
+                                        Formatif</button>
+                                </div>
+                            </div>
+                            <hr class="border mt-8 border-black border-opacity-30">
+                            <div class="flex w-full justify-center">
+                                <div class="pt-3 w-full" style="width:100%;overflow-x:auto;">
+                                    <div class="flex flex-col sm:flex-row justify-between items-center mb-4">
+                                        <div class="md:mt-0 sm:flex sm:space-x-4 w-full">
+                                            <!-- Form untuk entries -->
+                                            <x-show-entries :route="route('jadwal_reguler.show', $idJadwal)" :search="request()->searchFormatif">
+                                            </x-show-entries>
+                                        </div>
+
+                                        <div class="sm:ml-16 sm:mt-0 sm:flex sm:space-x-4 sm:flex-none">
+                                            <form action="{{ route('jadwal_reguler.show', $idJadwal) }}" method="GET"
+                                                class="flex items-center flex-1">
+                                                <input type="text" name="searchFormatif"
+                                                    placeholder="Enter for search . . . " id="search"
+                                                    value="{{ request('searchFormatif') }}"
+                                                    class="w-56 relative inline-flex items-center px-4 py-2 font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-700 dark:active:bg-gray-700 dark:active:text-gray-300"
+                                                    oninput="this.value = this.value.toUpperCase();" />
+
+                                                <input type="hidden" name="entriesFormatif"
+                                                    value="{{ request('entriesFormatif', 10) }}">
+                                                <input type="hidden" name="page"
+                                                    value="{{ request('pageFormatif', 1) }}">
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="relative overflow-x-auto shadow-md rounded-lg">
+                                        <table
+                                            class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border">
+                                            <thead
+                                                class="text-md font-bold text-gray-700 uppercase py-[100px] dark:bg-gray-700 dark:text-gray-400">
+                                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
+                                                        NO
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-center">
+                                                        JUDUL FORMATIF
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
+                                                        DEADLINE
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-center">
+                                                        ACTION
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="formatifTable">
+                                                @php
+                                                    $no = $formatif->firstItem();
+                                                @endphp
+                                                @forelse ($formatif as $key => $j)
+                                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                        <td class="px-6 py-4 text-center bg-gray-100">
+                                                            {{ $no++ }}
+                                                        </td>
+                                                        <td class="px-6 py-4 text-wrap">
+                                                            {{ $j->judul_formatif }}
+                                                        </td>
+                                                        <td class="px-6 py-4 text-center bg-gray-100">
+                                                            {{ $j->deadline }}
+                                                        </td>
+                                                        <td
+                                                            class="px-6 py-4 text-center flex items-center justify-center">
+                                                            <a href="{{ asset('formatif/' . $j->formatif) }}"
+                                                                target="_blank"
+                                                                class="flex items-center mr-2 hover:bg-emerald-100 text-emerald-600 pr-2 pl-4 py-3 rounded-xl text-md border border-dashed border-emerald-600">
+                                                                <i class="fi fi-sr-document flex mr-2"></i>
+                                                            </a>
+                                                            <button onclick="formatifUpdate(this)"
+                                                                class="flex items-center mr-2 hover:bg-amber-100 text-amber-600 pr-2 pl-4 py-3 rounded-xl text-md border border-dashed border-amber-600"
+                                                                data-id="{{ $j->id }}"
+                                                                data-judul="{{ $j->judul_formatif }}"
+                                                                data-deadline="{{ $j->deadline }}"
+                                                                data-formatif="{{ $j->formatif }}"
+                                                                data-action="{{ route('jadwal_reguler.formatif_update', $j->id) }}">
+                                                                <i class="fi fi-sr-file-edit flex mr-2"></i>
+                                                            </button>
+                                                            <a href="{{ route('jadwal_reguler.formatif_answer', $j->id_formatif) }}"
+                                                                class="flex items-center mr-2 hover:bg-sky-100 text-sky-600 pr-2 pl-4 py-3 rounded-xl text-md border border-dashed border-sky-600">
+                                                                <i class="fi fi-sr-member-list flex mr-2"></i>
+                                                            </a>
+                                                            <button type="button"
+                                                                onclick="return dataDelete('{{ $j->id }}')"
+                                                                title="Hapus Data"
+                                                                class="border border-dashed border-red-500 text-red-500 hover:bg-red-100 px-3 py-1 rounded-xl h-10 w-10 text-xs">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                @empty
+                                                    <div
+                                                        class="border border-red-500 bg-red-100 font-bold text-red-500 p-3 rounded-xl shadow-sm mb-3">
+                                                        Data Belum Tersedia!
+                                                    </div>
+                                                @endforelse
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="mt-4">
+                                        @if ($formatif->hasPages())
+                                            {{ $formatif->appends(request()->query())->links('vendor.pagination.custom') }}
+                                        @else
+                                            <div class="flex items-center justify-between">
+                                                <nav class="flex justify-start">
+                                                    <div class="text-sm flex gap-1">
+                                                        <div>Showing</div>
+                                                        <div class="font-bold">1</div>
+                                                        <div>to</div>
+                                                        <div class="font-bold">{{ count($formatif) }}</div>
+                                                        <div>of</div>
+                                                        <div class="font-bold">{{ count($formatif) }}</div>
+                                                        <div>entries</div>
+                                                    </div>
+                                                </nav>
+                                                <div class="flex items-center space-x-2">
+                                                    <div class="flex">
+                                                        <div class="border px-4 py-1 rounded-l-lg">&lt;</div>
+                                                        <div class="border px-4 py-1">1</div>
+                                                        <div class="border px-4 py-1 rounded-r-lg">&gt;</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl">
+                        <div class="p-6 text-gray-900 dark:text-gray-100">
+                            <div>
+                                <div class="flex flex-col lg:flex-row items-center justify-between">
+                                    <div class="flex -mb-6">
+                                        <div class="w-10">
+                                            <img src="{{ url('img/database.png') }}" alt="Icon 1" class="">
+                                        </div>
+                                        <div
+                                            class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                                            DATA PRESENSI JADWAL PEMBELAJARAN
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="border mt-8 border-black border-opacity-30">
+                            </div>
+                            <div class="flex w-full justify-center">
+                                <div class="pt-3 w-full" style="width:100%;overflow-x:auto;">
+                                    <div class="flex flex-col sm:flex-row justify-between items-center mb-4">
+                                        <div class="md:mt-0 sm:flex sm:space-x-4 w-full">
+                                            <!-- Form untuk entries -->
+                                            <x-show-entries :route="route('jadwal_reguler.show', $idJadwal)" :search="request()->search">
+                                            </x-show-entries>
+                                        </div>
+
+                                        <div class="sm:ml-16 sm:mt-0 sm:flex sm:space-x-4 sm:flex-none">
+                                            <form action="{{ route('jadwal_reguler.show', $idJadwal) }}"
+                                                method="GET" class="flex items-center flex-1">
+                                                <input type="text" name="search"
+                                                    placeholder="Enter for search . . . " id="search"
+                                                    value="{{ request('search') }}"
+                                                    class="w-56 relative inline-flex items-center px-4 py-2 font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-700 dark:active:bg-gray-700 dark:active:text-gray-300"
+                                                    oninput="this.value = this.value.toUpperCase();" />
+
+                                                <input type="hidden" name="entries"
+                                                    value="{{ request('entries', 10) }}">
+                                                <input type="hidden" name="page"
+                                                    value="{{ request('page', 1) }}">
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="relative overflow-x-auto shadow-md rounded-lg">
+                                        <table
+                                            class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border">
+                                            <thead
+                                                class="text-md font-bold text-gray-700 uppercase py-[100px] dark:bg-gray-700 dark:text-gray-400">
+                                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
+                                                        NO
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-center">
+                                                        PERTEMUAN
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
+                                                        MATERI PEMBELAJARAN
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-center">
+                                                        PENDUKUNG MATERI
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
+                                                        TANGGAL PRESENSI
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-center">
+                                                        ACTION
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="jadwalRegulerTable">
+                                                @php
+                                                    $no = $presensi->firstItem();
+                                                @endphp
+                                                @forelse ($presensi as $key => $j)
+                                                    <tr
+                                                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                        <td class="px-6 py-4 text-center bg-gray-100">
+                                                            {{ $no++ }}
+                                                        </td>
+                                                        <td class="px-6 py-4 text-center">
+                                                            {{ $j->pertemuan }}
+                                                        </td>
+                                                        <td class="px-6 py-4 text-center bg-gray-100">
+                                                            {!! $j->tgl_presensi
+                                                                ? $j->materi
+                                                                : '<div class="bg-red-100 inline-block px-6 rounded-full font-bold text-red-500">Belum Presensi</div>' !!}
+                                                        </td>
+                                                        <td class="px-6 py-4 text-center">
+                                                            {!! $j->file_materi
+                                                                ? '<a href="' . route('presensi.materi_update', $j->id_presensi) . '">File Materi ' . $j->materi . '</a>'
+                                                                : '<div class="bg-red-100 inline-block px-6 rounded-full font-bold text-red-500">Belum Presensi</div>' !!}
+                                                        </td>
+                                                        <td class="px-6 py-4 text-center bg-gray-100">
+                                                            {!! $j->tgl_presensi
+                                                                ? date('d-m-Y', strtotime($j->tgl_presensi))
+                                                                : '<div class="bg-red-100 inline-block px-6 rounded-full font-bold text-red-500">Belum Presensi</div>' !!}
+                                                        </td>
+                                                        <td
+                                                            class="px-6 py-4 text-center flex items-center justify-center">
+                                                            <a href="{{route('presensi.show',$j->id_presensi)}}"
+                                                                class="flex items-center mr-2 hover:bg-sky-100 text-sky-600 pr-3 pl-4 py-3 rounded-xl text-md border border-dashed border-sky-600">
+                                                                <i class="fi fi-sr-add flex mr-2"></i> <span>Input
+                                                                    Presensi</span></a>
+                                                            <a href="http://"
+                                                                class="mr-2 flex items-center hover:bg-emerald-100 text-emerald-600 pr-3 pl-4 py-3 rounded-xl text-md border border-dashed border-emerald-600"><i
+                                                                    class="fi fi-sr-document flex mr-2"></i>
+                                                                <span>Dokumen
+                                                                    Materi</span></a>
+                                                        </td>
+                                                    </tr>
+                                                @empty
+                                                    <div
+                                                        class="border border-red-500 bg-red-100 font-bold text-red-500 p-3 rounded-xl shadow-sm mb-3">
+                                                        Data Belum Tersedia!
+                                                    </div>
+                                                @endforelse
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="mt-4">
+                                        @if ($presensi->hasPages())
+                                            {{ $presensi->appends(request()->query())->links('vendor.pagination.custom') }}
+                                        @else
+                                            <div class="flex items-center justify-between">
+                                                <nav class="flex justify-start">
+                                                    <div class="text-sm flex gap-1">
+                                                        <div>Showing</div>
+                                                        <div class="font-bold">1</div>
+                                                        <div>to</div>
+                                                        <div class="font-bold">{{ count($presensi) }}</div>
+                                                        <div>of</div>
+                                                        <div class="font-bold">{{ count($presensi) }}</div>
+                                                        <div>entries</div>
+                                                    </div>
+                                                </nav>
+                                                <div class="flex items-center space-x-2">
+                                                    <div class="flex">
+                                                        <div class="border px-4 py-1 rounded-l-lg">&lt;</div>
+                                                        <div class="border px-4 py-1">1</div>
+                                                        <div class="border px-4 py-1 rounded-r-lg">&gt;</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="fixed inset-0 flex items-center justify-center z-50 hidden" id="sourceModal">
-        <div class="fixed inset-0 bg-black opacity-50"></div>
-        <div class="fixed inset-0 flex items-center justify-center">
-            <div class="w-full md:w-1/2 relative bg-white rounded-lg shadow mx-5">
-                <div class="flex items-start justify-between p-4 border-b rounded-t">
-                    <h3 class="text-xl font-semibold text-gray-900" id="title_source">
-                        Tambah Sumber Database
-                    </h3>
-                    <button type="button" onclick="sourceModalClose(this)" data-modal-target="sourceModal"
-                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center"
-                        data-modal-hide="defaultModal">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                </div>
-                <form method="POST" id="formSourceModal">
-                    @csrf
-                    <div class="flex flex-col  p-4 space-y-6">
-                        <input type="text" id="id_presensis" name="id_presensi" hidden>
-                        <input type="text" id="materis" name="materis" hidden>
-                        <div class="">
-                            <label for="text" class="block mb-2 text-sm font-medium text-gray-900">Materi
-                                Sebelumnya</label>
-                            <input type="text" id="file_materis" name="file_materi"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Masukan jurusan disini..." readonly>
-                        </div>
-                        <div class="mb-5">
-                            <label for="materi_baru"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Materi Baru</label>
-                            <input type="file" id="materi_baru" name="materi_baru"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Masukan Materi disini ..." required />
-                        </div>
-                    </div>
-                    <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
-                        <button type="submit" id="formSourceButton"
-                            class="bg-green-400 m-2 w-40 h-10 rounded-xl hover:bg-green-500">Simpan</button>
-                        <button type="button" data-modal-target="sourceModal" onclick="sourceModalClose(this)"
-                            class="bg-red-500 m-2 w-40 h-10 rounded-xl text-white hover:shadow-lg hover:bg-red-600">Batal</button>
-                    </div>
-                </form>
-            </div>
+    <div id="modal-formatif" class="hidden fixed inset-0 flex justify-center items-center z-50">
+        <!-- Backdrop Blur -->
+        <div class="absolute inset-0 bg-black opacity-50 backdrop-blur-sm"></div>
+        <div class="bg-white rounded-lg p-6 lg:w-4/12 w-full shadow-xl z-10">
+            <h2 class="text-lg font-bold mb-4 bg-amber-50 pl-6 pr-6 p-2 rounded-xl">Formatif</h2>
+            <form id="formatifForm" action="{{ route('jadwal_reguler.formatif_add') }}" method="post"
+                enctype="multipart/form-data" class="w-full">
+                @csrf
+                <input type="hidden" value="{{ $idJadwal }}" name="id_jadwal">
+                <p id="modal-content"></p>
+                <hr class="mt-4 border-2">
+                <button type="submit" id="submitFormatif" class="mt-4 bg-sky-500 text-white px-4 py-2 rounded">
+                    Submit
+                </button>
+                <button onclick="closeModalFormatif(event)" class="mt-4 bg-red-500 text-white px-4 py-2 rounded">
+                    Tutup
+                </button>
+            </form>
         </div>
     </div>
+
+    <div id="modal-formatif-update" class="hidden fixed inset-0 flex justify-center items-center z-50">
+        <!-- Backdrop Blur -->
+        <div class="absolute inset-0 bg-black opacity-50 backdrop-blur-sm"></div>
+
+        <div class="bg-white rounded-lg p-6 lg:w-4/12 w-full shadow-xl z-10">
+            <h2 class="text-lg font-bold mb-4 bg-amber-50 pl-6 pr-6 p-2 rounded-xl">Edit Formatif</h2>
+
+            <form id="formatifFormUpdate" method="post" enctype="multipart/form-data" class="w-full">
+                @csrf
+                @method('PATCH')
+                <input type="hidden" id="formatif-id" name="id">
+
+                <div id="modal-content-update"></div>
+
+                <hr class="mt-4 border-2">
+
+                <button type="submit" id="submitFormatifUpdate"
+                    class="mt-4 bg-sky-500 text-white px-4 py-2 rounded">
+                    Submit
+                </button>
+
+                <button onclick="closeModalFormatifUpdate(event)"
+                    class="mt-4 bg-red-500 text-white px-4 py-2 rounded">
+                    Tutup
+                </button>
+            </form>
+        </div>
+    </div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+
     <script>
-        const editSourceModal = (button) => {
-            const formModal = document.getElementById('formSourceModal');
-            const modalTarget = button.dataset.modalTarget;
-            const id_presensi = button.dataset.id_presensi;
-            const file_materi = button.dataset.file_materi;
-            const materi = button.dataset.materi;
-            let url = "{{ route('presensi.materi_update', ':id') }}".replace(':id', id_presensi);
-            let status = document.getElementById(modalTarget);
-
-            // Set modal title and fields
-            document.getElementById('title_source').innerText = `Update Materi ${id_presensi}`;
-            document.getElementById('id_presensis').value = id_presensi;
-            document.getElementById('file_materis').value = file_materi;
-            document.getElementById('materis').value = materi;
-            document.getElementById('formSourceButton').innerText = 'Simpan';
-            formModal.setAttribute('action', url);
-
-            // Add CSRF token if not already present
-            if (!document.querySelector('#formSourceModal input[name="_token"]')) {
-                let csrfToken = document.createElement('input');
-                csrfToken.setAttribute('type', 'hidden');
-                csrfToken.setAttribute('name', '_token');
-                csrfToken.setAttribute('value', '{{ csrf_token() }}');
-                formModal.appendChild(csrfToken);
-            }
-
-            // Add method input for PATCH if not already present
-            if (!document.querySelector('#formSourceModal input[name="_method"]')) {
-                let methodInput = document.createElement('input');
-                methodInput.setAttribute('type', 'hidden');
-                methodInput.setAttribute('name', '_method');
-                methodInput.setAttribute('value', 'PATCH');
-                formModal.appendChild(methodInput);
-            }
-
-            status.classList.toggle('hidden');
+        const dataDelete = async (id) => {
+            Swal.fire({
+                title: `Apakah Anda yakin?`,
+                text: `Data akan dihapus secara permanen!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await axios.delete(`/testFormatif/${id}`, {
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        })
+                        .then(response => {
+                            Swal.fire({
+                                title: 'Terhapus!',
+                                text: 'Data berhasil dihapus.',
+                                icon: 'success',
+                                confirmButtonText: 'OK',
+                                allowOutsideClick: false
+                            }).then(() => {
+                                location.reload();
+                            });
+                        })
+                        .catch(error => {
+                            Swal.fire({
+                                title: 'Gagal!',
+                                text: 'Terjadi kesalahan saat menghapus data.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                            console.log(error);
+                        });
+                }
+            });
         };
-
-        const sourceModalClose = (button) => {
-            const modalTarget = button.dataset.modalTarget;
-            let status = document.getElementById(modalTarget);
-            status.classList.toggle('hidden');
-        }
     </script>
+    <script>
+        function formatif() {
+            const modalContent = document.getElementById("modal-content");
+            modalContent.innerHTML = `
+                <div class="flex flex-col w-full">
+                    <lable>Judul Formatif</lable>
+                    <input type="text" id="judul_formatif" name="judul_formatif" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Masukan Judul Formatif disini ..." oninput="this.value = this.value.toUpperCase();"/>
+                </div>
+                <div class="flex flex-col w-full mt-4">
+                    <lable>Deadline</lable>
+                    <input type="datetime-local" id="deadline" name="deadline" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Masukan Judul Formatif disini ..." oninput="this.value = this.value.toUpperCase();"/>
+                </div>
+                <div class="flex flex-col w-full mt-4">
+                    <lable>File Soal Formatif</lable>
+                    <input type="file" id="file" name="file" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Masukan Judul Formatif disini ..." oninput="this.value = this.value.toUpperCase();"/>
+                </div>
+            `;
+            const modal = document.getElementById("modal-formatif");
+            modal.classList.remove("hidden");
+        }
+
+        function closeModalFormatif(event) {
+            event.preventDefault(); // Mencegah form submit
+            const modal = document.getElementById("modal-formatif");
+            modal.classList.add("hidden");
+        }
+
+        function formatifUpdate(button) {
+            const modal = document.getElementById("modal-formatif-update");
+            const modalContent = document.getElementById("modal-content-update");
+            const form = document.getElementById("formatifFormUpdate");
+
+            if (!modal || !modalContent || !form) {
+                console.error("Modal atau modal-content tidak ditemukan!");
+                return;
+            }
+
+            // Ambil data dari tombol yang diklik
+            const id = button.getAttribute("data-id") || "";
+            const judul = button.getAttribute("data-judul") || "";
+            const deadline = button.getAttribute("data-deadline") || "";
+            const formatif = button.getAttribute("data-formatif") || "";
+            const actionUrl = button.getAttribute("data-action"); // Ambil URL dari data-action
+
+            console.log("URL:", actionUrl);
+            console.log("ID:", id);
+            console.log("Judul:", judul);
+            console.log("Deadline:", deadline);
+            console.log("Formatif:", formatif);
+
+            // Isi modal dengan data yang benar
+            modalContent.innerHTML = `
+        <div class="flex flex-col w-full">
+            <label class="font-semibold">Judul Formatif</label>
+            <input type="text" id="judul_formatif-update" name="judul_formatif" value="${judul}"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" oninput="this.value = this.value.toUpperCase();" />
+        </div>
+        <div class="flex flex-col w-full mt-4">
+            <label class="font-semibold">Deadline</label>
+            <input type="datetime-local" id="deadline-update" name="deadline" value="${deadline}"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"/>
+        </div>
+        <div class="flex flex-col w-full mt-4">
+            <label class="font-semibold">File Sebelumnya</label>
+            <input type="text" id="formatif-update" name="formatif" value="${formatif}"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly/>
+        </div>
+        <div class="flex flex-col w-full mt-4">
+            <label class="font-semibold">File Baru</label>
+            <input type="file" id="file" name="file" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"/>
+        </div>
+    `;
+
+            // Atur action pada form
+            form.setAttribute('action', actionUrl);
+
+            // Tampilkan modal
+            modal.classList.remove("hidden");
+        }
+
+
+        function closeModalFormatifUpdate(event) {
+            event.preventDefault(); // Mencegah submit form jika ada
+            const modal = document.getElementById("modal-formatif-update");
+            if (modal) {
+                modal.classList.add("hidden");
+            } else {
+                console.error("Modal tidak ditemukan!");
+            }
+        }
+
+        const form = document.getElementById('informasiForm');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Mencegah form dikirim
+
+            let isValid = true;
+
+            // Validasi Mata Kuliah
+            const judul = document.getElementById('judul');
+            const errorJudul = document.getElementById('error-judul');
+            if (judul.value === '') {
+                errorJudul.classList.remove('hidden');
+                isValid = false;
+            } else {
+                errorJudul.classList.add('hidden');
+            }
+
+            // Validasi Mata Kuliah
+            const informasi = document.getElementById('informasi');
+            const errorInformasi = document.getElementById('error-informasi');
+            if (informasi.value === '') {
+                errorInformasi.classList.remove('hidden');
+                isValid = false;
+            } else {
+                errorInformasi.classList.add('hidden');
+            }
+
+            // Validasi Mata Kuliah
+            const kategori = document.getElementById('kategori');
+            const errorKategori = document.getElementById('error-kategori');
+            if (kategori.value === '') {
+                errorKategori.classList.remove('hidden');
+                isValid = false;
+            } else {
+                errorKategori.classList.add('hidden');
+            }
+
+            // Jika validasi lolos, kirim form
+            if (isValid) {
+                form.submit();
+            }
+        });
+    </script>
+    @push('scripts')
+
+        @if (session('message_insert'))
+            <script>
+                Swal.fire({
+                    title: 'Berhasil!',
+                    text: "{{ session('message_insert') }}",
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        const swalBtn = Swal.getConfirmButton();
+                        swalBtn.disabled = false;
+                        swalBtn.textContent = "OK";
+                    }
+                });
+            </script>
+        @endif
+
+        @if (session('message_update'))
+            <script>
+                Swal.fire({
+                    title: 'Update Berhasil!',
+                    text: "{{ session('message_update') }}",
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        const swalBtn = Swal.getConfirmButton();
+                        swalBtn.disabled = false;
+                        swalBtn.textContent = "OK";
+                    }
+                });
+            </script>
+        @endif
+
+    @endpush
+
 </x-app-layout>

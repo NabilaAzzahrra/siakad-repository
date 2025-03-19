@@ -144,7 +144,7 @@
                                                     <td class="px-6 py-4 text-center">
                                                         {{ $j->sks }}
                                                     </td>
-                                                    <td class="px-6 py-4 bg-gray- text-center">
+                                                    <td class="px-6 py-4 bg-gray-100 text-center">
                                                         {{ $j->ruang }}
                                                     </td>
                                                     <td class="px-6 py-4 text-center">
@@ -269,20 +269,85 @@
         }
 
         const jadwalDelete = async (id_jadwal, materi_ajar) => {
-            let tanya = confirm(
-                `Apakah anda yakin untuk menghapus Jadwal ${id_jadwal} untuk materi ${materi_ajar}?`);
-            if (tanya) {
-                try {
+            Swal.fire({
+                title: `Apakah Anda yakin?`,
+                text: `Data akan dihapus secara permanen!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
                     await axios.post(`/jadwal_reguler/${id_jadwal}`, {
-                        '_method': 'DELETE',
-                        '_token': $('meta[name="csrf-token"]').attr('content')
-                    });
-                    location.reload(); // Refresh halaman setelah berhasil menghapus
-                } catch (error) {
-                    alert('Terjadi kesalahan saat menghapus data.');
-                    console.log(error);
+                            '_method': 'DELETE',
+                            '_token': $('meta[name="csrf-token"]').attr('content')
+                        })
+                        .then(function(response) {
+                            Swal.fire({
+                                title: 'Terhapus!',
+                                text: `Data berhasil dihapus.`,
+                                icon: 'success',
+                                confirmButtonText: 'OK',
+                                allowOutsideClick: false
+                            }).then(() => {
+                                // Refresh halaman setelah menekan tombol OK
+                                location.reload();
+                            });
+                        })
+                        .catch(function(error) {
+                            // Alert jika terjadi kesalahan
+                            Swal.fire({
+                                title: 'Gagal!',
+                                text: 'Terjadi kesalahan saat menghapus data.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                            console.log(error);
+                        });
                 }
-            }
+            });
         };
     </script>
+    @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+
+        @if (session('message_insert'))
+            <script>
+                Swal.fire({
+                    title: 'Berhasil!',
+                    text: "{{ session('message_insert') }}",
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        const swalBtn = Swal.getConfirmButton();
+                        swalBtn.disabled = false;
+                        swalBtn.textContent = "OK";
+                    }
+                });
+            </script>
+        @endif
+
+        @if (session('message_update'))
+            <script>
+                Swal.fire({
+                    title: 'Update Berhasil!',
+                    text: "{{ session('message_update') }}",
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        const swalBtn = Swal.getConfirmButton();
+                        swalBtn.disabled = false;
+                        swalBtn.textContent = "OK";
+                    }
+                });
+            </script>
+        @endif
+
+    @endpush
+
 </x-app-layout>

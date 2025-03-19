@@ -1,19 +1,27 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight flex text-wrap text-md">
-            <div class="flex items-center">Jadwal Materi Ajar<i class="fi fi-rr-caret-right mt-1"></i> <span class="text-red-500">Tambah Jadwal Materi Ajar</span></div>
-        </h2>
+        <p class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
+        <div class="flex items-center font-bold">Jadwal Pembelajaran<i class="fi fi-rr-caret-right mt-1"></i> <span
+                class="text-amber-100">Tambah Jadwal Pembelajaran</span></div>
+        </p>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
-            <div class="w-full p-3">
-                <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900 dark:text-gray-100">
-                        <div class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                            FORM INPUT JADWAL REGULER
+            <div class="w-full">
+                <div
+                    class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl">
+                    <div class="flex px-12 pt-8">
+                        <div class="w-10">
+                            <img src="{{ url('img/cells.png') }}" alt="Icon 1" class="">
                         </div>
-                        <form action="{{ route('jadwal_reguler.store') }}" method="post">
+                        <div class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                            DATA JADWAL PEMBELAJARAN
+                        </div>
+                    </div>
+                    <hr class="border mt-2 border-black border-opacity-30 mx-12">
+                    <div class="p-6 text-gray-900 dark:text-gray-100">
+                        <form action="{{ route('jadwal_reguler.store') }}" method="post" id="jadwalForm">
                             @csrf
                             <div class="p-4 rounded-xl">
                                 <input type="hidden" value="{{ $konfigurasi->jml_pertemuan }}" name="jml_pertemuan">
@@ -26,12 +34,14 @@
                                             </label>
                                             <select
                                                 class="js-example-placeholder-single js-states form-control w-full m-6"
-                                                name="hari" data-placeholder="Pilih Hari">
+                                                id="hari" name="hari" data-placeholder="Pilih Hari">
                                                 <option value="">Pilih...</option>
                                                 @foreach ($hari as $k)
-                                                <option value="{{ $k->id }}">{{ $k->hari }}</option>
+                                                    <option value="{{ $k->id }}">{{ $k->hari }}</option>
                                                 @endforeach
                                             </select>
+                                            <p id="error-hari" class="mt-2 text-sm text-red-500 hidden">Hari wajib
+                                                diisi.</p>
                                         </div>
                                         <div class="lg:mb-5 w-full">
                                             <label for="pukul"
@@ -40,12 +50,15 @@
                                             </label>
                                             <select
                                                 class="js-example-placeholder-single js-states form-control w-full m-6"
-                                                name="sesi" data-placeholder="Pilih Sesi" onchange="getsesi()">
+                                                id="sesi" name="sesi" data-placeholder="Pilih Sesi"
+                                                onchange="getsesi()">
                                                 <option value="">Pilih...</option>
                                                 @foreach ($sesi as $k)
-                                                <option value="{{ $k->id }}">{{ $k->sesi }}</option>
+                                                    <option value="{{ $k->id }}">{{ $k->sesi }}</option>
                                                 @endforeach
                                             </select>
+                                            <p id="error-sesi" class="mt-2 text-sm text-red-500 hidden">Sesi wajib
+                                                diisi.</p>
                                         </div>
                                     </div>
 
@@ -57,18 +70,20 @@
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 placeholder="Masukan Pukul disini ..." value="{{ old('pukul') }}"
                                                 readonly />
+                                            <p id="error-pukul" class="mt-2 text-sm text-red-500 hidden">Pukul wajib
+                                                diisi.</p>
                                         </div>
                                         <div class="lg:mb-5 w-full">
                                             <label for="sesi_dua"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                                Sesi <span class="text-red-500">*</span>
+                                                Sesi
                                             </label>
                                             <select
                                                 class="js-example-placeholder-single js-states form-control w-full m-6"
                                                 name="sesi_dua" data-placeholder="Pilih Sesi" onchange="getsesiDua()">
                                                 <option value="">Pilih...</option>
                                                 @foreach ($sesi as $k)
-                                                <option value="{{ $k->id }}">{{ $k->sesi }}</option>
+                                                    <option value="{{ $k->id }}">{{ $k->sesi }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -86,16 +101,20 @@
                                             <label for="kurikulum"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Materi
                                                 Ajar <span class="text-red-500">*</span></label>
-                                            <select class="js-example-placeholder-single js-states form-control w-full m-6"
-                                                name="kurikulum" data-placeholder="Pilih Materi Ajar"
+                                            <select
+                                                class="js-example-placeholder-single js-states form-control w-full m-6"
+                                                id="kurikulum" name="kurikulum" data-placeholder="Pilih Materi Ajar"
                                                 onchange="getdetailkurikulum()">
                                                 <option value="">Pilih...</option>
                                                 @foreach ($kurikulum as $k)
-                                                <option value="{{ $k->id_materi_ajar }}">
-                                                    {{ $k->materi_ajar->materi_ajar }}
-                                                </option>
+                                                    <option value="{{ $k->id_materi_ajar }}">
+                                                        {{ $k->materi_ajar->materi_ajar }}
+                                                    </option>
                                                 @endforeach
                                             </select>
+                                            <p id="error-kurikulum" class="mt-2 text-sm text-red-500 hidden">Materi
+                                                wajib
+                                                diisi.</p>
                                         </div>
                                     </div>
 
@@ -105,8 +124,11 @@
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Semester</label>
                                             <input type="text" id="semester" name="semester"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Masukan Semester disini ..." value="{{ old('semester') }}"
-                                                readonly />
+                                                placeholder="Masukan Semester disini ..."
+                                                value="{{ old('semester') }}" readonly />
+                                            <p id="error-semester" class="mt-2 text-sm text-red-500 hidden">Semester
+                                                wajib
+                                                diisi.</p>
                                         </div>
                                         <div class="lg:mb-5 w-full">
                                             <label for="sks"
@@ -115,6 +137,8 @@
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 placeholder="Masukan SKS disini ..." value="{{ old('sks') }}"
                                                 readonly />
+                                            <p id="error-sks" class="mt-2 text-sm text-red-500 hidden">Sks wajib
+                                                diisi.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -125,12 +149,14 @@
                                             Ruang <span class="text-red-500">*</span>
                                         </label>
                                         <select class="js-example-placeholder-single js-states form-control w-full m-6"
-                                            name="ruang" data-placeholder="Pilih Ruang">
+                                            id="ruang" name="ruang" data-placeholder="Pilih Ruang">
                                             <option value="">Pilih...</option>
                                             @foreach ($ruang as $k)
-                                            <option value="{{ $k->id }}">{{ $k->ruang }}</option>
+                                                <option value="{{ $k->id }}">{{ $k->ruang }}</option>
                                             @endforeach
                                         </select>
+                                        <p id="error-ruang" class="mt-2 text-sm text-red-500 hidden">Ruang wajib
+                                            diisi.</p>
                                     </div>
                                     <div class="lg:mb-5 w-full">
                                         <label for="dosen"
@@ -138,12 +164,14 @@
                                             Dosen <span class="text-red-500">*</span>
                                         </label>
                                         <select class="js-example-placeholder-single js-states form-control w-full m-6"
-                                            name="dosen" data-placeholder="Pilih Dosen">
+                                            id="dosen" name="dosen" data-placeholder="Pilih Dosen">
                                             <option value="">Pilih...</option>
                                             @foreach ($dosen as $k)
-                                            <option value="{{ $k->id }}">{{ $k->nama_dosen }}</option>
+                                                <option value="{{ $k->id }}">{{ $k->nama_dosen }}</option>
                                             @endforeach
                                         </select>
+                                        <p id="error-dosen" class="mt-2 text-sm text-red-500 hidden">Dosen wajib
+                                            diisi.</p>
                                     </div>
                                     <div class="lg:mb-5 w-full">
                                         <label for="kelas"
@@ -151,20 +179,26 @@
                                             Kelas <span class="text-red-500">*</span>
                                         </label>
                                         <select class="js-example-placeholder-single js-states form-control w-full m-6"
-                                            name="kelas" data-placeholder="Pilih Kelas" onchange="getkelas()">
+                                            id="kelas" name="kelas" data-placeholder="Pilih Kelas"
+                                            onchange="getkelas()">
                                             <option value="">Pilih...</option>
                                             @foreach ($kelas as $k)
-                                            <option value="{{ $k->id }}">{{ $k->kelas }}</option>
+                                                <option value="{{ $k->id }}">{{ $k->kelas }}</option>
                                             @endforeach
                                         </select>
+                                        <p id="error-kelas" class="mt-2 text-sm text-red-500 hidden">Kelas wajib
+                                            diisi.</p>
                                     </div>
                                     <div class="mb-5 w-full">
                                         <label for="jurusan"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Program Studi</label>
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Program
+                                            Studi</label>
                                         <input type="text" id="jurusan" name="jurusan"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="Masukan Program Studi disini ..." value="{{ old('jurusan') }}"
-                                            readonly />
+                                            placeholder="Masukan Program Studi disini ..."
+                                            value="{{ old('jurusan') }}" readonly />
+                                        <p id="error-jurusan" class="mt-2 text-sm text-red-500 hidden">Jurusan wajib
+                                            diisi.</p>
                                     </div>
                                 </div>
                                 <div hidden>
@@ -178,7 +212,8 @@
                                         value="{{ $konfigurasi->id_perhitungan }}">
                                 </div>
                                 <button type="submit"
-                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i class="fi fi-rr-disk "></i></button>
+                                    class="text-blue-700 hover:bg-blue-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm border border-dashed border-blue-700 w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i
+                                        class="fi fi-rr-disk mr-2"></i> Simpan</button>
                             </div>
                         </form>
                     </div>
@@ -188,6 +223,119 @@
     </div>
 </x-app-layout>
 <script>
+    const form = document.getElementById('jadwalForm');
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault(); // Mencegah form dikirim
+
+        let isValid = true;
+
+        // Validasi Mata Kuliah
+        const hari = document.getElementById('hari');
+        const errorHari = document.getElementById('error-hari');
+        if (hari.value === '') {
+            errorHari.classList.remove('hidden');
+            isValid = false;
+        } else {
+            errorHari.classList.add('hidden');
+        }
+
+        // Validasi Mata Kuliah
+        const sesi = document.getElementById('sesi');
+        const errorSesi = document.getElementById('error-sesi');
+        if (sesi.value === '') {
+            errorSesi.classList.remove('hidden');
+            isValid = false;
+        } else {
+            errorSesi.classList.add('hidden');
+        }
+
+        // Validasi Mata Kuliah
+        const pukul = document.getElementById('pukul');
+        const errorPukul = document.getElementById('error-pukul');
+        if (pukul.value === '') {
+            errorPukul.classList.remove('hidden');
+            isValid = false;
+        } else {
+            errorPukul.classList.add('hidden');
+        }
+
+        // Validasi Mata Kuliah
+        const kurikulum = document.getElementById('kurikulum');
+        const errorKurikulum = document.getElementById('error-kurikulum');
+        if (kurikulum.value === '') {
+            errorKurikulum.classList.remove('hidden');
+            isValid = false;
+        } else {
+            errorKurikulum.classList.add('hidden');
+        }
+
+        // Validasi Mata Kuliah
+        const semester = document.getElementById('semester');
+        const errorSemester = document.getElementById('error-semester');
+        if (semester.value === '') {
+            errorSemester.classList.remove('hidden');
+            isValid = false;
+        } else {
+            errorSemester.classList.add('hidden');
+        }
+
+        // Validasi Mata Kuliah
+        const sks = document.getElementById('sks');
+        const errorSks = document.getElementById('error-sks');
+        if (sks.value === '') {
+            errorSks.classList.remove('hidden');
+            isValid = false;
+        } else {
+            errorSks.classList.add('hidden');
+        }
+
+        // Validasi Mata Kuliah
+        const ruang = document.getElementById('ruang');
+        const errorRuang = document.getElementById('error-ruang');
+        if (ruang.value === '') {
+            errorRuang.classList.remove('hidden');
+            isValid = false;
+        } else {
+            errorRuang.classList.add('hidden');
+        }
+
+        // Validasi Mata Kuliah
+        const dosen = document.getElementById('dosen');
+        const errorDosen = document.getElementById('error-dosen');
+        if (dosen.value === '') {
+            errorDosen.classList.remove('hidden');
+            isValid = false;
+        } else {
+            errorDosen.classList.add('hidden');
+        }
+
+        // Validasi Mata Kuliah
+        const kelas = document.getElementById('kelas');
+        const errorKelas = document.getElementById('error-kelas');
+        if (kelas.value === '') {
+            errorKelas.classList.remove('hidden');
+            isValid = false;
+        } else {
+            errorKelas.classList.add('hidden');
+        }
+
+        // Validasi Mata Kuliah
+        const jurusan = document.getElementById('jurusan');
+        const errorJurusan = document.getElementById('error-jurusan');
+        if (jurusan.value === '') {
+            errorJurusan.classList.remove('hidden');
+            isValid = false;
+        } else {
+            errorJurusan.classList.add('hidden');
+        }
+
+        // Jika validasi lolos, kirim form
+        if (isValid) {
+            form.submit();
+        }
+    });
+
     const getsesi = async () => {
         var selectedOption = document.querySelector('[name="sesi"] option:checked');
         var sesiId = selectedOption.value;
@@ -224,28 +372,29 @@
         }
     };
 
-        const getdetailkurikulum = async () => {
-            var selectedOption = document.querySelector('[name="kurikulum"] option:checked');
-            var kurikulumId = selectedOption.value;
+    const getdetailkurikulum = async () => {
+        var selectedOption = document.querySelector('[name="kurikulum"] option:checked');
+        var kurikulumId = selectedOption.value;
 
-            if (kurikulumId) {
-                await axios.get(`/api/kurikulum_matkul/${kurikulumId}`)
-                    .then((response) => {
-                        console.log(response.data.kurikulum.semester.semester);
-                        const data = response.data;
-                        if (data && data.kurikulum.semester) {
-                            document.getElementById('semester').value = response.data.kurikulum.semester.semester;
-                            document.getElementById('sks').value = response.data.kurikulum.sks;
-                        }
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
-            } else {
-                document.getElementById('semester').value = '';
-                document.getElementById('sks').value = '';
-            }
-        };
+        if (kurikulumId) {
+            await axios.get(`/api/kurikulum_matkul/${kurikulumId}`)
+                .then((response) => {
+                    console.log(response.data.kurikulum.semester.semester);
+                    const data = response.data;
+                    if (data && data.kurikulum.semester) {
+                        document.getElementById('semester').value = response.data.kurikulum.semester
+                            .semester;
+                        document.getElementById('sks').value = response.data.kurikulum.sks;
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        } else {
+            document.getElementById('semester').value = '';
+            document.getElementById('sks').value = '';
+        }
+    };
 
     const getkelas = async () => {
         var selectedOption = document.querySelector('[name="kelas"] option:checked');

@@ -156,7 +156,7 @@ class JadwalregulerController extends Controller
         Jadwalreguler::create($data);
         return redirect()
             ->route('jadwal_reguler.index')
-            ->with('message', 'Data Jadwal Reguler sudah ditambahkan');
+            ->with('message_insert', 'Data Berhasil ditambahkan');
     }
 
     /**
@@ -164,12 +164,48 @@ class JadwalregulerController extends Controller
      */
     public function show(string $id)
     {
-        $presensi = Presensi::where('id_jadwal', $id)->get();
+        /*$presensi = Presensi::where('id_jadwal', $id)->get();
         $jadwal = Jadwalreguler::where('id_jadwal', $id)->first();
         return view('page.jadwalreguler.show')->with([
             'presensi' => $presensi,
             'jadwal' => $jadwal
-        ]);
+        ]);*/
+
+        try {
+            $idJadwal = $id;
+            $jadwal = Jadwalreguler::where('id_jadwal', $id)->first();
+
+            $page = request()->input('page', 1);
+            $entries = request()->input('entries', 10);
+            $search = request()->input('search');
+
+            $query = Presensi::query()->where('id_jadwal', $id)->orderBy('pertemuan', 'ASC');
+
+
+            if ($search) {
+                $query->where('materi', 'like', '%' . $search . '%');
+            }
+
+            $presensi = $query->paginate($entries);
+
+            // FORMATIF //
+            $pageFormatif = request()->input('pageFormatif', 1);
+            $entriesFormatif = request()->input('entriesFormatif', 10);
+            $searchFormatif = request()->input('searchFormatif');
+            $queryFormatif = Formatif::query()->where('id_jadwal', $id)->orderBy('created_at', 'ASC');
+            if ($searchFormatif) {
+                $queryFormatif->where('judul_formatif', 'like', '%' . $searchFormatif . '%');
+            }
+
+            $formatif = $queryFormatif->paginate($entriesFormatif);
+
+            return view('page.jadwalreguler.show', compact(['presensi', 'idJadwal', 'jadwal', 'formatif']))
+                ->with('i', ($page - 1) * $entries)
+                ->with('i', ($pageFormatif - 1) * $entriesFormatif);
+        } catch (\Exception $e) {
+            echo "<script>console.error('PHP Error: " . addslashes($e->getMessage()) . "');</script>";
+            return view('error.index');
+        }
     }
 
     /**
@@ -274,7 +310,7 @@ class JadwalregulerController extends Controller
         $datas->update($data);
         return redirect()
             ->route('jadwal_reguler.index')
-            ->with('message', 'Data Jadwal Reguler Sudah diupdate');
+            ->with('message_update', 'Data Jadwal Reguler Sudah diupdate');
     }
 
     /**
@@ -340,7 +376,7 @@ class JadwalregulerController extends Controller
             ];
 
             Formatif::create($data);
-            return back()->with('message_delete', 'Data Formatif Sudah Ditambahkan');
+            return back()->with('message_insert', 'Data Formatif Sudah Ditambahkan');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
         }
@@ -379,12 +415,11 @@ class JadwalregulerController extends Controller
         // Simpan perubahan ke database
         $formatif->save();
 
-        return back()->with('message_delete', 'Data Formatif Sudah Diubah');
+        return back()->with('message_update', 'Data Formatif Sudah Diubah');
     }
 
     public function formatif_destroy($id)
     {
-        // Cari dan hapus data berdasarkan ID
         $formatif = Formatif::find($id);
 
         if ($formatif) {
@@ -392,9 +427,9 @@ class JadwalregulerController extends Controller
                 unlink(public_path('formatif/' . $formatif->formatif));
             }
             $formatif->delete();
-            return redirect()->route('jadwal_reguler.index')->with('success', 'Data berhasil dihapus.');
+            return back()->with('message_delete', 'Data Informasi Sudah dihapus');
         } else {
-            return redirect()->route('jadwal_reguler.index')->with('error', 'Data tidak ditemukan.');
+            return back()->with('message_error', 'Tidak dapat menghapus data');
         }
     }
 
@@ -408,15 +443,31 @@ class JadwalregulerController extends Controller
 
     public function formatif_answer(string $id)
     {
-        $detail = DetailFormatif::where('id_formatif', $id)->get();
+        $page = request()->input('page', 1);
+        $entries = request()->input('entries', 10);
+        $search = request()->input('search');
+
+        $query = DetailFormatif::query()
+            ->join('mahasiswa', 'mahasiswa.nim', '=', 'detail_formatif.nim')
+            ->where('id_formatif', $id)
+            ->select(
+                'detail_formatif.id as id_detail',
+                'detail_formatif.*',
+                'mahasiswa.*'
+            );;
+
+        if ($search) {
+            $query->where('nama', 'like', '%' . $search . '%');
+        }
+        $detail = $query->paginate($entries);
+
         $detail_mhs = DetailFormatif::where('id_formatif', $id)->where('nim', Auth::user()->email)->get();
         $formatif = Formatif::where('id_formatif', $id)->first();
-        // dd($formatif);
-        return view('page.jadwalreguler.formatif_answer')->with([
-            'detail' => $detail,
+
+        return view('page.jadwalreguler.formatif_answer', compact(['detail']))->with([
             'formatif' => $formatif,
             'detail_mhs' => $detail_mhs,
-        ]);
+        ])->with('i', ($page - 1) * $entries);
     }
 
     public function jadwal_mhs(string $id)
