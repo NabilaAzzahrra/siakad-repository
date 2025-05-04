@@ -13,7 +13,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden sm:flex sm:items-center sm:ms-6">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        <div class="text-[16px] font-bold tracking-wide">Dashboard</div>
+                        <div class="text-[16px] font-bold tracking-wide">DashboardDDDDDDDDD</div>
                     </x-nav-link>
                 </div>
 
