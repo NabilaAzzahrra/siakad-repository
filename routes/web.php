@@ -65,6 +65,7 @@ use App\Http\Controllers\UjianUTSMhsController;
 use App\Http\Controllers\UtsController;
 use App\Http\Controllers\verifikasiPembimbingController;
 use App\Http\Controllers\verifikasiPemngujiController;
+use App\Http\Middleware\RoleMiddleware;
 use App\Models\DetailPresensi;
 use App\Models\Dosen;
 use App\Models\Informasi;
@@ -81,8 +82,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('ruang', RuangController::class)->middleware(['auth']);
-Route::resource('sesi', SesiController::class)->middleware(['auth']);
+Route::resource('ruang', RuangController::class)->middleware(['auth', RoleMiddleware::class]);
+Route::resource('sesi', SesiController::class)->middleware(['auth', RoleMiddleware::class]);
 Route::resource('pukul', PukulController::class)->middleware(['auth']);
 Route::resource('jurusan', JurusanController::class)->middleware(['auth']);
 Route::resource('kelas', KelasController::class)->middleware(['auth']);
@@ -132,6 +133,8 @@ Route::resource('testFormatif', FormatifController::class)->middleware(['auth'])
 Route::get('/get-pengajuan-judul', [PengajuanJudulController::class, 'getPengajuanJudul']);
 Route::patch('/update-pengajuan-judul/{id}', [PengajuanJudulController::class, 'update'])->name('pengajuanJudul.update');
 Route::patch('/update-daftar-sidang/{id}', [DaftarSidangController::class, 'update'])->name('daftarSidang.update');
+
+Route::get('/printPresensiDosen/{id}', [ReportDosenController::class, 'printPresensiDosen'])->name('report_dosen.printPresensiDosen');
 
 Route::get('/print_jadwal', [JadwalRegulerController::class, 'print_jadwal'])->name('jadwal_reguler.print_jadwal');
 Route::get('/print_jadwal_mhs/{id}', [JadwalRegulerController::class, 'print_jadwal_mhs'])->name('jadwal_reguler.print_jadwal_mhs');
@@ -192,6 +195,8 @@ Route::resource('verifikasiPembimbing', verifikasiPembimbingController::class)->
 Route::resource('verifikasiPenguji', verifikasiPemngujiController::class)->middleware(['auth']);
 Route::resource('nilaiPenguji', NilaiPengujiController::class)->middleware(['auth']);
 Route::resource('inputNilaiPembimbing', NilaiPembimbingController::class)->middleware(['auth']);
+
+Route::post('/storeTranskrip', [TranskripController::class, 'storeTranskrip'])->name('transkrip.storeTranskrip');
 
 // Route::patch('/verifikasi/{id}', [MahasiswaBimbinganController::class, 'verifikasi'])->name('mahasiswaBimbingan.verifikasi');
 Route::get('/mahasiswaBimbingan/verifikasi/{id}', [MahasiswaBimbinganController::class, 'verifikasi'])->name('mahasiswaBimbingan.verifikasi');

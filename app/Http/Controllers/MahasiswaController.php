@@ -116,7 +116,7 @@ class MahasiswaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('page.mahasiswa.show');
     }
 
     /**

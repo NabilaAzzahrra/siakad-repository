@@ -17,7 +17,7 @@ class ReportDosenController extends Controller
      */
     public function index(Request $request)
     {
-        $dosen = Dosen::query()  // Gunakan model Eloquent
+        /*$dosen = Dosen::query()  // Gunakan model Eloquent
             ->when($request->input('search'), function ($query) use ($request) {
                 $search = $request->input('search');
                 $query->where('nama_dosen', 'like', '%' . $search . '%')
@@ -26,13 +26,26 @@ class ReportDosenController extends Controller
             })
             ->paginate(30);
 
-        // Untuk AJAX request
         if ($request->ajax()) {
             return view('partials.reportDosen', compact('dosen'))->render();
         }
 
-        // Untuk request biasa (non-AJAX)
-        return view('page.report.dosen', compact('dosen'));
+        return view('page.report.dosen', compact('dosen'));*/
+
+        $page = request()->input('page', 1);
+        $entries = request()->input('entries', 10);
+        $search = request()->input('search');
+
+        $query = Dosen::query();
+
+        if ($search) {
+            $query->where('nama_dosen', 'like', '%' . $search . '%');
+        }
+
+        $dosen = $query->paginate($entries);
+
+        return view('page.report.dosen', compact('dosen'))
+            ->with('i', ($page - 1) * $entries);
     }
 
     /**
@@ -58,14 +71,26 @@ class ReportDosenController extends Controller
     {
         $konfigurasi = Konfigurasi::first();
         $id_tahun_akademik = $konfigurasi->id_tahun_akademik;
+        $id_dosen = $id;
 
-        $jadwal = Jadwalreguler::where('id_dosen', $id)
-            ->where('id_tahun_akademik', $id_tahun_akademik)
-            ->get();
+        $page = request()->input('page', 1);
+        $entries = request()->input('entries', 10);
+        $search = request()->input('search');
 
-        return view('page.report.show')->with([
-            'jadwal' => $jadwal,
-        ]);
+        $query = Jadwalreguler::query()
+            ->join('detail_kurikulum', 'jadwal_reguler.id_detail_kurikulum', '=', 'detail_kurikulum.id_materi_ajar')
+            ->join('materi_ajar', 'detail_kurikulum.id_materi_ajar', '=', 'materi_ajar.id')
+            ->where('id_dosen', $id)
+            ->where('id_tahun_akademik', $id_tahun_akademik);
+
+        if ($search) {
+            $query->where('materi_ajar', 'like', '%' . $search . '%')->where('id_dosen', $id)->where('id_tahun_akademik', $id_tahun_akademik);
+        }
+
+        $jadwal = $query->paginate($entries);
+
+        return view('page.report.show', compact(['jadwal', 'id']))
+            ->with('i', ($page - 1) * $entries);
     }
 
     /**
@@ -132,6 +157,17 @@ class ReportDosenController extends Controller
 
         return view('page.report.show_dosen')->with([
             'jadwal' => $jadwal,
+        ]);
+    }
+
+    public function printPresensiDosen(string $id)
+    {
+        $jadwal = Jadwalreguler::where('id', $id)->first();
+        $id_jadwal= $jadwal->id_jadwal;
+        $presensi = Presensi::where('id_jadwal', $id_jadwal)->get();
+        return view('page.report.print')->with([
+            'jadwal' => $jadwal,
+            'presensi' => $presensi,
         ]);
     }
 }

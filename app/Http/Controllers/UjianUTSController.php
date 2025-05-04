@@ -6,6 +6,9 @@ use App\Models\Jadwalreguler;
 use App\Models\Kelas;
 use App\Models\Konfigurasi;
 use App\Models\KonfigurasiUjian;
+use App\Models\Mahasiswa;
+use App\Models\Nilai;
+use App\Models\Tahunakademik;
 use App\Models\Uts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,21 +19,77 @@ class UjianUTSController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $jadwal = Jadwalreguler::all();
+        $page = request()->input('page', 1);
+        $entries = request()->input('entries', 10);
+        $search = request()->input('search');
+
         $uts = Uts::all();
-        $konfigurasi = KonfigurasiUjian::first();
-        $tgl_ujian = $konfigurasi->tgl_ujian;
+        $konfigurasi = Konfigurasi::first();
+        $default_tahun_akademik = $konfigurasi->id_tahun_akademik;
+        $keterangan = $konfigurasi->id_keterangan;
         $tgl_ujian_susulan = $konfigurasi->tgl_susulan;
-        // dd($tgl_ujian_susulan);
-        return view('page.uts.index')->with([
-            'jadwal' => $jadwal,
-            'uts' => $uts,
-            'konfigurasi' => $konfigurasi,
-            'tgl_ujian' => $tgl_ujian,
-            'tgl_ujian_susulan' => $tgl_ujian_susulan,
-        ]);
+
+        $tahun_akademik = $request->input('id_tahun_akademiks', $default_tahun_akademik);
+        $query = Jadwalreguler::query()
+            ->join('detail_kurikulum', 'jadwal_reguler.id_detail_kurikulum', '=', 'detail_kurikulum.id')
+            ->join('dosen', 'jadwal_reguler.id_dosen', '=', 'dosen.id')
+            ->join('hari', 'jadwal_reguler.id_hari', '=', 'hari.id')
+            ->join('sesi as sesi1', 'jadwal_reguler.id_sesi', '=', 'sesi1.id') // Alias untuk sesi pertama
+            ->leftJoin('sesi as sesi2', 'jadwal_reguler.id_sesi2', '=', 'sesi2.id') // Alias untuk sesi kedua
+            ->join('pukul as pukul1', 'sesi1.id_pukul', '=', 'pukul1.id')
+            ->leftJoin('pukul as pukul2', 'sesi2.id_pukul', '=', 'pukul2.id') // Ganti join biasa dengan leftJoin untuk pukul2
+            ->join('ruang', 'jadwal_reguler.id_ruang', '=', 'ruang.id')
+            ->join('kelas', 'jadwal_reguler.id_kelas', '=', 'kelas.id')
+            ->join('materi_ajar', 'detail_kurikulum.id_materi_ajar', '=', 'materi_ajar.id')
+            ->join('semester', 'materi_ajar.id_semester', '=', 'semester.id')
+            ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id')
+            ->select(
+                'jadwal_reguler.*',
+                'jadwal_reguler.id as id_jadwal',
+                'jadwal_reguler.id_sesi2 as sesi2',
+                'jadwal_reguler.id_jadwal as kode_jadwal',
+                'detail_kurikulum.*',
+                'dosen.*',
+                'hari.*',
+                'sesi1.*',
+                'sesi2.*',
+                'sesi1.id as kode_sesi1',
+                'sesi2.id as kode_sesi2',
+                'sesi1.sesi as sesi1',
+                'sesi2.sesi as sesi2',
+                'pukul1.*',
+                'pukul2.*',
+                'pukul1.pukul as pukul1',
+                'pukul2.pukul as pukul2',
+                'ruang.*',
+                'kelas.*',
+                'materi_ajar.*',
+                'semester.*',
+                'jurusan.*'
+            )
+            ->where('jadwal_reguler.id_tahun_akademik', $tahun_akademik)
+            ->where('jadwal_reguler.id_keterangan', $keterangan);
+
+        if ($search) {
+            $query->where('materi_ajar', 'like', '%' . $search . '%')
+                ->orWhere('nama_dosen', 'like', '%' . $search . '%');
+        }
+
+        $jadwal_reguler = $query->paginate($entries);
+
+        $tahunAkademik = Tahunakademik::all();
+
+        if ($request->ajax()) {
+            $nilai = Nilai::all();
+            return view('partials.nilai', compact('jadwal_reguler', 'nilai'))->render(); // Update this partial view as needed
+        }
+
+        $nilai = Nilai::all();
+
+        return view('page.uts.index', compact(['jadwal_reguler', 'tahunAkademik', 'nilai', 'tgl_ujian_susulan', 'uts']))
+            ->with('i', ($page - 1) * $entries);
     }
 
     /**
@@ -46,16 +105,20 @@ class UjianUTSController extends Controller
      */
     public function store(Request $request)
     {
+
         try {
+
+
             $id_jadwal = $request->input('id_jadwal');
             $id_uts = date('YmdHis');
-            
+
             if ($request->hasFile('file') && $request->hasFile('file_cadangan')) {
+                dd('ini');
                 // Handle the main UTS file upload
                 $utsFile = $request->file('file');
                 $utsFileName = $id_uts . '-' . $id_jadwal . '.' . $utsFile->extension();
                 $utsFile->move(public_path('uts'), $utsFileName);
-                
+
                 // Handle the backup UTS file upload
                 $utsFileCadangan = $request->file('file_cadangan');
                 $utsFileNameCadangan = $id_uts . '-' . $id_jadwal . '.' . $utsFileCadangan->extension();
@@ -66,7 +129,7 @@ class UjianUTSController extends Controller
                 } else {
                     $verifikasi = 0;
                 }
-                
+
                 // Prepare data for insertion
                 $data = [
                     'id_jadwal' => $id_jadwal,
@@ -78,7 +141,7 @@ class UjianUTSController extends Controller
                     'file_cadangan' => $utsFileNameCadangan,
                     'verifikasi' => $verifikasi,
                 ];
-                
+
                 Uts::create($data);
 
                 // Redirect based on user role
@@ -92,10 +155,12 @@ class UjianUTSController extends Controller
                         ->with('message', 'Data UTS Sudah ditambahkan');
                 }
             } else {
+                dd('error');
                 // Redirect back if files are missing
                 return redirect()->back()->with('error', 'Soal tidak ditemukan');
             }
         } catch (\Exception $e) {
+            dd('salah');
             // Handle any errors that occur during the process
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
         }
@@ -233,39 +298,56 @@ class UjianUTSController extends Controller
 
     public function daftar_print_uts(Request $request)
     {
+        $page = $request->input('page', 1);
+        $entries = $request->input('entries', 30);
+        $search = $request->input('search');
+
         $kelas = Kelas::all();
         $tahun_angkatan = DB::table('mahasiswa')
             ->select('tahun_angkatan')
             ->groupBy('tahun_angkatan')
             ->get();
+        $konfigurasi = Konfigurasi::first();
+        $default_tahun_akademik = $konfigurasi->id_tahun_akademik;
+        $tahun_akademik = $request->input('id_tahun_akademiks', $default_tahun_akademik);
 
-        $mahasiswa_lengkap = null;
+        // Inisialisasi query
+        $query = Mahasiswa::query()
+            ->join('kelas', 'mahasiswa.id_kelas', '=', 'kelas.id')
+            ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id')
+            ->orderBy('nama', 'ASC')
+            ->select('mahasiswa.*', 'kelas.kelas', 'jurusan.jurusan', 'kelas.id_jurusan')
+            ->whereNotNull('mahasiswa.id_kelas')
+            ->whereNotNull('mahasiswa.tingkat');
 
-        if ($request->filled('tahun_angkatan') || $request->filled('kelas')) {
-            $query = DB::table('mahasiswa')
-                ->join('kelas', 'mahasiswa.id_kelas', '=', 'kelas.id')
-                ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id')
-                ->select('mahasiswa.*', 'kelas.kelas', 'jurusan.jurusan', 'kelas.id_jurusan')
-                ->whereNotNull('mahasiswa.id_kelas')
-                ->whereNotNull('mahasiswa.tingkat');
+        // Cek apakah filter diterapkan
+        $filtered = false;
 
-            if ($request->filled('tahun_angkatan')) {
-                $query->where('mahasiswa.tahun_angkatan', $request->tahun_angkatan);
-            }
-
-            if ($request->filled('kelas')) {
-                $query->where('mahasiswa.id_kelas', $request->kelas);
-            }
-
-            $mahasiswa_lengkap = $query->orderBy('nama', 'ASC')->paginate(30);
+        if ($request->filled('tahun_angkatan')) {
+            $query->where('mahasiswa.tahun_angkatan', $request->tahun_angkatan);
+            $filtered = true;
         }
 
-        return view('page.uts.daftar_print_uts')->with([
-            'mahasiswa_lengkap' => $mahasiswa_lengkap,
-            'kelas' => $kelas,
-            'tahun_angkatan' => $tahun_angkatan,
-        ]);
+        if ($request->filled('kelas')) {
+            $query->where('mahasiswa.id_kelas', $request->kelas);
+            $filtered = true;
+        }
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('nama', 'like', '%' . $search . '%')
+                    ->orWhere('kelas.kelas', 'like', '%' . $search . '%');
+            });
+            $filtered = true;
+        }
+
+        // Hanya ambil data jika ada filter
+        $mahasiswa = $filtered ? $query->paginate($entries) : null;
+
+        return view('page.uts.daftar_print_uts', compact('mahasiswa', 'kelas', 'tahun_angkatan'))
+            ->with('i', ($page - 1) * $entries);
     }
+
 
     public function print_kartu_uts(Request $request)
     {

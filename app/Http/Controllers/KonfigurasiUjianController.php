@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Keterangan;
 use App\Models\Konfigurasi;
 use App\Models\KonfigurasiUjian;
 use Illuminate\Http\Request;
@@ -15,9 +16,11 @@ class KonfigurasiUjianController extends Controller
     {
         $konfigurasi = Konfigurasi::first();
         $konfigurasiUjian = KonfigurasiUjian::first();
+        $keterangan = Keterangan::all();
         return view('page.konfigurasi_ujian.index')->with([
             'konfigurasi' => $konfigurasi,
             'konfigurasiUjian' => $konfigurasiUjian,
+            'keterangan' => $keterangan
         ]);
     }
 
@@ -74,6 +77,7 @@ class KonfigurasiUjianController extends Controller
             'jenis_ujian' => $request->input('jenis_ujians'),
             'tgl_mulai' => $request->input('tgl_mulais'),
             'tgl_susulan' => $request->input('tgl_susulans'),
+            'id_keterangan' => $request->input('id_keterangans'),
         ];
 
         $datas = KonfigurasiUjian::findOrFail($id);

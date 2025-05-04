@@ -15,38 +15,15 @@ return new class extends Migration
         DB::statement('DROP VIEW IF EXISTS vw_data_prestasi;');
         DB::statement('
                 CREATE VIEW vw_data_prestasi AS
-            SELECT
-                detail_kurikulum.id,
-                detail_kurikulum.id_materi_ajar,
-                materi_ajar.materi_ajar,
-                materi_ajar.sks,
-                materi_ajar.id_semester,
-                materi_ajar.id_jurusan,
-                semester.semester,
-                jadwal_reguler.id_jadwal,
-                jadwal_reguler.id_hari,
-                jadwal_reguler.id_sesi,
-                jadwal_reguler.id_ruang,
-                jadwal_reguler.id_kelas,
-                jadwal_reguler.id_tahun_akademik,
-                jadwal_reguler.id_kurikulum,
-                jadwal_reguler.id_keterangan,
-                jadwal_reguler.id_perhitungan,
-                nilai.id_nilai,
-                nilai.nim,
-                nilai.presensi,
-                nilai.tugas,
-                nilai.formatif,
-                nilai.uts,
-                nilai.uas
-            FROM
-                detail_kurikulum
-                INNER JOIN materi_ajar ON materi_ajar.id = detail_kurikulum.id_materi_ajar
-                INNER JOIN semester ON semester.id = materi_ajar.id_semester
-                LEFT JOIN jadwal_reguler ON jadwal_reguler.id_detail_kurikulum = detail_kurikulum.id
-                LEFT JOIN nilai ON nilai.id_jadwal = jadwal_reguler.id_jadwal
-                LEFT JOIN kelas ON kelas.id = jadwal_reguler.id_kelas
-                LEFT JOIN jurusan ON jurusan.id = kelas.id_jurusan;
+                SELECT jadwal_reguler.id_jadwal, jadwal_reguler.id_perhitungan, materi_ajar.materi_ajar, materi_ajar.sks, kurikulum.id AS id_kurikulum, semester.semester, jurusan.jurusan, mahasiswa.nim, mahasiswa.nama, kelas.kelas, COALESCE(nilai.presensi, 0) AS presensi, COALESCE(nilai.tugas, 0) AS tugas, COALESCE(nilai.formatif, 0) AS formatif, COALESCE(nilai.uts, 0) AS uts, COALESCE(nilai.uas, 0) AS uas FROM jadwal_reguler
+                RIGHT JOIN detail_kurikulum ON detail_kurikulum.id = jadwal_reguler.id_detail_kurikulum
+                JOIN kurikulum ON kurikulum.id = detail_kurikulum.id_kurikulum
+                JOIN materi_ajar ON materi_ajar.id = detail_kurikulum.id_materi_ajar
+                JOIN semester ON semester.id = materi_ajar.id_semester
+                JOIN jurusan ON jurusan.id = materi_ajar.id_jurusan
+                LEFT JOIN mahasiswa ON mahasiswa.id_kelas = jadwal_reguler.id_kelas
+                LEFT JOIN kelas ON kelas.id = mahasiswa.id_kelas
+                LEFT JOIN nilai ON nilai.id_jadwal = jadwal_reguler.id_jadwal AND nilai.nim = mahasiswa.nim;
             ');
     }
 

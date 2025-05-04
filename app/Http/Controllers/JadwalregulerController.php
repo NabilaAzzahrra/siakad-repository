@@ -40,7 +40,7 @@ class JadwalregulerController extends Controller
         $tahun_akademik = $request->input('id_tahun_akademiks', $default_tahun_akademik);
 
         $query = Jadwalreguler::query()
-            ->join('detail_kurikulum', 'jadwal_reguler.id_detail_kurikulum', '=', 'detail_kurikulum.id_materi_ajar')
+            ->join('detail_kurikulum', 'jadwal_reguler.id_detail_kurikulum', '=', 'detail_kurikulum.id')
             ->join('dosen', 'jadwal_reguler.id_dosen', '=', 'dosen.id')
             ->join('hari', 'jadwal_reguler.id_hari', '=', 'hari.id')
             ->join('sesi as sesi1', 'jadwal_reguler.id_sesi', '=', 'sesi1.id') // Alias untuk sesi pertama
@@ -180,7 +180,6 @@ class JadwalregulerController extends Controller
             $search = request()->input('search');
 
             $query = Presensi::query()->where('id_jadwal', $id)->orderBy('pertemuan', 'ASC');
-
 
             if ($search) {
                 $query->where('materi', 'like', '%' . $search . '%');

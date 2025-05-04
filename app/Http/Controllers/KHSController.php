@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Jadwalreguler;
 use App\Models\Kelas;
+use App\Models\Kurikulum;
+use App\Models\Mahasiswa;
 use App\Models\Nilai;
 use App\Models\Perhitungan;
 use App\Models\Semester;
@@ -17,49 +19,48 @@ class KHSController extends Controller
      */
     public function index(Request $request)
     {
-        // Fetch the options for filters
-        $tahun_angkatan = DB::table('mahasiswa')
-            ->select('tahun_angkatan')
-            ->groupBy('tahun_angkatan')
-            ->get();
-
+        $tahunAngkatan = Mahasiswa::select('tahun_angkatan')->distinct()->orderBy('tahun_angkatan', 'asc')->pluck('tahun_angkatan');
         $kelas = Kelas::all();
         $semester = Semester::all();
+        $kurikulum = Kurikulum::all();
 
-        // Initialize $mahasiswa_lengkap as an empty collection or null
-        $mahasiswa_lengkap = null;
+        $page = request()->input('page', 1);
+        $entries = request()->input('entries', 10);
+        $search = request()->input('search');
 
-        // Check if any filters are applied
-        if ($request->filled('tahun_angkatan') || $request->filled('kelas')) {
-            // Build the query for mahasiswa_lengkap only if filters are applied
-            $query = DB::table('mahasiswa')
+        $filterTahunAngkatan = request()->input('tahun_angkatan');
+        $filterKelas = request()->input('kelas');
+
+        $mahasiswa = collect(); // Default: kosong
+
+        // Jalankan query HANYA jika ada filter yang dikirim
+        if ($filterTahunAngkatan || $filterKelas || $search) {
+            $query = Mahasiswa::query()
                 ->join('kelas', 'mahasiswa.id_kelas', '=', 'kelas.id')
                 ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id')
-                ->select('mahasiswa.*', 'kelas.kelas', 'jurusan.jurusan', 'kelas.id_jurusan')
+                ->select('mahasiswa.*', 'kelas.*', 'jurusan.*')
                 ->whereNotNull('mahasiswa.id_kelas')
                 ->whereNotNull('mahasiswa.tingkat');
 
-            // Apply filters
-            if ($request->filled('tahun_angkatan')) {
-                $query->where('mahasiswa.tahun_angkatan', $request->tahun_angkatan);
+            if ($filterTahunAngkatan) {
+                $query->where('mahasiswa.tahun_angkatan', $filterTahunAngkatan);
             }
 
-            if ($request->filled('kelas')) {
-                $query->where('mahasiswa.id_kelas', $request->kelas);
+            if ($filterKelas) {
+                $query->where('kelas.id', $filterKelas);
             }
 
-            // Get the filtered data
-            $mahasiswa_lengkap = $query->orderBy('nama', 'ASC')->paginate(30);
+            if ($search) {
+                $query->where('nama', 'like', '%' . $search . '%');
+            }
+
+            $mahasiswa = $query->orderBy('nama', 'ASC')->get();
         }
 
-        // Return the view with the data
-        return view('page.khs.index')->with([
-            'mahasiswa_lengkap' => $mahasiswa_lengkap,
-            'tahun_angkatan' => $tahun_angkatan,
-            'kelas' => $kelas,
-            'semester' => $semester,
-        ]);
+        return view('page.khs.index', compact(['mahasiswa', 'tahunAngkatan', 'kelas', 'semester', 'kurikulum']))
+            ->with('i', ($page - 1) * $entries);
     }
+
 
 
 
@@ -132,7 +133,7 @@ class KHSController extends Controller
     //     ]);
     // }
 
-    public function store(Request $request)
+    /*public function store(Request $request)
     {
         $user_ids = $request->input('user_id');
         $id_jurusans = $request->input('id_jurusan');
@@ -158,6 +159,7 @@ class KHSController extends Controller
             ->select('mahasiswa.*', 'kelas.kelas', 'jurusan.jurusan', 'jurusan.id AS id_jurusan')
             ->paginate(15);
 
+
         if ($result->isEmpty()) {
             return redirect()->back()->with('error', 'Data tidak ditemukan');
         }
@@ -171,15 +173,17 @@ class KHSController extends Controller
             ->groupBy('id_materi_ajar')
             ->get();
 
-            if (!$jadwal->isEmpty()) {
-                $id_perhitungan = $jadwal->first()->id_perhitungan;
+            // dd($jadwal);
+        if (!$jadwal->isEmpty()) {
+            $id_perhitungan = $jadwal->first()->id_perhitungan;
 
-                $perhitungan_1 = Perhitungan::where('id', $id_perhitungan)->first();
-            } else {
-                $id_perhitungan = 0;
+            $perhitungan_1 = Perhitungan::where('id', $id_perhitungan)->first();
+        } else {
+            $id_perhitungan = 0;
 
-                $perhitungan_1 = 0;
-            }
+            $perhitungan_1 = 0;
+            //dd($perhitungan_1);
+        }
 
         $nilai = Nilai::where('verifikasi', 1)
             ->whereIn('nim', $user_ids)
@@ -193,6 +197,7 @@ class KHSController extends Controller
 
         $nilaiAplikasiProject = Nilai::whereIn('nim', $user_ids)->get();
 
+
         return view('page.khs.print')->with([
             'stu_data' => $result,
             'kelas' => Kelas::all(),
@@ -201,6 +206,53 @@ class KHSController extends Controller
             'nilaiPerMahasiswa' => $nilaiPerMahasiswa,
             'userJurusanPairs' => $userJurusanPairs,
             'nilaiAplikasiProject' => $nilaiAplikasiProject
+        ]);
+    }*/
+
+    public function store(Request $request)
+    {
+        $user_ids = $request->input('user_id');
+        $id_jurusan = $request->input('id_jurusan');
+        $semesters = $request->input('semester');
+        $kurikulum = $request->input('kurikulum');
+
+        if (empty($user_ids)) {
+            return redirect()->back()->with('error', 'Pilih dulu');
+        }
+
+        // Ambil data mahasiswa
+        $students = DB::table('mahasiswa')
+            ->join('kelas', 'mahasiswa.id_kelas', '=', 'kelas.id')
+            ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id')
+            ->whereIn('mahasiswa.nim', $user_ids)
+            ->select('mahasiswa.*', 'kelas.kelas', 'jurusan.jurusan', 'jurusan.id AS id_jurusan')
+            ->get();
+
+        if ($students->isEmpty()) {
+            return redirect()->back()->with('error', 'Data tidak ditemukan');
+        }
+
+        $prestasi = DB::table('vw_data_prestasi')
+            ->whereIn('jurusan', $id_jurusan)
+            ->where('semester', $semesters)
+            ->where('id_kurikulum', $kurikulum)
+            ->groupBy('materi_ajar')
+            ->get();
+
+        //dd($prestasi);
+
+        $firstPrestasi = $prestasi->first();
+
+        if ($firstPrestasi) {
+            $id_perhitungan = $firstPrestasi->id_perhitungan;
+            $perhitungan = Perhitungan::where('id', $id_perhitungan)->first();
+        } else {
+            $perhitungan = 0;
+        }
+        return view('page.khs.print')->with([
+            'students' => $students,
+            'prestasi' => $prestasi,
+            'perhitungan' => $perhitungan,
         ]);
     }
 

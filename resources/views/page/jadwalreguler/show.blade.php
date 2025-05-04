@@ -27,7 +27,7 @@
                                 </div>
                                 <hr class="border mt-8 border-black border-opacity-30">
                                 <div>
-                                    <div class="flex items-center justify-between px-24 pt-6 pb-2">
+                                    <div class="flex items-center justify-between px-4 pt-6 pb-2">
                                         <div class="w-full">
                                             <table>
                                                 <tr>
@@ -63,15 +63,15 @@
                                         <div class="w-full ml-12">
                                             <table>
                                                 <tr>
-                                                    <th class="text-left">Semester</th>
+                                                    <th class="text-left">Semester/SKS</th>
                                                     <td class="pl-2 pr-2">:</td>
-                                                    <td>{{ $jadwal->detail_kurikulum->materi_ajar->semester->semester }}
+                                                    <td>{{ $jadwal->detail_kurikulum->materi_ajar->semester->semester }}/{{ $jadwal->detail_kurikulum->materi_ajar->sks }}
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="text-left">SKS</th>
+                                                    <th class="text-left">Tahun Akademik</th>
                                                     <td class="pl-2 pr-2">:</td>
-                                                    <td>{{ $jadwal->detail_kurikulum->materi_ajar->sks }}</td>
+                                                    <td>{{ $jadwal->tahun_akademik->tahunakademik }}</td>
                                                 </tr>
                                                 <tr>
                                                     <th class="text-left">Ruang</th>
@@ -339,15 +339,55 @@
                                                         </td>
                                                         <td
                                                             class="px-6 py-4 text-center flex items-center justify-center">
-                                                            <a href="{{route('presensi.show',$j->id_presensi)}}"
-                                                                class="flex items-center mr-2 hover:bg-sky-100 text-sky-600 pr-3 pl-4 py-3 rounded-xl text-md border border-dashed border-sky-600">
-                                                                <i class="fi fi-sr-add flex mr-2"></i> <span>Input
-                                                                    Presensi</span></a>
-                                                            <a href="http://"
-                                                                class="mr-2 flex items-center hover:bg-emerald-100 text-emerald-600 pr-3 pl-4 py-3 rounded-xl text-md border border-dashed border-emerald-600"><i
-                                                                    class="fi fi-sr-document flex mr-2"></i>
-                                                                <span>Dokumen
-                                                                    Materi</span></a>
+                                                            @if ($j->tgl_presensi)
+                                                                <a href="{{ route('presensi.edit', $j->id_presensi) }}"
+                                                                    class="flex items-center mr-2 hover:bg-amber-100 text-amber-600 pr-3 pl-4 py-3 rounded-xl text-md border border-dashed border-amber-600">
+                                                                    <i class="fi fi-sr-eye flex mr-2"></i> <span>Lihat
+                                                                        Presensi</span></a>
+                                                                <a href="{{ asset('materi/' . $j->file_materi) }}"
+                                                                    download
+                                                                    class="mr-2 flex items-center hover:bg-emerald-100 text-emerald-600 pr-3 pl-4 py-3 rounded-xl text-md border border-dashed border-emerald-600"><i
+                                                                        class="fi fi-sr-document flex mr-2"></i>
+                                                                    <span>Dokumen
+                                                                        Materi</span></a>
+                                                            @else
+                                                                @php
+                                                                    $day = date('l');
+                                                                    $hari = match ($day) {
+                                                                        'Monday' => 'SENIN',
+                                                                        'Tuesday' => 'SELASA',
+                                                                        'Wednesday' => 'RABU',
+                                                                        'Thursday' => 'KAMIS',
+                                                                        'Friday' => 'JUMAT',
+                                                                        'Saturday' => 'SABTU',
+                                                                        'Sunday' => 'MINGGU',
+                                                                        default => 'Tidak diketahui',
+                                                                    };
+
+                                                                    $lastPresensi = $presensi
+                                                                        ->whereNotNull('tgl_presensi')
+                                                                        ->count();
+                                                                @endphp
+                                                                @if ($hari != $jadwal->hari->hari)
+                                                                    <a href="#"
+                                                                        class="mr-2 flex items-center hover:bg-red-100 text-red-600 pr-3 pl-4 py-3 rounded-xl text-md border border-dashed border-red-600"><i
+                                                                            class="fi fi-sr-document flex mr-2"></i>
+                                                                        <span>Belum Terdapat Jadwal</span></a>
+                                                                @else
+                                                                    @if ($key == $lastPresensi)
+                                                                        <a href="{{ route('presensi.show', $j->id_presensi) }}"
+                                                                            class="flex items-center mr-2 hover:bg-sky-100 text-sky-600 pr-3 pl-4 py-3 rounded-xl text-md border border-dashed border-sky-600">
+                                                                            <i class="fi fi-sr-add flex mr-2"></i>
+                                                                            <span>Input Presensi dan Dokumen /
+                                                                                Materi</span>
+                                                                        </a>
+                                                                    @else
+                                                                        <span
+                                                                            class="bg-red-100 inline-block px-6 rounded-full font-bold text-red-500">Belum
+                                                                            Terjadwal</span>
+                                                                    @endif
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     </tr>
                                                 @empty
@@ -441,8 +481,6 @@
                 </button>
             </form>
         </div>
-    </div>
-
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>

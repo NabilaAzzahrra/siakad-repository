@@ -43,7 +43,7 @@ class Jadwalreguler extends Model
 
     public function detail_kurikulum()
     {
-        return $this->belongsTo(Detailkurikulum::class, 'id_detail_kurikulum', 'id_materi_ajar');
+        return $this->belongsTo(Detailkurikulum::class, 'id_detail_kurikulum', 'id');
     }
 
     public function dosen()

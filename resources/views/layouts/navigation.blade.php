@@ -271,11 +271,11 @@
                                                         : ''">
                                                         {{ __('Keseluruhan') }}
                                                     </x-dropdown-link>
-                                                    <x-dropdown-link :href="route('report_nilai_mahasiswa.index')" :class="request()->routeIs('report_nilai_mahasiswa.index')
+                                                    {{-- <x-dropdown-link :href="route('report_nilai_mahasiswa.index')" :class="request()->routeIs('report_nilai_mahasiswa.index')
                                                         ? 'text-red-500 font-bold'
                                                         : ''">
                                                         {{ __('Per Mahasiswa') }}
-                                                    </x-dropdown-link>
+                                                    </x-dropdown-link> --}}
                                                 </div>
                                             </div>
                                             <x-dropdown-link :href="route('khs.index')" :class="request()->routeIs('khs.index') ? 'text-red-500 font-bold' : ''">

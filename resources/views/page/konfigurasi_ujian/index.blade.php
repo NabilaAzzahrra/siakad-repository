@@ -1,8 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
         <p class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
-            <div class="flex items-center font-bold">Master<i class="fi fi-rr-caret-right mt-1"></i> <span
-                    class="text-amber-100">Konfigurasi Ujian</span></div>
+        <div class="flex items-center font-bold">Master<i class="fi fi-rr-caret-right mt-1"></i> <span
+                class="text-amber-100">Konfigurasi Ujian</span></div>
         </p>
     </x-slot>
 
@@ -15,7 +15,8 @@
                 @endphp
                 @if ($hide)
                     <div class="w-full md:w-5/12 p-3 {{ $hide }}">
-                        <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl">
+                        <div
+                            class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl">
                             <div class="p-6 text-gray-900 dark:text-gray-100">
                                 <div
                                     class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
@@ -70,7 +71,8 @@
                 @endif
 
                 <div class="w-full md:w-7/12 p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl">
+                    <div
+                        class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                             <div class="flex">
                                 <div class="w-10">
@@ -129,16 +131,16 @@
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600"
                                 placeholder="Masukan Tahun Akademik disini...">
                         </div>
-                        <div class="flex flex-col  p-4 space-y-6 w-full">
+                        {{-- <div class="flex flex-col  p-4 space-y-6 w-full">
                             <label for="id_keterangans"
                                 class="block text-sm font-medium text-gray-900 dark:text-white">Keterangan
                                 <span class="text-red-500">*</span></label>
                             <input type="number" id="id_keterangans" name="id_keterangans"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600"
                                 placeholder="Masukan Keterangan disini...">
-                        </div>
+                        </div> --}}
                     </div>
-                    <div class="flex flex-col lg:flex-row gap-5">
+                    <div class="flex flex-col lg:flex-row gap-2">
                         <div class="flex flex-col p-4 w-full">
                             <label for="jenis_ujians"
                                 class="block text-sm font-medium text-gray-900 dark:text-white">Jenis Ujian
@@ -148,6 +150,18 @@
                                 <option value="">Pilih...</option>
                                 <option value="UTS">UTS</option>
                                 <option value="UAS">UAS</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col p-4 w-full">
+                            <label for="id_keterangans"
+                                class="block text-sm font-medium text-gray-900 dark:text-white">Keterangan
+                                <span class="text-red-500">*</span></label>
+                            <select class="js-example-placeholder-single js-states form-control w-full"
+                                id="id_keterangans" name="id_keterangans" data-placeholder="Pilih Keterangan">
+                                <option value="">Pilih...</option>
+                                @foreach ($keterangan as $k)
+                                    <option value="{{ $k->id }}">{{ $k->keterangan }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="flex flex-col p-4 w-full">
@@ -245,7 +259,7 @@
                     render: (data) => {
                         let editUrl =
                             `<button type="button" data-id="${data.id}"
-                                                        data-modal-target="sourceModal" data-id_tahun_akademiks="${data.id_tahun_akademik}" " data-id_keterangans="${data.id_keterangan}" data-jenis_ujians="${data.jenis_ujian}" data-tgl_mulais="${data.tgl_mulai}" data-tgl_susulans="${data.tgl_susulan}"
+                                                        data-modal-target="sourceModal" data-id_tahun_akademiks="${data.id_tahun_akademik}" data-id_keterangans="${data.id_keterangan}" data-jenis_ujians="${data.jenis_ujian}" data-tgl_mulais="${data.tgl_mulai}" data-tgl_susulans="${data.tgl_susulan}"
                                                         onclick="editSourceModal(this)"
                                                         class="border-2 border-dashed border-amber-500 text-amber-500 hover:bg-amber-100 px-3 py-1 rounded-xl h-10 w-10 text-xs">
                                                        <i class="fas fa-edit"></i>
@@ -272,12 +286,13 @@
 
             document.getElementById('tgl_mulais').value = tgl_mulais;
             document.getElementById('tgl_susulans').value = tgl_susulans;
-            document.getElementById('id_keterangans').value = id_keterangans;
             document.getElementById('id_tahun_akademiks').value = id_tahun_akademiks;
 
             document.querySelector('[name="jenis_ujians"]').value = jenis_ujians;
+            document.querySelector('[name="id_keterangans"]').value = id_keterangans;
             let event = new Event('change');
             document.querySelector('[name="jenis_ujians"]').dispatchEvent(event);
+            document.querySelector('[name="id_keterangans"]').dispatchEvent(event);
 
             document.getElementById('formSourceButton').innerText = 'Simpan';
             document.getElementById('formSourceModal').setAttribute('action', url);

@@ -206,7 +206,7 @@
 <body>
 
     <div class="book">
-        @foreach ($stu_data as $student)
+        @foreach ($students as $student)
             @php
                 $nim = $student->nim;
             @endphp
@@ -264,141 +264,137 @@
                             <tbody>
                                 @php
                                     $no = 1;
-                                    $jumlahSks_1 = 0;
-                                    $jumlahMutu_1 = 0;
-                                    $indexPrestasi_1 = 0;
+                                    $jumlahSks = 0;
+                                    $jumlahMutu = 0;
+                                    $indexPrestasi = 0;
+                                    $hasilIndexPrestasi = 0;
                                 @endphp
-                                @foreach ($detail_kurikulum_1 as $dk1)
+                                @foreach ($prestasi1 as $item)
                                     @php
-                                        if ($dk1->id_perhitungan != null) {
-                                            $perhitunganPresensi_1 = $perhitungan_1->presensi;
-                                            $persenPresensi_1 = $perhitunganPresensi_1 / 100;
-                                            $nilaiPresensi_1 =
-                                                $nilaiPerMahasiswa[$student->nim][$dk1->id_jadwal]->presensi ?? '0';
-                                            $amPresensi_1 = $nilaiPresensi_1 * $persenPresensi_1;
+                                        $nilai = DB::table('vw_data_prestasi')
+                                            ->where('nim', $student->nim)
+                                            ->where('materi_ajar', $item->materi_ajar)
+                                            ->first();
 
-                                            $perhitunganTugas_1 = $perhitungan_1->tugas;
-                                            $persenTugas_1 = $perhitunganTugas_1 / 100;
-                                            $nilaiTugas_1 =
-                                                $nilaiPerMahasiswa[$student->nim][$dk1->id_jadwal]->tugas ?? '0';
-                                            $amTugas_1 = $nilaiTugas_1 * $persenTugas_1;
+                                            //dd($nilai);
 
-                                            $perhitunganFormatif_1 = $perhitungan_1->formatif;
-                                            $persenFormatif_1 = $perhitunganFormatif_1 / 100;
-                                            $nilaiFormatif_1 =
-                                                $nilaiPerMahasiswa[$student->nim][$dk1->id_jadwal]->formatif ?? '0';
-                                            $amFormatif_1 = $nilaiFormatif_1 * $persenFormatif_1;
+                                        $nilaiPresensi = $nilai->presensi ?? 0;
+                                        $nilaiTugas = $nilai->tugas ?? 0;
+                                        $nilaiFormatif = $nilai->formatif ?? 0;
+                                        $nilaiUts = $nilai->uts ?? 0;
+                                        $nilaiUas = $nilai->uas ?? 0;
 
-                                            $perhitunganUts_1 = $perhitungan_1->uts;
-                                            $persenUts_1 = $perhitunganUts_1 / 100;
-                                            $nilaiUts_1 =
-                                                $nilaiPerMahasiswa[$student->nim][$dk1->id_jadwal]->uts ?? '0';
-                                            $amUts_1 = $nilaiUts_1 * $persenUts_1;
+                                        $idPerhitungan = $item->id_perhitungan ?? 0;
+                                        $perhitungan = DB::table('perhitungan')->where('id', $idPerhitungan)->first();
 
-                                            $perhitunganUas_1 = $perhitungan_1->uas;
-                                            $persenUas_1 = $perhitunganUas_1 / 100;
-                                            $nilaiUas_1 =
-                                                $nilaiPerMahasiswa[$student->nim][$dk1->id_jadwal]->uas ?? '0';
-                                            $amUas_1 = $nilaiUas_1 * $persenUas_1;
+                                        $perhitunganPresensi = $perhitungan->presensi ?? 0;
+                                        $persenPresensi = $perhitunganPresensi / 100;
+                                        $amPresensi = $nilaiPresensi * $persenPresensi;
 
-                                            $jumlahAm_1 =
-                                                $amPresensi_1 + $amTugas_1 + $amFormatif_1 + $amUts_1 + $amUas_1;
+                                        $perhitunganTugas = $perhitungan->tugas ?? 0;
+                                        $persenTugas = $perhitunganTugas / 100;
+                                        $amTugas = $nilaiTugas * $persenTugas;
 
-                                            if ($jumlahAm_1 < 50) {
-                                                $huruf_1 = 'E';
-                                            } elseif ($jumlahAm_1 < 55) {
-                                                $huruf_1 = 'D';
-                                            } elseif ($jumlahAm_1 < 60) {
-                                                $huruf_1 = 'C-';
-                                            } elseif ($jumlahAm_1 < 65) {
-                                                $huruf_1 = 'C';
-                                            } elseif ($jumlahAm_1 < 70) {
-                                                $huruf_1 = 'C+';
-                                            } elseif ($jumlahAm_1 < 75) {
-                                                $huruf_1 = 'B-';
-                                            } elseif ($jumlahAm_1 < 80) {
-                                                $huruf_1 = 'B';
-                                            } elseif ($jumlahAm_1 < 85) {
-                                                $huruf_1 = 'B+';
-                                            } elseif ($jumlahAm_1 < 90) {
-                                                $huruf_1 = 'A-';
-                                            } else {
-                                                $huruf_1 = 'A';
-                                            }
+                                        $perhitunganFormatif = $perhitungan->formatif ?? 0;
+                                        $persenFormatif = $perhitunganFormatif / 100;
+                                        $amFormatif = $nilaiFormatif * $persenFormatif;
 
-                                            if ($huruf_1 == 'E') {
-                                                $grade_1 = '0.0';
-                                            } elseif ($huruf_1 == 'D') {
-                                                $grade_1 = '1.0';
-                                            } elseif ($huruf_1 == 'C-') {
-                                                $grade_1 = '1.6';
-                                            } elseif ($huruf_1 == 'C') {
-                                                $grade_1 = '2.0';
-                                            } elseif ($huruf_1 == 'C+') {
-                                                $grade_1 = '2.3';
-                                            } elseif ($huruf_1 == 'B-') {
-                                                $grade_1 = '2.6';
-                                            } elseif ($huruf_1 == 'B') {
-                                                $grade_1 = '3.0';
-                                            } elseif ($huruf_1 == 'B+') {
-                                                $grade_1 = '3.3';
-                                            } elseif ($huruf_1 == 'A-') {
-                                                $grade_1 = '3.6';
-                                            } elseif ($huruf_1 == 'A') {
-                                                $grade_1 = '4.0';
-                                            }
-                                            $sks_1 = $dk1->sks;
-                                            $mutu_1 = $grade_1 * $sks_1;
-                                            $jumlahSks_1 += $sks_1;
-                                            $jumlahMutu_1 += $mutu_1;
+                                        $perhitunganUts = $perhitungan->uts ?? 0;
+                                        $persenUts = $perhitunganUts / 100;
+                                        $amUts = $nilaiUts * $persenUts;
 
-                                            $indexPrestasi_1 = $jumlahMutu_1 / $jumlahSks_1;
+                                        $perhitunganUas = $perhitungan->uas ?? 0;
+                                        $persenUas = $perhitunganUas / 100;
+                                        $amUas = $nilaiUas * $persenUas;
 
-                                            if ($indexPrestasi_1 < 2) {
-                                                $hasilIndexPrestasi_1 = 'KURANG';
-                                            } elseif ($indexPrestasi_1 < 2.6) {
-                                                $hasilIndexPrestasi_1 = 'CUKUP';
-                                            } elseif ($indexPrestasi_1 < 3) {
-                                                $hasilIndexPrestasi_1 = 'BAIK';
-                                            } elseif ($indexPrestasi_1 < 3.6) {
-                                                $hasilIndexPrestasi_1 = 'MEMUASKAN';
-                                            } elseif ($indexPrestasi_1 >= 3.6) {
-                                                $hasilIndexPrestasi_1 = 'SANGAT MEMUASKAN';
-                                            }
+                                        $jumlahAm = $amPresensi + $amTugas + $amFormatif + $amUts + $amUas;
+
+                                        if ($jumlahAm < 50) {
+                                            $huruf = 'E';
+                                        } elseif ($jumlahAm < 55) {
+                                            $huruf = 'D';
+                                        } elseif ($jumlahAm < 60) {
+                                            $huruf = 'C-';
+                                        } elseif ($jumlahAm < 65) {
+                                            $huruf = 'C';
+                                        } elseif ($jumlahAm < 70) {
+                                            $huruf = 'C+';
+                                        } elseif ($jumlahAm < 75) {
+                                            $huruf = 'B-';
+                                        } elseif ($jumlahAm < 80) {
+                                            $huruf = 'B';
+                                        } elseif ($jumlahAm < 85) {
+                                            $huruf = 'B+';
+                                        } elseif ($jumlahAm < 90) {
+                                            $huruf = 'A-';
                                         } else {
-                                            $huruf_1 = 'E';
-                                            $grade_1 = '0.0';
-                                            $mutu_1 = 0;
-                                            $sks_1 = $dk1->sks;
-                                            $jumlahSks_1 += $sks_1;
+                                            $huruf = 'A';
                                         }
 
+                                        if ($huruf == 'E') {
+                                            $grade = '0.0';
+                                        } elseif ($huruf == 'D') {
+                                            $grade = '1.0';
+                                        } elseif ($huruf == 'C-') {
+                                            $grade = '1.6';
+                                        } elseif ($huruf == 'C') {
+                                            $grade = '2.0';
+                                        } elseif ($huruf == 'C+') {
+                                            $grade = '2.3';
+                                        } elseif ($huruf == 'B-') {
+                                            $grade = '2.6';
+                                        } elseif ($huruf == 'B') {
+                                            $grade = '3.0';
+                                        } elseif ($huruf == 'B+') {
+                                            $grade = '3.3';
+                                        } elseif ($huruf == 'A-') {
+                                            $grade = '3.6';
+                                        } elseif ($huruf == 'A') {
+                                            $grade = '4.0';
+                                        }
+
+                                        $sks = $item->sks ?? 0;
+                                        $jumlahSks += $sks;
+
+                                        $mutu = $grade * $sks;
+                                        $jumlahMutu += $mutu;
+                                        if ($jumlahSks > 0) {
+                                            $indexPrestasi = $jumlahMutu / $jumlahSks;
+                                        } else {
+                                            $indexPrestasi = 0; // atau null, tergantung kebutuhan
+                                        }
+
+                                        if ($indexPrestasi < 2) {
+                                            $hasilIndexPrestasi = 'KURANG';
+                                        } elseif ($indexPrestasi < 2.6) {
+                                            $hasilIndexPrestasi = 'CUKUP';
+                                        } elseif ($indexPrestasi < 3) {
+                                            $hasilIndexPrestasi = 'BAIK';
+                                        } elseif ($indexPrestasi < 3.6) {
+                                            $hasilIndexPrestasi = 'MEMUASKAN';
+                                        } elseif ($indexPrestasi >= 3.6) {
+                                            $hasilIndexPrestasi = 'SANGAT MEMUASKAN';
+                                        } else {
+                                            $hasilIndexPrestasi = '-';
+                                        }
                                     @endphp
                                     <tr>
                                         <td class="border border-1 border-black">{{ $no++ }}</td>
-                                        <td class="border border-1 border-black text-left pl-2">
-                                            {{ $dk1->materi_ajar }}
+                                        <td class="border border-1 border-black text-left pl-2">{{ $item->materi_ajar }}
                                         </td>
-                                        <td class="border border-1 border-black">
-                                            {{ $huruf_1 }}
+                                        <td class="border border-1 border-black text-center pl-2">{{ $huruf }}
                                         </td>
-                                        <td class="border border-1 border-black">
-                                            {{ $grade_1 }}
-                                        </td>
-                                        <td class="border border-1 border-black">
-                                            {{ $dk1->sks }}
-                                        </td>
-                                        <td class="border border-1 border-black">
-                                            {{ $mutu_1 }}
-                                        </td>
+                                        <td class="border border-1 border-black">{{ $grade }}</td>
+                                        <td class="border border-1 border-black">{{ $item->sks }}</td>
+                                        <td class="border border-1 border-black">{{ $mutu }}</td>
                                     </tr>
                                 @endforeach
                                 <tr>
                                     <td colspan="4" class="border border-1 border-black">IP SMT 1 :
-                                        {{ number_format($indexPrestasi_1, 2) }}
+                                        {{ number_format($indexPrestasi, 2) }}
                                     </td>
-                                    <td class="border border-1 border-black">{{ $jumlahSks_1 }}</td>
-                                    <td class="border border-1 border-black">{{ $jumlahMutu_1 }}</td>
+                                    <td class="border border-1 border-black">{{ $jumlahSks }}</td>
+                                    <td class="border border-1 border-black">{{ $jumlahMutu }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -421,139 +417,136 @@
                             <tbody>
                                 @php
                                     $no = 1;
-                                    $jumlahSks_2 = 0;
-                                    $jumlahMutu_2 = 0;
-                                    $indexPrestasi_2 = 0;
+                                    $jumlahSks2 = 0;
+                                    $jumlahMutu2 = 0;
+                                    $indexPrestasi2 = 0;
+                                    $hasilIndexPrestasi2 = 0;
                                 @endphp
-                                @foreach ($detail_kurikulum_2 as $dk2)
+                                @foreach ($prestasi2 as $item2)
                                     @php
-                                        if ($dk2->id_perhitungan != null) {
-                                            $perhitunganPresensi_2 = $perhitungan_2->presensi;
-                                            $persenPresensi_2 = $perhitunganPresensi_2 / 100;
-                                            $nilaiPresensi_2 =
-                                                $nilaiPerMahasiswa2[$student->nim][$dk2->id_jadwal]->presensi ?? '0';
-                                            $amPresensi_2 = $nilaiPresensi_2 * $persenPresensi_2;
+                                        $nilai2 = DB::table('vw_data_prestasi')
+                                            ->where('nim', $student->nim)
+                                            ->where('materi_ajar', $item2->materi_ajar)
+                                            ->first();
 
-                                            $perhitunganTugas_2 = $perhitungan_2->tugas;
-                                            $persenTugas_2 = $perhitunganTugas_2 / 100;
-                                            $nilaiTugas_2 =
-                                                $nilaiPerMahasiswa2[$student->nim][$dk2->id_jadwal]->tugas ?? '0';
-                                            $amTugas_2 = $nilaiTugas_2 * $persenTugas_2;
+                                        $nilaiPresensi2 = $nilai2->presensi ?? 0;
+                                        $nilaiTugas2 = $nilai2->tugas ?? 0;
+                                        $nilaiFormatif2 = $nilai2->formatif ?? 0;
+                                        $nilaiUts2 = $nilai2->uts ?? 0;
+                                        $nilaiUas2 = $nilai2->uas ?? 0;
 
-                                            $perhitunganFormatif_2 = $perhitungan_2->formatif;
-                                            $persenFormatif_2 = $perhitunganFormatif_2 / 100;
-                                            $nilaiFormatif_2 =
-                                                $nilaiPerMahasiswa2[$student->nim][$dk2->id_jadwal]->formatif ?? '0';
-                                            $amFormatif_2 = $nilaiFormatif_2 * $persenFormatif_2;
+                                        $idPerhitungan2 = $item2->id_perhitungan ?? 0;
+                                        $perhitungan2 = DB::table('perhitungan')->where('id', $idPerhitungan2)->first();
 
-                                            $perhitunganUts_2 = $perhitungan_2->uts;
-                                            $persenUts_2 = $perhitunganUts_2 / 100;
-                                            $nilaiUts_2 =
-                                                $nilaiPerMahasiswa2[$student->nim][$dk2->id_jadwal]->uts ?? '0';
-                                            $amUts_2 = $nilaiUts_2 * $persenUts_2;
+                                        $perhitunganPresensi2 = $perhitungan2->presensi ?? 0;
+                                        $persenPresensi2 = $perhitunganPresensi2 / 100;
+                                        $amPresensi2 = $nilaiPresensi2 * $persenPresensi2;
 
-                                            $perhitunganUas_2 = $perhitungan_2->uas;
-                                            $persenUas_2 = $perhitunganUas_2 / 100;
-                                            $nilaiUas_2 =
-                                                $nilaiPerMahasiswa2[$student->nim][$dk2->id_jadwal]->uas ?? '0';
-                                            $amUas_2 = $nilaiUas_2 * $persenUas_2;
+                                        $perhitunganTugas2 = $perhitungan2->tugas ?? 0;
+                                        $persenTugas2 = $perhitunganTugas2 / 100;
+                                        $amTugas2 = $nilaiTugas2 * $persenTugas2;
 
-                                            $jumlahAm_2 =
-                                                $amPresensi_2 + $amTugas_2 + $amFormatif_2 + $amUts_2 + $amUas_2;
+                                        $perhitunganFormatif2 = $perhitungan2->formatif ?? 0;
+                                        $persenFormatif2 = $perhitunganFormatif2 / 100;
+                                        $amFormatif2 = $nilaiFormatif2 * $persenFormatif2;
 
-                                            if ($jumlahAm_2 < 50) {
-                                                $huruf_2 = 'E';
-                                            } elseif ($jumlahAm_2 < 55) {
-                                                $huruf_2 = 'D';
-                                            } elseif ($jumlahAm_2 < 60) {
-                                                $huruf_2 = 'C-';
-                                            } elseif ($jumlahAm_2 < 65) {
-                                                $huruf_2 = 'C';
-                                            } elseif ($jumlahAm_2 < 70) {
-                                                $huruf_2 = 'C+';
-                                            } elseif ($jumlahAm_2 < 75) {
-                                                $huruf_2 = 'B-';
-                                            } elseif ($jumlahAm_2 < 80) {
-                                                $huruf_2 = 'B';
-                                            } elseif ($jumlahAm_2 < 85) {
-                                                $huruf_2 = 'B+';
-                                            } elseif ($jumlahAm_2 < 90) {
-                                                $huruf_2 = 'A-';
-                                            } else {
-                                                $huruf_2 = 'A';
-                                            }
+                                        $perhitunganUts2 = $perhitungan2->uts ?? 0;
+                                        $persenUts2 = $perhitunganUts2 / 100;
+                                        $amUts2 = $nilaiUts2 * $persenUts2;
 
-                                            if ($huruf_2 == 'E') {
-                                                $grade_2 = '0.0';
-                                            } elseif ($huruf_2 == 'D') {
-                                                $grade_2 = '1.0';
-                                            } elseif ($huruf_2 == 'C-') {
-                                                $grade_2 = '1.6';
-                                            } elseif ($huruf_2 == 'C') {
-                                                $grade_2 = '2.0';
-                                            } elseif ($huruf_2 == 'C+') {
-                                                $grade_2 = '2.3';
-                                            } elseif ($huruf_2 == 'B-') {
-                                                $grade_2 = '2.6';
-                                            } elseif ($huruf_2 == 'B') {
-                                                $grade_2 = '3.0';
-                                            } elseif ($huruf_2 == 'B+') {
-                                                $grade_2 = '3.3';
-                                            } elseif ($huruf_2 == 'A-') {
-                                                $grade_2 = '3.6';
-                                            } elseif ($huruf_2 == 'A') {
-                                                $grade_2 = '4.0';
-                                            }
-                                            $sks_2 = $dk2->sks;
-                                            $mutu_2 = $grade_2 * $sks_2;
-                                            $jumlahSks_2 += $sks_2;
-                                            $jumlahMutu_2 += $mutu_2;
+                                        $perhitunganUas2 = $perhitungan2->uas ?? 0;
+                                        $persenUas2 = $perhitunganUas2 / 100;
+                                        $amUas2 = $nilaiUas2 * $persenUas2;
 
-                                            $indexPrestasi_2 = $jumlahMutu_2 / $jumlahSks_2;
+                                        $jumlahAm2 = $amPresensi2 + $amTugas2 + $amFormatif2 + $amUts2 + $amUas2;
 
-                                            if ($indexPrestasi_2 < 2) {
-                                                $hasilIndexPrestasi_2 = 'KURANG';
-                                            } elseif ($indexPrestasi_2 < 2.6) {
-                                                $hasilIndexPrestasi_2 = 'CUKUP';
-                                            } elseif ($indexPrestasi_2 < 3) {
-                                                $hasilIndexPrestasi_2 = 'BAIK';
-                                            } elseif ($indexPrestasi_2 < 3.6) {
-                                                $hasilIndexPrestasi_2 = 'MEMUASKAN';
-                                            } elseif ($indexPrestasi_2 >= 3.6) {
-                                                $hasilIndexPrestasi_2 = 'SANGAT MEMUASKAN';
-                                            }
+                                        if ($jumlahAm2 < 50) {
+                                            $huruf2 = 'E';
+                                        } elseif ($jumlahAm2 < 55) {
+                                            $huruf2 = 'D';
+                                        } elseif ($jumlahAm2 < 60) {
+                                            $huruf2 = 'C-';
+                                        } elseif ($jumlahAm2 < 65) {
+                                            $huruf2 = 'C';
+                                        } elseif ($jumlahAm2 < 70) {
+                                            $huruf2 = 'C+';
+                                        } elseif ($jumlahAm2 < 75) {
+                                            $huruf2 = 'B-';
+                                        } elseif ($jumlahAm2 < 80) {
+                                            $huruf2 = 'B';
+                                        } elseif ($jumlahAm < 85) {
+                                            $huruf2 = 'B+';
+                                        } elseif ($jumlahAm2 < 90) {
+                                            $huruf2 = 'A-';
                                         } else {
-                                            $huruf_2 = 'E';
-                                            $grade_2 = '0.0';
-                                            $mutu_2 = 0;
-                                            $sks_2 = $dk2->sks;
-                                            $jumlahSks_2 += $sks_2;
+                                            $huruf2 = 'A';
+                                        }
+
+                                        if ($huruf2 == 'E') {
+                                            $grade2 = '0.0';
+                                        } elseif ($huruf2 == 'D') {
+                                            $grade2 = '1.0';
+                                        } elseif ($huruf2 == 'C-') {
+                                            $grade2 = '1.6';
+                                        } elseif ($huruf2 == 'C') {
+                                            $grade2 = '2.0';
+                                        } elseif ($huruf2 == 'C+') {
+                                            $grade2 = '2.3';
+                                        } elseif ($huruf2 == 'B-') {
+                                            $grade2 = '2.6';
+                                        } elseif ($huruf2 == 'B') {
+                                            $grade2 = '3.0';
+                                        } elseif ($huruf2 == 'B+') {
+                                            $grade2 = '3.3';
+                                        } elseif ($huruf2 == 'A-') {
+                                            $grade2 = '3.6';
+                                        } elseif ($huruf2 == 'A') {
+                                            $grade2 = '4.0';
+                                        }
+
+                                        $sks2 = $item2->sks ?? 0;
+                                        $jumlahSks2 += $sks2;
+
+                                        $mutu2 = $grade2 * $sks2;
+                                        $jumlahMutu2 += $mutu2;
+                                        if ($jumlahSks2 > 0) {
+                                            $indexPrestasi2 = $jumlahMutu2 / $jumlahSks2;
+                                        } else {
+                                            $indexPrestasi2 = 0; // atau null, tergantung kebutuhan
+                                        }
+
+                                        if ($indexPrestasi2 < 2) {
+                                            $hasilIndexPrestasi2 = 'KURANG';
+                                        } elseif ($indexPrestasi2 < 2.6) {
+                                            $hasilIndexPrestasi2 = 'CUKUP';
+                                        } elseif ($indexPrestasi2 < 3) {
+                                            $hasilIndexPrestasi2 = 'BAIK';
+                                        } elseif ($indexPrestasi2 < 3.6) {
+                                            $hasilIndexPrestasi2 = 'MEMUASKAN';
+                                        } elseif ($indexPrestasi2 >= 3.6) {
+                                            $hasilIndexPrestasi2 = 'SANGAT MEMUASKAN';
+                                        } else {
+                                            $hasilIndexPrestasi2 = '-';
                                         }
                                     @endphp
                                     <tr>
                                         <td class="border border-1 border-black">{{ $no++ }}</td>
                                         <td class="border border-1 border-black text-left pl-2">
-                                            {{ $dk2->materi_ajar }}</td>
-                                        <td class="border border-1 border-black">
-                                            {{ $huruf_2 }}
+                                            {{ $item2->materi_ajar }}
                                         </td>
-                                        <td class="border border-1 border-black">
-                                            {{ $grade_2 }}
+                                        <td class="border border-1 border-black text-center pl-2">{{ $huruf2 }}
                                         </td>
-                                        <td class="border border-1 border-black">
-                                            {{ $dk2->sks }}
-                                        </td>
-                                        <td class="border border-1 border-black">
-                                            {{ $mutu_2 }}
-                                        </td>
+                                        <td class="border border-1 border-black">{{ $grade2 }}</td>
+                                        <td class="border border-1 border-black">{{ $item2->sks }}</td>
+                                        <td class="border border-1 border-black">{{ $mutu2 }}</td>
                                     </tr>
                                 @endforeach
                                 <tr>
                                     <td colspan="4" class="border border-1 border-black">IP SMT 2 :
-                                        {{ number_format($indexPrestasi_2, 2) }}
+                                        {{ number_format($indexPrestasi2, 2) }}
                                     </td>
-                                    <td class="border border-1 border-black">{{ $jumlahSks_2 }}</td>
-                                    <td class="border border-1 border-black">{{ $jumlahMutu_2 }}</td>
+                                    <td class="border border-1 border-black">{{ $jumlahSks2 }}</td>
+                                    <td class="border border-1 border-black">{{ $jumlahMutu2 }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -578,140 +571,136 @@
                             <tbody>
                                 @php
                                     $no = 1;
-                                    $jumlahSks_3 = 0;
-                                    $jumlahMutu_3 = 0;
-                                    $indexPrestasi_3 = 0;
+                                    $jumlahSks3 = 0;
+                                    $jumlahMutu3 = 0;
+                                    $indexPrestasi3 = 0;
+                                    $hasilIndexPrestasi3 = 0;
                                 @endphp
-                                @foreach ($detail_kurikulum_3 as $dk3)
+                                @foreach ($prestasi3 as $item3)
                                     @php
-                                        if ($dk3->id_perhitungan != null) {
-                                            $perhitunganPresensi_3 = $perhitungan_3->presensi;
-                                            $persenPresensi_3 = $perhitunganPresensi_3 / 100;
-                                            $nilaiPresensi_3 =
-                                                $nilaiPerMahasiswa3[$student->nim][$dk3->id_jadwal]->presensi ?? '0';
-                                            $amPresensi_3 = $nilaiPresensi_3 * $persenPresensi_3;
+                                        $nilai3 = DB::table('vw_data_prestasi')
+                                            ->where('nim', $student->nim)
+                                            ->where('materi_ajar', $item3->materi_ajar)
+                                            ->first();
 
-                                            $perhitunganTugas_3 = $perhitungan_3->tugas;
-                                            $persenTugas_3 = $perhitunganTugas_3 / 100;
-                                            $nilaiTugas_3 =
-                                                $nilaiPerMahasiswa3[$student->nim][$dk3->id_jadwal]->tugas ?? '0';
-                                            $amTugas_3 = $nilaiTugas_3 * $persenTugas_3;
+                                        $nilaiPresensi3 = $nilai3->presensi ?? 0;
+                                        $nilaiTugas3 = $nilai3->tugas ?? 0;
+                                        $nilaiFormatif23= $nilai3->formatif ?? 0;
+                                        $nilaiUts3 = $nilai3->uts ?? 0;
+                                        $nilaiUas3 = $nilai3->uas ?? 0;
 
-                                            $perhitunganFormatif_3 = $perhitungan_3->formatif;
-                                            $persenFormatif_3 = $perhitunganFormatif_3 / 100;
-                                            $nilaiFormatif_3 =
-                                                $nilaiPerMahasiswa3[$student->nim][$dk3->id_jadwal]->formatif ?? '0';
-                                            $amFormatif_3 = $nilaiFormatif_3 * $persenFormatif_3;
+                                        $idPerhitungan3 = $item3->id_perhitungan ?? 0;
+                                        $perhitungan3 = DB::table('perhitungan')->where('id', $idPerhitungan3)->first();
 
-                                            $perhitunganUts_3 = $perhitungan_3->uts;
-                                            $persenUts_3 = $perhitunganUts_3 / 100;
-                                            $nilaiUts_3 =
-                                                $nilaiPerMahasiswa3[$student->nim][$dk3->id_jadwal]->uts ?? '0';
-                                            $amUts_3 = $nilaiUts_3 * $persenUts_3;
+                                        $perhitunganPresensi3 = $perhitungan3->presensi ?? 0;
+                                        $persenPresensi3 = $perhitunganPresensi3 / 100;
+                                        $amPresensi3 = $nilaiPresensi3 * $persenPresensi3;
 
-                                            $perhitunganUas_3 = $perhitungan_3->uas;
-                                            $persenUas_3 = $perhitunganUas_3 / 100;
-                                            $nilaiUas_3 =
-                                                $nilaiPerMahasiswa3[$student->nim][$dk3->id_jadwal]->uas ?? '0';
-                                            $amUas_3 = $nilaiUas_3 * $persenUas_3;
+                                        $perhitunganTugas3 = $perhitungan3->tugas ?? 0;
+                                        $persenTugas3 = $perhitunganTugas3 / 100;
+                                        $amTugas3 = $nilaiTugas3 * $persenTugas3;
 
-                                            $jumlahAm_3 =
-                                                $amPresensi_3 + $amTugas_3 + $amFormatif_3 + $amUts_3 + $amUas_3;
+                                        $perhitunganFormatif3 = $perhitungan3->formatif ?? 0;
+                                        $persenFormatif3 = $perhitunganFormatif3 / 100;
+                                        $amFormatif3 = $nilaiFormatif3 * $persenFormatif3;
 
-                                            if ($jumlahAm_3 < 50) {
-                                                $huruf_3 = 'E';
-                                            } elseif ($jumlahAm_3 < 55) {
-                                                $huruf_3 = 'D';
-                                            } elseif ($jumlahAm_3 < 60) {
-                                                $huruf_3 = 'C-';
-                                            } elseif ($jumlahAm_3 < 65) {
-                                                $huruf_3 = 'C';
-                                            } elseif ($jumlahAm_3 < 70) {
-                                                $huruf_3 = 'C+';
-                                            } elseif ($jumlahAm_3 < 75) {
-                                                $huruf_3 = 'B-';
-                                            } elseif ($jumlahAm_3 < 80) {
-                                                $huruf_3 = 'B';
-                                            } elseif ($jumlahAm_3 < 85) {
-                                                $huruf_3 = 'B+';
-                                            } elseif ($jumlahAm_3 < 90) {
-                                                $huruf_3 = 'A-';
-                                            } else {
-                                                $huruf_3 = 'A';
-                                            }
+                                        $perhitunganUts3 = $perhitungan3->uts ?? 0;
+                                        $persenUts3 = $perhitunganUts3 / 100;
+                                        $amUts3 = $nilaiUts3 * $persenUts3;
 
-                                            if ($huruf_3 == 'E') {
-                                                $grade_3 = '0.0';
-                                            } elseif ($huruf_3 == 'D') {
-                                                $grade_3 = '1.0';
-                                            } elseif ($huruf_3 == 'C-') {
-                                                $grade_3 = '1.6';
-                                            } elseif ($huruf_3 == 'C') {
-                                                $grade_3 = '2.0';
-                                            } elseif ($huruf_3 == 'C+') {
-                                                $grade_3 = '2.3';
-                                            } elseif ($huruf_3 == 'B-') {
-                                                $grade_3 = '2.6';
-                                            } elseif ($huruf_3 == 'B') {
-                                                $grade_3 = '3.0';
-                                            } elseif ($huruf_3 == 'B+') {
-                                                $grade_3 = '3.3';
-                                            } elseif ($huruf_3 == 'A-') {
-                                                $grade_3 = '3.6';
-                                            } elseif ($huruf_3 == 'A') {
-                                                $grade_3 = '4.0';
-                                            }
-                                            $sks_3 = $dk3->sks;
-                                            $mutu_3 = $grade_3 * $sks_3;
-                                            $jumlahSks_3 += $sks_3;
-                                            $jumlahMutu_3 += $mutu_3;
+                                        $perhitunganUas3 = $perhitungan3->uas ?? 0;
+                                        $persenUas3 = $perhitunganUas3 / 100;
+                                        $amUas3 = $nilaiUas3 * $persenUas3;
 
-                                            $indexPrestasi_3 = $jumlahMutu_3 / $jumlahSks_3;
+                                        $jumlahAm3 = $amPresensi3 + $amTugas3 + $amFormatif3 + $amUts3 + $amUas3;
 
-                                            if ($indexPrestasi_3 < 2) {
-                                                $hasilIndexPrestasi_3 = 'KURANG';
-                                            } elseif ($indexPrestasi_3 < 2.6) {
-                                                $hasilIndexPrestasi_3 = 'CUKUP';
-                                            } elseif ($indexPrestasi_3 < 3) {
-                                                $hasilIndexPrestasi_3 = 'BAIK';
-                                            } elseif ($indexPrestasi_3 < 3.6) {
-                                                $hasilIndexPrestasi_3 = 'MEMUASKAN';
-                                            } elseif ($indexPrestasi_3 >= 3.6) {
-                                                $hasilIndexPrestasi_3 = 'SANGAT MEMUASKAN';
-                                            }
+                                        if ($jumlahAm3 < 50) {
+                                            $huruf3 = 'E';
+                                        } elseif ($jumlahAm3 < 55) {
+                                            $huruf3 = 'D';
+                                        } elseif ($jumlahAm3 < 60) {
+                                            $huruf3 = 'C-';
+                                        } elseif ($jumlahAm3 < 65) {
+                                            $huruf3 = 'C';
+                                        } elseif ($jumlahAm3 < 70) {
+                                            $huruf3 = 'C+';
+                                        } elseif ($jumlahAm3 < 75) {
+                                            $huruf3 = 'B-';
+                                        } elseif ($jumlahAm3 < 80) {
+                                            $huruf3 = 'B';
+                                        } elseif ($jumlahAm3 < 85) {
+                                            $huruf3 = 'B+';
+                                        } elseif ($jumlahAm3 < 90) {
+                                            $huruf3 = 'A-';
                                         } else {
-                                            $huruf_3 = 'E';
-                                            $grade_3 = '0.0';
-                                            $mutu_3 = 0;
-                                            $sks_3 = $dk3->sks;
-                                            $jumlahSks_3 += $sks_3;
+                                            $huruf3 = 'A';
                                         }
 
+                                        if ($huruf3 == 'E') {
+                                            $grade3 = '0.0';
+                                        } elseif ($huruf3 == 'D') {
+                                            $grade3 = '1.0';
+                                        } elseif ($huruf3 == 'C-') {
+                                            $grade3 = '1.6';
+                                        } elseif ($huruf3 == 'C') {
+                                            $grade3 = '2.0';
+                                        } elseif ($huruf3 == 'C+') {
+                                            $grade3 = '2.3';
+                                        } elseif ($huruf3 == 'B-') {
+                                            $grade3 = '2.6';
+                                        } elseif ($huruf3 == 'B') {
+                                            $grade3 = '3.0';
+                                        } elseif ($huruf3 == 'B+') {
+                                            $grade3 = '3.3';
+                                        } elseif ($huruf3 == 'A-') {
+                                            $grade3 = '3.6';
+                                        } elseif ($huruf3 == 'A') {
+                                            $grade3 = '4.0';
+                                        }
+
+                                        $sks3 = $item3->sks ?? 0;
+                                        $jumlahSks3 += $sks3;
+
+                                        $mutu3 = $grade3 * $sks3;
+                                        $jumlahMutu3 += $mutu3;
+                                        if ($jumlahSks3 > 0) {
+                                            $indexPrestasi3 = $jumlahMutu3 / $jumlahSks3;
+                                        } else {
+                                            $indexPrestasi3 = 0; // atau null, tergantung kebutuhan
+                                        }
+
+                                        if ($indexPrestasi3 < 2) {
+                                            $hasilIndexPrestasi3 = 'KURANG';
+                                        } elseif ($indexPrestasi3 < 2.6) {
+                                            $hasilIndexPrestasi3 = 'CUKUP';
+                                        } elseif ($indexPrestasi3 < 3) {
+                                            $hasilIndexPrestasi3 = 'BAIK';
+                                        } elseif ($indexPrestasi3 < 3.6) {
+                                            $hasilIndexPrestasi3 = 'MEMUASKAN';
+                                        } elseif ($indexPrestasi3 >= 3.6) {
+                                            $hasilIndexPrestasi3 = 'SANGAT MEMUASKAN';
+                                        } else {
+                                            $hasilIndexPrestasi3 = '-';
+                                        }
                                     @endphp
                                     <tr>
                                         <td class="border border-1 border-black">{{ $no++ }}</td>
                                         <td class="border border-1 border-black text-left pl-2">
-                                            {{ $dk3->materi_ajar }}</td>
-                                        <td class="border border-1 border-black">
-                                            {{ $huruf_3 }}
+                                            {{ $item3->materi_ajar }}
                                         </td>
-                                        <td class="border border-1 border-black">
-                                            {{ $grade_3 }}
+                                        <td class="border border-1 border-black text-center pl-2">{{ $huruf3 }}
                                         </td>
-                                        <td class="border border-1 border-black">
-                                            {{ $dk3->sks }}
-                                        </td>
-                                        <td class="border border-1 border-black">
-                                            {{ $mutu_3 }}
-                                        </td>
+                                        <td class="border border-1 border-black">{{ $grade3 }}</td>
+                                        <td class="border border-1 border-black">{{ $item3->sks }}</td>
+                                        <td class="border border-1 border-black">{{ $mutu3 }}</td>
                                     </tr>
                                 @endforeach
                                 <tr>
                                     <td colspan="4" class="border border-1 border-black">IP SMT 3 :
-                                        {{ number_format($indexPrestasi_3, 2) }}
+                                        {{ number_format($indexPrestasi3, 2) }}
                                     </td>
-                                    <td class="border border-1 border-black">{{ $jumlahSks_3 }}</td>
-                                    <td class="border border-1 border-black">{{ $jumlahMutu_3 }}</td>
+                                    <td class="border border-1 border-black">{{ $jumlahSks3 }}</td>
+                                    <td class="border border-1 border-black">{{ $jumlahMutu3 }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -734,210 +723,136 @@
                             <tbody>
                                 @php
                                     $no = 1;
-                                    $jumlahSks_4 = 0;
-                                    $jumlahMutu_4 = 0;
-                                    $jumlahMutuAp = 0;
-                                    $indexPrestasi_4 = 0;
+                                    $jumlahSks4 = 0;
+                                    $jumlahMutu4 = 0;
+                                    $indexPrestasi4 = 0;
+                                    $hasilIndexPrestasi4 = 0;
                                 @endphp
-                                @foreach ($detail_kurikulum_4 as $dk4)
+                                @foreach ($prestasi4 as $item4)
                                     @php
-                                        if ($dk4->id_perhitungan != null) {
-                                            $perhitunganPresensi_4 = $perhitungan_4->presensi;
-                                            $persenPresensi_4 = $perhitunganPresensi_4 / 100;
-                                            $nilaiPresensi_4 =
-                                                $nilaiPerMahasiswa4[$student->nim][$dk4->id_jadwal]->presensi ?? '0';
-                                            $amPresensi_4 = $nilaiPresensi_4 * $persenPresensi_4;
+                                        $nilai4 = DB::table('vw_data_prestasi')
+                                            ->where('nim', $student->nim)
+                                            ->where('materi_ajar', $item4->materi_ajar)
+                                            ->first();
 
-                                            $perhitunganTugas_4 = $perhitungan_4->tugas;
-                                            $persenTugas_4 = $perhitunganTugas_4 / 100;
-                                            $nilaiTugas_4 =
-                                                $nilaiPerMahasiswa4[$student->nim][$dk4->id_jadwal]->tugas ?? '0';
-                                            $amTugas_4 = $nilaiTugas_4 * $persenTugas_4;
+                                        $nilaiPresensi4 = $nilai4->presensi ?? 0;
+                                        $nilaiTugas4 = $nilai4->tugas ?? 0;
+                                        $nilaiFormatif4= $nilai4->formatif ?? 0;
+                                        $nilaiUts4 = $nilai4->uts ?? 0;
+                                        $nilaiUas4 = $nilai4->uas ?? 0;
 
-                                            $perhitunganFormatif_4 = $perhitungan_4->formatif;
-                                            $persenFormatif_4 = $perhitunganFormatif_4 / 100;
-                                            $nilaiFormatif_4 =
-                                                $nilaiPerMahasiswa4[$student->nim][$dk4->id_jadwal]->formatif ?? '0';
-                                            $amFormatif_4 = $nilaiFormatif_4 * $persenFormatif_4;
+                                        $idPerhitungan4 = $item4->id_perhitungan ?? 0;
+                                        $perhitungan4 = DB::table('perhitungan')->where('id', $idPerhitungan4)->first();
 
-                                            $perhitunganUts_4 = $perhitungan_4->uts;
-                                            $persenUts_4 = $perhitunganUts_4 / 100;
-                                            $nilaiUts_4 =
-                                                $nilaiPerMahasiswa4[$student->nim][$dk4->id_jadwal]->uts ?? '0';
-                                            $amUts_4 = $nilaiUts_4 * $persenUts_4;
+                                        $perhitunganPresensi4 = $perhitungan4->presensi ?? 0;
+                                        $persenPresensi4 = $perhitunganPresensi4 / 100;
+                                        $amPresensi4 = $nilaiPresensi4 * $persenPresensi4;
 
-                                            $perhitunganUas_4 = $perhitungan_4->uas;
-                                            $persenUas_4 = $perhitunganUas_4 / 100;
-                                            $nilaiUas_4 =
-                                                $nilaiPerMahasiswa3[$student->nim][$dk4->id_jadwal]->uas ?? '0';
-                                            $amUas_4 = $nilaiUas_4 * $persenUas_4;
+                                        $perhitunganTugas4 = $perhitungan4->tugas ?? 0;
+                                        $persenTugas4 = $perhitunganTugas4 / 100;
+                                        $amTugas4 = $nilaiTugas4 * $persenTugas4;
 
-                                            $jumlahAm_4 =
-                                                $amPresensi_4 + $amTugas_4 + $amFormatif_4 + $amUts_4 + $amUas_4;
+                                        $perhitunganFormatif4 = $perhitungan4->formatif ?? 0;
+                                        $persenFormatif4 = $perhitunganFormatif4 / 100;
+                                        $amFormatif4 = $nilaiFormatif4 * $persenFormatif4;
 
-                                            if ($jumlahAm_4 < 50) {
-                                                $huruf_4 = 'E';
-                                            } elseif ($jumlahAm_4 < 55) {
-                                                $huruf_4 = 'D';
-                                            } elseif ($jumlahAm_4 < 60) {
-                                                $huruf_4 = 'C-';
-                                            } elseif ($jumlahAm_4 < 65) {
-                                                $huruf_4 = 'C';
-                                            } elseif ($jumlahAm_4 < 70) {
-                                                $huruf_4 = 'C+';
-                                            } elseif ($jumlahAm_4 < 75) {
-                                                $huruf_4 = 'B-';
-                                            } elseif ($jumlahAm_4 < 80) {
-                                                $huruf_4 = 'B';
-                                            } elseif ($jumlahAm_4 < 85) {
-                                                $huruf_4 = 'B+';
-                                            } elseif ($jumlahAm_4 < 90) {
-                                                $huruf_4 = 'A-';
-                                            } else {
-                                                $huruf_4 = 'A';
-                                            }
+                                        $perhitunganUts4 = $perhitungan4->uts ?? 0;
+                                        $persenUts4 = $perhitunganUts4 / 100;
+                                        $amUts4 = $nilaiUts4 * $persenUts4;
 
-                                            if ($huruf_4 == 'E') {
-                                                $grade_4 = '0.0';
-                                            } elseif ($huruf_4 == 'D') {
-                                                $grade_4 = '1.0';
-                                            } elseif ($huruf_4 == 'C-') {
-                                                $grade_4 = '1.6';
-                                            } elseif ($huruf_4 == 'C') {
-                                                $grade_4 = '2.0';
-                                            } elseif ($huruf_4 == 'C+') {
-                                                $grade_4 = '2.3';
-                                            } elseif ($huruf_4 == 'B-') {
-                                                $grade_4 = '2.6';
-                                            } elseif ($huruf_4 == 'B') {
-                                                $grade_4 = '3.0';
-                                            } elseif ($huruf_4 == 'B+') {
-                                                $grade_4 = '3.3';
-                                            } elseif ($huruf_4 == 'A-') {
-                                                $grade_4 = '3.6';
-                                            } elseif ($huruf_4 == 'A') {
-                                                $grade_4 = '4.0';
-                                            }
+                                        $perhitunganUas4 = $perhitungan4->uas ?? 0;
+                                        $persenUas4 = $perhitunganUas4 / 100;
+                                        $amUas4 = $nilaiUas4 * $persenUas4;
 
-                                            $sks_4 = $dk4->sks;
-                                            $mutu_4 = $grade_4 * $sks_4;
-                                            $jumlahSks_4 += $sks_4;
-                                            $jumlahMutu_4 += $mutu_4;
+                                        $jumlahAm4 = $amPresensi4 + $amTugas4 + $amFormatif4 + $amUts4 + $amUas4;
 
-                                            $indexPrestasi_4 = $jumlahMutu_4 / $jumlahSks_4;
-
-                                            if ($indexPrestasi_4 < 2) {
-                                                $hasilIndexPrestasi_4 = 'KURANG';
-                                            } elseif ($indexPrestasi_4 < 2.6) {
-                                                $hasilIndexPrestasi_4 = 'CUKUP';
-                                            } elseif ($indexPrestasi_4 < 3) {
-                                                $hasilIndexPrestasi_4 = 'BAIK';
-                                            } elseif ($indexPrestasi_4 < 3.6) {
-                                                $hasilIndexPrestasi_4 = 'MEMUASKAN';
-                                            } elseif ($indexPrestasi_4 >= 3.6) {
-                                                $hasilIndexPrestasi_4 = 'SANGAT MEMUASKAN';
-                                            }
+                                        if ($jumlahAm4 < 50) {
+                                            $huruf4 = 'E';
+                                        } elseif ($jumlahAm4 < 55) {
+                                            $huruf4 = 'D';
+                                        } elseif ($jumlahAm4 < 60) {
+                                            $huruf4 = 'C-';
+                                        } elseif ($jumlahAm4 < 65) {
+                                            $huruf4 = 'C';
+                                        } elseif ($jumlahAm4 < 70) {
+                                            $huruf4 = 'C+';
+                                        } elseif ($jumlahAm4 < 75) {
+                                            $huruf4 = 'B-';
+                                        } elseif ($jumlahAm4 < 80) {
+                                            $huruf4 = 'B';
+                                        } elseif ($jumlahAm4 < 85) {
+                                            $huruf4 = 'B+';
+                                        } elseif ($jumlahAm4 < 90) {
+                                            $huruf4 = 'A-';
                                         } else {
-                                            $huruf_4 = 'E';
-                                            $grade_4 = '0.0';
-                                            $mutu_4 = 0;
-                                            $sks_4 = $dk4->sks;
-                                            $jumlahSks_4 += $sks_4;
+                                            $huruf4 = 'A';
                                         }
 
-                                        // NILAI APLIKASI PROJECT
-                                        $nilaiAplikasi = $nilaiAplikasiProject->where('nim', $student->nim)->first();
-                                        if (!$nilaiAplikasi) {
-                                            $apPresensi = 0;
-                                            $apTugas = 0;
-                                            $apFormatif = 0;
-                                            $apUts = 0;
-                                            $apUas = 0;
-                                            $jumlahNilaiAp = 0;
+                                        if ($huruf4 == 'E') {
+                                            $grade4 = '0.0';
+                                        } elseif ($huruf4 == 'D') {
+                                            $grade4 = '1.0';
+                                        } elseif ($huruf4 == 'C-') {
+                                            $grade4 = '1.6';
+                                        } elseif ($huruf4 == 'C') {
+                                            $grade4 = '2.0';
+                                        } elseif ($huruf4 == 'C+') {
+                                            $grade4 = '2.3';
+                                        } elseif ($huruf4 == 'B-') {
+                                            $grade4 = '2.6';
+                                        } elseif ($huruf4 == 'B') {
+                                            $grade4 = '3.0';
+                                        } elseif ($huruf4 == 'B+') {
+                                            $grade4 = '3.3';
+                                        } elseif ($huruf4 == 'A-') {
+                                            $grade4 = '3.6';
+                                        } elseif ($huruf4 == 'A') {
+                                            $grade4 = '4.0';
+                                        }
+
+                                        $sks4 = $item4->sks ?? 0;
+                                        $jumlahSks4 += $sks4;
+
+                                        $mutu4 = $grade4 * $sks4;
+                                        $jumlahMutu4 += $mutu4;
+                                        if ($jumlahSks4 > 0) {
+                                            $indexPrestasi4 = $jumlahMutu4 / $jumlahSks4;
                                         } else {
-                                            $apPresensi = $nilaiAplikasi->presensi;
-                                            $apTugas = $nilaiAplikasi->tugas;
-                                            $apFormatif = $nilaiAplikasi->formatif;
-                                            $apUts = $nilaiAplikasi->uts;
-                                            $apUas = $nilaiAplikasi->uas;
-                                            $jumlahNilaiAp =
-                                                ($apPresensi + $apTugas + $apFormatif + $apUts + $apUas) / 5;
+                                            $indexPrestasi4 = 0; // atau null, tergantung kebutuhan
+                                        }
 
-                                            if ($jumlahNilaiAp < 50) {
-                                                $hurufAp = 'E';
-                                            } elseif ($jumlahNilaiAp < 55) {
-                                                $hurufAp = 'D';
-                                            } elseif ($jumlahNilaiAp < 60) {
-                                                $hurufAp = 'C-';
-                                            } elseif ($jumlahNilaiAp < 65) {
-                                                $hurufAp = 'C';
-                                            } elseif ($jumlahNilaiAp < 70) {
-                                                $hurufAp = 'C+';
-                                            } elseif ($jumlahNilaiAp < 75) {
-                                                $hurufAp = 'B-';
-                                            } elseif ($jumlahNilaiAp < 80) {
-                                                $hurufAp = 'B';
-                                            } elseif ($jumlahNilaiAp < 85) {
-                                                $hurufAp = 'B+';
-                                            } elseif ($jumlahNilaiAp < 90) {
-                                                $hurufAp = 'A-';
-                                            } else {
-                                                $hurufAp = 'A';
-                                            }
-
-                                            if ($hurufAp == 'E') {
-                                                $gradeAp = '0.0';
-                                            } elseif ($hurufAp == 'D') {
-                                                $gradeAp = '1.0';
-                                            } elseif ($hurufAp == 'C-') {
-                                                $gradeAp = '1.6';
-                                            } elseif ($hurufAp == 'C') {
-                                                $gradeAp = '2.0';
-                                            } elseif ($hurufAp == 'C+') {
-                                                $gradeAp = '2.3';
-                                            } elseif ($hurufAp == 'B-') {
-                                                $gradeAp = '2.6';
-                                            } elseif ($hurufAp == 'B') {
-                                                $gradeAp = '3.0';
-                                            } elseif ($hurufAp == 'B+') {
-                                                $gradeAp = '3.3';
-                                            } elseif ($hurufAp == 'A-') {
-                                                $gradeAp = '3.6';
-                                            } elseif ($hurufAp == 'A') {
-                                                $gradeAp = '4.0';
-                                            }
-
-                                            $mutuAp = $gradeAp * $sks_4;
-                                            $jumlahMutuAp += $mutuAp;
-                                            $indexPrestasiAp = $jumlahMutuAp / $jumlahSks_4;
+                                        if ($indexPrestasi4 < 2) {
+                                            $hasilIndexPrestasi4 = 'KURANG';
+                                        } elseif ($indexPrestasi4 < 2.6) {
+                                            $hasilIndexPrestasi4 = 'CUKUP';
+                                        } elseif ($indexPrestasi4 < 3) {
+                                            $hasilIndexPrestasi4 = 'BAIK';
+                                        } elseif ($indexPrestasi4 < 3.6) {
+                                            $hasilIndexPrestasi4 = 'MEMUASKAN';
+                                        } elseif ($indexPrestasi4 >= 3.6) {
+                                            $hasilIndexPrestasi4 = 'SANGAT MEMUASKAN';
+                                        } else {
+                                            $hasilIndexPrestasi4 = '-';
                                         }
                                     @endphp
                                     <tr>
                                         <td class="border border-1 border-black">{{ $no++ }}</td>
                                         <td class="border border-1 border-black text-left pl-2">
-                                            {{ $dk4->materi_ajar }}</td>
-                                        <td class="border border-1 border-black">
-                                            {{ $nilaiAplikasi ? $hurufAp : $huruf_4 }}
+                                            {{ $item4->materi_ajar }}
                                         </td>
-                                        <td class="border border-1 border-black">
-                                            {{ $nilaiAplikasi ? $gradeAp : $grade_4 }}
+                                        <td class="border border-1 border-black text-center pl-2">{{ $huruf4 }}
                                         </td>
-                                        <td class="border border-1 border-black">
-                                            {{ $dk4->sks }}
-                                        </td>
-                                        <td class="border border-1 border-black">
-                                            {{ $nilaiAplikasi ? $mutuAp : $mutu_4 }}
-                                        </td>
-
+                                        <td class="border border-1 border-black">{{ $grade4 }}</td>
+                                        <td class="border border-1 border-black">{{ $item4->sks }}</td>
+                                        <td class="border border-1 border-black">{{ $mutu4 }}</td>
                                     </tr>
                                 @endforeach
                                 <tr>
                                     <td colspan="4" class="border border-1 border-black">IP SMT 4 :
-                                        {{ number_format($indexPrestasi_4, 2) }}
+                                        {{ number_format($indexPrestasi4, 2) }}
                                     </td>
-                                    <td class="border border-1 border-black">{{ $jumlahSks_4 }}</td>
-                                    <td class="border border-1 border-black">
-                                        {{ $dk4->id_materi_ajar == 10 ? $jumlahMutuAp : $jumlahMutu_4 }}</td>
+                                    <td class="border border-1 border-black">{{ $jumlahSks4 }}</td>
+                                    <td class="border border-1 border-black">{{ $jumlahMutu4 }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -946,24 +861,15 @@
                 <div>
                     @php
                         $ipk = 0;
-                        $ip1 = $indexPrestasi_1;
-                        $ip2 = $indexPrestasi_2;
-                        $ip3 = $indexPrestasi_3;
-                        $ip4 = $nilaiAplikasi ? $indexPrestasiAp : $indexPrestasi_4;
+                        $ip1 = $indexPrestasi;
+                        $ip2 = $indexPrestasi2;
+                        $ip3 = $indexPrestasi3;
+                        $ip4 = $indexPrestasi4;
 
-                        // $ipArray = [$ip1, $ip2, $ip3, $ip4];
-
-                        // $filteredIPs = array_filter($ipArray, function ($ip) {
-                        //     return $ip != 0;
-                        // });
-
-                        // $jumlah_ip = count($filteredIPs);
                         $ipArray = [$ip1, $ip2, $ip3, $ip4];
                                 $jumlah_ip = count($ipArray);
 
                                 $total_ip = array_sum($ipArray);
-
-                        // $total_ip = array_sum($filteredIPs);
 
                         if ($jumlah_ip > 0) {
                             $ipk = $total_ip / $jumlah_ip;

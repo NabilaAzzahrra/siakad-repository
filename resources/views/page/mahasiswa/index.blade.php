@@ -154,7 +154,8 @@
                                                                 {{ $no++ }}
                                                             </td>
                                                             <td class="px-6 py-4 text-center bg-gray-100">
-                                                                {{ $i->nim }}
+                                                                <a
+                                                                    href="{{ route('mahasiswa.show', $i->nim) }}">{{ $i->nim }}</a>
                                                             </td>
                                                             <td class="px-6 py-4 text-left">
                                                                 {{ $i->nama }}
@@ -206,7 +207,8 @@
                                         <div class="flex items-end justify-end mt-5">
                                             <button
                                                 class="mb-3 p-2 text-sm lg:mb-2 lg:p-2 bg-sky-100 hover:bg-sky-400 text-sky-500 border border-sky-500 hover:text-white rounded-xl flex items-end justify-end">
-                                                <i class="fi fi-sr-file-edit mr-2 ml-4"></i> <span class="pr-4">Update</span>
+                                                <i class="fi fi-sr-file-edit mr-2 ml-4"></i> <span
+                                                    class="pr-4">Update</span>
                                             </button>
                                         </div>
                                         <div class="mt-4">

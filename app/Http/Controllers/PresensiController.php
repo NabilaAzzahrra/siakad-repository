@@ -33,6 +33,7 @@ class PresensiController extends Controller
     {
         // Ambil nilai id_presensi dari inputan
         $presensiId = $request->input('id_presensi');
+        $idJadwal = $request->input('id_jadwal');
         $materi = $request->input('materi');
 
         // Persiapkan array $data untuk update
@@ -78,32 +79,15 @@ class PresensiController extends Controller
             }
         }
 
-        // // Masukkan input materi ke dalam $data
-        // $data['materi'] = $request->input('materi');
-        // $data['file_materi'] = $materiFilePath;
-        // $data['tgl_presensi'] = date('Y-m-d');
-        // // Cari data presensi berdasarkan id_presensi
-        // $presensi = Presensi::where('id_presensi', $presensiId)->first();
-        // $presensi->update($data);
-
-        // foreach ($request->nim as $key => $nim) {
-        //     $detailPresensi = new DetailPresensi();
-        //     $detailPresensi->id_presensi = $presensiId;
-        //     $detailPresensi->nim = $nim;
-        //     $detailPresensi->keterangan = $request->keterangan[$key];
-        //     // Simpan detail presensi
-        //     $detailPresensi->save();
-        // }
         if (Auth::user()->role == 'A') {
             return redirect()
-            ->route('jadwal_reguler.index')
-            ->with('message', 'Data presensi telah berhasil ditambahkan.');
+                ->route('jadwal_reguler.show', $idJadwal)
+                ->with('message', 'Data presensi telah berhasil ditambahkan.');
         } else {
             return redirect()
-            ->route('jadwal_reguler.jadwal_dosen', Auth::user()->email)
-            ->with('message', 'Data presensi telah berhasil ditambahkan.');
+                ->route('jadwal_reguler.jadwal_dosen', Auth::user()->email)
+                ->with('message', 'Data presensi telah berhasil ditambahkan.');
         }
-
     }
 
 
@@ -145,6 +129,8 @@ class PresensiController extends Controller
         // $presensi = Presensi::find($id);
         $presensi = Presensi::where('id_presensi', $id)->first();
 
+        $idJadwal = $presensi->id_jadwal;
+
         if (!$presensi) {
             return redirect()->back()->with('error', 'Data tidak ditemukan.');
         }
@@ -185,7 +171,7 @@ class PresensiController extends Controller
         }
 
         return redirect()
-            ->route('jadwal_reguler.index')
+            ->route('jadwal_reguler.show', $idJadwal)
             ->with('message', 'Data presensi telah berhasil diperbarui.');
     }
 

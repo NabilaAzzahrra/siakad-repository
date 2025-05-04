@@ -250,10 +250,10 @@
             <div class=" top-[320px] ml-[6px] mr-[90px] left-0 right-0 text-center text-sm">
                 <table class="border border-1 border-black w-full">
                     <thead class="border border-1 border-black">
-                        <th class="border border-1 border-black">NO</th>
-                        <th class="border border-1 border-black">MATERI AJAR</th>
+                        <th class="border border-1 border-black bg-gray-200">NO</th>
+                        <th class="border border-1 border-black bg-gray-200">MATERI AJAR</th>
                         @for ($i = 1; $i <= 14; $i++)
-                            <th scope="col" class="border border-1 border-black">
+                            <th scope="col" class="border border-1 border-black bg-gray-200">
                                 <div>
                                     P{{ $i }}
                                 </div>
@@ -273,24 +273,29 @@
                                     {{ $m->detail_kurikulum->materi_ajar->materi_ajar }}
                                 </td>
                                 @for ($i = 1; $i <= 14; $i++)
-                                    <td class="border border-1 border-black">
-                                        @php
-                                            $presensi = $presensiPerPertemuan[$m->id_jadwal]['P' . $i] ?? null;
-                                            $k = '-';
+                                    @php
+                                        $presensi = $presensiPerPertemuan[$m->id_jadwal]['P' . $i] ?? null;
+                                        $k = '';
+                                        $bg = '';
 
-                                            if ($presensi) {
-                                                $ket = $presensi->keterangan;
-                                                if ($ket == 'HADIR') {
-                                                    $k = 'H';
-                                                } elseif ($ket == 'IZIN') {
-                                                    $k = 'I';
-                                                } elseif ($ket == 'ALPA') {
-                                                    $k = 'A';
-                                                } elseif ($ket == 'SAKIT') {
-                                                    $k = 'S';
-                                                }
+                                        if ($presensi) {
+                                            $ket = $presensi->keterangan;
+                                            if ($ket == 'HADIR') {
+                                                $bg = 'bg-emerald-200 text-emerald-600';
+                                                $k = 'H';
+                                            } elseif ($ket == 'IZIN') {
+                                                $bg = 'bg-sky-200 text-sky-600';
+                                                $k = 'I';
+                                            } elseif ($ket == 'ALPA') {
+                                                $bg = 'bg-red-200 text-red-600';
+                                                $k = 'A';
+                                            } elseif ($ket == 'SAKIT') {
+                                                $bg = 'bg-amber-200 text-amber-600';
+                                                $k = 'S';
                                             }
-                                        @endphp
+                                        }
+                                    @endphp
+                                    <td class="border border-1 border-black {{ $bg }}">
                                         {{ $k }}
                                     </td>
                                 @endfor
@@ -361,5 +366,5 @@
 
 </html>
 <script>
-    window.print();
+    //window.print();
 </script>

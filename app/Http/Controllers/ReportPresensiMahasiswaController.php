@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DetailPresensi;
 use App\Models\Jadwalreguler;
+use App\Models\Jurusan;
 use App\Models\Mahasiswa;
 use App\Models\Presensi;
 use App\Models\Semester;
@@ -17,17 +18,46 @@ class ReportPresensiMahasiswaController extends Controller
      */
     public function index()
     {
-        $mahasiswa_lengkap = DB::table('mahasiswa')
+        $tahunAngkatan = Mahasiswa::select('tahun_angkatan')->distinct()->orderBy('tahun_angkatan', 'asc')->pluck('tahun_angkatan');
+        $jurusan = Jurusan::all();
+        $semester = Semester::all();
+
+        $page = request()->input('page', 1);
+        $entries = request()->input('entries', 10);
+        $search = request()->input('search');
+
+        $filterTahunAngkatan = request()->input('tahun_angkatan');
+        $filterJurusan = request()->input('jurusan');
+
+        $query = Mahasiswa::query()
             ->join('kelas', 'mahasiswa.id_kelas', '=', 'kelas.id')
             ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id')
-            ->select('mahasiswa.*', 'kelas.kelas', 'jurusan.jurusan')
+            ->select(
+                'mahasiswa.*',
+                'kelas.*',
+                'jurusan.*'
+            )
             ->whereNotNull('mahasiswa.id_kelas')
             ->whereNotNull('mahasiswa.tingkat')
-            ->orderBy('nama', 'ASC')
-            ->paginate(30);
-        return view('page.report_presensi_mahasiswa.index')->with([
-            'mahasiswa_lengkap' => $mahasiswa_lengkap,
-        ]);
+            ->orderBy('nama', 'ASC');
+
+        if ($search) {
+            $query->where('nama', 'like', '%' . $search . '%')
+                ->orWhere('nama', 'like', '%' . $search . '%');
+        }
+
+        if ($filterTahunAngkatan) {
+            $query->where('mahasiswa.tahun_angkatan', $filterTahunAngkatan);
+        }
+
+        if ($filterJurusan) {
+            $query->where('jurusan.id', $filterJurusan);
+        }
+
+        $mahasiswa_lengkap = $query->paginate($entries);
+
+        return view('page.report_presensi_mahasiswa.index', compact(['mahasiswa_lengkap', 'jurusan', 'tahunAngkatan', 'semester']))
+            ->with('i', ($page - 1) * $entries);
     }
 
     /**

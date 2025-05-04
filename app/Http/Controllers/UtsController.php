@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\DetailUts;
 use App\Models\Jadwalreguler;
+use App\Models\Konfigurasi;
 use App\Models\KonfigurasiUjian;
+use App\Models\Nilai;
+use App\Models\Tahunakademik;
 use App\Models\Uts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -15,12 +18,81 @@ class UtsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $jadwal = Jadwalreguler::all();
+        /*$jadwal = Jadwalreguler::all();
         return view('page.uts.index')->with([
             'jadwal' => $jadwal
-        ]);
+        ]);*/
+
+        $page = request()->input('page', 1);
+        $entries = request()->input('entries', 10);
+        $search = request()->input('search');
+
+        $konfigurasi = Konfigurasi::first();
+        $default_tahun_akademik = $konfigurasi->id_tahun_akademik;
+        $keterangan = $konfigurasi->id_keterangan;
+
+        $tahun_akademik = $request->input('id_tahun_akademiks', $default_tahun_akademik);
+
+        $query = Jadwalreguler::query()
+            ->join('detail_kurikulum', 'jadwal_reguler.id_detail_kurikulum', '=', 'detail_kurikulum.id_materi_ajar')
+            ->join('dosen', 'jadwal_reguler.id_dosen', '=', 'dosen.id')
+            ->join('hari', 'jadwal_reguler.id_hari', '=', 'hari.id')
+            ->join('sesi as sesi1', 'jadwal_reguler.id_sesi', '=', 'sesi1.id') // Alias untuk sesi pertama
+            ->leftJoin('sesi as sesi2', 'jadwal_reguler.id_sesi2', '=', 'sesi2.id') // Alias untuk sesi kedua
+            ->join('pukul as pukul1', 'sesi1.id_pukul', '=', 'pukul1.id')
+            ->leftJoin('pukul as pukul2', 'sesi2.id_pukul', '=', 'pukul2.id') // Ganti join biasa dengan leftJoin untuk pukul2
+            ->join('ruang', 'jadwal_reguler.id_ruang', '=', 'ruang.id')
+            ->join('kelas', 'jadwal_reguler.id_kelas', '=', 'kelas.id')
+            ->join('materi_ajar', 'detail_kurikulum.id_materi_ajar', '=', 'materi_ajar.id')
+            ->join('semester', 'materi_ajar.id_semester', '=', 'semester.id')
+            ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id')
+            ->select(
+                'jadwal_reguler.*',
+                'jadwal_reguler.id as id_jadwal',
+                'jadwal_reguler.id_sesi2 as sesi2',
+                'jadwal_reguler.id_jadwal as kode_jadwal',
+                'detail_kurikulum.*',
+                'dosen.*',
+                'hari.*',
+                'sesi1.*',
+                'sesi2.*',
+                'sesi1.id as kode_sesi1',
+                'sesi2.id as kode_sesi2',
+                'sesi1.sesi as sesi1',
+                'sesi2.sesi as sesi2',
+                'pukul1.*',
+                'pukul2.*',
+                'pukul1.pukul as pukul1',
+                'pukul2.pukul as pukul2',
+                'ruang.*',
+                'kelas.*',
+                'materi_ajar.*',
+                'semester.*',
+                'jurusan.*'
+            )
+            ->where('jadwal_reguler.id_tahun_akademik', $tahun_akademik)
+            ->where('jadwal_reguler.id_keterangan', $keterangan);
+
+        if ($search) {
+            $query->where('materi_ajar', 'like', '%' . $search . '%')
+                ->orWhere('nama_dosen', 'like', '%' . $search . '%');
+        }
+
+        $jadwal_reguler = $query->paginate($entries);
+
+        $tahunAkademik = Tahunakademik::all();
+
+        if ($request->ajax()) {
+            $nilai = Nilai::all();
+            return view('partials.nilai', compact('jadwal_reguler', 'nilai'))->render(); // Update this partial view as needed
+        }
+
+        $nilai = Nilai::all();
+
+        return view('page.uts.index', compact(['jadwal_reguler', 'tahunAkademik', 'nilai']))
+            ->with('i', ($page - 1) * $entries);
     }
 
     /**

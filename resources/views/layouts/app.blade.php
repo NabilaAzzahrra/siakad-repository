@@ -35,6 +35,15 @@
 
     {{-- Select2 --}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+
+    <!-- jQuery (Pastikan jQuery sudah ada, karena Select2 butuh jQuery) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
 
     {{-- Flsticon --}}
     <link rel='stylesheet'
@@ -141,10 +150,10 @@
             background: url('public/img/landing.jpg')
         }
     </style>
-
 </head>
 
 {{-- <body class="font-sans antialiased bg-[url('/public/img/building.jpg')] bg-cover bg-gray-500 bg-blend-multiply"> --}}
+
 <body class="font-sans antialiased bg-white bg-cover bg-blend-multiply">
     <!-- Preloader -->
     {{-- <div id="preloader" class="">
@@ -189,7 +198,8 @@
     </script>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
@@ -200,6 +210,21 @@
         // width: '100%'
         width: 'resolve'
     });
+
+    $(document).ready(function() {
+    $('.select-keterangan').select2({
+        placeholder: "Pilih Keterangan",
+        allowClear: true
+    });
+
+    // Jika elemen dibuat secara dinamis (AJAX), gunakan event delegation
+    $(document).on('focus', '.select-keterangan', function () {
+        $(this).select2({
+            placeholder: "Pilih Keterangan",
+            allowClear: true
+        });
+    });
+});
 </script>
 <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <script>
