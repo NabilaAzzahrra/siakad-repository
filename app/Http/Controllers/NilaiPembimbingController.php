@@ -67,61 +67,65 @@ class NilaiPembimbingController extends Controller
     {
         $nilaiPembimbing = NilaiPembimbing::findOrFail($id);
         $nim = $nilaiPembimbing->nim;
-
         $sikap = $nilaiPembimbing->sikap;
         $intensitasKesungguhan = $nilaiPembimbing->intensitas_kesungguhan;
         $kedalamanMateri = $nilaiPembimbing->kedalaman_materi;
 
         $nilaiPenguji = NilaiPenguji::where('nim', $nim)->first();
-        $verifikasiNilaiPenguji = $nilaiPenguji->verifikasi;
 
-        $penampilan = $nilaiPenguji->penampilan;
-        $bahasaAsing = $nilaiPenguji->bahasa_asing;
-        $bahasaIndonesia = $nilaiPenguji->bahasa_indonesia;
-        $teknikPresentasi = $nilaiPenguji->teknik_presentasi;
-        $metodaPenelitian = $nilaiPenguji->metoda_penelitian;
-        $penguasaanTeori = $nilaiPenguji->penguasaan_teori;
-
-        if ($verifikasiNilaiPenguji != 'SUDAH') {
-            $dataUpdate = [
-                'verifikasi' => 'SUDAH'
-            ];
-            $datas = NilaiPembimbing::where('nim', $nim)->first();;
-            $datas->update($dataUpdate);
+        if (!$nilaiPenguji) {
+            return back()->with('message_update', 'Data Nilai Penguji Belum Ada');
         } else {
-            $nPembimbing = ($sikap + $intensitasKesungguhan + $kedalamanMateri) / 3;
-            $jumlahNilaiPembimbing = (0.6) * $nPembimbing;
+            $verifikasiNilaiPenguji = $nilaiPenguji->verifikasi;
 
-            $nPenguji = ($penampilan + $bahasaAsing + $bahasaIndonesia + $teknikPresentasi + $metodaPenelitian + $penguasaanTeori) / 6;
-            $jumlahNilaiPenguji = (0.4) * $nPenguji;
+            $penampilan = $nilaiPenguji->penampilan;
+            $bahasaAsing = $nilaiPenguji->bahasa_asing;
+            $bahasaIndonesia = $nilaiPenguji->bahasa_indonesia;
+            $teknikPresentasi = $nilaiPenguji->teknik_presentasi;
+            $metodaPenelitian = $nilaiPenguji->metoda_penelitian;
+            $penguasaanTeori = $nilaiPenguji->penguasaan_teori;
 
-            $nilaiAkhir = $jumlahNilaiPembimbing + $jumlahNilaiPenguji;
+            if ($verifikasiNilaiPenguji != 'SUDAH') {
+                $dataUpdate = [
+                    'verifikasi' => 'SUDAH'
+                ];
+                $datas = NilaiPembimbing::where('nim', $nim)->first();;
+                $datas->update($dataUpdate);
+            } else {
+                $nPembimbing = ($sikap + $intensitasKesungguhan + $kedalamanMateri) / 3;
+                $jumlahNilaiPembimbing = (0.6) * $nPembimbing;
 
-            $data = [
-                'id_jadwal' => 0,
-                'id_nilai' => uniqid(),
-                'nim' => $nim,
-                'presensi' => $nilaiAkhir,
-                'tugas' => $nilaiAkhir,
-                'formatif' => $nilaiAkhir,
-                'uas' => $nilaiAkhir,
-                'uts' => $nilaiAkhir,
-                'verifikasi' => 1,
-            ];
+                $nPenguji = ($penampilan + $bahasaAsing + $bahasaIndonesia + $teknikPresentasi + $metodaPenelitian + $penguasaanTeori) / 6;
+                $jumlahNilaiPenguji = (0.4) * $nPenguji;
 
-            Nilai::create($data);
+                $nilaiAkhir = $jumlahNilaiPembimbing + $jumlahNilaiPenguji;
 
-            $dataUpdate = [
-                'verifikasi' => 'SUDAH'
-            ];
-            $datas = NilaiPembimbing::where('nim', $nim)->first();;
-            $datas->update($dataUpdate);
+                $data = [
+                    'id_jadwal' => 0,
+                    'id_nilai' => uniqid(),
+                    'nim' => $nim,
+                    'presensi' => $nilaiAkhir,
+                    'tugas' => $nilaiAkhir,
+                    'formatif' => $nilaiAkhir,
+                    'uas' => $nilaiAkhir,
+                    'uts' => $nilaiAkhir,
+                    'verifikasi' => 1,
+                ];
+
+                Nilai::create($data);
+
+                $dataUpdate = [
+                    'verifikasi' => 'SUDAH'
+                ];
+                $datas = NilaiPembimbing::where('nim', $nim)->first();;
+                $datas->update($dataUpdate);
+                return back()->with('message_update', 'Data Berhasil diupdate');
+
+                //dd($datas);
+            }
+
             return back()->with('message_update', 'Data Berhasil diupdate');
-
-            //dd($datas);
         }
-
-        return back()->with('message_update', 'Data Berhasil diupdate');
     }
 
     /**

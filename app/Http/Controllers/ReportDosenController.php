@@ -6,6 +6,7 @@ use App\Models\Dosen;
 use App\Models\Jadwalreguler;
 use App\Models\Konfigurasi;
 use App\Models\Presensi;
+use App\Models\Tahunakademik;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -122,48 +123,43 @@ class ReportDosenController extends Controller
         //
     }
 
-    public function show_dosen(string $id)
+    public function show_dosen(string $id, Request $request)
     {
         $konfigurasi = Konfigurasi::first();
-        $tahun_akademik = $konfigurasi->id_tahun_akademik;
-        $keterangan = $konfigurasi->id_keterangan;
-        $kode_dosen = Auth::user()->email;
+        $id_tahun_akademik = $konfigurasi->id_tahun_akademik;
+        $id_dosen = Auth::user()->email;
 
-        $jadwal = Jadwalreguler::with([
-            'perhitungan',
-            'sesi',
-            'sesi.pukul',
-            'hari',
-            'ruang',
-            'tahun_akademik',
-            'dosen',
-            'kelas',
-            'kelas.jurusan',
-            'detail_kurikulum',
-            'detail_kurikulum.materi_ajar',
-            'detail_kurikulum.materi_ajar.semester',
-            'detail_kurikulum.materi_ajar.semester.keterangan'
-        ])
-            ->whereHas('tahun_akademik', function ($query) use ($tahun_akademik) {
-                $query->where('id_tahun_akademik', $tahun_akademik);
-            })
-            ->whereHas('detail_kurikulum.materi_ajar.semester.keterangan', function ($query) use ($keterangan) {
-                $query->where('id_keterangan', $keterangan);
-            })
-            ->whereHas('dosen', function ($query) use ($kode_dosen) {
-                $query->where('kode_dosen', $kode_dosen);
-            })
-            ->paginate(10);
+        $kodeDosen = Dosen::where('kode_dosen', $id_dosen)->first();
+        $dosen = $kodeDosen->kode_dosen;
 
-        return view('page.report.show_dosen')->with([
-            'jadwal' => $jadwal,
-        ]);
+        $page = request()->input('page', 1);
+        $entries = request()->input('entries', 10);
+        $search = request()->input('search');
+
+        $query = Jadwalreguler::query()
+            ->join('detail_kurikulum', 'jadwal_reguler.id_detail_kurikulum', '=', 'detail_kurikulum.id_materi_ajar')
+            ->join('dosen', 'jadwal_reguler.id_dosen', '=', 'dosen.id')
+            ->join('materi_ajar', 'detail_kurikulum.id_materi_ajar', '=', 'materi_ajar.id')
+            ->where('kode_dosen', $dosen)
+            ->where('id_tahun_akademik', $id_tahun_akademik);
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('materi_ajar', 'like', '%' . $search . '%')
+                    ->orWhere('nama_dosen', 'like', '%' . $search . '%');
+            })->where('dosen.kode_dosen', Auth::user()->email);
+        }
+
+        $jadwal = $query->paginate($entries);
+
+        return view('page.report.show_dosen', compact(['jadwal', 'id']))
+            ->with('i', ($page - 1) * $entries);
     }
 
     public function printPresensiDosen(string $id)
     {
         $jadwal = Jadwalreguler::where('id', $id)->first();
-        $id_jadwal= $jadwal->id_jadwal;
+        $id_jadwal = $jadwal->id_jadwal;
         $presensi = Presensi::where('id_jadwal', $id_jadwal)->get();
         return view('page.report.print')->with([
             'jadwal' => $jadwal,

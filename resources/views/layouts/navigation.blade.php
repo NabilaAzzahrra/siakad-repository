@@ -13,7 +13,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden sm:flex sm:items-center sm:ms-6">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        <div class="text-[16px] font-bold tracking-wide">DashboardDDDDDDDDD</div>
+                        <div class="text-[16px] font-bold tracking-wide">Dashboard</div>
                     </x-nav-link>
                 </div>
 
@@ -156,11 +156,39 @@
                         </x-nav-link>
                     </div>
 
-                    <!-- Navigation Links -->
                     <div class="hidden sm:flex sm:items-center sm:ms-6">
-                        <x-nav-link :href="route('nilai.index')" :active="request()->routeIs(['nilai.index', 'nilai.show'])">
-                            <div class="text-[16px] font-bold tracking-wide">Nilai</div>
-                        </x-nav-link>
+                        <li class="relative list-none">
+                            <x-dropdown>
+                                <x-slot name="trigger">
+                                    <button
+                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-black dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                                        <div
+                                            class="text-[16px] font-bold tracking-wide {{ request()->routeIs('nilai.index', 'nilai.show', 'ojt.index') || request()->routeIs('nilai.index', 'nilai.show', 'ojt.index') ? 'text-[#F2994A]' : '' }}">
+                                            Nilai</div>
+
+                                        <div class="ms-1 mt-1">
+                                            <i
+                                                class="fi fi-rr-caret-down {{ request()->routeIs('nilai.index', 'nilai.show', 'ojt.index') || request()->routeIs('nilai.index', 'nilai.show', 'ojt.index') ? 'text-[#F2994A]' : '' }}"></i>
+                                        </div>
+                                    </button>
+                                </x-slot>
+
+                                <x-slot name="content">
+                                    <x-dropdown-link :href="route('nilai.index')" :class="request()->routeIs('nilai.index')
+                                        ? 'text-red-500 font-bold'
+                                        : ''">
+                                        {{ __('Perkuliahan') }}
+                                    </x-dropdown-link>
+
+                                    <x-dropdown-link :href="route('ojt.index')" :class="request()->routeIs('ojt.index')
+                                        ? 'text-red-500 font-bold'
+                                        : ''">
+                                        {{ __('OJT') }}
+                                    </x-dropdown-link>
+
+                                </x-slot>
+                            </x-dropdown>
+                        </li>
                     </div>
 
                     <div class="hidden sm:flex sm:items-center sm:ms-6">
@@ -192,7 +220,6 @@
                             </x-dropdown>
                         </li>
                     </div>
-
 
                     <div class="hidden sm:flex sm:items-center sm:ms-6">
                         <li class="relative list-none">
@@ -352,11 +379,11 @@
                                     </x-dropdown-link>
 
                                     <x-dropdown-link :href="route('inputNilaiPembimbing.create')" :class="request()->routeIs('inputNilaiPembimbing.create') ? 'text-red-500 font-bold' : ''">
-                                        {{ __('Verifikasi Nilai Pembimbing') }}
+                                        {{ __('Nilai Pembimbing') }}
                                     </x-dropdown-link>
 
                                     <x-dropdown-link :href="route('nilaiPenguji.index')" :class="request()->routeIs('revisiProj.index') ? 'text-red-500 font-bold' : ''">
-                                        {{ __('Verifikasi Nilai Penguji') }}
+                                        {{ __('Nilai Penguji') }}
                                     </x-dropdown-link>
                                 </x-slot>
                             </x-dropdown>

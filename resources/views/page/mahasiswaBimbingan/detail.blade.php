@@ -1,17 +1,17 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
+        <P class="font-bold text-white dark:text-gray-200 leading-tight text-md">
             {{ __('Bimbingan') }}
-        </h2>
+        </P>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-full p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-3xl mb-4">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl mb-4">
                         <div class="relative overflow-x-auto rounded-lg px-12 flex gap-5 justify-between">
-                            <div class="bg-amber-50 p-4 w-full rounded-2xl">
+                            <div class="p-4 w-full rounded-2xl">
                                 <table class="w-full">
                                     <tr>
                                         <td>Nama</td>
@@ -25,7 +25,7 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="bg-amber-50 p-4 w-full rounded-2xl">
+                            <div class="p-4 w-full rounded-2xl">
                                 <table>
                                     <tr>
                                         <td>Jurusan</td>
@@ -42,13 +42,13 @@
                             </div>
                         </div>
                         <div class="relative overflow-x-auto rounded-lg px-12 flex gap-5 justify-between">
-                            <div class="bg-amber-50 p-4 w-full rounded-2xl text-center">
+                            <div class="p-4 w-full rounded-2xl text-center">
                                 Jumlah Bimbingan : <span
                                     class="bg-emerald-100 p-2 rounded-xl font-bold">{{ count($data) }}</span>
                             </div>
                         </div>
                     </div>
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-3xl">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl">
                         <div class="relative overflow-x-auto rounded-lg shadow-lg p-4">
                             <table
                                 class="table table-bordered w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border"
@@ -114,7 +114,7 @@
                         style="width: 100%; height: 500px;"></iframe>
                 </div>
             </div>
-            <div class="bg-white p-4 shadow-lg rounded-3xl">
+            <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl">
                 <div class="bg-gray-100 px-4 py-2 text-center uppercase font-bold">Input Nilai Mahasiswa Bimbingan
                     (Verifikasi : {{ $verifikasi }})</div>
                 <div class="p-6">

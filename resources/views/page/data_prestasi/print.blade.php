@@ -276,7 +276,7 @@
                                             ->where('materi_ajar', $item->materi_ajar)
                                             ->first();
 
-                                            //dd($nilai);
+                                        //dd($nilai);
 
                                         $nilaiPresensi = $nilai->presensi ?? 0;
                                         $nilaiTugas = $nilai->tugas ?? 0;
@@ -585,7 +585,7 @@
 
                                         $nilaiPresensi3 = $nilai3->presensi ?? 0;
                                         $nilaiTugas3 = $nilai3->tugas ?? 0;
-                                        $nilaiFormatif23= $nilai3->formatif ?? 0;
+                                        $nilaiFormatif23 = $nilai3->formatif ?? 0;
                                         $nilaiUts3 = $nilai3->uts ?? 0;
                                         $nilaiUas3 = $nilai3->uas ?? 0;
 
@@ -721,7 +721,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @php
+                                {{-- @php
                                     $no = 1;
                                     $jumlahSks4 = 0;
                                     $jumlahMutu4 = 0;
@@ -737,7 +737,7 @@
 
                                         $nilaiPresensi4 = $nilai4->presensi ?? 0;
                                         $nilaiTugas4 = $nilai4->tugas ?? 0;
-                                        $nilaiFormatif4= $nilai4->formatif ?? 0;
+                                        $nilaiFormatif4 = $nilai4->formatif ?? 0;
                                         $nilaiUts4 = $nilai4->uts ?? 0;
                                         $nilaiUas4 = $nilai4->uas ?? 0;
 
@@ -818,7 +818,7 @@
                                         if ($jumlahSks4 > 0) {
                                             $indexPrestasi4 = $jumlahMutu4 / $jumlahSks4;
                                         } else {
-                                            $indexPrestasi4 = 0; // atau null, tergantung kebutuhan
+                                            $indexPrestasi4 = 0;
                                         }
 
                                         if ($indexPrestasi4 < 2) {
@@ -834,25 +834,182 @@
                                         } else {
                                             $hasilIndexPrestasi4 = '-';
                                         }
-                                    @endphp
-                                    <tr>
-                                        <td class="border border-1 border-black">{{ $no++ }}</td>
-                                        <td class="border border-1 border-black text-left pl-2">
-                                            {{ $item4->materi_ajar }}
-                                        </td>
-                                        <td class="border border-1 border-black text-center pl-2">{{ $huruf4 }}
-                                        </td>
-                                        <td class="border border-1 border-black">{{ $grade4 }}</td>
-                                        <td class="border border-1 border-black">{{ $item4->sks }}</td>
-                                        <td class="border border-1 border-black">{{ $mutu4 }}</td>
-                                    </tr>
-                                @endforeach
+                                    @endphp --}}
+                                @php
+                                    $nilaiPembimbing = DB::table('nilai_pembimbing')
+                                        ->where('nim', $student->nim)
+                                        ->first();
+                                    $sikap = $nilaiPembimbing->sikap ?? 0;
+                                    $intensitas_kesungguhan = $nilaiPembimbing->intensitas_kesungguhan ?? 0;
+                                    $kedalaman_materi = $nilaiPembimbing->kedalaman_materi ?? 0;
+                                    $jumlahNilaiPembimbing = $sikap + $intensitas_kesungguhan + $kedalaman_materi;
+                                    $hasilNilaiPembimbing = ($jumlahNilaiPembimbing / 3) * 0.6;
+
+                                    $nilaiPenguji = DB::table('nilai_penguji')->where('nim', $student->nim)->first();
+                                    $penampilan = $nilaiPenguji->penampilan ?? 0;
+                                    $bahasa_asing = $nilaiPenguji->bahasa_asing ?? 0;
+                                    $bahasa_indonesia = $nilaiPenguji->bahasa_indonesia ?? 0;
+                                    $teknik_presentasi = $nilaiPenguji->teknik_presentasi ?? 0;
+                                    $metoda_penelitian = $nilaiPenguji->metoda_penelitian ?? 0;
+                                    $penguasaan_teori = $nilaiPenguji->penguasaan_teori ?? 0;
+                                    $jumlahNilaiPenguji =
+                                        $penampilan +
+                                        $bahasa_asing +
+                                        $bahasa_indonesia +
+                                        $teknik_presentasi +
+                                        $metoda_penelitian +
+                                        $penguasaan_teori;
+                                    $hasilNilaiPenguji = ($jumlahNilaiPenguji / 6) * 0.4;
+
+                                    $nilaiSidang = $hasilNilaiPembimbing + $hasilNilaiPenguji;
+
+                                    if ($nilaiSidang < 50) {
+                                        $hurufSidang = 'E';
+                                    } elseif ($nilaiSidang < 55) {
+                                        $hurufSidang = 'D';
+                                    } elseif ($nilaiSidang < 60) {
+                                        $hurufSidang = 'C-';
+                                    } elseif ($nilaiSidang < 65) {
+                                        $hurufSidang = 'C';
+                                    } elseif ($nilaiSidang < 70) {
+                                        $hurufSidang = 'C+';
+                                    } elseif ($nilaiSidang < 75) {
+                                        $hurufSidang = 'B-';
+                                    } elseif ($nilaiSidang < 80) {
+                                        $hurufSidang = 'B';
+                                    } elseif ($nilaiSidang < 85) {
+                                        $hurufSidang = 'B+';
+                                    } elseif ($nilaiSidang < 90) {
+                                        $hurufSidang = 'A-';
+                                    } else {
+                                        $hurufSidang = 'A';
+                                    }
+
+                                    if ($hurufSidang == 'E') {
+                                        $gradeSidang = '0.0';
+                                    } elseif ($hurufSidang == 'D') {
+                                        $gradeSidang = '1.0';
+                                    } elseif ($hurufSidang == 'C-') {
+                                        $gradeSidang = '1.6';
+                                    } elseif ($hurufSidang == 'C') {
+                                        $gradeSidang = '2.0';
+                                    } elseif ($hurufSidang == 'C+') {
+                                        $gradeSidang = '2.3';
+                                    } elseif ($hurufSidang == 'B-') {
+                                        $gradeSidang = '2.6';
+                                    } elseif ($hurufSidang == 'B') {
+                                        $gradeSidang = '3.0';
+                                    } elseif ($hurufSidang == 'B+') {
+                                        $gradeSidang = '3.3';
+                                    } elseif ($hurufSidang == 'A-') {
+                                        $gradeSidang = '3.6';
+                                    } elseif ($hurufSidang == 'A') {
+                                        $gradeSidang = '4.0';
+                                    }
+
+                                    $mutuSidang = $gradeSidang * $prestasi4->sks;
+                                @endphp
+                                <tr>
+                                    <td class="border border-1 border-black">{{ $no++ }}</td>
+                                    <td class="border border-1 border-black text-left pl-2">
+                                        {{ $prestasi4->materi_ajar }}
+                                    </td>
+                                    <td class="border border-1 border-black text-center pl-2">{{ $hurufSidang }}
+                                    </td>
+                                    <td class="border border-1 border-black">{{ $gradeSidang }}</td>
+                                    <td class="border border-1 border-black">{{ $prestasi4->sks }}</td>
+                                    <td class="border border-1 border-black">{{ $mutuSidang }}</td>
+                                </tr>
+                                @php
+                                    $nilaiOjt = DB::table('ojt')->where('nim', $student->nim)->first();
+                                    $nilai = $nilaiOjt->nilai;
+                                    if ($nilai < 50) {
+                                        $hurufOjt = 'E';
+                                    } elseif ($nilai < 55) {
+                                        $hurufOjt = 'D';
+                                    } elseif ($nilai < 60) {
+                                        $hurufOjt = 'C-';
+                                    } elseif ($nilai < 65) {
+                                        $hurufOjt = 'C';
+                                    } elseif ($nilai < 70) {
+                                        $hurufOjt = 'C+';
+                                    } elseif ($nilai < 75) {
+                                        $hurufOjt = 'B-';
+                                    } elseif ($nilai < 80) {
+                                        $hurufOjt = 'B';
+                                    } elseif ($nilai < 85) {
+                                        $hurufOjt = 'B+';
+                                    } elseif ($nilai < 90) {
+                                        $hurufOjt = 'A-';
+                                    } else {
+                                        $hurufOjt = 'A';
+                                    }
+
+                                    if ($hurufOjt == 'E') {
+                                        $gradeOjt = '0.0';
+                                    } elseif ($hurufOjt == 'D') {
+                                        $gradeOjt = '1.0';
+                                    } elseif ($hurufOjt == 'C-') {
+                                        $gradeOjt = '1.6';
+                                    } elseif ($hurufOjt == 'C') {
+                                        $gradeOjt = '2.0';
+                                    } elseif ($hurufOjt == 'C+') {
+                                        $gradeOjt = '2.3';
+                                    } elseif ($hurufOjt == 'B-') {
+                                        $gradeOjt = '2.6';
+                                    } elseif ($hurufOjt == 'B') {
+                                        $gradeOjt = '3.0';
+                                    } elseif ($hurufOjt == 'B+') {
+                                        $gradeOjt = '3.3';
+                                    } elseif ($hurufOjt == 'A-') {
+                                        $gradeOjt = '3.6';
+                                    } elseif ($hurufOjt == 'A') {
+                                        $gradeOjt = '4.0';
+                                    }
+
+                                    $mutuOjt = $gradeOjt * $prestasiOjt->sks;
+                                @endphp
+                                <tr>
+                                    <td class="border border-1 border-black">{{ $no++ }}</td>
+                                    <td class="border border-1 border-black text-left pl-2">
+                                        {{ $prestasiOjt->materi_ajar }}
+                                    </td>
+                                    <td class="border border-1 border-black text-center pl-2">{{ $hurufOjt }}
+                                    </td>
+                                    <td class="border border-1 border-black">{{ $gradeOjt }}</td>
+                                    <td class="border border-1 border-black">{{ $prestasiOjt->sks }}</td>
+                                    <td class="border border-1 border-black">{{ $mutuOjt }}</td>
+                                </tr>
+                                {{-- @endforeach --}}
+                                @php
+                                    $mutu4 = $mutuSidang + $mutuOjt;
+                                    $sks4 = $prestasi4->sks + $prestasiOjt->sks;
+                                    if ($mutu4 > 0) {
+                                        $indexPrestasi4 = $mutu4 / $sks4;
+                                    } else {
+                                        $indexPrestasi4 = 0;
+                                    }
+
+                                    if ($indexPrestasi4 < 2) {
+                                        $hasilIndexPrestasi4 = 'KURANG';
+                                    } elseif ($indexPrestasi4 < 2.6) {
+                                        $hasilIndexPrestasi4 = 'CUKUP';
+                                    } elseif ($indexPrestasi4 < 3) {
+                                        $hasilIndexPrestasi4 = 'BAIK';
+                                    } elseif ($indexPrestasi4 < 3.6) {
+                                        $hasilIndexPrestasi4 = 'MEMUASKAN';
+                                    } elseif ($indexPrestasi4 >= 3.6) {
+                                        $hasilIndexPrestasi4 = 'SANGAT MEMUASKAN';
+                                    } else {
+                                        $hasilIndexPrestasi4 = '-';
+                                    }
+                                @endphp
                                 <tr>
                                     <td colspan="4" class="border border-1 border-black">IP SMT 4 :
                                         {{ number_format($indexPrestasi4, 2) }}
                                     </td>
-                                    <td class="border border-1 border-black">{{ $jumlahSks4 }}</td>
-                                    <td class="border border-1 border-black">{{ $jumlahMutu4 }}</td>
+                                    <td class="border border-1 border-black">{{ $sks4 }}</td>
+                                    <td class="border border-1 border-black">{{ $mutu4 }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -867,9 +1024,9 @@
                         $ip4 = $indexPrestasi4;
 
                         $ipArray = [$ip1, $ip2, $ip3, $ip4];
-                                $jumlah_ip = count($ipArray);
+                        $jumlah_ip = count($ipArray);
 
-                                $total_ip = array_sum($ipArray);
+                        $total_ip = array_sum($ipArray);
 
                         if ($jumlah_ip > 0) {
                             $ipk = $total_ip / $jumlah_ip;

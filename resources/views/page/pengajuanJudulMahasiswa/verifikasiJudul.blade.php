@@ -1,8 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
+        <P class="font-bold text-white dark:text-gray-200 leading-tight text-md">
             {{ __('Pengajuan Judul') }}
-        </h2>
+        </P>
     </x-slot>
 
     <div class="py-12">

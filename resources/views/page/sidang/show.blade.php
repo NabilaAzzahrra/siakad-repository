@@ -1,8 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
+        <P class="font-bold text-white dark:text-gray-200 leading-tight text-md">
             {{ __('Sidang') }}
-        </h2>
+        </P>
     </x-slot>
 
     <div class="py-12">
@@ -10,12 +10,12 @@
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-full p-3">
 
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl mb-4">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                             <div class="flex gap-5">
                                 <div class="w-full md:w-3/12 p-3">
                                     <div
-                                        class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg sm:rounded-lg">
+                                    class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl mb-4">
                                         <div class="p-6 text-gray-900 dark:text-gray-100">
                                             <div
                                                 class="lg:p-4 p-2 text-sm lg:text-lg text-center lg:text-center bg-amber-200 rounded-xl font-bold">
@@ -43,7 +43,7 @@
                                         </div>
                                     </div>
                                     <div
-                                        class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg sm:rounded-lg mt-4 p-4">
+                                    class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl mb-4 p-4">
                                         <table
                                             class="table table-bordered w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border"
                                             id="nilai-sidang-datatable">
@@ -120,7 +120,7 @@
                                 <div class="w-full">
                                     <div class="w-full">
                                         <div
-                                            class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg sm:rounded-lg">
+                                        class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl mb-4">
                                             <div class="p-6 text-gray-900 dark:text-gray-100">
                                                 <div class="mt-2 border-2 p-2 rounded-xl">
                                                     <div class="flex p-4 gap-5 bg-gray-100 rounded-xl items-center">
@@ -160,65 +160,68 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="relative overflow-x-auto rounded-lg shadow-lg p-4">
-                                        <table
-                                            class="table table-bordered w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border"
-                                            id="bimbingan-datatable">
-                                            <thead
-                                                class="text-md font-bold text-gray-700 uppercase py-[100px] dark:bg-gray-700 dark:text-gray-400">
-                                                <tr>
-                                                    <th scope="col"
-                                                        class="px-6 py-3 text-center bg-gray-100 w-32 text-wrap">
-                                                        BAB I
-                                                    </th>
-                                                    <th scope="col" class="px-6 py-3 text-center w-32 text-wrap">
-                                                        BAB II
-                                                    </th>
-                                                    <th scope="col"
-                                                        class="px-6 py-3 text-center bg-gray-100 w-32 text-wrap">
-                                                        <div class="flex items-center">
-                                                            BAB III
-                                                        </div>
-                                                    </th>
-                                                    <th scope="col" class="px-6 py-3 text-center w-32 text-wrap">
-                                                        <div class="flex items-center">
-                                                            BAB IV
-                                                        </div>
-                                                    </th>
-                                                    <th scope="col"
-                                                        class="px-6 py-3 text-center bg-gray-100 w-32 text-wrap">
-                                                        <div class="flex items-center">
-                                                            BAB V
-                                                        </div>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="mahasiswaTable">
-                                                @php
-                                                    $no = 1;
-                                                @endphp
-                                                @foreach ($data as $m)
-                                                    <tr class="bg-white border dark:bg-gray-800 dark:border-gray-700">
-                                                        <td class="px-6 py-4 bg-gray-100">
-                                                            {{ $m->bab_satu }}
-                                                        </td>
-                                                        <th scope="row"
-                                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                            {{ $m->bab_dua }}
+                                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl mb-4">
+
+                                        <div class="relative overflow-x-auto rounded-lg shadow-lg p-4">
+                                            <table
+                                                class="table table-bordered w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border"
+                                                id="bimbingan-datatable">
+                                                <thead
+                                                    class="text-md font-bold text-gray-700 uppercase py-[100px] dark:bg-gray-700 dark:text-gray-400">
+                                                    <tr>
+                                                        <th scope="col"
+                                                            class="px-6 py-3 text-center bg-gray-100 w-32 text-wrap">
+                                                            BAB I
                                                         </th>
-                                                        <td class="px-6 py-4 bg-gray-100">
-                                                            {{ $m->bab_tiga }}
-                                                        </td>
-                                                        <td class="px-6 py-4 ">
-                                                            {{ $m->bab_empat }}
-                                                        </td>
-                                                        <td class="px-6 py-4 bg-gray-100">
-                                                            {{ $m->bab_lima }}
-                                                        </td>
+                                                        <th scope="col" class="px-6 py-3 text-center w-32 text-wrap">
+                                                            BAB II
+                                                        </th>
+                                                        <th scope="col"
+                                                            class="px-6 py-3 text-center bg-gray-100 w-32 text-wrap">
+                                                            <div class="flex items-center">
+                                                                BAB III
+                                                            </div>
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-3 text-center w-32 text-wrap">
+                                                            <div class="flex items-center">
+                                                                BAB IV
+                                                            </div>
+                                                        </th>
+                                                        <th scope="col"
+                                                            class="px-6 py-3 text-center bg-gray-100 w-32 text-wrap">
+                                                            <div class="flex items-center">
+                                                                BAB V
+                                                            </div>
+                                                        </th>
                                                     </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody id="mahasiswaTable">
+                                                    @php
+                                                        $no = 1;
+                                                    @endphp
+                                                    @foreach ($data as $m)
+                                                        <tr class="bg-white border dark:bg-gray-800 dark:border-gray-700">
+                                                            <td class="px-6 py-4 bg-gray-100">
+                                                                {{ $m->bab_satu }}
+                                                            </td>
+                                                            <th scope="row"
+                                                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                                {{ $m->bab_dua }}
+                                                            </th>
+                                                            <td class="px-6 py-4 bg-gray-100">
+                                                                {{ $m->bab_tiga }}
+                                                            </td>
+                                                            <td class="px-6 py-4 ">
+                                                                {{ $m->bab_empat }}
+                                                            </td>
+                                                            <td class="px-6 py-4 bg-gray-100">
+                                                                {{ $m->bab_lima }}
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

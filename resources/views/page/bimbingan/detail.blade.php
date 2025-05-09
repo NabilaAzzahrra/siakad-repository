@@ -1,15 +1,16 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
+        <P class="font-bold text-white dark:text-gray-200 leading-tight text-md">
             {{ __('Bimbingan') }}
-        </h2>
+        </P>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-full p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-3xl">
+                    <div
+                        class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl">
                         <div class="relative overflow-x-auto rounded-lg shadow-lg p-4">
                             <table
                                 class="table table-bordered w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border"
@@ -72,7 +73,8 @@
 
                 <div class="w-full md:w-full p-3">
 
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-3xl">
+                    <div
+                        class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl mb-4">
                         <div class="relative overflow-x-auto rounded-lg px-12 pt-12 flex gap-5 justify-between">
                             <div class="bg-amber-50 p-4 w-full rounded-2xl">
                                 <table class="w-full">
@@ -111,51 +113,54 @@
                             </div>
                         </div>
                     </div>
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-3xl p-4 mt-6">
-                        <table
-                            class="table table-bordered w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border"
-                            id="nilai-pembimbing-datatable">
-                            <thead
-                                class="text-md font-bold text-gray-700 uppercase py-[100px] dark:bg-gray-700 dark:text-gray-400">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3 text-center bg-gray-100">
-                                        KRITERIA
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 text-center">
-                                        NILAI
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody id="mahasiswaTable">
-                                <tr class="bg-white border dark:bg-gray-800 dark:border-gray-700">
-                                    <td class="px-6 py-4 text-center bg-gray-100">
-                                        SIKAP
-                                    </td>
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {{ $sikap }}
-                                    </th>
-                                </tr>
-                                <tr class="bg-white border dark:bg-gray-800 dark:border-gray-700">
-                                    <td class="px-6 py-4 text-center bg-gray-100">
-                                        INTENSITAS KESUNGGUHAN
-                                    </td>
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {{ $intensitasKesungguhan }}
-                                    </th>
-                                </tr>
-                                <tr class="bg-white border dark:bg-gray-800 dark:border-gray-700">
-                                    <td class="px-6 py-4 text-center bg-gray-100">
-                                       KEDALAMAN MATERI
-                                    </td>
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {{ $kedalamanMateri }}
-                                    </th>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div
+                        class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl">
+                        <div class="w-full md:w-full p-3">
+                            <table
+                                class="table table-bordered w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border"
+                                id="nilai-pembimbing-datatable">
+                                <thead
+                                    class="text-md font-bold text-gray-700 uppercase py-[100px] dark:bg-gray-700 dark:text-gray-400">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-center bg-gray-100">
+                                            KRITERIA
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-center">
+                                            NILAI
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="mahasiswaTable">
+                                    <tr class="bg-white border dark:bg-gray-800 dark:border-gray-700">
+                                        <td class="px-6 py-4 text-center bg-gray-100">
+                                            SIKAP
+                                        </td>
+                                        <th scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            {{ $sikap }}
+                                        </th>
+                                    </tr>
+                                    <tr class="bg-white border dark:bg-gray-800 dark:border-gray-700">
+                                        <td class="px-6 py-4 text-center bg-gray-100">
+                                            INTENSITAS KESUNGGUHAN
+                                        </td>
+                                        <th scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            {{ $intensitasKesungguhan }}
+                                        </th>
+                                    </tr>
+                                    <tr class="bg-white border dark:bg-gray-800 dark:border-gray-700">
+                                        <td class="px-6 py-4 text-center bg-gray-100">
+                                            KEDALAMAN MATERI
+                                        </td>
+                                        <th scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            {{ $kedalamanMateri }}
+                                        </th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

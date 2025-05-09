@@ -1,8 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
-            {{ __('Pengajuan Judul') }}
-        </h2>
+        <P class="font-bold text-white dark:text-gray-200 leading-tight text-md">
+            {{ __('Pengajuan') }}
+        </P>
     </x-slot>
 
     <div class="py-12">
@@ -10,14 +10,18 @@
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-full p-3">
 
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
+                    <div
+                        class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div
-                                class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                                <div class="flex items-center justify-center">
-                                    <div>PENGAJUAN JUDUL</div>
+                            <div class="flex">
+                                <div class="w-10">
+                                    <img src="{{ url('img/database.png') }}" alt="Icon 1" class="">
+                                </div>
+                                <div class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                                    PENGAJUAN
                                 </div>
                             </div>
+                            <hr class="border mt-2 mb-4 border-black border-opacity-30">
                             <div class="flex justify-center">
                                 <div class="p-2" style="width:100%;overflow-x:auto;">
                                     <div class="relative overflow-x-auto rounded-lg shadow-lg">
@@ -54,9 +58,7 @@
                                                         </div>
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center bg-gray-100">
-                                                        <div class="flex items-center">
-                                                            DETAIL
-                                                        </div>
+                                                        DETAIL
                                                     </th>
                                                 </tr>
                                             </thead>
@@ -85,7 +87,7 @@
                                                         <td class="px-6 py-4">
                                                             {{ $m->verifikasi }}
                                                         </td>
-                                                        <td class="px-6 py-4 bg-gray-100">
+                                                        <td class="px-6 py-4 bg-gray-100 text-center">
                                                             {{-- <a href="{{ route('pengajuanJudul.show', $m->id) }}"
                                                                 class="mr-2 bg-green-500 hover:bg-green-600 pr-3 pl-4 py-3 rounded-xl text-xs text-white">
                                                                 <i class="fi fi-sr-check-circle"></i>
@@ -96,8 +98,8 @@
                                                                 data-nim="{{ $m->nim }}"
                                                                 data-id_dosen="{{ $m->id_dosen }}"
                                                                 onclick="editSourceModal(this)"
-                                                                class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-xl h-10 w-10 text-xs text-white">
-                                                                <i class="fi fi-sr-check-circle"></i>
+                                                                class="hover:bg-amber-100 px-3 py-1 rounded-xl h-10 w-10 text-amber-500 border border-amber-500">
+                                                                <i class="fi fi-sr-eye"></i>
                                                             </button>
                                                         </td>
                                                     </tr>
@@ -138,6 +140,7 @@
                         <input type="hidden" id="nim" name="nim" placeholder="Masukkan NIM" required>
                         {{-- <input type="text" id="verifikasi" name="verifikasi" placeholder="Masukkan Verifikasi" required> --}}
 
+                        <div class="font-bold text-amber-500">-- Data Diri --</div>
                         <div>
                             <table>
                                 <tr>
@@ -167,16 +170,13 @@
                             </table>
                         </div>
 
-                        <div class="flex items-center">
-                            <i class="fi fi-ss-rectangle-list mt-1 mr-2"></i>
-                            <p>Judul yang di ajukan</p>
-                        </div>
+                        <div class="font-bold text-amber-500">-- Judul yang diajukan --</div>
                         <div id="judul-container">
                             <!-- Tempat untuk menampilkan data judul -->
                         </div>
 
+                        <div class="font-bold text-amber-500">-- Verifikasi --</div>
                         <div>
-                            <p>Verifikasi <span class="text-red-500">*</span></p>
                             <label>
                                 <input type="radio" id="verifikasi-sudah" name="verifikasi" value="SUDAH">
                                 SUDAH
@@ -187,10 +187,8 @@
                             </label>
                         </div>
 
+                        <div class="font-bold text-amber-500">-- Pembimbing --</div>
                         <div class="">
-                            <label for="id_dosen"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pembimbing
-                                <span class="text-red-500">*</span></label>
                             <select class="js-example-placeholder-single js-states form-control w-[930px] m-6"
                                 id="id_dosen" name="id_dosen" data-placeholder="Pilih Dosen">
                                 <option value="">Pilih...</option>

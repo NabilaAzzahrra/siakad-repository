@@ -20,7 +20,7 @@
                                         </div>
                                         <div
                                             class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
-                                            DATA uas
+                                            DATA UAS
                                         </div>
                                     </div>
                                     <div class="flex gap-4 mb-2">
@@ -45,12 +45,12 @@
                                     <div class="flex flex-col sm:flex-row justify-between items-center mb-4">
                                         <div class="md:mt-0 sm:flex sm:space-x-4 w-full">
                                             <!-- Form untuk entries -->
-                                            <x-show-entries :route="route('nilai.index')" :search="request()->search">
+                                            <x-show-entries :route="route('ujian_uas.index')" :search="request()->search">
                                             </x-show-entries>
                                         </div>
 
                                         <div class="sm:ml-16 sm:mt-0 sm:flex sm:space-x-4 sm:flex-none">
-                                            <form action="{{ route('nilai.index') }}" method="GET"
+                                            <form action="{{ route('ujian_uas.index') }}" method="GET"
                                                 class="flex items-center flex-1">
                                                 <input type="text" name="search"
                                                     placeholder="Enter for search . . . " id="search"

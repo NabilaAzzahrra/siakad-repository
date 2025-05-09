@@ -47,7 +47,7 @@ class NilaiPengujiController extends Controller
             'teknik_presentasi' => $request->input('teknikPresentasi'),
             'metoda_penelitian' => $request->input('metodaPenelitian'),
             'penguasaan_teori' => $request->input('penguasaanTugas'),
-            'verifikasi' => 'BELUM',
+            'verifikasi' => 'SUDAH',
         ];
 
         NilaiPenguji::create($data);

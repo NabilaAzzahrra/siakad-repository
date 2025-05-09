@@ -20,7 +20,7 @@
                             </div>
                         </div>
                         <hr class="border mt-2 border-black border-opacity-30 mx-12">
-                        <div class="mt-4 px-12 mb-6 flex gap-5">
+                        <div class="mt-4 px-12 mb-6 flex gap-5 items-start justify-start">
                             <div
                                 class="bg-white w-1/2 px-4 pt-4 pb-4 dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl">
                                 <table>

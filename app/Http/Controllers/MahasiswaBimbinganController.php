@@ -54,7 +54,7 @@ class MahasiswaBimbinganController extends Controller
             'sikap' => $request->input('sikap'),
             'intensitas_kesungguhan' => $request->input('intensitasKesungguhan'),
             'kedalaman_materi' => $request->input('kedalamanMateri'),
-            'verifikasi' => 'BELUM',
+            'verifikasi' => 'SUDAH',
         ];
 
         NilaiPembimbing::create($data);

@@ -84,9 +84,12 @@ class TranskripController extends Controller
             return redirect()->back()->with('error', 'Pilih dulu');
         }
 
+        $jurusan = Mahasiswa::where('nim', $user_ids)->first();
+        $id_kelas = $jurusan->id_kelas;
+
         // Ambil no_mahasiswa terakhir dari transkrip_code
         $last = DB::table('transkrip_code')
-            ->where('id_kelas', $request->kelas)
+            ->where('id_kelas', $id_kelas)
             ->orderByDesc('no_mahasiswa')
             ->first();
 
@@ -357,38 +360,61 @@ class TranskripController extends Controller
     public function show(string $id)
     {
         $students = Mahasiswa::where('nim', $id)->first();
-        //$kurikulum = $request->input('kurikulum');
+        $idKelas = $students->kelas->jurusan->jurusan;
+        $kurikulum =  request('kurikulum');
+
+        $kodeTranskrip = TranskripCode::where('nim', $id)->first();
+
+        if (empty($students)) {
+            return redirect()->back()->with('error', 'Pilih dulu');
+        }
 
         $prestasi1 = DB::table('vw_data_prestasi')
             ->where('semester', 1)
-            //->where('id_kurikulum', $kurikulum)
+            ->where('id_kurikulum', $kurikulum)
+            ->where('jurusan', $idKelas)
             ->groupBy('materi_ajar')
             ->get();
 
         $prestasi2 = DB::table('vw_data_prestasi')
             ->where('semester', 2)
-            //->where('id_kurikulum', $kurikulum)
+            ->where('id_kurikulum', $kurikulum)
+            ->where('jurusan', $idKelas)
             ->groupBy('materi_ajar')
             ->get();
 
         $prestasi3 = DB::table('vw_data_prestasi')
             ->where('semester', 3)
-            //->where('id_kurikulum', $kurikulum)
+            ->where('id_kurikulum', $kurikulum)
+            ->where('jurusan', $idKelas)
             ->groupBy('materi_ajar')
             ->get();
 
         $prestasi4 = DB::table('vw_data_prestasi')
             ->where('semester', 4)
-            //->where('id_kurikulum', $kurikulum)
+            ->where('id_kurikulum', $kurikulum)
+            ->where('materi_ajar', "SIDANG TUGAS AKHIR")
+            ->where('jurusan', $idKelas)
             ->groupBy('materi_ajar')
-            ->get();
+            ->first();
 
-        return view('page.data_prestasi.print')->with([
+        $prestasiOjt = DB::table('vw_data_prestasi')
+            ->where('semester', 4)
+            ->where('id_kurikulum', $kurikulum)
+            ->where('materi_ajar', "OJT")
+            ->where('jurusan', $idKelas)
+            ->groupBy('materi_ajar')
+            ->first();
+
+
+        return view('page.transkrip.print')->with([
             'students' => $students,
             'prestasi1' => $prestasi1,
             'prestasi2' => $prestasi2,
             'prestasi3' => $prestasi3,
             'prestasi4' => $prestasi4,
+            'kodeTranskrip' => $kodeTranskrip,
+            'prestasiOjt' => $prestasiOjt,
         ]);
     }
 

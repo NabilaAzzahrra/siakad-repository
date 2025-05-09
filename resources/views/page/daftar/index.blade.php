@@ -1,8 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
-            {{ __('Daftar Sidang Aplikasi Project') }}
-        </h2>
+        <P class="font-bold text-white dark:text-gray-200 leading-tight text-md">
+            {{ __('Daftar') }}
+        </P>
     </x-slot>
 
     <div class="py-12">
@@ -46,7 +46,7 @@
                         </div>
                     </form> --}}
 
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl mb-4">
                         <div class="relative overflow-x-auto rounded-lg shadow-lg p-4">
 
                             <table
@@ -91,9 +91,7 @@
                                             </div>
                                         </th>
                                         <th scope="col" class="px-6 py-3 text-center bg-gray-100">
-                                            <div class="flex items-center">
                                                 ACTION
-                                            </div>
                                         </th>
                                     </tr>
                                 </thead>
@@ -128,13 +126,13 @@
                                             <td class="px-6 py-4">
                                                 {{ $m->verifikasi }}
                                             </td>
-                                            <td class="px-6 py-4 bg-gray-100">
+                                            <td class="px-6 py-4 bg-gray-100 text-center">
                                                 <button type="button" data-id="{{ $m->id }}"
                                                     data-modal-target="sourceModal"
                                                     data-verifikasi="{{ $m->verifikasi }}"
                                                     data-nim="{{ $m->nim }}" data-id_dosen="{{ $m->id_dosen }}"
                                                     onclick="editSourceModal(this)"
-                                                    class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-xl h-10 w-10 text-xs text-white">
+                                                    class="border border-amber-500 hover:bg-amber-100 px-3 py-1 rounded-xl h-10 w-10 text-amber-500">
                                                     <i class="fi fi-sr-check-circle"></i>
                                                 </button>
                                             </td>
@@ -155,7 +153,7 @@
     <div class="fixed inset-0 flex items-center justify-center z-50 hidden" id="sourceModal">
         <div class="fixed inset-0 bg-black opacity-50"></div>
         <div class="fixed inset-0 flex items-center justify-center">
-            <div class="w-full md:w-1/2 relative bg-white rounded-lg shadow mx-5">
+            <div class="w-full md:w-[550px] relative bg-white rounded-lg shadow mx-5">
                 <div class="flex items-start justify-between p-4 border-b rounded-t">
                     <h3 class="text-xl font-semibold text-gray-900" id="title_source">
                         VERIFIKASI DAFTAR SIDANG APLIKASI PROJECT

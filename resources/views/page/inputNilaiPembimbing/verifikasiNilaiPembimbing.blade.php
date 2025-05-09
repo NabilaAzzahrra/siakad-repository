@@ -1,8 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
-            {{ __('Mahasiswa') }}
-        </h2>
+        <P class="font-bold text-white dark:text-gray-200 leading-tight text-md">
+            {{ __('Nilai Pembimbing') }}
+        </P>
     </x-slot>
 
     <div class="py-12">
@@ -10,15 +10,18 @@
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-full p-3">
 
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl mb-4">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div
-                                class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                                <div class="flex items-center justify-center">
-                                    <div>DATA PENGUJI</div>
+                            <div class="flex">
+                                <div class="w-10">
+                                    <img src="{{ url('img/database.png') }}" alt="Icon 1" class="">
+                                </div>
+                                <div class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                                    NILAI PEMBIMBING
                                 </div>
                             </div>
-                            <div class="flex justify-center">
+                            <hr class="border mt-2 border-black border-opacity-30">
+                            <div class="flex justify-center mt-2">
                                 <div class="p-2" style="width:100%;overflow-x:auto;">
                                     <div class="relative overflow-x-auto rounded-lg shadow-lg">
 
@@ -65,11 +68,11 @@
                                                             KEDALAMAN MATERI
                                                         </div>
                                                     </th>
-                                                    <th scope="col" class="px-6 py-3 text-center">
+                                                    {{-- <th scope="col" class="px-6 py-3 text-center">
                                                         <div class="flex items-center">
                                                             ACTION
                                                         </div>
-                                                    </th>
+                                                    </th> --}}
                                                 </tr>
                                             </thead>
                                             <tbody id="mahasiswaTable">
@@ -115,11 +118,7 @@
                                                         <td class="px-6 py-4 bg-gray-100">
                                                             {{ $m->kedalaman_materi }}
                                                         </td>
-                                                        <td class="px-6 py-4">
-                                                            {{-- <button type="button"
-                                                                onclick="confirmVerification({{ $m->id }})"
-                                                                class="{{ $bg }} px-2 text-sm rounded-xl font-bold"
-                                                                {{ $dis }}>{{ $val }}</button> --}}
+                                                        {{-- <td class="px-6 py-4">
                                                             <form
                                                                 action="{{ route('inputNilaiPembimbing.update', $m->id) }}"
                                                                 method="POST">
@@ -127,7 +126,7 @@
                                                                 @method('PUT')
                                                                 <button type="submit">{{ $val }}</button>
                                                             </form>
-                                                        </td>
+                                                        </td> --}}
                                                     </tr>
                                                 @endforeach
                                             </tbody>

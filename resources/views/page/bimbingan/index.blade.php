@@ -1,54 +1,61 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
+        <P class="font-bold text-white dark:text-gray-200 leading-tight text-md">
             {{ __('Bimbingan') }}
-        </h2>
+        </P>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-full p-3">
-                    <form method="GET" action="{{ route('bimbinganMahasiswa.index') }}" class="flex gap-5 mb-4">
-                        <div class="lg:mb-5 w-full">
-                            <label for="tahun_angkatan"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Tahun Angkatan
-                            </label>
-                            <select name="tahun_angkatan" class="js-example-placeholder-single js-states form-control w-full m-6">
-                                <option value="">Pilih Tahun Angkatan</option>
-                                @foreach ($tahun_angkatan as $k)
-                                    <option value="{{ $k->tahun_angkatan }}"
-                                        {{ request('tahun_angkatan') == $k->tahun_angkatan ? 'selected' : '' }}>
-                                        {{ $k->tahun_angkatan }}
-                                    </option>
-                                @endforeach
-                            </select>
+                    <div
+                        class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl mb-4">
+                        <div class="p-6 text-gray-900 dark:text-gray-100">
+                            <form method="GET" action="{{ route('bimbinganMahasiswa.index') }}" class="flex gap-5 mb-4">
+                                <div class="w-full">
+                                    <label for="tahun_angkatan"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                        Tahun Angkatan
+                                    </label>
+                                    <select name="tahun_angkatan"
+                                        class="js-example-placeholder-single js-states form-control w-full m-6">
+                                        <option value="">Pilih Tahun Angkatan</option>
+                                        @foreach ($tahun_angkatan as $k)
+                                            <option value="{{ $k->tahun_angkatan }}"
+                                                {{ request('tahun_angkatan') == $k->tahun_angkatan ? 'selected' : '' }}>
+                                                {{ $k->tahun_angkatan }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="w-full">
+                                    <label for="jurusan"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                        Jurusan
+                                    </label>
+                                    <select name="jurusan"
+                                        class="js-example-placeholder-single js-states form-control w-full m-6">
+                                        <option value="">Pilih Jurusan</option>
+                                        @foreach ($jurusan as $j)
+                                            <option value="{{ $j->id }}"
+                                                {{ request('jurusan') == $j->id ? 'selected' : '' }}>
+                                                {{ $j->jurusan }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="flex items-center mt-6">
+                                    <button type="submit" class="px-4 py-2 border border-blue-600 text-blue-600 hover:bg-blue-100 rounded">
+                                        Filter
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-                        <div class="lg:mb-5 w-full">
-                            <label for="jurusan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Jurusan
-                            </label>
-                            <select name="jurusan" class="js-example-placeholder-single js-states form-control w-full m-6">
-                                <option value="">Pilih Jurusan</option>
-                                @foreach ($jurusan as $j)
-                                    <option value="{{ $j->id }}"
-                                        {{ request('jurusan') == $j->id ? 'selected' : '' }}>
-                                        {{ $j->jurusan }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="flex items-center mt-2">
-                            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded">
-                                Filter
-                            </button>
-                        </div>
-                    </form>
+                    </div>
 
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl mb-4">
                         <div class="relative overflow-x-auto rounded-lg shadow-lg p-4">
-
                             <table
                                 class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border">
                                 <thead

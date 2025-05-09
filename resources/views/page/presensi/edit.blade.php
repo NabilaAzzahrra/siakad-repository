@@ -220,7 +220,7 @@
                                                                     value="{{ $pr->nim }}" hidden>
                                                             </td>
                                                             <td class="px-6 py-4 w-[500px] text-wrap">
-                                                                {{ $pr->nama }}
+                                                                {{ $pr->mahasiswa->nama }}
                                                             </td>
                                                             <td class="px-6 py-4">
                                                                 <select

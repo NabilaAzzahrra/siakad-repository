@@ -172,8 +172,10 @@
                                                 <td class="px-6 py-4 text-left bg-gray-100 text-center">
                                                     {{ $noTranskrip }}
                                                 </td>
-                                                <td class="px-6 py-4 text-left">
-                                                    <a href="{{route('transkrip.show', $i->nim)}}" class="{{ $actionTranskrip }}">Print Transkrip</a>
+                                                <td class="px-6 py-4 text-center">
+                                                    <a href="{{ route('transkrip.show', ['id' => $i->nim]) }}?kurikulum={{ request('kurikulum') }}" class="{{ $actionTranskrip }} border border-amber-500 hover:bg-amber-100 text-amber-500 py-2 px-4 rounded-xl">
+                                                        Print Transkrip
+                                                    </a>
                                                 </td>
                                             </tr>
                                         @empty

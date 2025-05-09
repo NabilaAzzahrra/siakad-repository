@@ -1,22 +1,25 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
-            {{ __('Mahasiswa') }}
-        </h2>
+        <P class="font-bold text-white dark:text-gray-200 leading-tight text-md">
+            {{ __('Sidang') }}
+        </P>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-full p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl mb-4">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div
-                                class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                                <div class="flex items-center justify-center">
-                                    <div>DATA SIDANG</div>
+                            <div class="flex">
+                                <div class="w-10">
+                                    <img src="{{ url('img/database.png') }}" alt="Icon 1" class="">
+                                </div>
+                                <div class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                                    SIDANG
                                 </div>
                             </div>
+                            <hr class="border mt-2 border-black border-opacity-30">
                             <div class="flex justify-center">
                                 <div class="p-2" style="width:100%;overflow-x:auto;">
                                     <div class="relative overflow-x-auto rounded-lg shadow-lg">

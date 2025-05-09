@@ -11,6 +11,7 @@ use App\Models\Mahasiswa;
 use App\Models\Nilai;
 use App\Models\Perhitungan;
 use App\Models\Semester;
+use App\Models\TranskripCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -272,12 +273,12 @@ class DataPrestasiController extends Controller
             return redirect()->back()->with('error', 'Pilih dulu');
         }
 
-        // Ambil data mahasiswa
         $students = DB::table('mahasiswa')
             ->join('kelas', 'mahasiswa.id_kelas', '=', 'kelas.id')
             ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id')
             ->whereIn('mahasiswa.nim', $user_ids)
             ->select('mahasiswa.*', 'kelas.kelas', 'jurusan.jurusan', 'jurusan.id AS id_jurusan')
+            ->orderBy('nama', 'ASC')
             ->get();
 
         if ($students->isEmpty()) {
@@ -310,9 +311,18 @@ class DataPrestasiController extends Controller
         $prestasi4 = DB::table('vw_data_prestasi')
             ->where('semester', 4)
             ->where('id_kurikulum', $kurikulum)
+            ->where('materi_ajar', "SIDANG TUGAS AKHIR")
             ->whereIn('jurusan', $jurusanList)
             ->groupBy('materi_ajar')
-            ->get();
+            ->first();
+
+        $prestasiOjt = DB::table('vw_data_prestasi')
+            ->where('semester', 4)
+            ->where('id_kurikulum', $kurikulum)
+            ->where('materi_ajar', "OJT")
+            ->whereIn('jurusan', $jurusanList)
+            ->groupBy('materi_ajar')
+            ->first();
 
         return view('page.data_prestasi.print')->with([
             'students' => $students,
@@ -320,6 +330,7 @@ class DataPrestasiController extends Controller
             'prestasi2' => $prestasi2,
             'prestasi3' => $prestasi3,
             'prestasi4' => $prestasi4,
+            'prestasiOjt' => $prestasiOjt,
         ]);
     }
 

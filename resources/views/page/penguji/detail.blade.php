@@ -1,30 +1,32 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
-            <div class="flex items-center">Mahsiswa<i class="fi fi-rr-caret-right mt-1"></i> <span
-                    class="text-red-500">Detail Mahaiswa</span></div>
-        </h2>
+        <P class="font-bold text-white dark:text-gray-200 leading-tight text-md">
+            {{ __('Penguji') }}
+        </P>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-full p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl mb-4">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div
-                                class="lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                                <div class="flex items-center justify-center">
-                                    <div>DATA MAHASISWA</div>
+                            <div class="flex">
+                                <div class="w-10">
+                                    <img src="{{ url('img/database.png') }}" alt="Icon 1" class="">
+                                </div>
+                                <div class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                                    PENGUJI
                                 </div>
                             </div>
+                            <hr class="border mt-2 border-black border-opacity-30">
                             <div class="flex justify-center">
                                 <div class="p-4 pt-6" style="width:100%;overflow-x:auto;">
                                     <form action="{{ route('penguji.pengujiAdd') }}" method="POST" class="formupdate">
                                         @csrf
-                                        <div class="flex justify-end">
+                                        <div class="flex justify-end mb-4">
                                             <button type="submit"
-                                                class="mb-2 lg:mb-0 p-2 bg-sky-400 text-white rounded-xl">
+                                                class="mb-6 lg:mb-0 p-2 hover:bg-sky-100 text-sky-400 border border-sky-500 rounded-xl">
                                                 SUBMIT
                                             </button>
                                         </div>
@@ -51,7 +53,7 @@
                                                             PENGUJI</th>
                                                         <th scope="col" class="px-6 py-3 text-center">TANGGAL SIDANG
                                                         </th>
-                                                        <th scope="col" class="px-6 py-3 text-center">WAKTU</th>
+                                                        <th scope="col" class="px-6 py-3 text-center bg-gray-100">WAKTU</th>
                                                         <th scope="col" class="px-6 py-3 text-center">RUANG</th>
                                                     </tr>
                                                 </thead>
@@ -82,7 +84,7 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-                                                            <td class="px-6 py-4 bg-gray-100">
+                                                            <td class="px-6 py-4">
                                                                 <input type="date" id="tgl_sidang" name="tgl_sidang[]"
                                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                                     placeholder="Masukan Nama kelas disini ..."
@@ -108,7 +110,7 @@
                                                                         required />
                                                                 </div>
                                                             </td>
-                                                            <td class="px-6 py-4 bg-gray-100">
+                                                            <td class="px-6 py-4">
                                                                 <div class=" w-full">
                                                                     <select
                                                                         class="js-example-placeholder-single js-states form-control"

@@ -9,37 +9,44 @@
         <div class="max-w-8xl mx-auto text-white">
             <div class="flex h-[542px] bg-[url('/public/img/building.jpg')] bg-cover bg-gray-500 bg-blend-multiply">
                 <div class="w-[800px] p-12">
-                    <div class="bg-[#005F9D] bg-opacity-65 pt-6 pb-4 pr-6 pl-4 w-[300px] rounded-3xl" data-aos="fade-down" data-aos-delay="70" data-aos-duration="1000">
-                        <div class="flex gap-5 items-center justify-between">
-                            <div><img src="{{ url('img/major.png') }}" alt="Icon 1" class=""></div>
-                            <div>
-                                <div class="font-extrabold text-right text-md">PROGRAM STUDI</div>
-                                <div class="font-extrabold text-right text-[40px] mt-2">{{ $totalProgramStudi }}</div>
+                    @can('role-A')
+                        <div class="bg-[#005F9D] bg-opacity-65 pt-6 pb-4 pr-6 pl-4 w-[300px] rounded-3xl" data-aos="fade-down"
+                            data-aos-delay="70" data-aos-duration="1000">
+                            <div class="flex gap-5 items-center justify-between">
+                                <div><img src="{{ url('img/major.png') }}" alt="Icon 1" class=""></div>
+                                <div>
+                                    <div class="font-extrabold text-right text-md">PROGRAM STUDI</div>
+                                    <div class="font-extrabold text-right text-[40px] mt-2">{{ $totalProgramStudi }}</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="bg-[#F2C94C] bg-opacity-65 pt-6 pb-4 pr-6 pl-4 w-[300px] rounded-3xl mt-4" data-aos="fade-down" data-aos-delay="60" data-aos-duration="1000">
-                        <div class="flex gap-5 items-center justify-between">
-                            <div><img src="{{ url('img/graduated.png') }}" alt="Icon 1" class="w-20"></div>
-                            <div>
-                                <div class="font-extrabold text-right text-md">PESERTA DIDIK</div>
-                                <div class="font-extrabold text-right text-[40px] mt-2">{{ $totalPesertaDidik }}</div>
+                        <div class="bg-[#F2C94C] bg-opacity-65 pt-6 pb-4 pr-6 pl-4 w-[300px] rounded-3xl mt-4"
+                            data-aos="fade-down" data-aos-delay="60" data-aos-duration="1000">
+                            <div class="flex gap-5 items-center justify-between">
+                                <div><img src="{{ url('img/graduated.png') }}" alt="Icon 1" class="w-20"></div>
+                                <div>
+                                    <div class="font-extrabold text-right text-md">PESERTA DIDIK</div>
+                                    <div class="font-extrabold text-right text-[40px] mt-2">{{ $totalPesertaDidik }}</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="bg-[#F15B67] bg-opacity-65 pt-6 pb-4 pr-6 pl-4 w-[300px] rounded-3xl mt-5" data-aos="fade-down" data-aos-delay="50" data-aos-duration="1000">
-                        <div class="flex gap-5 items-center justify-between">
-                            <div><img src="{{ url('img/teacher.png') }}" alt="Icon 1" class="w-24"></div>
-                            <div>
-                                <div class="font-extrabold text-right text-md">PENGAJAR</div>
-                                <div class="font-extrabold text-right text-[40px] mt-2">{{ $totalPengajar }}</div>
+                        <div class="bg-[#F15B67] bg-opacity-65 pt-6 pb-4 pr-6 pl-4 w-[300px] rounded-3xl mt-5"
+                            data-aos="fade-down" data-aos-delay="50" data-aos-duration="1000">
+                            <div class="flex gap-5 items-center justify-between">
+                                <div><img src="{{ url('img/teacher.png') }}" alt="Icon 1" class="w-24"></div>
+                                <div>
+                                    <div class="font-extrabold text-right text-md">PENGAJAR</div>
+                                    <div class="font-extrabold text-right text-[40px] mt-2">{{ $totalPengajar }}</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endcan
                 </div>
                 <div class="w-full p-12 mt-36 text-right">
-                    <div class="text-wrap pr-28 text-3xl font-extrabold" data-aos="fade-left" data-aos-delay="50" data-aos-duration="1000">Sistem Informasi Akademik (SIAKAD)</div>
-                    <div class="text-wrap px-28 text-lg" data-aos="fade-left" data-aos-delay="55" data-aos-duration="1000">Sistem informasi akademik merupakan sebuah platform
+                    <div class="text-wrap pr-28 text-3xl font-extrabold" data-aos="fade-left" data-aos-delay="50"
+                        data-aos-duration="1000">Sistem Informasi Akademik (SIAKAD)</div>
+                    <div class="text-wrap px-28 text-lg" data-aos="fade-left" data-aos-delay="55"
+                        data-aos-duration="1000">Sistem informasi akademik merupakan sebuah platform
                         terintegrasi yang dirancang untuk memudahkan pengelolaan berbagai aspek dalam kegiatan akademik,
                         khususnya di lingkungan perguruan tinggi. Sistem ini berfungsi sebagai sarana untuk mengelola
                         data mahasiswa, data perkuliahan, jadwal, nilai, hingga informasi administrasi akademik lainnya.
@@ -48,50 +55,103 @@
             </div>
             <div class="bg-[#005F9D] py-12 pb-12 md:block hidden">
                 <div class="flex items-center justify-center">
-                    <div class="relative bg-white w-full mx-56 py-2 m-12 rounded-full h-12">
-                        <div class="absolute inset-0 flex justify-between items-center -top-5">
-                            <!-- Lingkaran 1 -->
-                            <button
-                                class="bg-white w-32 h-32 ml-52 rounded-full flex items-center justify-center shadow-md"
-                                onclick="ketidakhadiran()">
-                                <div
-                                    class="w-24 h-24 border-2 border-black rounded-full flex items-center justify-center shadow-md" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
-                                    <img src="{{ url('img/calendar.png') }}" alt="Icon 1" class="w-12 h-12" >
-                                </div>
-                            </button>
-                            <!-- Lingkaran 2 -->
-                            <button class="bg-white w-32 h-32 rounded-full flex items-center justify-center shadow-md"
-                                onclick="informasi()">
-                                <div
-                                    class="w-24 h-24 border-2 border-black rounded-full flex items-center justify-center shadow-md" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
-                                    <img src="{{ url('img/info.png') }}" alt="Icon 2" class="w-12 h-12">
-                                </div>
-                            </button>
-                            <!-- Lingkaran 3 -->
-                            <button class="bg-white w-32 h-32 rounded-full flex items-center justify-center shadow-md"
-                                onclick="ulangtahun()">
-                                <div
-                                    class="w-24 h-24 border-2 border-black rounded-full flex items-center justify-center shadow-md" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
-                                    <img src="{{ url('img/birth.png') }}" alt="Icon 3" class="w-12 h-12">
-                                </div>
-                            </button>
-                            <!-- Lingkaran 4 -->
-                            <button
-                                class="bg-white w-32 h-32 mr-52 rounded-full flex items-center justify-center shadow-md" onclick="jadwal()">
-                                <div
-                                    class="w-24 h-24 border-2 border-black rounded-full flex items-center justify-center shadow-md" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
-                                    <img src="{{ url('img/timetable.png') }}" alt="Icon 4" class="w-12 h-12">
-                                </div>
-                            </button>
+                    @can('role-A')
+                        <div class="relative bg-white w-full mx-56 py-2 m-12 rounded-full h-12">
+                            <div class="absolute inset-0 flex justify-between items-center -top-5">
+                                <!-- Lingkaran 1 -->
+                                <button
+                                    class="bg-white w-32 h-32 ml-52 rounded-full flex items-center justify-center shadow-md"
+                                    onclick="ketidakhadiran()">
+                                    <div class="w-24 h-24 border-2 border-black rounded-full flex items-center justify-center shadow-md"
+                                        data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
+                                        <img src="{{ url('img/calendar.png') }}" alt="Icon 1" class="w-12 h-12">
+                                    </div>
+                                </button>
+                                <!-- Lingkaran 2 -->
+                                <button class="bg-white w-32 h-32 rounded-full flex items-center justify-center shadow-md"
+                                    onclick="informasi()">
+                                    <div class="w-24 h-24 border-2 border-black rounded-full flex items-center justify-center shadow-md"
+                                        data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
+                                        <img src="{{ url('img/info.png') }}" alt="Icon 2" class="w-12 h-12">
+                                    </div>
+                                </button>
+                                <!-- Lingkaran 3 -->
+                                <button class="bg-white w-32 h-32 rounded-full flex items-center justify-center shadow-md"
+                                    onclick="ulangtahun()">
+                                    <div class="w-24 h-24 border-2 border-black rounded-full flex items-center justify-center shadow-md"
+                                        data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
+                                        <img src="{{ url('img/birth.png') }}" alt="Icon 3" class="w-12 h-12">
+                                    </div>
+                                </button>
+                                <!-- Lingkaran 4 -->
+                                <button
+                                    class="bg-white w-32 h-32 mr-52 rounded-full flex items-center justify-center shadow-md"
+                                    onclick="jadwal()">
+                                    <div class="w-24 h-24 border-2 border-black rounded-full flex items-center justify-center shadow-md"
+                                        data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
+                                        <img src="{{ url('img/timetable.png') }}" alt="Icon 4" class="w-12 h-12">
+                                    </div>
+                                </button>
+                            </div>
                         </div>
+                    @endcan
+                    @can('role-D')
+                        <!-- Lingkaran 2 -->
+                        <button class="bg-white w-32 h-32 rounded-full flex items-center justify-center shadow-md ml-12 mr-12"
+                            onclick="informasi()">
+                            <div class="w-24 h-24 border-2 border-black rounded-full flex items-center justify-center shadow-md"
+                                data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
+                                <img src="{{ url('img/info.png') }}" alt="Icon 2" class="w-12 h-12">
+                            </div>
+                        </button>
+                        <!-- Lingkaran 4 -->
+                        <button class="bg-white w-32 h-32 rounded-full flex items-center justify-center shadow-md mr-12 ml-12"
+                            onclick="jadwal()">
+                            <div class="w-24 h-24 border-2 border-black rounded-full flex items-center justify-center shadow-md"
+                                data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
+                                <img src="{{ url('img/timetable.png') }}" alt="Icon 4" class="w-12 h-12">
+                            </div>
+                        </button>
+                    @endcan
+                    @can('role-M')
+                        <!-- Lingkaran 2 -->
+                        <button class="bg-white w-32 h-32 rounded-full flex items-center justify-center shadow-md ml-12 mr-12"
+                            onclick="informasi()">
+                            <div class="w-24 h-24 border-2 border-black rounded-full flex items-center justify-center shadow-md"
+                                data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
+                                <img src="{{ url('img/info.png') }}" alt="Icon 2" class="w-12 h-12">
+                            </div>
+                        </button>
+                        <!-- Lingkaran 4 -->
+                        <button class="bg-white w-32 h-32 rounded-full flex items-center justify-center shadow-md mr-12 ml-12"
+                            onclick="jadwal()">
+                            <div class="w-24 h-24 border-2 border-black rounded-full flex items-center justify-center shadow-md"
+                                data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
+                                <img src="{{ url('img/timetable.png') }}" alt="Icon 4" class="w-12 h-12">
+                            </div>
+                        </button>
+                    @endcan
+                </div>
+                @can('role-A')
+                    <div class="flex mx-[380px]">
+                        <div class="font-bold">Ketidakhadiran Mahasiswa</div>
+                        <div class="ml-[160px] font-bold">Informasi</div>
+                        <div class="ml-[200px] font-bold">Ulang Tahun Dosen</div>
+                        <div class="ml-[168px] font-bold">Jadwal Hari ini</div>
                     </div>
-                </div>
-                <div class="flex mx-[380px]">
-                    <div class="font-bold">Ketidakhadiran Mahasiswa</div>
-                    <div class="ml-[160px] font-bold">Informasi</div>
-                    <div class="ml-[200px] font-bold">Ulang Tahun Dosen</div>
-                    <div class="ml-[168px] font-bold">Jadwal Hari ini</div>
-                </div>
+                @endcan
+                @can('role-D')
+                    <div class="flex items-center justify-center mt-4 gap-24">
+                        <div class="font-bold ml-[34px]">Informasi</div>
+                        <div class="font-bold ml-[35px]">Jadwal Hari ini</div>
+                    </div>
+                @endcan
+                @can('role-M')
+                    <div class="flex items-center justify-center mt-4 gap-24">
+                        <div class="font-bold ml-[34px]">Informasi</div>
+                        <div class="font-bold ml-[35px]">Jadwal Hari ini</div>
+                    </div>
+                @endcan
             </div>
             {{-- RESPONSIVE --}}
             <div class="md:hidden block">
@@ -171,7 +231,8 @@
                 @foreach ($informasi as $i)
                     <div class="flex gap-2">
                         <div class="h-10 w-10">
-                            <img class="rounded-full shadow-lg" src="{{ url('img/user.png') }}" alt="Bonnie image" />
+                            <img class="rounded-full shadow-lg" src="{{ url('img/user.png') }}"
+                                alt="Bonnie image" />
                         </div>
                         <div class="w-full">
                             <div class="flex gap-3 items-center">
@@ -210,8 +271,7 @@
         <div class="bg-white rounded-lg p-6 lg:w-4/12 w-full shadow-xl z-10">
             <div class="flex gap-5">
                 <div class="w-10">
-                    <img class="mb-2" src="{{ url('img/balloon.png') }}"
-                                            alt="Balloon" />
+                    <img class="mb-2" src="{{ url('img/balloon.png') }}" alt="Balloon" />
                 </div>
                 <div>
                     <h2 class="text-lg font-bold rounded-xl">ULANG TAHUN DOSEN</h2>
@@ -222,9 +282,18 @@
             <div class="grid grid-cols-2 gap-2">
                 @foreach ($dosenUlangtahun as $key => $j)
                     @php
-                       $button = date('d-m') === date('d-m', strtotime($j->tgl_lahir))
-                                ? '<a href="https://wa.me/?text=' . urlencode('Assalamualaikum Bapak/Ibu, Hari ini ' . $j->nama_dosen . ' sedang berulang tahun, selamat ulang tahun! Semoga Allah SWT senantiasa memberikan kesehatan, kebahagiaan, dan kesuksesan dalam setiap langkah. Terima kasih atas segala ilmu dan bimbingannya yang sangat berarti bagi mahasiswa kami. Semoga tahun ini menjadi tahun penuh berkah dan kebahagiaan.') . '" target="_blank" class="text-blue-500">
-                                    <img class="" src="' . url('img/conversation.png') . '" alt="Bonnie image" />
+                        $button =
+                            date('d-m') === date('d-m', strtotime($j->tgl_lahir))
+                                ? '<a href="https://wa.me/?text=' .
+                                    urlencode(
+                                        'Assalamualaikum Bapak/Ibu, Hari ini ' .
+                                            $j->nama_dosen .
+                                            ' sedang berulang tahun, selamat ulang tahun! Semoga Allah SWT senantiasa memberikan kesehatan, kebahagiaan, dan kesuksesan dalam setiap langkah. Terima kasih atas segala ilmu dan bimbingannya yang sangat berarti bagi mahasiswa kami. Semoga tahun ini menjadi tahun penuh berkah dan kebahagiaan.',
+                                    ) .
+                                    '" target="_blank" class="text-blue-500">
+                                    <img class="" src="' .
+                                    url('img/conversation.png') .
+                                    '" alt="Bonnie image" />
                                 </a>'
                                 : '';
                     @endphp
@@ -276,47 +345,46 @@
             </div>
             <hr class="border mb-5 border-black border-opacity-30">
             <p id="modal-content-jadwal">
-                <div class="flex justify-center">
-                    <div class="" style="width:100%;  overflow-x:auto;">
-                        <table class="table table-bordered" id="jadwal-datatable">
-                            <thead>
+            <div class="flex justify-center">
+                <div class="" style="width:100%;  overflow-x:auto;">
+                    <table class="table table-bordered" id="jadwal-datatable">
+                        <thead>
+                            <tr>
+                                <th class="w-7">NO.</th>
+                                <th>MATERI AJAR</th>
+                                <th>PENGAJAR</th>
+                                <th>HARI</th>
+                                <th>SESI</th>
+                                <th>PUKUL</th>
+                                <th>SKS</th>
+                                <th>RUANG</th>
+                                <th>KELAS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                                $no = 1;
+                            @endphp
+                            @foreach ($jadwal as $key => $j)
                                 <tr>
-                                    <th class="w-7">NO.</th>
-                                    <th>MATERI AJAR</th>
-                                    <th>PENGAJAR</th>
-                                    <th>HARI</th>
-                                    <th>SESI</th>
-                                    <th>PUKUL</th>
-                                    <th>SKS</th>
-                                    <th>RUANG</th>
-                                    <th>KELAS</th>
+                                    <td>{{ $no++ }}</td>
+                                    <td>{{ $j->detail_kurikulum->materi_ajar->materi_ajar }}</td>
+                                    <td>{{ $j->dosen ? $j->dosen->nama_dosen : '' }}</td>
+                                    <td>{{ $j->hari->hari }}</td>
+                                    <td>{{ $j->sesi->sesi }}</td>
+                                    <td>{{ $j->sesi->pukul->pukul }}</td>
+                                    <td>{{ $j->detail_kurikulum->materi_ajar->sks }}</td>
+                                    <td>{{ $j->ruang->ruang }}</td>
+                                    <td>{{ $j->kelas->kelas }}</td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @php
-                                    $no = 1;
-                                @endphp
-                                @foreach ($jadwal as $key => $j)
-                                    <tr>
-                                        <td>{{$no++}}</td>
-                                        <td>{{ $j->detail_kurikulum->materi_ajar->materi_ajar }}</td>
-                                        <td>{{ $j->dosen ? $j->dosen->nama_dosen : '' }}</td>
-                                        <td>{{ $j->hari->hari }}</td>
-                                        <td>{{ $j->sesi->sesi }}</td>
-                                        <td>{{ $j->sesi->pukul->pukul }}</td>
-                                        <td>{{ $j->detail_kurikulum->materi_ajar->sks }}</td>
-                                        <td>{{ $j->ruang->ruang }}</td>
-                                        <td>{{ $j->kelas->kelas }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
+            </div>
             </p>
             <hr class="border mt-5 border-black border-opacity-30">
-            <button onclick="closeModalJadwal()"
-                class="mt-4 bg-red-500 text-white px-4 py-2 rounded">Tutup</button>
+            <button onclick="closeModalJadwal()" class="mt-4 bg-red-500 text-white px-4 py-2 rounded">Tutup</button>
         </div>
     </div>
 

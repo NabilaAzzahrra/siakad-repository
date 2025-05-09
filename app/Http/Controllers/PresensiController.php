@@ -115,6 +115,7 @@ class PresensiController extends Controller
         $presensi = Presensi::with(['jadwal', 'jadwal.kelas'])->where('id_presensi', $id)->first();
         $mahasiswa = DetailPresensi::where('id_presensi', $id)
             ->get();
+           // dd($mahasiswa);
         return view('page.presensi.edit')->with([
             'presensi' => $presensi,
             'mahasiswa' => $mahasiswa
