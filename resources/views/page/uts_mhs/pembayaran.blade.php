@@ -1,8 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <P class="font-bold text-white dark:text-gray-200 leading-tight text-md">
             {{ __('UTS') }}
-        </h2>
+        </P>
     </x-slot>
 
     <div class="py-12">

@@ -39,7 +39,7 @@
                                 </div>
                             </div>
                             <hr class="border mt-2 border-black border-opacity-30">
-                            {{-- @can('role-A')
+                            @can('role-A')
                                 <form action="" method="GET">
                                     <div class="flex items-start justify-start gap-5 px-12">
                                         <div class="mb-5 mt-6 w-[400px]">
@@ -65,7 +65,7 @@
                                         </div>
                                     </div>
                                 </form>
-                            @endcan --}}
+                            @endcan
 
                             @can('role-M')
                                 <form action="{{ route('report_presensi_mahasiswa.edit', Auth::user()->email) }}"

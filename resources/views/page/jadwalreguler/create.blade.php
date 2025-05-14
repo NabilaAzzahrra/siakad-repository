@@ -107,7 +107,7 @@
                                                 onchange="getdetailkurikulum()">
                                                 <option value="">Pilih...</option>
                                                 @foreach ($kurikulum as $k)
-                                                    <option value="{{ $k->id_materi_ajar }}">
+                                                    <option value="{{ $k->id }}">
                                                         {{ $k->materi_ajar->materi_ajar }}
                                                     </option>
                                                 @endforeach

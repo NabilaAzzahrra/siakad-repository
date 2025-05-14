@@ -1,33 +1,45 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <P class="font-bold text-white dark:text-gray-200 leading-tight text-md">
             {{ __('Report Nilai Mahasiswa') }}
-        </h2>
+        </P>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-full p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
-                        <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 bg-amber-300 font-bold rounded-xl">
-                                <div class="flex flex-col lg:flex-row items-center justify-between">
-                                    <div>DATA NILAI <span class="uppercase text-white">{{ $mahasiswa->nama }}</span>
+                    <div class="w-full bg-white dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl p-6 mb-6">
+                        <div class="px-6 pb-6 text-gray-900 dark:text-gray-100">
+                            <div class="flex flex-col lg:flex-row items-center justify-between">
+                                    <div class="flex -mb-6">
+                                        <div class="w-10">
+                                            <img src="{{ url('img/database.png') }}" alt="Icon 1" class="">
+                                        </div>
+                                        <div
+                                            class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                                            DATA NILAI MAHASISWA
+                                        </div>
                                     </div>
-                                    <a href="{{ route('report_nilai_mahasiswa.show', $mahasiswa->nim) }}" target="_blank"
-                                        class="bg-sky-300 p-2 rounded-xl text-white">PRINT</a>
+                                    <div class="flex gap-4 mb-2">
+                                        <div class="mt-4">
+                                            <a href="{{ route('report_nilai_mahasiswa.show', $mahasiswa->nim) }}" target="_blank"
+                                            class="href rounded-xl flex items-center justify-center  p-2 text-sm lg:text-md hover:bg-amber-100 border border-dashed border-amber-500 text-amber-500 pl-4 pr-4 pt-2"><i
+                                                class="fi fi-sr-print mr-2 text-lg"></i> <span>Print
+                                                Nilai</span></a>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                                <hr class="border mt-2 border-black border-opacity-30">
                             <div class="flex flex-row lg:flex-row items-center gap-10">
                                 <div class="mt-5">
                                     <div class="flex">
-                                        <div class="pr-4">NAMA PESERTA DIDIK</div>
+                                        <div class="pr-[18px]">NAMA PESERTA DIDIK</div>
                                         <div class="pr-4">:</div>
                                         <div class="uppercase">{{ $mahasiswa->nama }}</div>
                                     </div>
                                     <div class="flex mt-1">
-                                        <div class="pr-[149px]">NIM</div>
+                                        <div class="pr-[148px]">NIM</div>
                                         <div class="pr-4">:</div>
                                         <div class="">{{ $mahasiswa->nim }}</div>
                                     </div>
@@ -37,7 +49,7 @@
                                         <div class="">{{ $mahasiswa->kelas->kelas }}</div>
                                     </div>
                                     <div class="flex mt-1">
-                                        <div class="pr-[105px]">PROGRAM STUDI</div>
+                                        <div class="pr-[49px]">PROGRAM STUDI</div>
                                         <div class="pr-4">:</div>
                                         <div class="">{{ $mahasiswa->kelas->jurusan->jurusan }}</div>
                                     </div>

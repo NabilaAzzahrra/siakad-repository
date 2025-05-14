@@ -174,15 +174,11 @@
                                 </x-slot>
 
                                 <x-slot name="content">
-                                    <x-dropdown-link :href="route('nilai.index')" :class="request()->routeIs('nilai.index')
-                                        ? 'text-red-500 font-bold'
-                                        : ''">
+                                    <x-dropdown-link :href="route('nilai.index')" :class="request()->routeIs('nilai.index') ? 'text-red-500 font-bold' : ''">
                                         {{ __('Perkuliahan') }}
                                     </x-dropdown-link>
 
-                                    <x-dropdown-link :href="route('ojt.index')" :class="request()->routeIs('ojt.index')
-                                        ? 'text-red-500 font-bold'
-                                        : ''">
+                                    <x-dropdown-link :href="route('ojt.index')" :class="request()->routeIs('ojt.index') ? 'text-red-500 font-bold' : ''">
                                         {{ __('OJT') }}
                                     </x-dropdown-link>
 
@@ -378,7 +374,9 @@
                                         {{ __('Revisi') }}
                                     </x-dropdown-link>
 
-                                    <x-dropdown-link :href="route('inputNilaiPembimbing.create')" :class="request()->routeIs('inputNilaiPembimbing.create') ? 'text-red-500 font-bold' : ''">
+                                    <x-dropdown-link :href="route('inputNilaiPembimbing.create')" :class="request()->routeIs('inputNilaiPembimbing.create')
+                                        ? 'text-red-500 font-bold'
+                                        : ''">
                                         {{ __('Nilai Pembimbing') }}
                                     </x-dropdown-link>
 
@@ -443,7 +441,7 @@
 
                     <!-- Navigation Links -->
                     <div class="hidden sm:flex sm:items-center sm:ms-6">
-                        <x-nav-link :href="route('report_presensi_mahasiswa.edit', Auth::user()->email)" :active="request()->routeIs('report_presensi_mahasiswa.edit', Auth::user()->email)">
+                        <x-nav-link onclick="return printPresensiMahasiswa('{{ Auth::user()->email }}')">
                             <div class="text-[16px] font-bold tracking-wide">Presensi</div>
                         </x-nav-link>
                     </div>
@@ -1144,6 +1142,24 @@
             </div>
         </div>
     </div>
+    <div id="modal-print-mahasiswa" class="hidden fixed inset-0 flex justify-center items-center z-50">
+        <!-- Backdrop Blur -->
+        <div class="absolute inset-0 bg-black opacity-50 backdrop-blur-sm"></div>
+        <div class="bg-white rounded-lg p-6 lg:w-4/12 w-full shadow-xl z-10">
+            <h2 class="text-lg font-bold mb-4 bg-amber-50 pl-6 pr-6 p-2 rounded-xl">Print Presensi</h2>
+            <form id="printFormMahasiswa" action="#" method="get" class="w-full">
+
+                <p id="modal-content-print-mahasiswa"></p>
+                <hr class="mt-4 border-2">
+                <button type="submit" id="submitPrintMahasiswa" class="mt-4 bg-sky-500 text-white px-4 py-2 rounded">
+                    Submit
+                </button>
+                <button onclick="closeModalPrintMahasiswa(event)" class="mt-4 bg-red-500 text-white px-4 py-2 rounded">
+                    Tutup
+                </button>
+            </form>
+        </div>
+    </div>
 </nav>
 <script>
     const dropdownDigital = () => {
@@ -1223,4 +1239,43 @@
             });
         });
     });
+</script>
+
+<script>
+    const initializeSelect2Mahasiswa = () => {
+        $('.js-example-placeholder-single').select2({
+            placeholder: "Pilih...",
+            allowClear: true,
+        });
+    };
+
+    function printPresensiMahasiswa(nim) {
+        const modalContent = document.getElementById("modal-content-print-mahasiswa");
+
+        modalContent.innerHTML = `
+            <div class="flex flex-col w-full gap-4">
+                <select class="js-example-placeholder-single js-states form-control w-full mb-4" id="semesterMahasiswa" name="semester" data-placeholder="Pilih Semester">
+                    <option value="">Pilih...</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+            </div>
+        `;
+
+        // Set action form pakai JS
+        const form = document.getElementById("printFormMahasiswa");
+        form.action = `{{ url('report_presensi_mahasiswa') }}/${nim}`;
+
+        initializeSelect2Mahasiswa();
+        const modal = document.getElementById("modal-print-mahasiswa");
+        modal.classList.remove("hidden");
+    }
+
+    function closeModalPrintMahasiswa(event) {
+        event.preventDefault(); // Mencegah form submit
+        const modal = document.getElementById("modal-print-mahasiswa");
+        modal.classList.add("hidden");
+    }
 </script>

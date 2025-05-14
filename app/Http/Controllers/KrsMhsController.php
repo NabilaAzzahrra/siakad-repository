@@ -61,6 +61,7 @@ class KrsMhsController extends Controller
                     'formatif' => 0,
                     'uts' => 0,
                     'uas' => 0,
+                    'verifikasi' => 1,
                 ];
             }, $id_jadwal);
 

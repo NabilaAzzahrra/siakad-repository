@@ -79,22 +79,34 @@ class ReportPresensiMahasiswaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id, Request $request)
     {
         // Ambil data mahasiswa berdasarkan NIM
         $mahasiswa = Mahasiswa::where('nim', $id)->first();
         $id_kelas = $mahasiswa->id_kelas;
 
         // Ambil data jadwal berdasarkan id_kelas
-        $jadwal = Jadwalreguler::where('id_kelas', $id_kelas)->get();
+        $semester = $request->input('semester');
+        $jadwal = Jadwalreguler::join('detail_kurikulum', 'jadwal_reguler.id_detail_kurikulum', '=', 'detail_kurikulum.id')
+            ->join('materi_ajar', 'detail_kurikulum.id_materi_ajar', '=', 'materi_ajar.id')
+            ->join('semester', 'materi_ajar.id_semester', '=', 'semester.id')
+            ->where('id_kelas', $id_kelas)
+            ->where('semester', $semester)
+            ->get();
 
         // Ambil data presensi yang terkait dengan mahasiswa tersebut
         // Join ke tabel presensi untuk mendapatkan id_jadwal dari presensi
         $presensi = DetailPresensi::join('presensi', 'detail_presensi.id_presensi', '=', 'presensi.id_presensi')
+            ->join('jadwal_reguler', 'presensi.id_jadwal', '=', 'jadwal_reguler.id_jadwal')
+            ->join('detail_kurikulum', 'jadwal_reguler.id_detail_kurikulum', '=', 'detail_kurikulum.id')
+            ->join('materi_ajar', 'detail_kurikulum.id_materi_ajar', '=', 'materi_ajar.id')
+            ->join('semester', 'materi_ajar.id_semester', '=', 'semester.id')
             ->where('detail_presensi.nim', $id)
-            ->select('detail_presensi.*', 'presensi.id_jadwal', 'presensi.pertemuan')
+            ->where('semester.semester', $semester)
+            ->select('detail_presensi.*', 'presensi.id_jadwal', 'presensi.pertemuan', 'semester.semester')
             ->get();
 
+        //dd($jadwal);
         // Susun data presensi per pertemuan P1-P14
         $presensiPerPertemuan = [];
         foreach ($jadwal as $jadwalItem) {

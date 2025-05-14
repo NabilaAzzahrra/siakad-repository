@@ -1,32 +1,41 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <P class="font-bold text-white dark:text-gray-200 leading-tight text-md">
             {{ __('UTS') }}
-        </h2>
+        </P>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-full p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
-                        <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <div
+                        class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl">
+                        <div class="px-6 pb-4 text-gray-900 dark:text-gray-100">
                             <div class="">
-                                <div class="flex flex-col lg:flex-row items-center justify-between gap-5">
-                                    <div
-                                        class="w-full lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                                        DATA UTS</div>
-                                    @if ($mahasiswa->status == 1)
-                                    <div class="rounded-xl lg:p-6 p-2 text-sm lg:text-md bg-sky-300">
-                                        <a href="{{ route('ujian_uts_mhs.print_uts_mhs') }}" target="_blank"
-                                            class="href">PRINT</a>
+                                <div class="flex flex-col lg:flex-row items-center justify-between">
+                                    <div class="flex -mb-6">
+                                        <div class="w-10">
+                                            <img src="{{ url('img/database.png') }}" alt="Icon 1" class="">
+                                        </div>
+                                        <div
+                                            class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                                            DATA UTS
+                                        </div>
                                     </div>
-                                    @else
-                                    @endif
+                                    <div class="flex gap-4 mb-2">
+                                        <div class="mt-4">
+                                            <a href="{{ route('ujian_uts_mhs.print_uts_mhs') }}" target="_blank"
+                                                class="href rounded-xl flex items-center justify-center  p-2 text-sm lg:text-md hover:bg-amber-100 border border-dashed border-amber-500 text-amber-500 pl-4 pr-4 pt-2"><i
+                                                    class="fi fi-sr-print mr-2 text-lg"></i> <span>Print
+                                                    Jadwal</span></a>
+                                        </div>
+                                    </div>
                                 </div>
+                                <hr class="border mt-2 border-black border-opacity-30">
                             </div>
                             <div class="flex w-full justify-center">
-                                <div class="pt-12 w-full" style="width:100%;overflow-x:auto;">
+                                <div class="pt-4 w-full" style="width:100%;overflow-x:auto;">
 
                                     <div class="relative overflow-x-auto shadow-lg rounded-lg">
                                         <table
@@ -41,208 +50,187 @@
                                                         MATERI AJAR
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center bg-gray-100">
-                                                        <div class="flex items-center">
-                                                            PENGAJAR
-                                                        </div>
+                                                        PENGAJAR
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center">
-                                                        <div class="flex items-center">
-                                                            TANGGAL
-                                                        </div>
+                                                        TANGGAL
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center bg-gray-100">
-                                                        <div class="flex items-center">
-                                                            HARI
-                                                        </div>
+                                                        HARI
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center">
-                                                        <div class="flex items-center">
-                                                            SESI
-                                                        </div>
+                                                        SESI
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center bg-gray-100">
-                                                        <div class="flex items-center">
-                                                            PUKUL
-                                                        </div>
+                                                        PUKUL
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center">
-                                                        <div class="flex items-center">
-                                                            SEMESTER
-                                                        </div>
+                                                        SEMESTER
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center bg-gray-100">
-                                                        <div class="flex items-center">
-                                                            SKS
-                                                        </div>
+                                                        SKS
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center">
-                                                        <div class="flex items-center">
-                                                            RUANG
-                                                        </div>
+                                                        RUANG
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center bg-gray-100">
-                                                        <div class="flex items-center">
-                                                            KELAS
-                                                        </div>
+                                                        KELAS
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center">
-                                                        <div class="flex items-center">
-                                                            PROGRAM STUDI
-                                                        </div>
+                                                        PROGRAM STUDI
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center bg-gray-100 ">
-                                                        <div class="flex items-center">
-                                                            SOAL
-                                                        </div>
+                                                        SOAL
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center ">
-                                                        <div class="flex items-center">
-                                                            ACTION
-                                                        </div>
+                                                        ACTION
                                                     </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @php
-                                                $no = 1;
+                                                    $no = 1;
                                                 @endphp
                                                 @foreach ($jadwal_reguler as $key => $j)
-                                                @php
-                                                $utsItem = $uts->where('id_jadwal', $j->id_jadwal)->first();
-                                                $jawaban = null;
-                                                $hari = '';
+                                                    @php
+                                                        $utsItem = $uts->where('id_jadwal', $j->id_jadwal)->first();
+                                                        $jawaban = null;
+                                                        $hari = '';
 
-                                                if ($utsItem) {
-                                                $jawaban = $detail_uts
-                                                ->where('id_uts', $utsItem->id_uts)
-                                                ->where('nim', Auth::user()->email)
-                                                ->first();
+                                                        if ($utsItem) {
+                                                            $jawaban = $detail_uts
+                                                                ->where('id_uts', $utsItem->id_uts)
+                                                                ->where('nim', Auth::user()->email)
+                                                                ->first();
 
-                                                $day = date('l', strtotime($utsItem->tgl_ujian));
-                                                switch ($day) {
-                                                case 'Monday':
-                                                $hari = 'SENIN';
-                                                break;
-                                                case 'Tuesday':
-                                                $hari = 'SELASA';
-                                                break;
-                                                case 'Wednesday':
-                                                $hari = 'RABU';
-                                                break;
-                                                case 'Thursday':
-                                                $hari = 'KAMIS';
-                                                break;
-                                                case 'Friday':
-                                                $hari = 'JUMAT';
-                                                break;
-                                                case 'Saturday':
-                                                $hari = 'SABTU';
-                                                break;
-                                                case 'Sunday':
-                                                $hari = 'MINGGU';
-                                                break;
-                                                default:
-                                                $hari = '';
-                                                break;
-                                                }
-                                                }
-                                                $hide = '';
-                                                @endphp
-                                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                                    <td class="px-6 py-4 text-center bg-gray-100">
-                                                        {{ $no++ }}
-                                                    </td>
-                                                    <td class="px-6 py-4 text-center">
-                                                        {{ $j->detail_kurikulum->materi_ajar->materi_ajar }}
-                                                    </td>
-                                                    <td class="px-6 py-4 bg-gray-100">
-                                                        {{ $j->dosen->nama_dosen }}
-                                                    </td>
-                                                    <td class="px-6 py-4 ">
-                                                        @if ($utsItem)
-                                                        {{ date('d-m-Y', strtotime($utsItem->tgl_ujian)) }}
-                                                        @php
-                                                        $hide = 'hidden'; // Default value
-
-                                                        if ($utsItem->tgl_ujian == date('Y-m-d')) {
-                                                        $endTime = str_replace('.', ':', explode(' - ', $utsItem->waktu_ujian)[1]);
-                                                        if (date('H:i') <= $endTime) {
-                                                            $hide='' ; // Show if current time is within the allowed range
+                                                            $day = date('l', strtotime($utsItem->tgl_ujian));
+                                                            switch ($day) {
+                                                                case 'Monday':
+                                                                    $hari = 'SENIN';
+                                                                    break;
+                                                                case 'Tuesday':
+                                                                    $hari = 'SELASA';
+                                                                    break;
+                                                                case 'Wednesday':
+                                                                    $hari = 'RABU';
+                                                                    break;
+                                                                case 'Thursday':
+                                                                    $hari = 'KAMIS';
+                                                                    break;
+                                                                case 'Friday':
+                                                                    $hari = 'JUMAT';
+                                                                    break;
+                                                                case 'Saturday':
+                                                                    $hari = 'SABTU';
+                                                                    break;
+                                                                case 'Sunday':
+                                                                    $hari = 'MINGGU';
+                                                                    break;
+                                                                default:
+                                                                    $hari = '';
+                                                                    break;
                                                             }
-                                                            }
-                                                            @endphp
+                                                        }
+                                                        $hide = '';
+                                                    @endphp
+                                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                        <td class="px-6 py-4 text-center bg-gray-100">
+                                                            {{ $no++ }}
+                                                        </td>
+                                                        <td class="px-6 py-4">
+                                                            {{ $j->detail_kurikulum->materi_ajar->materi_ajar }}
+                                                        </td>
+                                                        <td class="px-6 py-4 bg-gray-100">
+                                                            {{ $j->dosen->nama_dosen }}
+                                                        </td>
+                                                        <td class="px-6 py-4 text-center">
+                                                            @if ($utsItem)
+                                                                {{ date('d-m-Y', strtotime($utsItem->tgl_ujian)) }}
+                                                                @php
+                                                                    $hide = 'hidden'; // Default value
+
+                                                                    if ($utsItem->tgl_ujian == date('Y-m-d')) {
+                                                                        $endTime = str_replace(
+                                                                            '.',
+                                                                            ':',
+                                                                            explode(' - ', $utsItem->waktu_ujian)[1],
+                                                                        );
+                                                                        if (date('H:i') <= $endTime) {
+                                                                            $hide = '';
+                                                                        }
+                                                                    }
+                                                                @endphp
                                                             @else
-                                                            <span>Belum ditentukan</span>
+                                                                <span class="bg-amber-100 border px-4 rounded-xl border-amber-500 text-amber-500">Belum ditentukan</span>
                                                             @endif
-                                                    </td>
-                                                    <td class="px-6 py-4 bg-gray-100">
-                                                        @if ($utsItem)
-                                                        {{ $hari }}
-                                                        @else
-                                                        {{ $j->hari->hari }}
-                                                        @endif
-                                                    </td>
-                                                    <td class="px-6 py-4">
-                                                        {{ $j->sesi->sesi }}
-                                                    </td>
-                                                    <td class="px-6 py-4 bg-gray-100">
-                                                        @if ($utsItem)
-                                                        {{ $utsItem->waktu_ujian }}
-
-                                                        @else
-                                                        {{ $j->sesi->pukul->pukul }}
-                                                        @endif
-                                                    </td>
-                                                    <td class="px-6 py-4">
-                                                        {{ $j->detail_kurikulum->materi_ajar->semester->semester }}
-                                                    </td>
-                                                    <td class="px-6 py-4 bg-gray-100">
-                                                        {{ $j->detail_kurikulum->materi_ajar->sks }}
-                                                    </td>
-                                                    <td class="px-6 py-4">
-                                                        {{ $j->ruang->ruang }}
-                                                    </td>
-                                                    <td class="px-6 py-4 bg-gray-100">
-                                                        {{ $j->kelas->kelas }}
-                                                    </td>
-                                                    <td class="px-6 py-4">
-                                                        {{ $j->kelas->jurusan->jurusan }}
-                                                    </td>
-                                                    <td class="px-6 py-4 bg-gray-100" {{$hide}}>
-                                                        @if ($utsItem)
-                                                        <a href="{{ asset('uts/' . $utsItem->file) }}" download
-                                                            class="mr-2 bg-green-500 hover:bg-green-600 px-4 py-3 rounded-xl text-xs text-white">
-                                                            <i class="fa-solid fa-download"></i>
-                                                        </a>
-                                                        @else
-                                                        <div class="bg-red-500 text-white px-2 rounded-xl">Belum
-                                                            Terdapat Soal</div>
-                                                        @endif
-                                                    </td>
-                                                    <td class="px-6 py-4" {{$hide}}>
-                                                        @if ($utsItem)
-                                                        @if ($jawaban)
-                                                        {{-- If the student's submission exists in detail_uts --}}
-                                                        <a href="{{ asset('uts/jawaban/' . $jawaban->file) }}"
-                                                            download
-                                                            class="mr-2 bg-green-500 hover:bg-green-600 px-4 py-3 rounded-xl text-xs text-white">
-                                                            <i class="fa-solid fa-file"></i>
-                                                        </a>
-                                                        @else
-                                                        {{-- If no submission exists for the student, show the upload button --}}
-                                                        <button type="button"
-                                                            data-id="{{ $utsItem->id }}"
-                                                            data-modal-target="sourceModalUpload"
-                                                            data-id_uts="{{ $utsItem->id_uts }}"
-                                                            onclick="editSourceModalUpload(this)"
-                                                            class="bg-amber-500 hover:bg-amber-600 px-4 py-3 rounded-xl text-xs text-white">
-                                                            <i class="fas fa-upload"></i>
-                                                        </button>
-                                                        @endif
-                                                        @else
-                                                        @endif
-                                                    </td>
-                                                </tr>
+                                                        </td>
+                                                        <td class="px-6 py-4 bg-gray-100 text-center">
+                                                            @if ($utsItem)
+                                                                {{ $hari }}
+                                                            @else
+                                                                {{ $j->hari->hari }}
+                                                            @endif
+                                                        </td>
+                                                        <td class="px-6 py-4 text-center">
+                                                            {{ $j->sesi->sesi }}
+                                                        </td>
+                                                        <td class="px-6 py-4 bg-gray-100 text-center">
+                                                            @if ($utsItem)
+                                                                {{ $utsItem->waktu_ujian }}
+                                                            @else
+                                                                {{ $j->sesi->pukul->pukul }}
+                                                            @endif
+                                                        </td>
+                                                        <td class="px-6 py-4 text-center">
+                                                            {{ $j->detail_kurikulum->materi_ajar->semester->semester }}
+                                                        </td>
+                                                        <td class="px-6 py-4 bg-gray-100 text-center">
+                                                            {{ $j->detail_kurikulum->materi_ajar->sks }}
+                                                        </td>
+                                                        <td class="px-6 py-4 text-center">
+                                                            {{ $j->ruang->ruang }}
+                                                        </td>
+                                                        <td class="px-6 py-4 bg-gray-100 text-center">
+                                                            {{ $j->kelas->kelas }}
+                                                        </td>
+                                                        <td class="px-6 py-4 text-center">
+                                                            {{ $j->kelas->jurusan->jurusan }}
+                                                        </td>
+                                                        <td class="px-6 py-4 bg-gray-100 text-center" {{ $hide }}>
+                                                            @if ($utsItem)
+                                                                <a href="{{ asset('uts/' . $utsItem->file) }}" download
+                                                                    class="mr-2 text-green-500 hover:bg-green-100 px-4 py-3 rounded-xl border-2 border-green-500 border-dashed">
+                                                                    <i class="fa-solid fa-download"></i>
+                                                                </a>
+                                                            @else
+                                                                <div class="text-red-500 bg-red-100 border border-red-500 px-2 rounded-xl">Belum
+                                                                    Terdapat Soal</div>
+                                                            @endif
+                                                        </td>
+                                                        <td class="px-6 py-4 text-center" {{ $hide }}>
+                                                            @if ($utsItem)
+                                                                @if ($jawaban)
+                                                                    {{-- If the student's submission exists in detail_uts --}}
+                                                                    <a href="{{ asset('uts/jawaban/' . $jawaban->file) }}"
+                                                                        download
+                                                                        class="mr-2 text-green-500 hover:bg-green-100 px-4 py-3 rounded-xl border border-green-500">
+                                                                        <i class="fa-solid fa-file"></i>
+                                                                    </a>
+                                                                @else
+                                                                    {{-- If no submission exists for the student, show the upload button --}}
+                                                                    <button type="button"
+                                                                        data-id="{{ $utsItem->id }}"
+                                                                        data-modal-target="sourceModalUpload"
+                                                                        data-id_uts="{{ $utsItem->id_uts }}"
+                                                                        onclick="editSourceModalUpload(this)"
+                                                                        class="text-amber-500 hover:bg-amber-100 px-4 py-3 rounded-xl border border-amber-500 border-dashed border-2">
+                                                                        <i class="fas fa-upload"></i>
+                                                                    </button>
+                                                                @endif
+                                                            @else
+                                                            @endif
+                                                        </td>
+                                                    </tr>
                                                 @endforeach
                                             </tbody>
                                         </table>
@@ -250,6 +238,7 @@
                                     {{-- <div class="mt-4">
                                         {{ $jadwal_reguler->links() }}
                                 </div> --}}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -257,12 +246,11 @@
             </div>
         </div>
     </div>
-    </div>
     {{-- UPLOAD JAWABAN --}}
     <div class="fixed inset-0 flex items-center justify-center z-50 hidden" id="sourceModalUpload">
         <div class="fixed inset-0 bg-black opacity-50"></div>
         <div class="fixed inset-0 flex items-center justify-center">
-            <div class="w-full md:w-1/2 relative bg-white rounded-lg shadow mx-5">
+            <div class="w-full md:w-1/4 relative bg-white rounded-lg shadow mx-5">
                 <div class="flex items-start justify-between p-4 border-b rounded-t">
                     <h3 class="text-xl font-semibold text-gray-900" id="title_source_upload">
                         Tambah Sumber Database

@@ -102,7 +102,7 @@ class ReportKhsMahasiswaController extends Controller
             ->where('nim', Auth::user()->email)
             ->whereNotNull('mahasiswa.tingkat');
         $mahasiswa_lengkap = $query->orderBy('nama', 'ASC')->paginate(30);
-
+//dd($mahasiswa_lengkap);
         return view('page.report_khs_mahasiswa.index')->with([
             'mahasiswa_lengkap' => $mahasiswa_lengkap,
             'semester' => $semester,

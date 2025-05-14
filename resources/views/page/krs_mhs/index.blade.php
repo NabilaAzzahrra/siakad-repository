@@ -1,18 +1,26 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('KRS Mahasiswa') }}
-        </h2>
+        <P class="font-bold text-white dark:text-gray-200 leading-tight text-md">
+            {{ __('KRS') }}
+        </P>
     </x-slot>
 
     <div class="py-12 px-6">
         <div class="lg:grid lg:grid-cols-2 gap-5">
-            <div class="w-full p-4 bg-white rounded-xl shadow-xl">
-                <div
-                    class="lg:p-6 p-2 mb-6 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                    PILIH KRS
+            <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl p-6 mb-6">
+                <div class="flex flex-col lg:flex-row items-center justify-between">
+                    <div class="flex -mb-6">
+                        <div class="w-10">
+                            <img src="{{ url('img/database.png') }}" alt="Icon 1" class="">
+                        </div>
+                        <div
+                            class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                            DATA MAHASISWA
+                        </div>
+                    </div>
                 </div>
-                <form action="{{ route('krs_mhs.store') }}" method="post">
+                <hr class="border mt-8 border-black border-opacity-30">
+                <form action="{{ route('krs_mhs.store') }}" method="post" class="mt-12">
                     @csrf
                     <input type="hidden" name="nim" value="{{ Auth::user()->email }}">
                     <div class="relative overflow-x-auto rounded-lg shadow-lg">
@@ -117,7 +125,7 @@
 
                     </div>
                     <div class="mt-5">
-                        <button class="bg-sky-500 text-white p-2 rounded-xl">Submit</button>
+                        <button class="text-sky-500 border border-sky-500 py-2 px-4 hover:bg-sky-100 rounded-xl">Submit</button>
                     </div>
                 </form>
             </div>

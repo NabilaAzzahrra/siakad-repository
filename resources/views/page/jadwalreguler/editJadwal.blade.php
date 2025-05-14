@@ -109,8 +109,8 @@
                                                 name="kurikulum" data-placeholder="Pilih Materi Ajar"
                                                 onchange="getdetailkurikulum()">
                                                 @foreach ($kurikulum as $c)
-                                                    <option value="{{ $c->id_materi_ajar }}"
-                                                        {{ $c->id_materi_ajar == $jadwal->id_detail_kurikulum ? 'selected' : '' }}>
+                                                    <option value="{{ $c->id }}"
+                                                        {{ $c->id == $jadwal->id_detail_kurikulum ? 'selected' : '' }}>
                                                         {{ $c->materi_ajar->materi_ajar }}
                                                     </option>
                                                 @endforeach

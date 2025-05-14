@@ -215,7 +215,7 @@ class KHSController extends Controller
         $id_jurusan = $request->input('id_jurusan');
         $semesters = $request->input('semester');
         $kurikulum = $request->input('kurikulum');
-
+        //dd($semesters);
         if (empty($user_ids)) {
             return redirect()->back()->with('error', 'Pilih dulu');
         }
@@ -239,7 +239,7 @@ class KHSController extends Controller
             ->groupBy('materi_ajar')
             ->get();
 
-        //dd($prestasi);
+        //dd($id_jurusan);
 
         $firstPrestasi = $prestasi->first();
 

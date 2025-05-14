@@ -105,15 +105,12 @@ class UjianUTSController extends Controller
      */
     public function store(Request $request)
     {
-
         try {
-
-
             $id_jadwal = $request->input('id_jadwal');
             $id_uts = date('YmdHis');
 
             if ($request->hasFile('file') && $request->hasFile('file_cadangan')) {
-                dd('ini');
+                //dd('ini');
                 // Handle the main UTS file upload
                 $utsFile = $request->file('file');
                 $utsFileName = $id_uts . '-' . $id_jadwal . '.' . $utsFile->extension();
@@ -155,12 +152,12 @@ class UjianUTSController extends Controller
                         ->with('message', 'Data UTS Sudah ditambahkan');
                 }
             } else {
-                dd('error');
+                //dd('error');
                 // Redirect back if files are missing
                 return redirect()->back()->with('error', 'Soal tidak ditemukan');
             }
         } catch (\Exception $e) {
-            dd('salah');
+            //dd('salah');
             // Handle any errors that occur during the process
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
         }

@@ -1,28 +1,37 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <P class="font-bold text-white dark:text-gray-200 leading-tight text-md">
             {{ __('UAS') }}
-        </h2>
+        </P>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-full p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-lg rounded-lg">
-                        <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="flex flex-col lg:flex-row items-center justify-between gap-5">
-                                <div
-                                    class="w-full lg:p-6 p-2 text-sm lg:text-lg text-center lg:text-left bg-amber-300 rounded-xl font-bold">
-                                    DATA UAS</div>
-                                @if ($mahasiswa->status == 1)
-                                    <div class="rounded-xl lg:p-6 p-2 text-sm lg:text-md bg-sky-300">
-                                        <a href="{{ route('ujian_uas_mhs.print_uas_mhs') }}" target="_blank"
-                                            class="href">PRINT</a>
+                    <div
+                        class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-xl border border-gray-200 rounded-3xl">
+                        <div class="px-6 pb-4 text-gray-900 dark:text-gray-100">
+                            <div class="flex flex-col lg:flex-row items-center justify-between">
+                                <div class="flex -mb-6">
+                                    <div class="w-10">
+                                        <img src="{{ url('img/database.png') }}" alt="Icon 1" class="">
                                     </div>
-                                @else
-                                @endif
+                                    <div
+                                        class="lg:p-2 p-2 text-sm lg:text-lg text-left lg:text-left rounded-xl font-bold">
+                                        DATA UAS
+                                    </div>
+                                </div>
+                                <div class="flex gap-4 mb-2">
+                                    <div class="mt-4">
+                                        <a href="{{ route('ujian_uas_mhs.print_uas_mhs') }}" target="_blank"
+                                            class="href rounded-xl flex items-center justify-center  p-2 text-sm lg:text-md hover:bg-amber-100 border border-dashed border-amber-500 text-amber-500 pl-4 pr-4 pt-2"><i
+                                                class="fi fi-sr-print mr-2 text-lg"></i> <span>Print
+                                                Jadwal</span></a>
+                                    </div>
+                                </div>
                             </div>
+                            <hr class="border mt-2 border-black border-opacity-30">
                             <div class="flex w-full justify-center">
                                 <div class="pt-12 w-full" style="width:100%;overflow-x:auto;">
 
@@ -39,64 +48,40 @@
                                                         MATERI AJAR
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center bg-gray-100">
-                                                        <div class="flex items-center">
-                                                            PENGAJAR
-                                                        </div>
+                                                        PENGAJAR
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center">
-                                                        <div class="flex items-center">
-                                                            TANGGAL
-                                                        </div>
+                                                        TANGGAL
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center bg-gray-100">
-                                                        <div class="flex items-center">
-                                                            HARI
-                                                        </div>
+                                                        HARI
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center">
-                                                        <div class="flex items-center">
-                                                            SESI
-                                                        </div>
+                                                        SESI
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center bg-gray-100">
-                                                        <div class="flex items-center">
-                                                            PUKUL
-                                                        </div>
+                                                        PUKUL
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center">
-                                                        <div class="flex items-center">
-                                                            SEMESTER
-                                                        </div>
+                                                        SEMESTER
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center bg-gray-100">
-                                                        <div class="flex items-center">
-                                                            SKS
-                                                        </div>
+                                                        SKS
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center">
-                                                        <div class="flex items-center">
-                                                            RUANG
-                                                        </div>
+                                                        RUANG
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center bg-gray-100">
-                                                        <div class="flex items-center">
-                                                            KELAS
-                                                        </div>
+                                                        KELAS
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center">
-                                                        <div class="flex items-center">
-                                                            PROGRAM STUDI
-                                                        </div>
+                                                        PROGRAM STUDI
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center bg-gray-100 ">
-                                                        <div class="flex items-center">
-                                                            SOAL
-                                                        </div>
+                                                        SOAL
                                                     </th>
                                                     <th scope="col" class="px-6 py-3 text-center ">
-                                                        <div class="flex items-center">
-                                                            ACTION
-                                                        </div>
+                                                        ACTION
                                                     </th>
                                                 </tr>
                                             </thead>
@@ -150,82 +135,90 @@
                                                         <td class="px-6 py-4 text-center bg-gray-100">
                                                             {{ $no++ }}
                                                         </td>
-                                                        <td class="px-6 py-4 text-center">
+                                                        <td class="px-6 py-4">
                                                             {{ $j->detail_kurikulum->materi_ajar->materi_ajar }}
                                                         </td>
                                                         <td class="px-6 py-4 bg-gray-100">
                                                             {{ $j->dosen->nama_dosen }}
                                                         </td>
-                                                        <td class="px-6 py-4 ">
-                                                        @if ($uasItem)
-                                                            {{ date('d-m-Y', strtotime($uasItem->tgl_ujian)) }}
-
-                                                            @php
-                                                                $hide = 'hidden'; // Default value
-
-                                                                if ($uasItem->tgl_ujian == date('Y-m-d')) {
-                                                                    $endTime = str_replace('.', ':', explode(' - ', $uasItem->waktu_ujian)[1] ?? '');
-                                                                    if (date('H:i') <= $endTime) {
-                                                                        $hide = ''; // Show if current time is within the allowed range
-                                                                    }
-                                                                }
-                                                            @endphp
-                                                        @else
-                                                            <span>Belum ditentukan</span>
-                                                        @endif
-                                                        </td>
-                                                        <td class="px-6 py-4 bg-gray-100 bg-gray-100">
+                                                        <td class="px-6 py-4 text-center">
                                                             @if ($uasItem)
-                                                                {{ $hari }}
-                                                                
+                                                                {{ date('d-m-Y', strtotime($uasItem->tgl_ujian)) }}
+
+                                                                @php
+                                                                    $hide = 'hidden'; // Default value
+
+                                                                    if ($uasItem->tgl_ujian == date('Y-m-d')) {
+                                                                        $endTime = str_replace(
+                                                                            '.',
+                                                                            ':',
+                                                                            explode(' - ', $uasItem->waktu_ujian)[1] ??
+                                                                                '',
+                                                                        );
+                                                                        if (date('H:i') <= $endTime) {
+                                                                            $hide = ''; // Show if current time is within the allowed range
+                                                                        }
+                                                                    }
+                                                                @endphp
                                                             @else
-                                                                {{ $j->hari->hari }}
-                                                                
+                                                                <span
+                                                                    class="bg-amber-100 border px-4 rounded-xl border-amber-500 text-amber-500">Belum
+                                                                    ditentukan</span>
                                                             @endif
                                                         </td>
-                                                        <td class="px-6 py-4">
+                                                        <td class="px-6 py-4 bg-gray-100 text-center">
+                                                            @if ($uasItem)
+                                                                {{ $hari }}
+                                                            @else
+                                                                {{ $j->hari->hari }}
+                                                            @endif
+                                                        </td>
+                                                        <td class="px-6 py-4 text-center">
                                                             {{ $j->sesi->sesi }}
                                                         </td>
-                                                        <td class="px-6 py-4 bg-gray-100">
+                                                        <td class="px-6 py-4 bg-gray-100 text-center">
                                                             @if ($uasItem)
                                                                 {{ $uasItem->waktu_ujian }}
                                                             @else
                                                                 {{ $j->sesi->pukul->pukul }}
                                                             @endif
                                                         </td>
-                                                        <td class="px-6 py-4">
+                                                        <td class="px-6 py-4 text-center">
                                                             {{ $j->detail_kurikulum->materi_ajar->semester->semester }}
                                                         </td>
-                                                        <td class="px-6 py-4 bg-gray-100">
+                                                        <td class="px-6 py-4 bg-gray-100 text-center">
                                                             {{ $j->detail_kurikulum->materi_ajar->sks }}
                                                         </td>
-                                                        <td class="px-6 py-4">
+                                                        <td class="px-6 py-4 text-center">
                                                             {{ $j->ruang->ruang }}
                                                         </td>
-                                                        <td class="px-6 py-4 bg-gray-100">
+                                                        <td class="px-6 py-4 bg-gray-100 text-center">
                                                             {{ $j->kelas->kelas }}
                                                         </td>
-                                                        <td class="px-6 py-4">
+                                                        <td class="px-6 py-4 text-center">
                                                             {{ $j->kelas->jurusan->jurusan }}
                                                         </td>
-                                                        <td class="px-6 py-4 bg-gray-100" {{$hide}}>
+                                                        <td class="px-6 py-4 bg-gray-100 text-center"
+                                                            {{ $hide }}>
                                                             @if ($uasItem)
                                                                 <a href="{{ asset('uas/' . $uasItem->file) }}" download
-                                                                    class="mr-2 bg-green-500 hover:bg-green-600 px-4 py-3 rounded-xl text-xs text-white">
+                                                                    class="mr-2 text-green-500 hover:bg-green-100 px-4 py-3 rounded-xl border-2 border-green-500 border-dashed">
                                                                     <i class="fa-solid fa-download"></i>
                                                                 </a>
                                                             @else
-                                                                <div class="bg-red-500 text-white px-2 rounded-xl">Belum
+                                                                <div
+                                                                    class="text-red-500 bg-red-100 border border-red-500 px-2 rounded-xl">
+                                                                    Belum
                                                                     Terdapat Soal</div>
                                                             @endif
                                                         </td>
-                                                        <td class="px-6 py-4" {{$hide}}>
+                                                        <td class="px-6 py-4 text-center" {{ $hide }}>
                                                             @if ($uasItem)
                                                                 @if ($jawaban)
                                                                     {{-- If the student's submission exists in detail_uas --}}
                                                                     <a href="{{ asset('uas/jawaban/' . $jawaban->file) }}"
                                                                         download
-                                                                        class="mr-2 bg-green-500 hover:bg-green-600 px-4 py-3 rounded-xl text-xs text-white">
+                                                                        class="mr-2 text-green-500 hover:bg-green-100 px-4 py-3 rounded-xl border-2 border-green-500 border-dashed">
                                                                         <i class="fa-solid fa-file"></i>
                                                                     </a>
                                                                 @else
@@ -235,7 +228,7 @@
                                                                         data-modal-target="sourceModalUpload"
                                                                         data-id_uas="{{ $uasItem->id_uas }}"
                                                                         onclick="editSourceModalUpload(this)"
-                                                                        class="bg-amber-500 hover:bg-amber-600 px-4 py-3 rounded-xl text-xs text-white">
+                                                                        class="text-amber-500 hover:bg-amber-100 px-4 py-3 rounded-xl border border-amber-500 border-dashed border-2">
                                                                         <i class="fas fa-upload"></i>
                                                                     </button>
                                                                 @endif

@@ -2,7 +2,7 @@
     <x-slot name="header">
         <p class="font-semibold lg:text-xl text-gray-800 dark:text-gray-200 leading-tight text-md">
         <div class="flex items-center font-bold">Jadwal Pembelajaran<i class="fi fi-rr-caret-right mt-1"></i> <span
-                class="text-amber-100">Presensi Jadwal Pembelajaran</span></div>
+                class="text-amber-100">Detail Jadwal Pembelajaran</span></div>
         </p>
     </x-slot>
 
@@ -107,10 +107,18 @@
                                     </div>
                                 </div>
                                 <div class="flex -mb-5">
-                                    <button
-                                        class="flex border border-sky-500 px-4 pt-2 pb-2 rounded-xl text-sky-500 hover:bg-sky-100"
-                                        onclick="return formatif()"><i class="fi fi-sr-add flex mr-2 mt-1"></i> Tambah
-                                        Formatif</button>
+                                    @can('role-A')
+                                        <button
+                                            class="flex border border-sky-500 px-4 pt-2 pb-2 rounded-xl text-sky-500 hover:bg-sky-100"
+                                            onclick="return formatif()"><i class="fi fi-sr-add flex mr-2 mt-1"></i> Tambah
+                                            Formatif</button>
+                                    @endcan
+                                    @can('role-D')
+                                        <button
+                                            class="flex border border-sky-500 px-4 pt-2 pb-2 rounded-xl text-sky-500 hover:bg-sky-100"
+                                            onclick="return formatif()"><i class="fi fi-sr-add flex mr-2 mt-1"></i> Tambah
+                                            Formatif</button>
+                                    @endcan
                                 </div>
                             </div>
                             <hr class="border mt-8 border-black border-opacity-30">
@@ -172,34 +180,88 @@
                                                             {{ $j->judul_formatif }}
                                                         </td>
                                                         <td class="px-6 py-4 text-center bg-gray-100">
-                                                            {{ $j->deadline }}
+                                                            {{ date('d-m-Y H:i', strtotime($j->deadline)) }}
                                                         </td>
                                                         <td
                                                             class="px-6 py-4 text-center flex items-center justify-center">
-                                                            <a href="{{ asset('formatif/' . $j->formatif) }}"
-                                                                target="_blank"
-                                                                class="flex items-center mr-2 hover:bg-emerald-100 text-emerald-600 pr-2 pl-4 py-3 rounded-xl text-md border border-dashed border-emerald-600">
-                                                                <i class="fi fi-sr-document flex mr-2"></i>
-                                                            </a>
-                                                            <button onclick="formatifUpdate(this)"
-                                                                class="flex items-center mr-2 hover:bg-amber-100 text-amber-600 pr-2 pl-4 py-3 rounded-xl text-md border border-dashed border-amber-600"
-                                                                data-id="{{ $j->id }}"
-                                                                data-judul="{{ $j->judul_formatif }}"
-                                                                data-deadline="{{ $j->deadline }}"
-                                                                data-formatif="{{ $j->formatif }}"
-                                                                data-action="{{ route('jadwal_reguler.formatif_update', $j->id) }}">
-                                                                <i class="fi fi-sr-file-edit flex mr-2"></i>
-                                                            </button>
-                                                            <a href="{{ route('jadwal_reguler.formatif_answer', $j->id_formatif) }}"
-                                                                class="flex items-center mr-2 hover:bg-sky-100 text-sky-600 pr-2 pl-4 py-3 rounded-xl text-md border border-dashed border-sky-600">
-                                                                <i class="fi fi-sr-member-list flex mr-2"></i>
-                                                            </a>
-                                                            <button type="button"
-                                                                onclick="return dataDelete('{{ $j->id }}')"
-                                                                title="Hapus Data"
-                                                                class="border border-dashed border-red-500 text-red-500 hover:bg-red-100 px-3 py-1 rounded-xl h-10 w-10 text-xs">
-                                                                <i class="fas fa-trash"></i>
-                                                            </button>
+                                                            @can('role-A')
+                                                                <a href="{{ asset('formatif/' . $j->formatif) }}"
+                                                                    target="_blank"
+                                                                    class="flex items-center mr-2 hover:bg-emerald-100 text-emerald-600 pr-2 pl-4 py-3 rounded-xl text-md border border-dashed border-emerald-600">
+                                                                    <i class="fi fi-sr-document flex mr-2"></i>
+                                                                </a>
+                                                                <button onclick="formatifUpdate(this)"
+                                                                    class="flex items-center mr-2 hover:bg-amber-100 text-amber-600 pr-2 pl-4 py-3 rounded-xl text-md border border-dashed border-amber-600"
+                                                                    data-id="{{ $j->id }}"
+                                                                    data-judul="{{ $j->judul_formatif }}"
+                                                                    data-deadline="{{ $j->deadline }}"
+                                                                    data-formatif="{{ $j->formatif }}"
+                                                                    data-action="{{ route('jadwal_reguler.formatif_update', $j->id) }}">
+                                                                    <i class="fi fi-sr-file-edit flex mr-2"></i>
+                                                                </button>
+                                                                <a href="{{ route('jadwal_reguler.formatif_answer', $j->id_formatif) }}"
+                                                                    class="flex items-center mr-2 hover:bg-sky-100 text-sky-600 pr-2 pl-4 py-3 rounded-xl text-md border border-dashed border-sky-600">
+                                                                    <i class="fi fi-sr-member-list flex mr-2"></i>
+                                                                </a>
+                                                                <button type="button"
+                                                                    onclick="return dataDelete('{{ $j->id }}')"
+                                                                    title="Hapus Data"
+                                                                    class="border border-dashed border-red-500 text-red-500 hover:bg-red-100 px-3 py-1 rounded-xl h-10 w-10 text-xs">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button>
+                                                            @endcan
+                                                            @can('role-D')
+                                                                <a href="{{ asset('formatif/' . $j->formatif) }}"
+                                                                    target="_blank"
+                                                                    class="flex items-center mr-2 hover:bg-emerald-100 text-emerald-600 pr-2 pl-4 py-3 rounded-xl text-md border border-dashed border-emerald-600">
+                                                                    <i class="fi fi-sr-document flex mr-2"></i>
+                                                                </a>
+                                                                <button onclick="formatifUpdate(this)"
+                                                                    class="flex items-center mr-2 hover:bg-amber-100 text-amber-600 pr-2 pl-4 py-3 rounded-xl text-md border border-dashed border-amber-600"
+                                                                    data-id="{{ $j->id }}"
+                                                                    data-judul="{{ $j->judul_formatif }}"
+                                                                    data-deadline="{{ $j->deadline }}"
+                                                                    data-formatif="{{ $j->formatif }}"
+                                                                    data-action="{{ route('jadwal_reguler.formatif_update', $j->id) }}">
+                                                                    <i class="fi fi-sr-file-edit flex mr-2"></i>
+                                                                </button>
+                                                                <a href="{{ route('jadwal_reguler.formatif_answer', $j->id_formatif) }}"
+                                                                    class="flex items-center mr-2 hover:bg-sky-100 text-sky-600 pr-2 pl-4 py-3 rounded-xl text-md border border-dashed border-sky-600">
+                                                                    <i class="fi fi-sr-member-list flex mr-2"></i>
+                                                                </a>
+                                                                <button type="button"
+                                                                    onclick="return dataDelete('{{ $j->id }}')"
+                                                                    title="Hapus Data"
+                                                                    class="border border-dashed border-red-500 text-red-500 hover:bg-red-100 px-3 py-1 rounded-xl h-10 w-10 text-xs">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button>
+                                                            @endcan
+                                                            @can('role-M')
+                                                                @php
+                                                                    $jawaban = DB::table('detail_formatif')
+                                                                        ->where('nim', Auth::user()->email)
+                                                                        ->where('id_formatif', $j->id_formatif)
+                                                                        ->first();
+                                                                @endphp
+                                                                @if (!$jawaban)
+                                                                    @if (date('Y-m-d H:i:s') < $j->deadline)
+                                                                        <button type="button"
+                                                                            onclick="return formatifAnswer('{{ $j->id_formatif }}','{{ Auth::user()->email }}')"
+                                                                            title="Upload Jawaban"
+                                                                            class="border border-dashed border-sky-500 text-sky-500 hover:bg-sky-100 px-3 py-1 rounded-xl h-10 w-10">
+                                                                            <i class="fi fi-sr-file-upload"></i>
+                                                                        </button>
+                                                                    @else
+                                                                        <div
+                                                                            class="bg-red-100 border border-red-500 rounded-xl px-4 text-red-500">
+                                                                            Deadline terlewatkan</div>
+                                                                    @endif
+                                                                @else
+                                                                    <div
+                                                                        class="bg-emerald-100 border border-emerald-500 rounded-xl px-4 text-emerald-500">
+                                                                        Sudah dikerjakan</div>
+                                                                @endif
+                                                            @endcan
                                                         </td>
                                                     </tr>
                                                 @empty
@@ -340,16 +402,38 @@
                                                         <td
                                                             class="px-6 py-4 text-center flex items-center justify-center">
                                                             @if ($j->tgl_presensi)
-                                                                <a href="{{ route('presensi.edit', $j->id_presensi) }}"
-                                                                    class="flex items-center mr-2 hover:bg-amber-100 text-amber-600 pr-3 pl-4 py-3 rounded-xl text-md border border-dashed border-amber-600">
-                                                                    <i class="fi fi-sr-eye flex mr-2"></i> <span>Lihat
-                                                                        Presensi</span></a>
-                                                                <a href="{{ asset('materi/' . $j->file_materi) }}"
-                                                                    download
-                                                                    class="mr-2 flex items-center hover:bg-emerald-100 text-emerald-600 pr-3 pl-4 py-3 rounded-xl text-md border border-dashed border-emerald-600"><i
-                                                                        class="fi fi-sr-document flex mr-2"></i>
-                                                                    <span>Dokumen
-                                                                        Materi</span></a>
+                                                                @can('role-A')
+                                                                    <a href="{{ route('presensi.edit', $j->id_presensi) }}"
+                                                                        class="flex items-center mr-2 hover:bg-amber-100 text-amber-600 pr-3 pl-4 py-3 rounded-xl text-md border border-dashed border-amber-600">
+                                                                        <i class="fi fi-sr-eye flex mr-2"></i> <span>Lihat
+                                                                            Presensi</span></a>
+                                                                    <a href="{{ asset('materi/' . $j->file_materi) }}"
+                                                                        download
+                                                                        class="mr-2 flex items-center hover:bg-emerald-100 text-emerald-600 pr-3 pl-4 py-3 rounded-xl text-md border border-dashed border-emerald-600"><i
+                                                                            class="fi fi-sr-document flex mr-2"></i>
+                                                                        <span>Dokumen
+                                                                            Materi</span></a>
+                                                                @endcan
+                                                                @can('role-D')
+                                                                    <a href="{{ route('presensi.edit', $j->id_presensi) }}"
+                                                                        class="flex items-center mr-2 hover:bg-amber-100 text-amber-600 pr-3 pl-4 py-3 rounded-xl text-md border border-dashed border-amber-600">
+                                                                        <i class="fi fi-sr-eye flex mr-2"></i> <span>Lihat
+                                                                            Presensi</span></a>
+                                                                    <a href="{{ asset('materi/' . $j->file_materi) }}"
+                                                                        download
+                                                                        class="mr-2 flex items-center hover:bg-emerald-100 text-emerald-600 pr-3 pl-4 py-3 rounded-xl text-md border border-dashed border-emerald-600"><i
+                                                                            class="fi fi-sr-document flex mr-2"></i>
+                                                                        <span>Dokumen
+                                                                            Materi</span></a>
+                                                                @endcan
+                                                                @can('role-M')
+                                                                    <a href="{{ asset('materi/' . $j->file_materi) }}"
+                                                                        download
+                                                                        class="mr-2 flex items-center hover:bg-emerald-100 text-emerald-600 pr-3 pl-4 py-3 rounded-xl text-md border border-dashed border-emerald-600"><i
+                                                                            class="fi fi-sr-document flex mr-2"></i>
+                                                                        <span>Dokumen
+                                                                            Materi</span></a>
+                                                                @endcan
                                                             @else
                                                                 @php
                                                                     $day = date('l');
@@ -448,6 +532,28 @@
                     Submit
                 </button>
                 <button onclick="closeModalFormatif(event)" class="mt-4 bg-red-500 text-white px-4 py-2 rounded">
+                    Tutup
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-formatif-answer" class="hidden fixed inset-0 flex justify-center items-center z-50">
+        <!-- Backdrop Blur -->
+        <div class="absolute inset-0 bg-black opacity-50 backdrop-blur-sm"></div>
+        <div class="bg-white rounded-lg p-6 lg:w-4/12 w-full shadow-xl z-10">
+            <h2 class="text-lg font-bold mb-4 bg-amber-50 pl-6 pr-6 p-2 rounded-xl">Formatif</h2>
+            <form id="formatifFormAnswer" action="{{ route('detail_formatif.store') }}" method="post"
+                enctype="multipart/form-data" class="w-full">
+                @csrf
+                <input type="hidden" value="{{ $idJadwal }}" name="id_jadwal">
+                <p id="modal-content-answer"></p>
+                <hr class="mt-4 border-2">
+                <button type="submit" id="submitFormatif" class="mt-4 bg-sky-500 text-white px-4 py-2 rounded">
+                    Submit
+                </button>
+                <button onclick="closeModalFormatifAnswer(event)"
+                    class="mt-4 bg-red-500 text-white px-4 py-2 rounded">
                     Tutup
                 </button>
             </form>
@@ -616,6 +722,26 @@
             } else {
                 console.error("Modal tidak ditemukan!");
             }
+        }
+
+        function formatifAnswer(id_formatif, nim) {
+            const modalContent = document.getElementById("modal-content-answer");
+            modalContent.innerHTML = `
+                <input type="text" name="id_formatif" value="${id_formatif}">
+                <input type="hidden" name="nim" value="${nim}">
+                <div class="flex flex-col w-full mt-4">
+                    <lable>Jawaban</lable>
+                    <input type="file" id="jawaban" name="jawaban" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Masukan Judul Formatif disini ..." oninput="this.value = this.value.toUpperCase();"/>
+                </div>
+            `;
+            const modal = document.getElementById("modal-formatif-answer");
+            modal.classList.remove("hidden");
+        }
+
+        function closeModalFormatifAnswer(event) {
+            event.preventDefault(); // Mencegah form submit
+            const modal = document.getElementById("modal-formatif-answer");
+            modal.classList.add("hidden");
         }
 
         const form = document.getElementById('informasiForm');
