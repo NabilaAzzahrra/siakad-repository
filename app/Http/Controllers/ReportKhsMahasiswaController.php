@@ -93,16 +93,17 @@ class ReportKhsMahasiswaController extends Controller
     public function edit(string $id, Request $request)
     {
         $semester = Semester::all();
-
+        $nim = Auth::user()->role === 'M'
+            ? Auth::user()->email
+            : str_replace('ortu', '', Auth::user()->email);
         $query = DB::table('mahasiswa')
             ->join('kelas', 'mahasiswa.id_kelas', '=', 'kelas.id')
             ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id')
             ->select('mahasiswa.*', 'kelas.kelas', 'jurusan.jurusan', 'kelas.id_jurusan')
             ->whereNotNull('mahasiswa.id_kelas')
-            ->where('nim', Auth::user()->email)
+            ->where('nim', $nim)
             ->whereNotNull('mahasiswa.tingkat');
         $mahasiswa_lengkap = $query->orderBy('nama', 'ASC')->paginate(30);
-//dd($mahasiswa_lengkap);
         return view('page.report_khs_mahasiswa.index')->with([
             'mahasiswa_lengkap' => $mahasiswa_lengkap,
             'semester' => $semester,

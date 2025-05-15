@@ -362,6 +362,42 @@ Route::get('/dashboard', function (Request $request) {
                     });
                 })
                 ->paginate(10);
+        }else if(Auth::user()->role == "O"){
+            $jadwal = Jadwalreguler::with('hari', 'dosen', 'detail_kurikulum.materi_ajar', 'sesi', 'sesi.pukul', 'ruang', 'kelas')
+                ->whereHas('hari', function ($query) use ($now, $tahun_akademik, $keterangan) {
+                    $query->where('id_tahun_akademik', $tahun_akademik)
+                        ->where('id_keterangan', $keterangan)
+                        ->where('hari', $now);
+                })
+                ->when($search, function ($query) use ($search) {
+                    $query->where(function ($query) use ($search) {
+                        $query->whereHas('detail_kurikulum.materi_ajar', function ($query) use ($search) {
+                            $query->where('materi_ajar', 'like', '%' . $search . '%');
+                        })
+                            ->orWhereHas('dosen', function ($query) use ($search) {
+                                $query->where('nama_dosen', 'like', '%' . $search . '%');
+                            })
+                            ->orWhereHas('hari', function ($query) use ($search) {
+                                $query->where('hari', 'like', '%' . $search . '%');
+                            })
+                            ->orWhereHas('detail_kurikulum.materi_ajar', function ($query) use ($search) {
+                                $query->where('sks', 'like', '%' . $search . '%');
+                            })
+                            ->orWhereHas('sesi', function ($query) use ($search) {
+                                $query->where('sesi', 'like', '%' . $search . '%');
+                            })
+                            ->orWhereHas('ruang', function ($query) use ($search) {
+                                $query->where('ruang', 'like', '%' . $search . '%');
+                            })
+                            ->orWhereHas('kelas', function ($query) use ($search) {
+                                $query->where('kelas', 'like', '%' . $search . '%');
+                            })
+                            ->orWhereHas('sesi.pukul', function ($query) use ($search) {
+                                $query->where('pukul', 'like', '%' . $search . '%');
+                            });
+                    });
+                })
+                ->paginate(10);
         }
 
         $kode_dosen = Auth::user()->email;

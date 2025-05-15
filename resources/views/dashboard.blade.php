@@ -131,6 +131,24 @@
                             </div>
                         </button>
                     @endcan
+                    @can('role-O')
+                        <!-- Lingkaran 2 -->
+                        <button class="bg-white w-32 h-32 rounded-full flex items-center justify-center shadow-md ml-12 mr-12"
+                            onclick="informasi()">
+                            <div class="w-24 h-24 border-2 border-black rounded-full flex items-center justify-center shadow-md"
+                                data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
+                                <img src="{{ url('img/info.png') }}" alt="Icon 2" class="w-12 h-12">
+                            </div>
+                        </button>
+                        <!-- Lingkaran 4 -->
+                        <button class="bg-white w-32 h-32 rounded-full flex items-center justify-center shadow-md mr-12 ml-12"
+                            onclick="jadwal()">
+                            <div class="w-24 h-24 border-2 border-black rounded-full flex items-center justify-center shadow-md"
+                                data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
+                                <img src="{{ url('img/timetable.png') }}" alt="Icon 4" class="w-12 h-12">
+                            </div>
+                        </button>
+                    @endcan
                 </div>
                 @can('role-A')
                     <div class="flex mx-[380px]">
@@ -147,6 +165,12 @@
                     </div>
                 @endcan
                 @can('role-M')
+                    <div class="flex items-center justify-center mt-4 gap-24">
+                        <div class="font-bold ml-[34px]">Informasi</div>
+                        <div class="font-bold ml-[35px]">Jadwal Hari ini</div>
+                    </div>
+                @endcan
+                @can('role-O')
                     <div class="flex items-center justify-center mt-4 gap-24">
                         <div class="font-bold ml-[34px]">Informasi</div>
                         <div class="font-bold ml-[35px]">Jadwal Hari ini</div>

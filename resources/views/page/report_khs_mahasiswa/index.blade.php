@@ -42,10 +42,10 @@
                                             @endforeach
                                         </select>
                                         <div class="flex justify-end -mt-12 mb-4">
-                                            <button class="href rounded-xl flex items-center justify-center  p-2 text-sm lg:text-md hover:bg-amber-100 border border-dashed border-amber-500 text-amber-500 pl-4 pr-4 pt-2">
-                                                <i
-                                                class="fi fi-sr-print mr-2 text-lg"></i> <span>Print
-                                                KHS</span>
+                                            <button
+                                                class="href rounded-xl flex items-center justify-center  p-2 text-sm lg:text-md hover:bg-amber-100 border border-dashed border-amber-500 text-amber-500 pl-4 pr-4 pt-2">
+                                                <i class="fi fi-sr-print mr-2 text-lg"></i> <span>Print
+                                                    KHS</span>
                                             </button>
                                         </div>
                                         <div class="relative overflow-x-auto rounded-lg shadow-lg">
@@ -96,16 +96,22 @@
                                                     @endphp
                                                     @if ($mahasiswa_lengkap)
                                                         @foreach ($mahasiswa_lengkap as $m)
+                                                            @php
+                                                                $nim =
+                                                                    Auth::user()->role === 'M'
+                                                                        ? Auth::user()->email
+                                                                        : str_replace('ortu', '', Auth::user()->email);
+                                                            @endphp
                                                             <tr
                                                                 class="bg-white border dark:bg-gray-800 dark:border-gray-700">
                                                                 <td class="px-6 py-4 text-center bg-gray-100 hidden">
                                                                     <input type="checkbox" class="rounded-md"
                                                                         name="user_id[]"
-                                                                        value="{{ Auth::user()->email }}" checked>
+                                                                        value="{{ $nim }}" checked>
                                                                 </td>
                                                                 <th scope="row"
                                                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                                    {{ Auth::user()->email }}
+                                                                    {{ $nim }}
                                                                 </th>
                                                                 <td class="px-6 py-4 bg-gray-100">
                                                                     {{ $m->nama }}

@@ -54,8 +54,8 @@
                                         </div>
 
                                         <div class="sm:ml-16 sm:mt-0 sm:flex sm:space-x-4 sm:flex-none">
-                                            <form action="{{ route('jadwal_reguler.jadwal_mhs', Auth::user()->email) }}" method="GET"
-                                                class="flex items-center flex-1">
+                                            <form action="{{ route('jadwal_reguler.jadwal_mhs', Auth::user()->email) }}"
+                                                method="GET" class="flex items-center flex-1">
                                                 <input type="text" name="search"
                                                     placeholder="Enter for search . . . " id="search"
                                                     value="{{ request('search') }}"
@@ -125,9 +125,11 @@
                                                             PROGRAM STUDI
                                                         </div>
                                                     </th>
-                                                    <th scope="col" class="px-6 py-3 text-center">
-                                                        ACTION
-                                                    </th>
+                                                    @cannot('role-O')
+                                                        <th scope="col" class="px-6 py-3 text-center">
+                                                            ACTION
+                                                        </th>
+                                                    @endcannot
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -181,12 +183,14 @@
                                                         <td class="px-6 py-4 bg-gray-100">
                                                             {{ $j->jurusan }}
                                                         </td>
-                                                        <td class="px-6 py-4 text-center">
-                                                            <a href="{{ route('jadwal_reguler.show', $j->kode_jadwal) }}"
-                                                                class="mr-2 hover:bg-green-100 text-green-600 pr-3 pl-4 pr-4 py-3 rounded-xl text-xs border border-dashed border-green-600">
-                                                                <i class="fa-solid fa-eye"></i>
-                                                            </a>
-                                                        </td>
+                                                        @cannot('role-O')
+                                                            <td class="px-6 py-4 text-center">
+                                                                <a href="{{ route('jadwal_reguler.show', $j->kode_jadwal) }}"
+                                                                    class="mr-2 hover:bg-green-100 text-green-600 pr-3 pl-4 pr-4 py-3 rounded-xl text-xs border border-dashed border-green-600">
+                                                                    <i class="fa-solid fa-eye"></i>
+                                                                </a>
+                                                            </td>
+                                                        @endcannot
                                                     </tr>
                                                 @endforeach
                                             </tbody>

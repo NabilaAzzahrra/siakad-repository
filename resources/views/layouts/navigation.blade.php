@@ -507,13 +507,7 @@
 
                     <!-- Navigation Links -->
                     <div class="hidden sm:flex sm:items-center sm:ms-6">
-                        <x-nav-link :href="route(
-                            'report_presensi_mahasiswa.edit',
-                            str_replace('ortu', '', Auth::user()->email),
-                        )" :active="request()->routeIs(
-                            'report_presensi_mahasiswa.edit',
-                            str_replace('ortu', '', Auth::user()->email),
-                        )">
+                        <x-nav-link onclick="return printPresensiMahasiswa('{{str_replace('ortu', '', Auth::user()->email) }}')">
                             <div class="text-[16px] font-bold tracking-wide">Presensi</div>
                         </x-nav-link>
                     </div>
